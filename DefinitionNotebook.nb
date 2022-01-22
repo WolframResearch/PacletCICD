@@ -138,7 +138,6 @@ Notebook[
             "FileManagerFile",
             CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellFrameLabels -> {
              {
               Cell[
@@ -150,7 +149,7 @@ Notebook[
              {Inherited, Inherited}
             },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 198352996
+            CellID -> 187055
            ],
            Cell[
             TextData[
@@ -198,7 +197,6 @@ Notebook[
             "FileManagerDirectory",
             CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellFrameLabels -> {
              {
               Cell[
@@ -212,7 +210,7 @@ Notebook[
              {Inherited, Inherited}
             },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 224933526
+            CellID -> 90373661
            ],
            Cell[
             CellGroupData[
@@ -263,7 +261,6 @@ Notebook[
                "FileManagerDirectory",
                CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 100},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -277,7 +274,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 602242535
+               CellID -> 87381406
               ],
               Cell[
                BoxData[
@@ -311,7 +308,6 @@ Notebook[
                "FileManagerFile",
                CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -323,7 +319,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 88730621
+               CellID -> 47171191
               ]
              },
              Closed
@@ -378,7 +374,6 @@ Notebook[
                "FileManagerDirectory",
                CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 100},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -390,7 +385,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 18906746
+               CellID -> 408277321
               ],
               Cell[
                BoxData[
@@ -398,102 +393,10 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"BuildPaclet.m\"",
-                    File[
-                     FileNameJoin[{NotebookDirectory[], "Kernel/BuildPaclet.m"}]
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 File[
-                  FileNameJoin[{NotebookDirectory[], "Kernel/BuildPaclet.m"}]
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 405369322
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
-                    "\"CheckPaclet.m\"",
-                    File[
-                     FileNameJoin[{NotebookDirectory[], "Kernel/CheckPaclet.m"}]
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 File[
-                  FileNameJoin[{NotebookDirectory[], "Kernel/CheckPaclet.m"}]
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 288832028
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
-                    "\"DeployPaclet.m\"",
+                    "\"BuildPaclet.wl\"",
                     File[
                      FileNameJoin[
-                      {NotebookDirectory[], "Kernel/DeployPaclet.m"}
+                      {NotebookDirectory[], "Kernel/BuildPaclet.wl"}
                      ]
                     ]
                    },
@@ -510,7 +413,7 @@ Notebook[
                  ],
                  File[
                   FileNameJoin[
-                   {NotebookDirectory[], "Kernel/DeployPaclet.m"}
+                   {NotebookDirectory[], "Kernel/BuildPaclet.wl"}
                   ]
                  ],
                  BoxID -> "FileTreePath",
@@ -520,7 +423,6 @@ Notebook[
                "FileManagerFile",
                CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -532,7 +434,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 334125494
+               CellID -> 18674630
               ],
               Cell[
                BoxData[
@@ -540,56 +442,10 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"PacletCICD.m\"",
-                    File[
-                     FileNameJoin[{NotebookDirectory[], "Kernel/PacletCICD.m"}]
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 File[
-                  FileNameJoin[{NotebookDirectory[], "Kernel/PacletCICD.m"}]
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 234416447
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
-                    "\"SubmitPaclet.m\"",
+                    "\"CheckPaclet.wl\"",
                     File[
                      FileNameJoin[
-                      {NotebookDirectory[], "Kernel/SubmitPaclet.m"}
+                      {NotebookDirectory[], "Kernel/CheckPaclet.wl"}
                      ]
                     ]
                    },
@@ -606,7 +462,7 @@ Notebook[
                  ],
                  File[
                   FileNameJoin[
-                   {NotebookDirectory[], "Kernel/SubmitPaclet.m"}
+                   {NotebookDirectory[], "Kernel/CheckPaclet.wl"}
                   ]
                  ],
                  BoxID -> "FileTreePath",
@@ -616,7 +472,6 @@ Notebook[
                "FileManagerFile",
                CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -628,7 +483,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 54093983
+               CellID -> 2150078
               ],
               Cell[
                BoxData[
@@ -636,9 +491,11 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"TestPaclet.m\"",
+                    "\"DeployPaclet.wl\"",
                     File[
-                     FileNameJoin[{NotebookDirectory[], "Kernel/TestPaclet.m"}]
+                     FileNameJoin[
+                      {NotebookDirectory[], "Kernel/DeployPaclet.wl"}
+                     ]
                     ]
                    },
                    "FileManagerFileOpenerTemplate"
@@ -653,7 +510,9 @@ Notebook[
                   ]
                  ],
                  File[
-                  FileNameJoin[{NotebookDirectory[], "Kernel/TestPaclet.m"}]
+                  FileNameJoin[
+                   {NotebookDirectory[], "Kernel/DeployPaclet.wl"}
+                  ]
                  ],
                  BoxID -> "FileTreePath",
                  BaseStyle -> {"Text"}
@@ -662,7 +521,6 @@ Notebook[
                "FileManagerFile",
                CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -674,7 +532,7 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 392486450
+               CellID -> 761931760
               ],
               Cell[
                BoxData[
@@ -682,9 +540,9 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"Utilities.m\"",
+                    "\"PacletCICD.wl\"",
                     File[
-                     FileNameJoin[{NotebookDirectory[], "Kernel/Utilities.m"}]
+                     FileNameJoin[{NotebookDirectory[], "Kernel/PacletCICD.wl"}]
                     ]
                    },
                    "FileManagerFileOpenerTemplate"
@@ -699,7 +557,7 @@ Notebook[
                   ]
                  ],
                  File[
-                  FileNameJoin[{NotebookDirectory[], "Kernel/Utilities.m"}]
+                  FileNameJoin[{NotebookDirectory[], "Kernel/PacletCICD.wl"}]
                  ],
                  BoxID -> "FileTreePath",
                  BaseStyle -> {"Text"}
@@ -708,7 +566,6 @@ Notebook[
                "FileManagerFile",
                CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
                CellGroupingRules -> {"SectionGrouping", 110},
-               TaggingRules -> { },
                CellFrameLabels -> {
                 {
                  Cell[
@@ -720,7 +577,146 @@ Notebook[
                 {Inherited, Inherited}
                },
                CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 220897388
+               CellID -> 2247890
+              ],
+              Cell[
+               BoxData[
+                InterpretationBox[
+                 TagBox[
+                  TemplateBox[
+                   {
+                    "\"SubmitPaclet.wl\"",
+                    File[
+                     FileNameJoin[
+                      {NotebookDirectory[], "Kernel/SubmitPaclet.wl"}
+                     ]
+                    ]
+                   },
+                   "FileManagerFileOpenerTemplate"
+                  ],
+                  Function[
+                   Annotation[
+                    #1,
+                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                     1
+                    ]
+                   ]
+                  ]
+                 ],
+                 File[
+                  FileNameJoin[
+                   {NotebookDirectory[], "Kernel/SubmitPaclet.wl"}
+                  ]
+                 ],
+                 BoxID -> "FileTreePath",
+                 BaseStyle -> {"Text"}
+                ]
+               ],
+               "FileManagerFile",
+               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
+               CellGroupingRules -> {"SectionGrouping", 110},
+               CellFrameLabels -> {
+                {
+                 Cell[
+                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
+                  Background -> None
+                 ],
+                 Inherited
+                },
+                {Inherited, Inherited}
+               },
+               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+               CellID -> 131024557
+              ],
+              Cell[
+               BoxData[
+                InterpretationBox[
+                 TagBox[
+                  TemplateBox[
+                   {
+                    "\"TestPaclet.wl\"",
+                    File[
+                     FileNameJoin[{NotebookDirectory[], "Kernel/TestPaclet.wl"}]
+                    ]
+                   },
+                   "FileManagerFileOpenerTemplate"
+                  ],
+                  Function[
+                   Annotation[
+                    #1,
+                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                     1
+                    ]
+                   ]
+                  ]
+                 ],
+                 File[
+                  FileNameJoin[{NotebookDirectory[], "Kernel/TestPaclet.wl"}]
+                 ],
+                 BoxID -> "FileTreePath",
+                 BaseStyle -> {"Text"}
+                ]
+               ],
+               "FileManagerFile",
+               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
+               CellGroupingRules -> {"SectionGrouping", 110},
+               CellFrameLabels -> {
+                {
+                 Cell[
+                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
+                  Background -> None
+                 ],
+                 Inherited
+                },
+                {Inherited, Inherited}
+               },
+               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+               CellID -> 52427552
+              ],
+              Cell[
+               BoxData[
+                InterpretationBox[
+                 TagBox[
+                  TemplateBox[
+                   {
+                    "\"Utilities.wl\"",
+                    File[
+                     FileNameJoin[{NotebookDirectory[], "Kernel/Utilities.wl"}]
+                    ]
+                   },
+                   "FileManagerFileOpenerTemplate"
+                  ],
+                  Function[
+                   Annotation[
+                    #1,
+                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                     1
+                    ]
+                   ]
+                  ]
+                 ],
+                 File[
+                  FileNameJoin[{NotebookDirectory[], "Kernel/Utilities.wl"}]
+                 ],
+                 BoxID -> "FileTreePath",
+                 BaseStyle -> {"Text"}
+                ]
+               ],
+               "FileManagerFile",
+               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
+               CellGroupingRules -> {"SectionGrouping", 110},
+               CellFrameLabels -> {
+                {
+                 Cell[
+                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
+                  Background -> None
+                 ],
+                 Inherited
+                },
+                {Inherited, Inherited}
+               },
+               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+               CellID -> 818075845
               ]
              },
              Closed
@@ -754,7 +750,6 @@ Notebook[
             "FileManagerFile",
             CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellFrameLabels -> {
              {
               Cell[
@@ -766,7 +761,7 @@ Notebook[
              {Inherited, Inherited}
             },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 477791677
+            CellID -> 268536060
            ],
            Cell[
             BoxData[
@@ -796,7 +791,6 @@ Notebook[
             "FileManagerFile",
             CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellFrameLabels -> {
              {
               Cell[
@@ -810,7 +804,7 @@ Notebook[
              {Inherited, Inherited}
             },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 145278354
+            CellID -> 244126696
            ],
            Cell[
             BoxData[
@@ -840,7 +834,6 @@ Notebook[
             "FileManagerFile",
             CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellFrameLabels -> {
              {
               Cell[
@@ -852,15 +845,131 @@ Notebook[
              {Inherited, Inherited}
             },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 241476859
+            CellID -> 546329107
+           ],
+           Cell[
+            CellGroupData[
+             {
+              Cell[
+               TextData[
+                Cell[
+                 BoxData[
+                  InterpretationBox[
+                   TagBox[
+                    ActionMenuBox[
+                     "\"Scripts\"",
+                     {
+                      "\"Open/Close Group\"" :> (SelectionMove[ParentCell[EvaluationCell[]], All, Cell];
+                      FrontEndTokenExecute[
+                       EvaluationNotebook[],
+                       "OpenCloseGroup"
+                      ]),
+                      "\"Open Directory\"" :> DefinitionNotebookClient`FileTreeOpen[
+                       ParentCell[EvaluationCell[]]
+                      ],
+                      "\"Un/Mark as Excluded\"" :> DefinitionNotebookClient`FileTreeExclusionToggle[
+                       ParentCell[EvaluationCell[]]
+                      ],
+                      "\"Copy Path to Clipboard\"" :> DefinitionNotebookClient`FileTreeCopy[
+                       ParentCell[EvaluationCell[]]
+                      ]
+                     },
+                     Appearance -> None,
+                     BaseStyle -> {"Text"}
+                    ],
+                    Function[
+                     Annotation[
+                      #1,
+                      DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                       0
+                      ]
+                     ]
+                    ]
+                   ],
+                   File[FileNameJoin[{NotebookDirectory[], "Scripts"}]],
+                   BoxID -> "FileTreePath",
+                   BaseStyle -> {"Text"}
+                  ]
+                 ]
+                ]
+               ],
+               "FileManagerDirectory",
+               CellMargins -> {{Inherited, Inherited}, {Inherited, Inherited}},
+               CellGroupingRules -> {"SectionGrouping", 100},
+               CellFrameLabels -> {
+                {
+                 Cell[
+                  BoxData[
+                   TemplateBox[{}, "FileManagerDirectoryIconTemplate"]
+                  ],
+                  Background -> None
+                 ],
+                 Inherited
+                },
+                {Inherited, Inherited}
+               },
+               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+               CellID -> 163996705
+              ],
+              Cell[
+               BoxData[
+                InterpretationBox[
+                 TagBox[
+                  TemplateBox[
+                   {
+                    "\"FormatNotebooks.wls\"",
+                    File[
+                     FileNameJoin[
+                      {NotebookDirectory[], "Scripts/FormatNotebooks.wls"}
+                     ]
+                    ]
+                   },
+                   "FileManagerFileOpenerTemplate"
+                  ],
+                  Function[
+                   Annotation[
+                    #1,
+                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                     1
+                    ]
+                   ]
+                  ]
+                 ],
+                 File[
+                  FileNameJoin[
+                   {NotebookDirectory[], "Scripts/FormatNotebooks.wls"}
+                  ]
+                 ],
+                 BoxID -> "FileTreePath",
+                 BaseStyle -> {"Text"}
+                ]
+               ],
+               "FileManagerFile",
+               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
+               CellGroupingRules -> {"SectionGrouping", 110},
+               CellFrameLabels -> {
+                {
+                 Cell[
+                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
+                  Background -> None
+                 ],
+                 Inherited
+                },
+                {Inherited, Inherited}
+               },
+               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+               CellID -> 721100080
+              ]
+             },
+             Closed
+            ]
            ],
            Cell[
             "",
             "FileManagerBottomSpacer",
             CellGroupingRules -> {"SectionGrouping", 100},
-            TaggingRules -> { },
             CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-            CellID -> 516510199
+            CellID -> 15724518
            ]
           },
           Open
@@ -1066,14 +1175,7 @@ Notebook[
                       },
                       {
                        FaceForm[
-                        {
-                         RGBColor[
-                          0.980392,
-                          0.662745,
-                          0.25098
-                         ],
-                         Opacity[1.]
-                        }
+                        {RGBColor[0.980392, 0.662745, 0.25098], Opacity[1.]}
                        ],
                        FilledCurveBox[
                         {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
@@ -1090,14 +1192,7 @@ Notebook[
                       },
                       {
                        FaceForm[
-                        {
-                         RGBColor[
-                          0.980392,
-                          0.662745,
-                          0.25098
-                         ],
-                         Opacity[1.]
-                        }
+                        {RGBColor[0.980392, 0.662745, 0.25098], Opacity[1.]}
                        ],
                        FilledCurveBox[
                         {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
@@ -1114,14 +1209,7 @@ Notebook[
                       },
                       {
                        FaceForm[
-                        {
-                         RGBColor[
-                          0.980392,
-                          0.662745,
-                          0.25098
-                         ],
-                         Opacity[1.]
-                        }
+                        {RGBColor[0.980392, 0.662745, 0.25098], Opacity[1.]}
                        ],
                        FilledCurveBox[
                         {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
@@ -4034,8 +4122,8 @@ Notebook[
   "ResourceType" -> "Paclet",
   "ResourceCreateNotebook" -> True,
   "TemplateVersion" -> "1.5.53",
-  "CreationTimestamp" -> 3851869727.2490953,
-  "UpdatedTimestamp" -> 3851869727.2490953,
+  "CreationTimestamp" -> 3851869727.,
+  "UpdatedTimestamp" -> 3851869727.,
   "CompatibilityTest" -> HoldComplete[
    BinaryDeserialize[
     BaseDecode[
@@ -4067,43 +4155,50 @@ Notebook[
  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
  StyleDefinitions -> Notebook[
   {
-   Cell[StyleData[StyleDefinitions -> "Default.nb"]],
    Cell[
-    StyleData[All, "Working"],
-    DockedCells -> {
-     Cell[
-      BoxData[TemplateBox[{}, "MainGridTemplate"]],
-      "DockedCell",
-      CellMargins -> {{-10, -10}, {-8, -8}},
-      CellFrame -> 0,
-      Background -> RGBColor[0.47058823529411764, 0., 0.00784313725490196],
-      CellTags -> {"MainDockedCell"},
-      CacheGraphics -> False
-     ],
-     Cell[
-      BoxData[TemplateBox[{}, "ToolsGridTemplate"]],
-      "DockedCell",
-      TaggingRules -> {"Tools" -> True},
-      CellTags -> {"ToolbarDockedCell"},
-      CellFrameMargins -> {{0, 0}, {2, 2}},
-      CellFrame -> {{0, 0}, {1, 0}},
-      CacheGraphics -> False,
-      CellOpen -> Dynamic[
-       CurrentValue[
-        EvaluationNotebook[],
-        {TaggingRules, "ToolsOpen"},
-        True
-       ]
+    CellGroupData[
+     {
+      Cell[StyleData[StyleDefinitions -> "Default.nb"]],
+      Cell[
+       StyleData[All, "Working"],
+       DockedCells -> {
+        Cell[
+         BoxData[TemplateBox[{}, "MainGridTemplate"]],
+         "DockedCell",
+         CellMargins -> {{-10, -10}, {-8, -8}},
+         CellFrame -> 0,
+         Background -> RGBColor[0.47058823529411764, 0., 0.00784313725490196],
+         CellTags -> {"MainDockedCell"},
+         CacheGraphics -> False
+        ],
+        Cell[
+         BoxData[TemplateBox[{}, "ToolsGridTemplate"]],
+         "DockedCell",
+         TaggingRules -> {"Tools" -> True},
+         CellTags -> {"ToolbarDockedCell"},
+         CellFrameMargins -> {{0, 0}, {2, 2}},
+         CellFrame -> {{0, 0}, {1, 0}},
+         CacheGraphics -> False,
+         CellOpen -> Dynamic[
+          CurrentValue[
+           EvaluationNotebook[],
+           {TaggingRules, "ToolsOpen"},
+           True
+          ]
+         ]
+        ]
+       },
+       PrivateNotebookOptions -> {
+        "FileOutlineCache" -> False,
+        "SafeFileOpen" -> "IgnoreCache"
+       },
+       CellLabelAutoDelete -> False,
+       CodeAssistOptions -> {"AutoDetectHyperlinks" -> False},
+       AutoQuoteCharacters -> { }
       ]
-     ]
-    },
-    PrivateNotebookOptions -> {
-     "FileOutlineCache" -> False,
-     "SafeFileOpen" -> "IgnoreCache"
-    },
-    CellLabelAutoDelete -> False,
-    CodeAssistOptions -> {"AutoDetectHyperlinks" -> False},
-    AutoQuoteCharacters -> { }
+     },
+     Open
+    ]
    ],
    Cell[
     StyleData[
