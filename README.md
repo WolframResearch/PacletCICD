@@ -1,2 +1,2 @@
 # PacletCICD
-CI/CD Utilities for Wolfram Language Paclets
+CI/CD utilities for Wolfram Language Paclets
