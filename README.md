@@ -1,17 +1,10 @@
 # PacletCICD
 
-<table>
-<tr>
-<td>
-CI/CD utilities for Wolfram Language Paclets
-</td>
-<td>
-<img src="Images/HeroImage.png" width="25%">
-</td>
-</tr>
-</table>
+[![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW) [![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml)
 
-[![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW)
+CI/CD utilities for Wolfram Language Paclets
+
+<img src="Images/HeroImage.png" width="25%">
 
 ## License
 
