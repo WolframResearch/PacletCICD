@@ -15,19 +15,19 @@ jobs:
       WOLFRAM_SYSTEM_ID: Linux-x86-64
       WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAM_LICENSE_ENTITLEMENT_ID }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout files
+        uses: actions/checkout@v2
 
       - name: Install Dependencies
         run: wolframscript -code 'PacletInstall["https://wolfr.am/11FhS453R"];PacletInstall["https://wolfr.am/11FhS4xyd"];'
 
-      - name: CheckPaclet
-        run: wolframscript -code 'PacletResource`CICD`CheckPaclet[]'
+      - name: Check paclet
+        run: wolframscript -code 'TimeConstrained[PacletResource`CICD`CheckPaclet[], 60]'
 
-      - name: BuildPaclet
-        run: wolframscript -code 'PacletResource`CICD`BuildPaclet[]'
+      - name: Build paclet
+        run: wolframscript -code 'TimeConstrained[PacletResource`CICD`BuildPaclet[], 60]'
 
       - name: Upload build artifacts
-        if: success() || failure()    # run this step even if previous step failed
         uses: actions/upload-artifact@v2
         with:
           name: build-artifacts
