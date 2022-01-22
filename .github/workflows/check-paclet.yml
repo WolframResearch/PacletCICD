@@ -13,4 +13,20 @@ jobs:
       WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAM_LICENSE_ENTITLEMENT_ID }}
     steps:
       - uses: actions/checkout@v2
-      - uses: rhennigan/check-paclet@main
+
+      - name: Install Dependencies
+        run: wolframscript -code 'PacletInstall["https://wolfr.am/11FhS453R"];PacletInstall["https://wolfr.am/11FhS4xyd"];'
+
+      - name: CheckPaclet
+        run: wolframscript -code 'PacletResource`CICD`CheckPaclet[]'
+
+      - name: BuildPaclet
+        run: wolframscript -code 'PacletResource`CICD`BuildPaclet[]'
+
+      - name: Upload build artifacts
+        if: success() || failure()    # run this step even if previous step failed
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: build/
+          if-no-files-found: error
