@@ -3,7 +3,7 @@ EndPackage[ ];
 
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
-Wolfram`PacletCICD`DeployPaclet;
+Wolfram`PacletCICD`DeployPaclet; (* TODO: API handler for CloudDeploy *)
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`SubmitPaclet;
