@@ -190,7 +190,7 @@ checkPacArchiveExtension[ ___ ] := $Failed;
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*setOutput*)
-setOutput[ name_, value_ ] :=
+setOutput[ name_, value_ ] /; dnc`$ConsoleType === "GitHub" :=
     setOutput[ $gitHubEnv, name, value ];
 
 setOutput[ str_OutputStream, name_, value_ ] := (
