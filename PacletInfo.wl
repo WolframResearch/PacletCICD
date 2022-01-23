@@ -9,16 +9,21 @@ PacletObject[ <|
         {
             "Kernel",
             "Root"    -> "Kernel",
-            "Context" -> { "Wolfram`PacletCICD`", "Wolfram`PacletCICDLoader`" },
+            "Context" -> { "Wolfram`PacletCICD`" },
             "Symbols" -> {
                 "Wolfram`PacletCICD`BuildPaclet",
                 "Wolfram`PacletCICD`CheckPaclet",
                 "Wolfram`PacletCICD`DeployPaclet",
+                "Wolfram`PacletCICD`GitHubPacletInstall",
                 "Wolfram`PacletCICD`SubmitPaclet",
                 "Wolfram`PacletCICD`TestPaclet"
             }
         },
-        { "Documentation", "Language" -> "English" },
+        {
+            "Documentation",
+            "Root"     -> "Documentation",
+            "Language" -> "English"
+        },
         {
             "Asset",
             "Assets" -> {
