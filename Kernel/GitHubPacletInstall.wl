@@ -99,6 +99,14 @@ githubPacletInstall[ user_, repo_, ver_, tag_, br: Except[ $$maybeString ] ] :=
 (* TODO *)
 ghInstallLatest[ ___ ] := throwMessageFailure[ GitHubPacletInstall::unknown ];
 
+(* Use this URL:
+    URLBuild @ <|
+        "Scheme" -> "https",
+        "Domain" -> "api.github.com",
+        "Path"   -> { "", "repos", user, repo, "releases", "latest" }
+    |>
+*)
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*ghInstallVersion*)
