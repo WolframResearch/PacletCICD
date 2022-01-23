@@ -12,7 +12,7 @@ Notebook[
       CellID -> 525589890
      ],
      Cell[
-      "CI/CD utilities for Wolfram Language Paclets.",
+      "CI/CD utilities for Wolfram Language Paclets!",
       "Text",
       Deletable -> False,
       TaggingRules -> { },
