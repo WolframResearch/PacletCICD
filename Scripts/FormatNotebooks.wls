@@ -148,7 +148,7 @@ makeReadable[ file_, hash_, HoldComplete[ overrides___ ] ] :=
 
         ResourceFunction[ "SaveReadableNotebook" ][
             ReplaceAll[
-                Import @ file,
+                DeleteCases[ Import @ file, TaggingRules -> { }, Infinity ],
                 a: _RawArray | _NumericArray :>
                     With[ { b = Check[ a, $Failed ] }, b /; ! FailureQ @ b ]
             ],
