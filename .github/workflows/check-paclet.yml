@@ -19,18 +19,5 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: wolframscript -code 'PacletInstall["https://wolfr.am/11FhS453R"];PacletInstall["https://wolfr.am/11FhS4xyd"];'
-
       - name: Check paclet
-        run: wolframscript -code 'PacletResource`CICD`CheckPaclet[]'
-
-      - name: Build paclet
-        run: wolframscript -code 'PacletResource`CICD`BuildPaclet[]'
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-artifacts
-          path: build/
-          if-no-files-found: error
+        uses: rhennigan/check-paclet@testing
