@@ -14,7 +14,7 @@ jobs:
     env:
       WOLFRAM_SYSTEM_ID: Linux-x86-64
       WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAM_LICENSE_ENTITLEMENT_ID }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
