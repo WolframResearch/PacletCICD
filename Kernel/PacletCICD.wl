@@ -1,9 +1,11 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 EndPackage[ ];
 
+Wolfram`PacletCICD`$ExamplesLocation;
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
 Wolfram`PacletCICD`DeployPaclet; (* TODO: API handler for CloudDeploy *)
+Wolfram`PacletCICD`ExampleDirectory;
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`SubmitPaclet;
