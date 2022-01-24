@@ -220,7 +220,7 @@ Notebook[
          ],
          "InlineFormula"
         ],
-        " can be used via the ",
+        " is the underlying function that powers the ",
         ButtonBox[
          "check-paclet",
          BaseStyle -> "Hyperlink",
@@ -7771,7 +7771,7 @@ Notebook[
   "CreationDate" -> "01-22-2022 19:00:03",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 1, 24, 14, 54, 31.7339096`9.254098484841547},
+   {2022, 1, 24, 16, 38, 10.4947645`8.773547659448335},
    "Instant",
    "Gregorian",
    -5.

@@ -58,16 +58,53 @@ ExampleDirectory[ name_String ] :=
             throwMessageFailure @ ExampleDirectory::exdir
         ];
 
-        dir = FileNameJoin @ { ExpandFileName @ root, name };
+        root = ExpandFileName @ root;
+        dir = FileNameJoin @ { root, name };
 
-        If[ ! DirectoryQ @ dir,
-            throwMessageFailure[ ExampleDirectory::exdnf, name ]
+        If[ DirectoryQ @ dir,
+            File @ dir,
+            tryFetchExampleData[ root, name ]
         ];
 
         File @ dir
     ];
 
-(* TODO: package these up as zip files *)
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*tryFetchExampleData*)
+tryFetchExampleData[ root_String, name_String ] :=
+    Module[ { file },
+        file = FileNameJoin @ { root, name <> ".wl" };
+        If[ FileExistsQ @ file,
+            fetchExampleData[ file, name ],
+            throwMessageFailure[ ExampleDirectory::exdnf, name ]
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*fetchExampleData*)
+fetchExampleData[ file_, name_ ] :=
+    Module[ { tmp },
+        WithCleanup[
+            tmp = CreateDirectory[ ],
+            fetchExampleData0[ tmp, file, name ],
+            DeleteDirectory[ tmp, DeleteContents -> True ]
+        ]
+    ];
+
+fetchExampleData0[ tmp_, file_, name_ ] := Enclose[
+    Module[ { data, url, tgt, zip, files, top },
+        data  = ConfirmBy[ Get @ file, AssociationQ ];
+        url   = ConfirmBy[ Lookup[ data, "URL" ], StringQ ];
+        tgt   = FileNameJoin @ { tmp, name<>".zip" };
+        zip   = ConfirmBy[ URLDownload[ url, tgt ], FileExistsQ ];
+        files = ConfirmBy[ ExtractArchive[ zip, tmp ], AllTrue @ StringQ ];
+        top   = First[ SortBy[ files, StringLength ], Confirm @ $Failed ];
+        CopyDirectory[ top, FileNameJoin @ { DirectoryName @ file, name } ]
+    ],
+    throwMessageFailure[ ExampleDirectory::exdnf, name ] &
+];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
