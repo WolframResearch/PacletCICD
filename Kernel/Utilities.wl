@@ -4,6 +4,8 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
 PacletCICD;
+$ExamplesLocation;
+ExampleDirectory;
 
 Begin[ "`Private`" ];
 
@@ -16,6 +18,93 @@ PacletCICD::warning = "`1`";
 PacletCICD::notice  = "`1`";
 PacletCICD::debug   = "`1`";
 PacletCICD::unknown = "`1`";
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*$ExamplesLocation*)
+$ExamplesLocation::pacfail =
+"Cannot find the Wolfram/PacletCICD paclet.";
+
+$ExamplesLocation::exdir =
+"Cannot find the Wolfram/PacletCICD examples directory.";
+
+$ExamplesLocation :=
+    catchTop @ Module[ { pac, dir },
+        pac = PacletObject[ "Wolfram/PacletCICD" ];
+        If[ ! PacletObjectQ @ pac,
+            throwMessageFailure[ $ExamplesLocation::pacfail ]
+        ];
+        dir = pac[ "AssetLocation", "Examples" ];
+        If[ ! DirectoryQ @ dir,
+            throwMessageFailure[ $ExamplesLocation::exdir ]
+        ];
+        File @ dir
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ExampleDirectory*)
+ExampleDirectory::exdir =
+"Cannot find the Wolfram/PacletCICD examples directory.";
+
+ExampleDirectory::exdnf =
+"No example directory with the name \"`1`\" exists.";
+
+ExampleDirectory[ name_String ] :=
+    catchTop @ Module[ { root, dir },
+        root = $ExamplesLocation;
+
+        If[ ! DirectoryQ @ root,
+            throwMessageFailure @ ExampleDirectory::exdir
+        ];
+
+        root = ExpandFileName @ root;
+        dir = FileNameJoin @ { root, name };
+
+        If[ DirectoryQ @ dir,
+            File @ dir,
+            tryFetchExampleData[ root, name ]
+        ];
+
+        File @ dir
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*tryFetchExampleData*)
+tryFetchExampleData[ root_String, name_String ] :=
+    Module[ { file },
+        file = FileNameJoin @ { root, name <> ".wl" };
+        If[ FileExistsQ @ file,
+            fetchExampleData[ file, name ],
+            throwMessageFailure[ ExampleDirectory::exdnf, name ]
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*fetchExampleData*)
+fetchExampleData[ file_, name_ ] :=
+    Module[ { tmp },
+        WithCleanup[
+            tmp = CreateDirectory[ ],
+            fetchExampleData0[ tmp, file, name ],
+            DeleteDirectory[ tmp, DeleteContents -> True ]
+        ]
+    ];
+
+fetchExampleData0[ tmp_, file_, name_ ] := Enclose[
+    Module[ { data, url, tgt, zip, files, top },
+        data  = ConfirmBy[ Get @ file, AssociationQ ];
+        url   = ConfirmBy[ Lookup[ data, "URL" ], StringQ ];
+        tgt   = FileNameJoin @ { tmp, name<>".zip" };
+        zip   = ConfirmBy[ URLDownload[ url, tgt ], FileExistsQ ];
+        files = ConfirmBy[ ExtractArchive[ zip, tmp ], AllTrue @ StringQ ];
+        top   = First[ SortBy[ files, StringLength ], Confirm @ $Failed ];
+        CopyDirectory[ top, FileNameJoin @ { DirectoryName @ file, name } ]
+    ],
+    throwMessageFailure[ ExampleDirectory::exdnf, name ] &
+];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

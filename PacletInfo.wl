@@ -11,9 +11,11 @@ PacletObject[ <|
             "Root"    -> "Kernel",
             "Context" -> { "Wolfram`PacletCICD`" },
             "Symbols" -> {
+                "Wolfram`PacletCICD`$ExamplesLocation",
                 "Wolfram`PacletCICD`BuildPaclet",
                 "Wolfram`PacletCICD`CheckPaclet",
                 "Wolfram`PacletCICD`DeployPaclet",
+                "Wolfram`PacletCICD`ExampleDirectory",
                 "Wolfram`PacletCICD`GitHubPacletInstall",
                 "Wolfram`PacletCICD`SubmitPaclet",
                 "Wolfram`PacletCICD`TestPaclet"
@@ -27,9 +29,10 @@ PacletObject[ <|
         {
             "Asset",
             "Assets" -> {
-                { "License", "./LICENSE"   },
-                { "ReadMe" , "./README.md" },
-                { "Images" , "./Images"    }
+                { "License"  , "./LICENSE"   },
+                { "ReadMe"   , "./README.md" },
+                { "Images"   , "./Images"    },
+                { "Examples" , "./Examples"  }
             }
         }
     }

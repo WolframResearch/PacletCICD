@@ -56,10 +56,10 @@ CheckPaclet[ file_File, opts: $$cpOpts ] :=
 CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
     catchTop @ checkPaclet[
         file,
+        "DisabledHints" -> toDisabledHints @ OptionValue[ "DisabledHints" ],
         takeCheckDefNBOpts @ opts,
         "ConsoleType"   -> Automatic,
         "ClickedButton" -> OptionValue[ "Target" ],
-        "DisabledHints" -> toDisabledHints @ OptionValue[ "DisabledHints" ],
         "Format"        -> fmt
     ];
 
