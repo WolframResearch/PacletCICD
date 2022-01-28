@@ -19,7 +19,8 @@ Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
 EchoEvaluation @ Wolfram`PacletCICD`BuildPaclet[
     File @ FileNameJoin @ { $pacDir, "DefinitionNotebook.nb" },
     "Preflight"   -> True,
-    "Target"      -> "Submit"
+    "Target"      -> "Submit",
+    "ConsoleType" -> "GitHub"
 ]
 
 (* :!CodeAnalysis::EndBlock:: *)
