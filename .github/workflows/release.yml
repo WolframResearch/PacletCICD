@@ -25,6 +25,7 @@ jobs:
         with:
           paclet_cicd_version: release/main
           debug: true
+          check: false
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
