@@ -141,7 +141,7 @@ withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] :=
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
-        EchoEvaluation[ dnc`$ConsoleType   = type ];
+        Print[ dnc`$ConsoleType = type ];
         dnc`$ClickedButton = tgt;
         eval
     ];
