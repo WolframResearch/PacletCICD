@@ -126,9 +126,11 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
 openNotebookAndBuild[ file_, opts___ ] :=
     Module[ { nbo },
         WithCleanup[
+            dnc`BeginConsoleGroup[ "BuildPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,
             buildPaclet[ nbo, opts ],
-            dnc`CloseTemporaryNotebook @ nbo
+            dnc`CloseTemporaryNotebook @ nbo;
+            dnc`EndConsoleGroup[ "BuildPaclet" ];
         ]
     ];
 

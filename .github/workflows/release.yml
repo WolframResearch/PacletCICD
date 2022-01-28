@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build paclet
-        uses: rhennigan/build-paclet@main
+        run: wolframscript Scripts/BuildPaclet.wls
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
