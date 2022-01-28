@@ -20,12 +20,14 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
+      # - name: Build paclet
+      #   uses: rhennigan/build-paclet@main
+      #   with:
+      #     paclet_cicd_version: release/main
+      #     debug: true
+      #     check: false
       - name: Build paclet
-        uses: rhennigan/build-paclet@main
-        with:
-          paclet_cicd_version: release/main
-          debug: true
-          check: false
+        run: wolframscript Scripts/BuildPaclet.wls
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
