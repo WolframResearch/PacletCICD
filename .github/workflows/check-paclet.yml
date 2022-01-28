@@ -22,5 +22,8 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: wolframscript Scripts/InstallDependencies.wls
+
       - name: Check paclet
-        uses: rhennigan/check-paclet@main
+        run: wolframscript Scripts/CheckPaclet.wls
