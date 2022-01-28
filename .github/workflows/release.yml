@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: ["release/*", "debugging/fixing-fe-assertion-failures"]
+    branches: ["release/*"]
 
 jobs:
   release-paclet:
