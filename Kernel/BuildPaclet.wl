@@ -140,11 +140,9 @@ openNotebookAndBuild[ file_, opts___ ] :=
 withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] :=
-    Block[
-        {
-            dnc`$ConsoleType = type,
-            dnc`$ClickedButton = tgt
-        },
+    Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
+        EchoEvaluation[ dnc`$ConsoleType = type ];
+        dnc`$ClickedButton = tgt;
         eval
     ];
 
@@ -192,7 +190,7 @@ checkPacArchiveExtension[ ___ ] := $Failed;
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*setOutput*)
-setOutput[ name_, value_ ] /; dnc`$ConsoleType === "GitHub" :=
+setOutput[ name_, value_ ] /; EchoEvaluation @ dnc`$ConsoleType === "GitHub" :=
     setOutput[ $gitHubEnv, name, value ];
 
 setOutput[ str_OutputStream, name_, value_ ] := (
@@ -207,13 +205,21 @@ setOutput[ str_OutputStream, name_, value_ ] := (
     WriteLine[ str, ToString @ name <> "=" <> ToString @ value ]
 );
 
-setOutput[ _, name_, value_ ] :=
+setOutput[ _, name_, value_ ] := (
+    dnc`ConsolePrint @ StringJoin[
+        "Setting GitHub environment variable using fallback ",
+        ToString @ name,
+        "=",
+        ToString @ value
+    ];
+
     dnc`ConsolePrint @ StringJoin[
         "::set-output name=",
         ToString @ name,
         "::",
         ToString @ value
-    ];
+    ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
