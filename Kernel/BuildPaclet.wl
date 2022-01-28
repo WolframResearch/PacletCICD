@@ -221,7 +221,7 @@ setOutput[ _, name_, value_ ] :=
 $gitHubEnv := getGitHubEnv[ ];
 
 getGitHubEnv[ ] := getGitHubEnv @ Environment[ "GITHUB_ENV" ];
-getGitHubEnv[ e_String ] := getGitHubEnv @ First[ Streams @ e, OpenAppend @ e ];
+getGitHubEnv[ e_String ] := EchoEvaluation @ getGitHubEnv @ EchoEvaluation @ First[ EchoEvaluation @ Streams @ e, OpenAppend @ e ];
 getGitHubEnv[ s_OutputStream ] := $gitHubEnv = s;
 getGitHubEnv[ ___ ] := $Failed;
 
