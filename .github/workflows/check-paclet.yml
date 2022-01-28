@@ -25,4 +25,4 @@ jobs:
       - name: Check paclet
         uses: rhennigan/check-paclet@main
         with:
-          paclet_cicd_version: main
+          paclet_cicd_version: latest
