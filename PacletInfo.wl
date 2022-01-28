@@ -2,7 +2,7 @@ PacletObject[ <|
     "Name"           -> "Wolfram/PacletCICD",
     "Description"    -> "CI/CD utilities for Wolfram Language Paclets",
     "Creator"        -> "Richard Hennigan <richardh@wolfram.com>",
-    "Version"        -> "0.1.1",
+    "Version"        -> "0.1.2",
     "WolframVersion" -> "13+",
     "PublisherID"    -> "Wolfram",
     "Extensions"     -> {
