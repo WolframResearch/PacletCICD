@@ -9,16 +9,13 @@ PacletDirectoryLoad @ $pacDir;
 
 Needs[ "Wolfram`PacletCICD`" ];
 
-Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
-
-result = Wolfram`PacletCICD`BuildPaclet[
+result = Wolfram`PacletCICD`CheckPaclet[
     File @ FileNameJoin @ { $pacDir, "DefinitionNotebook.nb" },
-    "Preflight" -> False,
-    "Target"    -> "Submit"
+    "Target" -> "Submit"
 ];
 
-If[ MatchQ[ result, _Wolfram`PacletCICD`BuildPaclet ],
-    print[ "::error::Wolfram`PacletCICD`BuildPaclet not defined" ];
+If[ MatchQ[ result, _Wolfram`PacletCICD`CheckPaclet ],
+    print[ "::error::Wolfram`PacletCICD`CheckPaclet not defined" ];
     Exit[ 1 ],
     print @ result
 ];
