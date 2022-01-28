@@ -2,7 +2,7 @@ name: Check Paclet
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "debugging/fixing-fe-assertion-failures"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
