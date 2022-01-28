@@ -26,3 +26,4 @@ jobs:
         uses: rhennigan/check-paclet@main
         with:
           paclet_cicd_version: main
+          debug: true
