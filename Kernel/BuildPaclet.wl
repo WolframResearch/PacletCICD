@@ -141,7 +141,7 @@ withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] :=
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
-        dnc`$ConsoleType   = type;
+        EchoEvaluation[ dnc`$ConsoleType   = type ];
         dnc`$ClickedButton = tgt;
         eval
     ];
@@ -171,6 +171,8 @@ setGHBuildOutput0[ Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ] ] :=
 
         file
     ];
+
+setGHBuildOutput0[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
