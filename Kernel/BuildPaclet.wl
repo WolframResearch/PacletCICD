@@ -54,8 +54,8 @@ BuildPaclet[ dir_File? DirectoryQ, opts: $$bpOpts ] :=
     catchTop @ BuildPaclet[ findDefinitionNotebook @ dir, opts ];
 
 BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
-    catchTop @ UsingFrontEnd @ withDNCSettings[
-        { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
+    catchTop @ withDNCSettings[
+        { DefinitionNotebookClient`PackageScope`toConsoleType @ OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
         Module[ { checked, built },
 
             checked = If[ TrueQ @ OptionValue[ "Preflight" ],
@@ -63,7 +63,7 @@ BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
                           Missing[ "NotAvailable" ]
                       ];
 
-            built = buildPaclet[ file, opts ];
+            built = UsingFrontEnd @ buildPaclet[ file, opts ];
 
             <| "BuildResult" -> built, "CheckResult" -> checked |>
         ]
@@ -141,7 +141,7 @@ withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] :=
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
-        dnc`ConsolePrint[ dnc`$ConsoleType = type, "Level" -> "Notice" ];
+        dnc`ConsolePrint[ dnc`$ConsoleType = type, "Level" -> "Error" ];
         dnc`$ClickedButton = tgt;
         eval
     ];
