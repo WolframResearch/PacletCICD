@@ -23,12 +23,16 @@ CheckPaclet::errors =
 CheckPaclet::undefined =
 "Unhandled arguments for `1` in `2`.";
 
+CheckPaclet::unknown =
+"An unexpected error occurred.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 CheckPaclet // Options = {
-    "Target"        -> "Submit",
-    "DisabledHints" -> Automatic
+    "Target"           -> "Submit",
+    "DisabledHints"    -> Automatic,
+    "FailureCondition" -> "Error"
 };
 
 (* ::**********************************************************************:: *)
@@ -58,9 +62,10 @@ CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
         file,
         "DisabledHints" -> toDisabledHints @ OptionValue[ "DisabledHints" ],
         takeCheckDefNBOpts @ opts,
-        "ConsoleType"   -> Automatic,
-        "ClickedButton" -> OptionValue[ "Target" ],
-        "Format"        -> fmt
+        "ConsoleType"      -> Automatic,
+        "ClickedButton"    -> OptionValue[ "Target" ],
+        "Format"           -> fmt,
+        "FailureCondition" -> OptionValue[ "FailureCondition" ]
     ];
 
 (* TODO: save as JSON to build dir so it gets included in build artifacts *)
@@ -104,17 +109,18 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    Module[ { checked },
-        checked = dnc`CheckDefinitionNotebook[ nb, opts ];
-        (* TODO: make an option to specify exit conditions *)
-        If[ FreeQ[ dnc`HintData[ "Paclet", None ],
-                   KeyValuePattern[ "Level" -> "Error" ],
-                   { 1 }
-            ],
-            checked,
-            exitFailure[ CheckPaclet::errors, 1, checked ]
-        ]
-    ];
+    checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkExit*)
+checkExit[ Failure[ "FailureCondition", as_Association ] ] :=
+    exitFailure[ CheckPaclet::errors, 1, as[ "Result" ] ];
+
+checkExit[ res_? FailureQ ] :=
+    exitFailure[ CheckPaclet::unknown, 1, res ];
+
+checkExit[ result_ ] := result;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
