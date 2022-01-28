@@ -27,9 +27,7 @@ jobs:
         run: wolframscript Scripts/CheckPaclet.wls
 
       - name: Build paclet
-        uses: rhennigan/build-paclet@main
-        with:
-          paclet_cicd_version: main
+        run: wolframscript Scripts/BuildPaclet.wls
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
