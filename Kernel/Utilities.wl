@@ -9,6 +9,9 @@ ExampleDirectory;
 
 Begin[ "`Private`" ];
 
+Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
+Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*PacletCICD*)
@@ -230,11 +233,14 @@ messageFailure[ msg: MessageName[ sym_Symbol, mtag__ ], args___ ] :=
         tag = StringRiffle[ { SymbolName @ Unevaluated @ sym, mtag }, "::" ];
         info = <| "MessageTemplate" :> msg, "MessageParameters" :> { args } |>;
         failure = Failure[ tag, info ];
-        If[ $MessageList === { }, Message @ Evaluate @ failure ];
-        dnc`ConsolePrint[
-            "Stack trace:\n  "<>StringRiffle[ Stack[ ], "\n  " ],
-            "Level" -> "Error"
+        If[ $MessageList === { },
+            Message @ Evaluate @ failure;
+            dnc`ConsolePrint[
+                "Stack trace:\n  "<>StringRiffle[ Stack[ ], "\n  " ],
+                "Level" -> "Error"
+            ]
         ];
+
         failure
     ];
 
