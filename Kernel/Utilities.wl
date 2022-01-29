@@ -235,10 +235,8 @@ messageFailure[ msg: MessageName[ sym_Symbol, mtag__ ], args___ ] :=
         failure = Failure[ tag, info ];
         If[ $MessageList === { },
             Message @ Evaluate @ failure;
-            dnc`ConsolePrint[
-                "Stack trace:\n  "<>StringRiffle[ Stack[ ], "\n  " ],
-                "Level" -> "Error"
-            ]
+            dnc`ConsolePrint[ failure[ "Message" ], "Level" -> "Error" ];
+            dnc`ConsolePrint[ SequenceForm[ "Stack trace: ", Stack[ ] ] ];
         ];
 
         failure
@@ -550,8 +548,6 @@ filterOptions /:
     With[ { filtered = filterOptions[ sym, opts1 ] },
         sym[ args, filtered, opts2 ]
     ];
-
-filterOptions // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
