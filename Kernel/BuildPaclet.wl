@@ -53,7 +53,7 @@ BuildPaclet[ opts: $$bpOpts ] :=
 BuildPaclet[ dir_File? DirectoryQ, opts: $$bpOpts ] :=
     catchTop @ BuildPaclet[ findDefinitionNotebook @ dir, opts ];
 
-BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
+(* BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
         { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
         Module[ { file, tmp, checked, built },
@@ -64,6 +64,22 @@ BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
             ];
 
             file = File @ FileNameJoin @ { tmp, FileNameTake @ file0 };
+
+            checked = If[ TrueQ @ OptionValue[ "Preflight" ],
+                          CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
+                          Missing[ "NotAvailable" ]
+                      ];
+
+            built = buildPaclet[ file, opts ];
+
+            <| "BuildResult" -> built, "CheckResult" -> checked |>
+        ]
+    ]; *)
+
+BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
+    catchTop @ UsingFrontEnd @ withDNCSettings[
+        { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
+        Module[ { checked, built },
 
             checked = If[ TrueQ @ OptionValue[ "Preflight" ],
                           CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
