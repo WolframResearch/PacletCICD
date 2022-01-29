@@ -63,11 +63,7 @@ BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
                 FileNameJoin @ { $TemporaryDirectory, CreateUUID[ ] }
             ];
 
-            Print[ "tmp: ", tmp ];
-
             file = File @ FileNameJoin @ { tmp, FileNameTake @ file0 };
-
-            Print[ "file: ", file ];
 
             checked = If[ TrueQ @ OptionValue[ "Preflight" ],
                           CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
