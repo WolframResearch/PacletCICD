@@ -141,7 +141,7 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::warning
     },
-    TestID -> "Utilities-catchTop-1"
+    TestID -> "Utilities-catchTop"
 ]
 
 VerificationTest[
@@ -160,7 +160,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::warning },
-    TestID -> "Utilities-catchTop-2"
+    TestID -> "Utilities-catchTop"
 ]
 
 VerificationTest[
@@ -176,7 +176,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-catchTop-3"
+    TestID -> "Utilities-catchTop"
 ]
 
 VerificationTest[
@@ -194,7 +194,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-catchTop-4"
+    TestID -> "Utilities-catchTop"
 ]
 
 VerificationTest[
@@ -224,5 +224,5 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::error
     },
-    TestID -> "Utilities-catchTop-5"
+    TestID -> "Utilities-catchTop"
 ]
