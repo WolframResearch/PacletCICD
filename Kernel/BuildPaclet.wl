@@ -53,7 +53,7 @@ BuildPaclet[ opts: $$bpOpts ] :=
 BuildPaclet[ dir_File? DirectoryQ, opts: $$bpOpts ] :=
     catchTop @ BuildPaclet[ findDefinitionNotebook @ dir, opts ];
 
-BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
+(* BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
         { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
         Module[ { file, tmp, checked, built },
@@ -63,11 +63,23 @@ BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
                 FileNameJoin @ { $TemporaryDirectory, CreateUUID[ ] }
             ];
 
-            Print[ "tmp: ", tmp ];
-
             file = File @ FileNameJoin @ { tmp, FileNameTake @ file0 };
 
-            Print[ "file: ", file ];
+            checked = If[ TrueQ @ OptionValue[ "Preflight" ],
+                          CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
+                          Missing[ "NotAvailable" ]
+                      ];
+
+            built = buildPaclet[ file, opts ];
+
+            <| "BuildResult" -> built, "CheckResult" -> checked |>
+        ]
+    ]; *)
+
+BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
+    catchTop @ UsingFrontEnd @ withDNCSettings[
+        { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
+        Module[ { checked, built },
 
             checked = If[ TrueQ @ OptionValue[ "Preflight" ],
                           CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
@@ -169,19 +181,39 @@ setGHBuildOutput0[ KeyValuePattern[ "BuildResult"|"Result" -> res_ ] ] :=
     setGHBuildOutput0 @ res;
 
 setGHBuildOutput0[ Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ] ] :=
-    Enclose @ Module[ { archive, file, pac, vers },
+    Enclose @ Module[ { archive, file, pac, vers, full },
 
         archive = ConfirmBy[ ExpandFileName @ pa, FileExistsQ ];
         file    = ConfirmBy[ checkPacArchiveExtension @ archive, StringQ ];
         pac     = ConfirmBy[ PacletObject @ File @ file, PacletObjectQ ];
         vers    = ConfirmBy[ pac[ "Version" ], StringQ ];
+        full    = ConfirmBy[ ExpandFileName @ file, StringQ ];
 
-        setOutput[ "PACLET_PATH", ExpandFileName @ file ];
+        setOutput[ "BUILD_DIR"  , ghRelativePath @ DirectoryName @ full ];
+        setOutput[ "PACLET_PATH", ghRelativePath @ full ];
         setOutput[ "PACLET_FILE", FileNameTake @ file ];
         setOutput[ "RELEASE_TAG", "v" <> vers ];
 
         file
     ];
+
+setGHBuildOutput0[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghRelativePath*)
+ghRelativePath[ file_ ] := Enclose[
+    Module[ { ws },
+        ws = Environment[ "GITHUB_WORKSPACE" ];
+        If[ StringQ @ ws,
+            ConfirmBy[ relativePath[ ws, file ], StringQ ],
+            ConfirmBy[ relativePath[ Directory[ ], file ], StringQ ]
+        ]
+    ],
+    throwError[ "Could not determine relative path for file `1`", file ] &
+];
+
+ghRelativePath // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
