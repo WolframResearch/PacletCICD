@@ -53,10 +53,21 @@ BuildPaclet[ opts: $$bpOpts ] :=
 BuildPaclet[ dir_File? DirectoryQ, opts: $$bpOpts ] :=
     catchTop @ BuildPaclet[ findDefinitionNotebook @ dir, opts ];
 
-BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
+BuildPaclet[ file0_File? defNBQ, opts: $$bpOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
         { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
-        Module[ { checked, built },
+        Module[ { file, tmp, checked, built },
+
+            tmp = CopyDirectory[
+                DirectoryName @ file0,
+                FileNameJoin @ { $TemporaryDirectory, CreateUUID[ ] }
+            ];
+
+            Print[ "tmp: ", tmp ];
+
+            file = File @ FileNameJoin @ { tmp, FileNameTake @ file0 };
+
+            Print[ "file: ", file ];
 
             checked = If[ TrueQ @ OptionValue[ "Preflight" ],
                           CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
@@ -115,7 +126,7 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
     Module[ { result },
         result = prdn`BuildPaclet[
             nbo,
-            filterOptions[ "Interactive" -> False, opts ]
+            filterOptions[ Interactive -> False, opts ]
         ];
         setGHBuildOutput @ result
     ];
