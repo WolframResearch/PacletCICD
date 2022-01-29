@@ -231,6 +231,10 @@ messageFailure[ msg: MessageName[ sym_Symbol, mtag__ ], args___ ] :=
         info = <| "MessageTemplate" :> msg, "MessageParameters" :> { args } |>;
         failure = Failure[ tag, info ];
         If[ $MessageList === { }, Message @ Evaluate @ failure ];
+        dnc`ConsolePrint[
+            "Stack trace:\n  "<>StringRiffle[ Stack[ ], "\n  " ],
+            "Level" -> "Error"
+        ];
         failure
     ];
 
