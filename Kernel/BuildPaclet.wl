@@ -188,6 +188,7 @@ setGHBuildOutput0[ Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ] ] :=
         pac     = ConfirmBy[ PacletObject @ File @ file, PacletObjectQ ];
         vers    = ConfirmBy[ pac[ "Version" ], StringQ ];
 
+        (* TODO: make these relative paths to $GITHUB_WORKSPACE *)
         setOutput[ "BUILD_DIR"  , DirectoryName @ ExpandFileName @ file ];
         setOutput[ "PACLET_PATH", ExpandFileName @ file ];
         setOutput[ "PACLET_FILE", FileNameTake @ file ];
