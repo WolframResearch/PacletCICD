@@ -17,11 +17,19 @@ TestPaclet[ ___ ] := Failure[ "NotImplemented", <| |> ];
 (*Test Utilities (Experimental)*)
 
 $testIDDelimiter = "@@";
+$pacletRoot      = None;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*annotateTestIDs*)
-annotateTestIDs[ file_? FileExistsQ ] :=
+annotateTestIDs // Options = { "PacletRoot" -> None };
+
+annotateTestIDs[ file_? FileExistsQ, opts: OptionsPattern[ ] ] :=
+    Block[ { $pacletRoot = OptionValue[ "PacletRoot" ] },
+        annotateTestIDs0 @ file
+    ];
+
+annotateTestIDs0[ file_ ] :=
     Module[ { data, pairs, string, replace, newString },
         data      = parseTestIDs @ file;
         pairs     = { #NewTestID, #IDSourceCharacterIndex } & /@ data;
@@ -36,13 +44,14 @@ annotateTestIDs[ file_? FileExistsQ ] :=
 (* ::Subsection::Closed:: *)
 (*parseTestIDs*)
 parseTestIDs[ file_ ] :=
-    Module[ { as1, as2, idPositions },
+    Module[ { as1, as2, idPositions, base },
 
         as1         = parseTestIDs[ file, "LineColumn" ];
         as2         = parseTestIDs[ file, "SourceCharacterIndex" ];
         idPositions = Join @@@ Transpose[ { as1, as2 } ];
+        base        = testIDFilePart @ file;
 
-        Append[ #1, "NewTestID" -> makeTestID @ # ] & /@ idPositions
+        Append[ #1, "NewTestID" -> makeTestID[ #, base ] ] & /@ idPositions
     ];
 
 parseTestIDs[ file_, type_ ] :=
@@ -84,6 +93,18 @@ parseTestIDs[ file_, type_ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*testIDFilePart*)
+testIDFilePart[ file_ ] :=
+    If[ DirectoryQ @ $pacletRoot,
+        StringDelete[
+            relativePath[ $pacletRoot, file ],
+            StartOfString~~("./"|"/"|".")
+        ],
+        FileNameTake @ file
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*codeParseType*)
 codeParseType[ file_, type_ ] :=
     CodeParser`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ];
@@ -91,17 +112,21 @@ codeParseType[ file_, type_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeTestID*)
-makeTestID[ KeyValuePattern @ {
-    "TestID" -> id_String,
-    "TestLineColumn" -> { { l1_, c1_ }, { l2_, c2_ } }
-} ] :=
+makeTestID[
+    KeyValuePattern @ {
+        "TestID" -> id_String,
+        "TestLineColumn" -> { { l1_, c1_ }, { l2_, c2_ } }
+    },
+    base_String
+] :=
     Module[ { cleaned },
         cleaned = removeTestIDAnnotation @ id;
-
         ToString[
             StringJoin[
                 cleaned,
                 $testIDDelimiter,
+                base,
+                ":",
                 ToString @ l1,
                 ",",
                 ToString @ c1,
@@ -118,7 +143,7 @@ makeTestID[ KeyValuePattern @ {
 (* ::Subsection::Closed:: *)
 (*removeTestIDAnnotation*)
 removeTestIDAnnotation[ id_ ] :=
-    StringDelete[ id, $testIDDelimiter ~~ __ ~~ EndOfString ];
+    StringDelete[ id, $testIDDelimiter ~~ ___ ~~ EndOfString ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

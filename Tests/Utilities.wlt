@@ -8,20 +8,20 @@ VerificationTest[
             2
         ]
     ],
-    TestID -> "Utilities-Initialize-1"
+    TestID -> "Initialize@@Tests/Utilities.wlt:4,1-12,2"
 ]
 
 VerificationTest[
     PacletDirectoryLoad @ Wolfram`PacletCICD`Tests`$pacletDir,
     { ___, Wolfram`PacletCICD`Tests`$pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Utilities-Initialize-2"
+    TestID -> "Initialize@@Tests/Utilities.wlt:14,1-19,2"
 ]
 
 VerificationTest[
     Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`" ] ],
     Null,
-    TestID -> "Utilities-Initialize-3"
+    TestID -> "Initialize@@Tests/Utilities.wlt:21,1-25,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -41,7 +41,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::undefined },
-    TestID -> "Utilities-catchUndefined-1"
+    TestID -> "catchUndefined@@Tests/Utilities.wlt:30,1-45,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -53,19 +53,19 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "Utilities-relativePath-1"
+    TestID -> "relativePath@@Tests/Utilities.wlt:50,1-57,2"
 ]
 
 VerificationTest[
     Wolfram`PacletCICD`Private`relativePath[ "path/to/file", "path/to/file" ],
     ".",
-    TestID -> "Utilities-relativePath-2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:59,1-63,2"
 ]
 
 VerificationTest[
     Wolfram`PacletCICD`Private`relativePath[ "path/to/file" ][ "path/another/file" ],
     "../../another/file",
-    TestID -> "Utilities-relativePath-3"
+    TestID -> "relativePath@@Tests/Utilities.wlt:65,1-69,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -81,7 +81,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-throwError-1"
+    TestID -> "throwError@@Tests/Utilities.wlt:74,1-85,2"
 ]
 
 VerificationTest[
@@ -100,7 +100,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-throwError-2"
+    TestID -> "throwError@@Tests/Utilities.wlt:87,1-104,2"
 ]
 
 VerificationTest[
@@ -116,7 +116,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-throwError-3"
+    TestID -> "throwError@@Tests/Utilities.wlt:106,1-120,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -141,7 +141,7 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::warning
     },
-    TestID -> "Utilities-catchTop"
+    TestID -> "catchTop@@Tests/Utilities.wlt:125,1-145,2"
 ]
 
 VerificationTest[
@@ -160,7 +160,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::warning },
-    TestID -> "Utilities-catchTop"
+    TestID -> "catchTop@@Tests/Utilities.wlt:147,1-164,2"
 ]
 
 VerificationTest[
@@ -176,7 +176,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-catchTop"
+    TestID -> "catchTop@@Tests/Utilities.wlt:166,1-180,2"
 ]
 
 VerificationTest[
@@ -194,7 +194,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "Utilities-catchTop"
+    TestID -> "catchTop@@Tests/Utilities.wlt:182,1-198,2"
 ]
 
 VerificationTest[
@@ -224,5 +224,5 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::error
     },
-    TestID -> "Utilities-catchTop"
+    TestID -> "catchTop@@Tests/Utilities.wlt:200,1-228,2"
 ]
