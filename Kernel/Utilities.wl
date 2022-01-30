@@ -9,6 +9,10 @@ ExampleDirectory;
 
 Begin[ "`Private`" ];
 
+$thisPacletDir      = DirectoryName[ $InputFileName, 2 ];
+$thisPaclet        := $thisPaclet = PacletObject @ File @ $thisPacletDir;
+$thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version" ];
+
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
 
@@ -356,6 +360,11 @@ findDefinitionNotebook // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*General File Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ensureDirectory*)
+ensureDirectory[ dir_ ] := GeneralUtilities`EnsureDirectory @ dir;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
