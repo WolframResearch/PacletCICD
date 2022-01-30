@@ -20,12 +20,27 @@ CreateWorkflow::wfname =
 CreateWorkflow::invspec =
 "Invalid workflow specification: `1`";
 
+CreateWorkflow::invtimeout =
+"Invalid TimeConstraint: `1`";
+
+CreateWorkflow::yamlfail =
+"Failed to export workflow to YAML format.";
+
+CreateWorkflow::ymlconv =
+"Unable to convert `1` to valid YAML.";
+
+CreateWorkflow::export =
+"Failed to export YAML to the file `1`.";
+
+CreateWorkflow::entitlement = "`1`";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 CreateWorkflow // Options = {
+    "DefaultBranch" -> "main",
     OverwriteTarget -> False,
-    "DefaultBranch" -> "main"
+    TimeConstraint  -> Quantity[ 10, "Minutes" ]
 };
 
 (* ::**********************************************************************:: *)
@@ -33,25 +48,39 @@ CreateWorkflow // Options = {
 (*Main definition*)
 CreateWorkflow[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { workflow },
-        workflow = createWorkflow[ spec, OptionValue[ "DefaultBranch" ] ];
+        workflow = createWorkflow[
+            spec,
+            OptionValue[ "DefaultBranch" ],
+            OptionValue[ TimeConstraint ]
+        ];
         exportWorkflow[ pac, workflow ]
     ];
+
+$defaultBranch         = "main";
+$defaultTimeConstraint = 10;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*createWorkflow*)
-createWorkflow[ spec_, branch_String ] :=
-    Block[ { $defaultBranch = branch },
+createWorkflow[ spec_, branch_String, timeConstraint_ ] :=
+    Block[
+        {
+            $defaultBranch = branch,
+            $defaultTimeConstraint = toTimeConstraint @ timeConstraint
+        },
         createWorkflow0 @ spec
     ];
 
 createWorkflow[ spec_, branch: Except[ _String? StringQ ] ] :=
     throwMessageFailure[ CreateWorkflow::defbranch, branch ];
 
+createWorkflow // catchUndefined;
+
+
 createWorkflow0[ name_String ] :=
     createWorkflow0 @ Lookup[
         $namedWorkflows,
-        name,
+        toWorkflowName @ name,
         throwMessageFailure[ CreateWorkflow::wfname, name ]
     ];
 
@@ -64,22 +93,161 @@ createWorkflow0[ spec_Association ] :=
         ]
     ];
 
+createWorkflow0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toTimeConstraint*)
+toTimeConstraint[ t_? NumberQ ] := toTimeConstraint @ Quantity[ t, "Seconds" ];
+toTimeConstraint[ Infinity    ] := toTimeConstraint @ Quantity[ 6, "Hours" ];
+
+toTimeConstraint[ q_Quantity ] :=
+    QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
+
+toTimeConstraint[ other_ ] :=
+    throwMessageFailure[ CreateWorkflow::invtimeout, other ];
+
+toTimeConstraint // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*exportWorkflow*)
 exportWorkflow[ pac_PacletObject, workflow_ ] :=
-    Module[ { pacDir, wfDir, file },
-        pacDir = pac[ "Location" ];
-        wfDir  = ensureDirectory @ { pacDir, ".github", "workflows" };
+    exportWorkflow[ pac[ "Location" ], workflow ];
+
+exportWorkflow[ dir_? DirectoryQ, workflow_ ] :=
+    Module[ { wfDir, file },
+        wfDir  = toWorkFlowDir @ dir;
         file   = FileNameJoin @ { wfDir, workflowFileName @ workflow };
-        exportWorkflow[ pac, file, workflow ] (* TODO *)
+        exportWorkflow[ file, workflow ] (* TODO *)
     ];
+
+exportWorkflow[ file_, workflow_ ] := Enclose[
+    Module[ { yaml, exported },
+        yaml = ConfirmBy[ toYAMLString @ workflow, StringQ ];
+        exported = Export[ file, yaml, "String" ];
+        If[ FileExistsQ @ exported,
+            entitlementWarning[ ];
+            File @ exported,
+            throwMessageFailure[ CreateWorkflow::export, file ]
+        ]
+    ],
+    throwMessageFailure[ CreateWorkflow::ymlconv ] &
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$hasLicenseEntitlements*)
+$hasLicenseEntitlements :=
+    MatchQ[ LicenseEntitlements[ ], { ___, _LicenseEntitlementObject, ___ } ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*entitlementWarning*)
+entitlementWarning[ ] := entitlementWarning[ ] =
+    If[ TrueQ @ suppressedEntitlementWarning[ ],
+        Null,
+        messageFailure[ CreateWorkflow::entitlement, $licenseWarningText ]
+    ];
+
+suppressedEntitlementWarning[ ] :=
+    suppressedEntitlementWarning[ $thisPacletVersion, $suppressWarningFile ];
+
+suppressedEntitlementWarning[ ver_String, file_? FileExistsQ ] :=
+    suppressedEntitlementWarning[ ver, Get @ file ];
+
+suppressedEntitlementWarning[ ver_String, ver_String ] := True;
+
+suppressedEntitlementWarning[ ___ ] := False;
+
+$suppressWarningFile :=
+    FileNameJoin @ {
+        $UserBaseDirectory,
+        "ApplicationData",
+        "Wolfram",
+        "PacletCICD",
+        "SuppressWarning.wl"
+    };
+
+$licenseWarningText := $licenseWarningText = TemplateApply[ "\
+Warning: An on-demand license entitlement is required for this workflow to run.
+See the `LicenseEntitlementDocs` for details on creating license entitlements.\
+`DisableLink`",
+<|
+    "LicenseEntitlementDocs" -> $leTutorial,
+    "DisableLink" -> $disableGHSecretWarning
+|>
+];
+
+$leTutorial :=
+    If[ $Notebooks,
+        ToString[
+            Hyperlink[
+                "license entitlement tutorial",
+                "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+            ],
+            StandardForm
+        ],
+        "license entitlement tutorial"
+    ];
+
+$disableGHSecretWarning :=
+    With[ { file = $suppressWarningFile, ver = $thisPacletVersion },
+        If[ $Notebooks,
+            " " <> hyperlinkButtonString[
+                "Don't show this message again \[RightGuillemet]",
+                GeneralUtilities`EnsureDirectory @ DirectoryName @ file;
+                Put[ ver, file ]
+            ],
+            ""
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*hyperlinkButtonString*)
+hyperlinkButtonString // Attributes = { HoldRest };
+
+hyperlinkButtonString[ label_, code_ ] :=
+    ToString[
+        RawBoxes @ TagBox[
+            ButtonBox[
+                StyleBox[
+                    ToBoxes @ label,
+                    ShowStringCharacters -> False
+                ],
+                BaseStyle      -> "Hyperlink",
+                ButtonFunction :> code,
+                Evaluator      -> Automatic,
+                Method         -> "Queued"
+            ],
+            MouseAppearanceTag[ "LinkHand" ]
+        ],
+        StandardForm
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toWorkFlowDir*)
+toWorkFlowDir[ dir_ ] := toWorkFlowDir @ FileNameSplit @ ExpandFileName @ dir;
+toWorkFlowDir[ { p__, ".github", "workflows" } ] := toWorkFlowDir @ { p };
+toWorkFlowDir[ { p__, ".github" } ] := toWorkFlowDir @ { p };
+toWorkFlowDir[ { p__ } ] := ensureDirectory @ { p, ".github", "workflows" };
+toWorkFlowDir // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowFileName*)
 workflowFileName[ KeyValuePattern[ "name" -> name_String ] ] :=
+    workflowFileName @ name;
+
+workflowFileName[ KeyValuePattern[ "id" -> id_String ] ] :=
+    workflowFileName @ id;
+
+workflowFileName[ name_String ] :=
     StringDelete[ name, Except[ LetterCharacter ] ] <> ".yml";
+
+workflowFileName[ ___ ] := "workflow.yml";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -115,7 +283,19 @@ $namedWorkflows := <|
     |>
 |>;
 
-$defaultBranch = "main";
+toWorkflowName[ name_String ] :=
+    Module[ { lc, wf },
+        lc = ToLowerCase @ name;
+        wf = toWorkflowName0 @ StringDelete[ lc, Except[ LetterCharacter ] ];
+        If[ StringQ @ wf, wf, name ]
+    ];
+
+toWorkflowName0[ "release"       ] := "Release";
+toWorkflowName0[ "releasepaclet" ] := "Release";
+toWorkflowName0[ "build"         ] := "Build";
+toWorkflowName0[ "buildpaclet"   ] := "Build";
+toWorkflowName0[ "check"         ] := "Check";
+toWorkflowName0[ "checkpaclet"   ] := "Check";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -207,8 +387,8 @@ normalizeForYAML[
 ] :=
     "options" -> Flatten @ { opts };
 
-normalizeForYAML[ "jobs", name_, "Environment"|Environment, env_ ] :=
-    normalizeForYAML[ "jobs", name, "env", env ];
+normalizeForYAML[ "jobs", name_, "Environment"|Environment -> env_ ] :=
+    normalizeForYAML[ "jobs", name, "env" -> env ];
 
 normalizeForYAML[ "jobs", _, "env", key_String -> val_String ] :=
     key -> val;
@@ -227,6 +407,15 @@ normalizeForYAML[ keys___, key_Symbol -> value_ ] :=
 
 normalizeForYAML[ keys___, key_String -> value_? validValueQ ] :=
     key -> value;
+
+normalizeForYAML[ keys___, "TimeConstraint" -> t_ ] :=
+    normalizeForYAML[ keys, TimeConstraint -> t ];
+
+normalizeForYAML[ keys___, TimeConstraint -> t_? NumberQ ] :=
+    normalizeForYAML[ keys, TimeConstraint -> Quantity[ t, "Seconds" ] ];
+
+normalizeForYAML[ keys___, TimeConstraint -> q_Quantity ] :=
+    "timeout-minutes" -> QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
 
 normalizeForYAML[ keys___, key_String :> Environment[ env_String ] ] :=
     normalizeForYAML[ keys, key -> "${{ env."<>env<>" }}" ];
@@ -249,12 +438,12 @@ normalizeJobs // catchUndefined;
 (*normalizeJob*)
 normalizeJob[ "check" | "checkpaclet" ] :=
     "CheckPaclet" -> <|
-        "name"      -> "Check Paclet",
-        "id"        -> "check-paclet-job",
-        "runs-on"   -> "ubuntu-latest",
-        "container" -> $defaultJobContainer,
-        "env"       -> $defaultJobEnv,
-        "steps"     -> {
+        "name"            -> "Check Paclet",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "steps"           -> {
             normalizeStep[ "Checkout"    ],
             normalizeStep[ "CheckPaclet" ]
         }
@@ -262,12 +451,12 @@ normalizeJob[ "check" | "checkpaclet" ] :=
 
 normalizeJob[ "build" | "buildpaclet" ] :=
     "BuildPaclet" -> <|
-        "name"      -> "Build Paclet",
-        "id"        -> "build-paclet-job",
-        "runs-on"   -> "ubuntu-latest",
-        "container" -> $defaultJobContainer,
-        "env"       -> $defaultJobEnv,
-        "steps"     -> {
+        "name"            -> "Build Paclet",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "steps"           -> {
             normalizeStep[ "Checkout"             ],
             normalizeStep[ "BuildPaclet"          ],
             normalizeStep[ "UploadBuildArtifacts" ]
@@ -276,12 +465,12 @@ normalizeJob[ "build" | "buildpaclet" ] :=
 
 normalizeJob[ "release" | "releasepaclet" ] :=
     "ReleasePaclet" -> <|
-        "name"      -> "Release Paclet",
-        "id"        -> "release-paclet-job",
-        "runs-on"   -> "ubuntu-latest",
-        "container" -> $defaultJobContainer,
-        "env"       -> $defaultJobEnv,
-        "steps"     -> {
+        "name"            -> "Release Paclet",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "steps"           -> {
             normalizeStep[ "Checkout"             ],
             normalizeStep[ "BuildPaclet"          ],
             normalizeStep[ "UploadBuildArtifacts" ],
@@ -305,7 +494,7 @@ normalizeJob // catchUndefined;
 (*$defaultJobContainer*)
 $defaultJobContainer = <|
     "image"   -> "wolframresearch/wolframengine:latest",
-    "options" -> { " --user root" }
+    "options" -> "--user root"
 |>;
 
 (* ::**********************************************************************:: *)
@@ -319,33 +508,33 @@ $defaultJobEnv = <|
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeSteps*)
-normalizeSteps[step_String] := normalizeSteps@{step};
-normalizeSteps[steps_List] := Association[normalizeStep /@ steps];
+normalizeSteps[ step_String ] := normalizeSteps @ { step };
+normalizeSteps[ steps_List ] := normalizeStep /@ steps;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeStep*)
-normalizeStep[ "checkout" ] := <|
+normalizeStep[ "checkout"|"checkoutcode" ] := <|
     "name" -> "Checkout Code",
     "id"   -> "checkout-code",
     "uses" -> "actions/checkout@v2"
 |>;
 
-normalizeStep[ "check" | "checkpaclet" ] := <|
+normalizeStep[ "check"|"checkpaclet" ] := <|
     "name" -> "Check Paclet",
     "id"   -> "check-paclet-step",
     "uses" -> "rhennigan/check-paclet@latest"
 |>;
 
-normalizeStep[ "build" | "buildpaclet" ] := <|
+normalizeStep[ "build"|"buildpaclet" ] := <|
     "name" -> "Build Paclet",
     "id"   -> "build-paclet-step",
     "uses" -> "rhennigan/build-paclet@latest"
 |>;
 
-normalizeStep[ "uploadbuildartifacts" | "uploadartifacts" | "uploadbuild" ] := <|
+normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
     "name" -> "Upload Build Artifacts",
-    "id" -> "upload-build-artifacts-step",
+    "id"   -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
         "path"              -> "${{ env.BUILD_DIR }}",
@@ -355,9 +544,9 @@ normalizeStep[ "uploadbuildartifacts" | "uploadartifacts" | "uploadbuild" ] := <
 
 normalizeStep[ "createrelease" ] := <|
     "name" -> "Create Release",
-    "id" -> "create-release-step",
+    "id"   -> "create-release-step",
     "uses" -> "actions/create-release@v1",
-    "env" -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
+    "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
         "tag_name"     -> "${{ env.RELEASE_TAG }}",
         "release_name" -> "Release ${{ env.RELEASE_TAG }}",
@@ -366,11 +555,11 @@ normalizeStep[ "createrelease" ] := <|
     |>
 |>;
 
-normalizeStep[ "uploadrelease" | "uploadreleaseasset" ] := <|
+normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
     "name" -> "Upload Release Asset",
-    "id" -> "upload-release-asset-step",
+    "id"   -> "upload-release-asset-step",
     "uses" -> "actions/upload-release-asset@v1",
-    "env" -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
+    "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
         "upload_url" -> "${{ steps.create_release.outputs.upload_url }}",
         "asset_path" -> "${{ env.PACLET_PATH }}",
@@ -396,6 +585,101 @@ $workflowSchema := $workflowSchema =
         "https://json.schemastore.org/github-workflow.json",
         "RawJSON"
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*YAML Export*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toYAMLString*)
+toYAMLString[ expr_ ] :=
+    Enclose[
+        StringReplace[
+            ConfirmBy[ toYAMLString0 @ expr, StringQ ],
+            StringExpression[
+                a: ("\n" ~~ WhitespaceCharacter.. ~~ "-"),
+                WhitespaceCharacter..,
+                b: Except[ WhitespaceCharacter ]
+            ] :>
+                a <> " " <> b
+        ],
+        throwMessageFailure[ CreateWorkflow::yamlfail, expr ] &
+    ];
+
+toYAMLString // catchUndefined;
+
+
+toYAMLString0[ as_Association ] :=
+    stringJoin @ Riffle[ KeyValueMap[ toYAMLString0, as ], "\n" ];
+
+toYAMLString0[ key_String, as_Association ] :=
+    stringJoin[ toYAMLKey @ key, "\n", descend @ toYAMLString0 @ as ];
+
+toYAMLString0[ key_String, vals_List ] :=
+    Module[ { strs, str },
+        strs = toYAMLString0 /@ vals;
+        str  = StringRiffle[ strs, ", " ];
+        stringJoin[ toYAMLKey @ key, " [", str, "]" ] /;
+            FreeQ[ strs, toYAMLString0 ] && StringLength @ str < 80 - $depth*2
+    ];
+
+toYAMLString0[ key_String, vals_List ] :=
+    stringJoin[
+        toYAMLKey @ key,
+        Map[
+            stringJoin[ "\n", $indent, "- ", descend @ toYAMLString0 @ # ] &,
+            vals
+        ]
+    ];
+
+toYAMLString0[ key_String, Null ] := $indent <> key <> ":";
+
+toYAMLString0[ key_String, val_ ] :=
+    stringJoin[ $indent, key, ": ", toYAMLString0 @ val ];
+
+toYAMLString0[ list_List ] :=
+    descend @ stringJoin @ Riffle[
+        stringJoin[ "- ", toYAMLString0 @ # ] & /@ list,
+        "\n"
+    ];
+
+toYAMLString0[ val_String  ] := val;
+toYAMLString0[ int_Integer ] := ToString @ int;
+toYAMLString0[ r_Real      ] := TextString @ r;
+toYAMLString0[ True        ] := "true";
+toYAMLString0[ False       ] := "false";
+toYAMLString0[ Null        ] := "null";
+
+toYAMLString0[ other_ ] :=
+    throwMessageFailure[ CreateWorkflow::ymlconv, other ];
+
+toYAMLString0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toYAMLKey*)
+toYAMLKey[ key_ ] := stringJoin[ $indent, key, ": " ];
+toYAMLKey // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Indentation*)
+$depth   = 0;
+$indent := StringJoin @ ConstantArray[ "  ", $depth ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*descend*)
+descend // Attributes = { HoldFirst };
+descend[ eval_ ] := Internal`InheritedBlock[ { $depth }, $depth += 1; eval ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*stringJoin*)
+stringJoin[ str_String ] := str;
+stringJoin[ a___, b_String, c__String, d___ ] := stringJoin[ a, b <> c, d ];
+stringJoin[ a___, { b___ }, c___ ] := stringJoin[ a, b, c ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
