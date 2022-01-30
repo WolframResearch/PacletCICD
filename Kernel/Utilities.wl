@@ -359,6 +359,11 @@ findDefinitionNotebook // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*ensureDirectory*)
+ensureDirectory[ dir_ ] := GeneralUtilities`EnsureDirectory @ dir;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*fileNameJoin*)
 fileNameJoin[ list_List ] :=
     With[ { joined = fileNameJoin0 @ list },

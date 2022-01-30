@@ -4,9 +4,11 @@ EndPackage[ ];
 Wolfram`PacletCICD`$ExamplesLocation;
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
+Wolfram`PacletCICD`CreateWorkflow;
 Wolfram`PacletCICD`DeployPaclet;
 Wolfram`PacletCICD`ExampleDirectory;
 Wolfram`PacletCICD`GitHubPacletInstall;
+Wolfram`PacletCICD`GitHubSecret;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`SubmitPaclet;
 Wolfram`PacletCICD`TestPaclet;
@@ -20,6 +22,7 @@ Quiet[
         Get[ "Wolfram`PacletCICD`GitHubPacletInstall`" ];
         Get[ "Wolfram`PacletCICD`SubmitPaclet`"        ];
         Get[ "Wolfram`PacletCICD`TestPaclet`"          ];
+        Get[ "Wolfram`PacletCICD`Workflows`"           ];
     ],
     General::shdw
 ];
