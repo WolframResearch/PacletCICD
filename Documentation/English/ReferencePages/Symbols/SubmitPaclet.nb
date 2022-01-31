@@ -341,6 +341,7 @@ Notebook[
    ]
   ]
  },
+ ScreenStyleEnvironment -> "FutureObject",
  TaggingRules -> <|
   "Author" -> "rhennigan",
   "CreationDate" -> "01-22-2022 19:00:19"

@@ -245,15 +245,7 @@ Notebook[
     Open
    ]
   ],
-  Cell[
-   CellGroupData[
-    {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 80739962],
-     Cell["GitHubActions", "Tutorials", CellID -> 640242793]
-    },
-    Open
-   ]
-  ],
+  Cell["Tech Notes", "TechNotesSection", CellID -> 80739962],
   Cell[
    CellGroupData[
     {
@@ -284,7 +276,35 @@ Notebook[
    CellGroupData[
     {
      Cell["See Also", "SeeAlsoSection", CellID -> 69474376],
-     Cell["XXXX", "SeeAlso", CellID -> 295932360]
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "BuildPaclet",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "CreateWorkflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreateWorkflow"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "SeeAlso",
+      CellID -> 335243475
+     ]
     },
     Open
    ]
@@ -465,13 +485,7 @@ Notebook[
                        {
                         Thickness[0.055556],
                         {
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ],
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                          FilledCurveBox[
                           {
                            {
@@ -551,11 +565,7 @@ Notebook[
                      ],
                      Annotation[#1, "Suggestion", "Tooltip"] & 
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     FrameMargins -> {{1, 1}, {0, 0}},
                     FrameStyle -> None,
                     RoundingRadius -> 8,
@@ -592,13 +602,7 @@ Notebook[
                           ]
                          ]
                         },
-                        FaceForm[
-                         RGBColor[
-                          0.490196,
-                          0.490196,
-                          0.490196
-                         ]
-                        ]
+                        FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                        ],
                        StyleBox[
                         {
@@ -661,11 +665,7 @@ Notebook[
                     ],
                     "Suggestion"
                    ],
-                   Background -> RGBColor[
-                    0.913725,
-                    0.913725,
-                    0.913725
-                   ],
+                   Background -> RGBColor[0.913725, 0.913725, 0.913725],
                    RoundingRadius -> 8,
                    FrameStyle -> None,
                    FrameMargins -> {{1, 1}, {0, 0}}
@@ -749,13 +749,7 @@ Notebook[
                         ]
                        ]
                       },
-                      FaceForm[
-                       RGBColor[
-                        0.490196,
-                        0.490196,
-                        0.490196
-                       ]
-                      ]
+                      FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                      ],
                      StyleBox[
                       {
@@ -818,11 +812,7 @@ Notebook[
                   ],
                   "Suggestion"
                  ],
-                 Background -> RGBColor[
-                  0.913725,
-                  0.913725,
-                  0.913725
-                 ],
+                 Background -> RGBColor[0.913725, 0.913725, 0.913725],
                  RoundingRadius -> 8,
                  FrameStyle -> None,
                  FrameMargins -> {{1, 1}, {0, 0}}
@@ -999,11 +989,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1040,11 +1026,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1081,11 +1063,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1122,11 +1100,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -3449,13 +3423,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -3535,11 +3503,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -3576,13 +3540,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -3645,11 +3603,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -3733,13 +3687,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -3802,11 +3750,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -3869,13 +3813,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -3955,11 +3893,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -3996,13 +3930,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -4065,11 +3993,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4153,13 +4077,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -4222,11 +4140,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -5000,11 +4914,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5041,11 +4951,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5082,11 +4988,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5123,11 +5025,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6308,11 +6206,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -6349,11 +6243,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -6390,11 +6280,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -6431,11 +6317,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -8224,13 +8106,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -8310,11 +8186,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -8351,13 +8223,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -8420,11 +8286,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -8508,13 +8370,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -8577,11 +8433,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -8644,13 +8496,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -8730,11 +8576,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -8771,13 +8613,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -8840,11 +8676,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -8928,13 +8760,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -8997,11 +8823,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -9202,11 +9024,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -9243,11 +9061,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -9284,11 +9098,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -9325,11 +9135,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -10997,13 +10803,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -11083,11 +10883,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -11124,13 +10920,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -11193,11 +10983,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -11281,13 +11067,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -11350,11 +11130,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -11417,13 +11193,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -11503,11 +11273,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -11544,13 +11310,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -11613,11 +11373,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -11701,13 +11457,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -11770,11 +11520,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -12540,11 +12286,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -12581,11 +12323,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -12622,11 +12360,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -12663,11 +12397,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -14421,13 +14151,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -14507,11 +14231,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -14548,13 +14268,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -14617,11 +14331,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -14705,13 +14415,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -14774,11 +14478,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -14841,13 +14541,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -14927,11 +14621,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -14968,13 +14658,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -15037,11 +14721,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -15125,13 +14805,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -15194,11 +14868,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -15399,11 +15069,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -15440,11 +15106,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -15481,11 +15143,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -15522,11 +15180,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -16639,7 +16293,7 @@ Notebook[
   "CreationDate" -> "01-22-2022 19:00:03",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 1, 30, 16, 38, 11.9213529`8.828900503459305},
+   {2022, 1, 31, 10, 9, 12.3383833`8.843833214191115},
    "Instant",
    "Gregorian",
    -5.
