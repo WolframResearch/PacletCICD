@@ -13,8 +13,8 @@ Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
 
 result = Wolfram`PacletCICD`BuildPaclet[
     File @ FileNameJoin @ { $pacDir, "DefinitionNotebook.nb" },
-    "Preflight" -> False,
-    "Target"    -> "Submit"
+    "Check"  -> False,
+    "Target" -> "Submit"
 ];
 
 If[ MatchQ[ result, _Wolfram`PacletCICD`BuildPaclet ],
