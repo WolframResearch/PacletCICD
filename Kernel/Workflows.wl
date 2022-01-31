@@ -34,13 +34,18 @@ CreateWorkflow::export =
 
 CreateWorkflow::entitlement = "`1`";
 
+CreateWorkflow::invaction =
+"`1` is not a valid action specification.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 CreateWorkflow // Options = {
-    "DefaultBranch" -> "main",
-    OverwriteTarget -> False,
-    TimeConstraint  -> Quantity[ 10, "Minutes" ]
+    "BuildPacletAction" -> "rhennigan/build-paclet@latest",
+    "CheckPacletAction" -> "rhennigan/check-paclet@latest",
+    "DefaultBranch"     -> "main",
+    OverwriteTarget     -> False,
+    TimeConstraint      -> Quantity[ 10, "Minutes" ]
 };
 
 (* ::**********************************************************************:: *)
@@ -50,23 +55,29 @@ CreateWorkflow[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { workflow },
         workflow = createWorkflow[
             spec,
-            OptionValue[ "DefaultBranch" ],
-            OptionValue[ TimeConstraint ]
+            OptionValue[ "DefaultBranch"     ],
+            OptionValue[ TimeConstraint      ],
+            toBuildPacletAction @ OptionValue[ "BuildPacletAction" ],
+            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ]
         ];
         exportWorkflow[ pac, workflow ]
     ];
 
+$buildPacletAction     = "rhennigan/build-paclet@latest";
+$checkPacletAction     = "rhennigan/check-paclet@latest";
 $defaultBranch         = "main";
 $defaultTimeConstraint = 10;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*createWorkflow*)
-createWorkflow[ spec_, branch_String, timeConstraint_ ] :=
+createWorkflow[ spec_, branch_String, timeConstraint_, build_, check_ ] :=
     Block[
         {
-            $defaultBranch = branch,
-            $defaultTimeConstraint = toTimeConstraint @ timeConstraint
+            $defaultBranch         = branch,
+            $defaultTimeConstraint = toTimeConstraint @ timeConstraint,
+            $buildPacletAction     = build,
+            $checkPacletAction     = check
         },
         createWorkflow0 @ spec
     ];
@@ -94,6 +105,60 @@ createWorkflow0[ spec_Association ] :=
     ];
 
 createWorkflow0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toBuildPacletAction*)
+toBuildPacletAction[ Automatic ] := normalizeActionName @ $buildPacletAction;
+toBuildPacletAction[ name_     ] := normalizeActionName @ name;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toCheckPacletAction*)
+toCheckPacletAction[ Automatic ] := normalizeActionName @ $checkPacletAction;
+toCheckPacletAction[ name_     ] := normalizeActionName @ name;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*normalizeActionName*)
+normalizeActionName[ name_String? StringQ ] :=
+    normalizeActionName[ name, StringSplit[ name, c: "/" | "@" :> c ] ];
+
+normalizeActionName[ name_, { owner_, "/", repo_ } ] :=
+    normalizeActionName[ name, { owner, "/", repo, "@", "latest" } ];
+
+normalizeActionName[ name_, { owner_, "/", repo_, "@", "latest" } ] :=
+    latestActionName[ name, owner, repo ];
+
+normalizeActionName[ name_, { owner_, "/", repo_, "@", ref_ } ] :=
+    StringJoin[ owner, "/", repo, "@", ref ];
+
+normalizeActionName[ name_, _ ] :=
+    throwMessageFailure[ CreateWorkflow::invaction, name ];
+
+normalizeActionName // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*latestActionName*)
+latestActionName[ name_, owner_, repo_ ] := Enclose[
+    Module[ { url, data, tag },
+
+        url = URLBuild @ <|
+            "Scheme" -> "https",
+            "Domain" -> "api.github.com",
+            "Path" -> { "repos", owner, repo, "releases", "latest" }
+        |>;
+
+        data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
+        tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
+
+        owner <> "/" <> repo <> "@" <> tag
+    ],
+    name &
+];
+
+latestActionName // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -523,13 +588,13 @@ normalizeStep[ "checkout"|"checkoutcode" ] := <|
 normalizeStep[ "check"|"checkpaclet" ] := <|
     "name" -> "Check Paclet",
     "id"   -> "check-paclet-step",
-    "uses" -> "rhennigan/check-paclet@latest"
+    "uses" -> $checkPacletAction
 |>;
 
 normalizeStep[ "build"|"buildpaclet" ] := <|
     "name" -> "Build Paclet",
     "id"   -> "build-paclet-step",
-    "uses" -> "rhennigan/build-paclet@latest"
+    "uses" -> $buildPacletAction
 |>;
 
 normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|

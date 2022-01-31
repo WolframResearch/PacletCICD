@@ -30,8 +30,9 @@ BuildPaclet::archive =
 (*Options*)
 BuildPaclet // Options = {
     "ConsoleType" -> Automatic,
-    "Preflight"   -> False,
-    "Target"      -> "Build"
+    "Check"       -> False,
+    "Target"      -> "Build",
+    "ExitOnFail"  -> Automatic
 };
 
 (* ::**********************************************************************:: *)
@@ -58,14 +59,20 @@ BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
         { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
         Module[ { checked, built },
 
-            checked = If[ TrueQ @ OptionValue[ "Preflight" ],
-                          CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ],
+            checked = If[ TrueQ @ OptionValue[ "Check" ],
+                          checkForBuild[ file, opts ],
                           Missing[ "NotAvailable" ]
                       ];
 
-            built = buildPaclet[ file, opts ];
+            built = If[ FailureQ @ checked,
+                        Missing[ "CheckFailed" ],
+                        buildPaclet[ file, opts ]
+                    ];
 
-            <| "BuildResult" -> built, "CheckResult" -> checked |>
+            Global`checked = checked;
+            Global`built = built;
+            (* <| "BuildResult" -> built, "CheckResult" -> checked |>; *)
+            combineBuildResult[ file, built, checked ]
         ]
     ];
 
@@ -101,6 +108,14 @@ e: BuildPaclet[ ___ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
+(*checkForBuild*)
+checkForBuild[ file_, opts___ ] :=
+    catch @ CheckPaclet[ file, filterOptions[ $$cpOpts, opts ] ];
+
+checkForBuild // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
 (*buildPaclet*)
 buildPaclet[ file_File, opts___ ] :=
     Module[ { nbo },
@@ -111,14 +126,71 @@ buildPaclet[ file_File, opts___ ] :=
         ]
     ];
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 buildPaclet[ nbo_NotebookObject, opts___ ] :=
     Module[ { result },
-        result = prdn`BuildPaclet[
-            nbo,
-            filterOptions[ Interactive -> False, opts ]
-        ];
+
+        result =
+            Internal`InheritedBlock[ { $Line },
+                prdn`BuildPaclet[
+                    nbo,
+                    filterOptions[ Interactive -> False, opts ]
+                ]
+            ];
+
         setGHBuildOutput @ result
     ];
+(* :!CodeAnalysis::EndBlock:: *)
+
+buildPaclet // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*combineBuildResult*)
+combineBuildResult[
+    file_,
+    b_,
+    Failure[ "CheckPaclet::errors", as_Association ]
+] :=
+    Failure[
+        "CheckPaclet::errors",
+        Join[
+            KeyDrop[ as, "Result" ],
+            <|
+                "Source"      -> file,
+                "BuildResult" -> b,
+                "CheckResult" -> Lookup[ as, "Result" ]
+            |>
+        ]
+    ];
+
+combineBuildResult[ file_, Success[ tag_, as_Association ], c_ ] :=
+    Success[ tag, Join[ as, <| "Source" -> file, "CheckResult" -> c |> ] ];
+
+combineBuildResult[ file_, built_? FailureQ, checked_ ] :=
+    exitFailure[
+        "BuildPacletFailure",
+        <|
+            "MessageTemplate" -> "Failed to build Paclet.",
+            "Source"          -> file,
+            "BuildResult"     -> built,
+            "CheckResult"     -> checked
+        |>
+    ];
+
+combineBuildResult[ file_, built_, checked_? FailureQ ] :=
+    exitFailure[
+        "CheckPacletFailure",
+        <|
+            "MessageTemplate" -> "Failed to check Paclet.",
+            "Source"          -> file,
+            "BuildResult"     -> built,
+            "CheckResult"     -> checked
+        |>
+    ];
+
+combineBuildResult // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -157,7 +229,9 @@ setGHBuildOutput[ res_ ] := Enclose[
 setGHBuildOutput0[ KeyValuePattern[ "BuildResult"|"Result" -> res_ ] ] :=
     setGHBuildOutput0 @ res;
 
-setGHBuildOutput0[ Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ] ] :=
+setGHBuildOutput0[
+    result: Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ]
+] :=
     Enclose @ Module[ { archive, file, pac, vers, full },
 
         archive = ConfirmBy[ ExpandFileName @ pa, FileExistsQ ];
@@ -171,7 +245,10 @@ setGHBuildOutput0[ Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ] ] :=
         setOutput[ "PACLET_FILE", FileNameTake @ file ];
         setOutput[ "RELEASE_TAG", "v" <> vers ];
 
-        file
+        If[ TrueQ @ $simpleTextMode,
+            file,
+            result
+        ]
     ];
 
 setGHBuildOutput0[ ___ ] := $Failed;
