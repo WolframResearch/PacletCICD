@@ -14,12 +14,12 @@ Notebook[
     }
    ],
    "History",
-   CellID -> 30979251
+   CellID -> 412217043
   ],
   Cell[
-   "Created by: rhennigan on 01-22-2022 19:00:12",
+   "Created by: rhennigan on 01-30-2022 11:26:41",
    "AuthorDate",
-   CellID -> 47625783
+   CellID -> 91713363
   ],
   Cell[
    CellGroupData[
@@ -27,31 +27,31 @@ Notebook[
      Cell[
       "Categorization",
       "CategorizationSection",
-      CellID -> 593242234
+      CellID -> 448215474
      ],
      Cell[
       "Symbol",
       "Categorization",
       CellLabel -> "Entity Type",
-      CellID -> 53455188
+      CellID -> 66126539
      ],
      Cell[
       "Wolfram/PacletCICD",
       "Categorization",
       CellLabel -> "Paclet Name",
-      CellID -> 460582254
+      CellID -> 213719215
      ],
      Cell[
       "Wolfram`PacletCICD`",
       "Categorization",
       CellLabel -> "Context",
-      CellID -> 550651123
+      CellID -> 12528718
      ],
      Cell[
-      "Wolfram/PacletCICD/ref/DeployPaclet",
+      "Wolfram/PacletCICD/ref/PacletCICD",
       "Categorization",
       CellLabel -> "URI",
-      CellID -> 98526742
+      CellID -> 12399200
      ]
     },
     Open
@@ -60,8 +60,8 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Keywords", "KeywordsSection", CellID -> 522084109],
-     Cell["XXXX", "Keywords", CellID -> 293485048]
+     Cell["Keywords", "KeywordsSection", CellID -> 182822204],
+     Cell["XXXX", "Keywords", CellID -> 20818381]
     },
     Open
    ]
@@ -72,31 +72,31 @@ Notebook[
      Cell[
       "Syntax Templates",
       "TemplatesSection",
-      CellID -> 95662249
+      CellID -> 720290031
      ],
      Cell[
       BoxData[""],
       "Template",
       CellLabel -> "Additional Function Template",
-      CellID -> 482981514
+      CellID -> 407247896
      ],
      Cell[
       BoxData[""],
       "Template",
       CellLabel -> "Arguments Pattern",
-      CellID -> 34311347
+      CellID -> 216143029
      ],
      Cell[
       BoxData[""],
       "Template",
       CellLabel -> "Local Variables",
-      CellID -> 20395752
+      CellID -> 41541590
      ],
      Cell[
       BoxData[""],
       "Template",
       CellLabel -> "Color Equal Signs",
-      CellID -> 5146341
+      CellID -> 433793447
      ]
     },
     Open
@@ -105,22 +105,22 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["DeployPaclet", "ObjectName", CellID -> 25152550],
+     Cell["PacletCICD", "ObjectName", CellID -> 159316922],
      Cell[
       TextData[
        {
         Cell["   ", "ModInfo"],
         Cell[
-         BoxData[RowBox[{"DeployPaclet", "[", "]"}]],
+         BoxData[RowBox[{"PacletCICD", "[", "]"}]],
          "InlineFormula"
         ],
         " \[LineSeparator]XXXX"
        }
       ],
       "Usage",
-      CellID -> 281904499
+      CellID -> 524455567
      ],
-     Cell["XXXX", "Notes", CellID -> 395352481]
+     Cell["XXXX", "Notes", CellID -> 44121391]
     },
     Open
    ]
@@ -128,8 +128,8 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 41613275],
-     Cell["XXXX", "Tutorials", CellID -> 141114978]
+     Cell["Tech Notes", "TechNotesSection", CellID -> 79015013],
+     Cell["XXXX", "Tutorials", CellID -> 304903406]
     },
     Open
    ]
@@ -140,9 +140,9 @@ Notebook[
      Cell[
       "Related Demonstrations",
       "RelatedDemonstrationsSection",
-      CellID -> 12401346
+      CellID -> 11779154
      ],
-     Cell["XXXX", "RelatedDemonstrations", CellID -> 6892373]
+     Cell["XXXX", "RelatedDemonstrations", CellID -> 115218685]
     },
     Open
    ]
@@ -153,9 +153,9 @@ Notebook[
      Cell[
       "Related Links",
       "RelatedLinksSection",
-      CellID -> 97705443
+      CellID -> 871138293
      ],
-     Cell["XXXX", "RelatedLinks", CellID -> 596360699]
+     Cell["XXXX", "RelatedLinks", CellID -> 146016000]
     },
     Open
    ]
@@ -163,8 +163,8 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["See Also", "SeeAlsoSection", CellID -> 262678917],
-     Cell["XXXX", "SeeAlso", CellID -> 460172598]
+     Cell["See Also", "SeeAlsoSection", CellID -> 5400516],
+     Cell["XXXX", "SeeAlso", CellID -> 47206012]
     },
     Open
    ]
@@ -175,9 +175,9 @@ Notebook[
      Cell[
       "Related Guides",
       "MoreAboutSection",
-      CellID -> 5626954
+      CellID -> 157059233
      ],
-     Cell["XXXX", "MoreAbout", CellID -> 133303649]
+     Cell["XXXX", "MoreAbout", CellID -> 82472884]
     },
     Open
    ]
@@ -208,7 +208,7 @@ Notebook[
     ]
    ],
    "PrimaryExamplesSection",
-   CellID -> 32724640
+   CellID -> 660665442
   ],
   Cell[
    CellGroupData[
@@ -217,7 +217,7 @@ Notebook[
       "More Examples",
       "ExtendedExamplesSection",
       CellTags -> "ExtendedExamples",
-      CellID -> 231803803
+      CellID -> 44858841
      ],
      Cell[
       BoxData[
@@ -228,7 +228,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 89001409
+      CellID -> 326502076
      ],
      Cell[
       BoxData[
@@ -239,7 +239,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 65567550
+      CellID -> 308465628
      ],
      Cell[
       CellGroupData[
@@ -253,7 +253,7 @@ Notebook[
           ]
          ],
          "ExampleSection",
-         CellID -> 237350756
+         CellID -> 444938562
         ],
         Cell[
          BoxData[
@@ -264,7 +264,7 @@ Notebook[
           ]
          ],
          "ExampleSubsection",
-         CellID -> 3942511
+         CellID -> 634196429
         ],
         Cell[
          BoxData[
@@ -275,7 +275,7 @@ Notebook[
           ]
          ],
          "ExampleSubsection",
-         CellID -> 216997462
+         CellID -> 28666479
         ]
        },
        Open
@@ -290,7 +290,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 12919521
+      CellID -> 92579634
      ],
      Cell[
       BoxData[
@@ -301,7 +301,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 115106180
+      CellID -> 436745038
      ],
      Cell[
       BoxData[
@@ -312,7 +312,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 33392842
+      CellID -> 7550917
      ],
      Cell[
       BoxData[
@@ -323,7 +323,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 67792645
+      CellID -> 591407946
      ],
      Cell[
       BoxData[
@@ -334,7 +334,7 @@ Notebook[
        ]
       ],
       "ExampleSection",
-      CellID -> 20767092
+      CellID -> 341020244
      ]
     },
     Open
@@ -343,7 +343,7 @@ Notebook[
  },
  TaggingRules -> <|
   "Author" -> "rhennigan",
-  "CreationDate" -> "01-22-2022 19:00:12"
+  "CreationDate" -> "01-30-2022 11:26:41"
  |>,
  CellContext -> "Global`",
  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
@@ -352,5 +352,5 @@ Notebook[
   "FunctionPageStylesExt.nb",
   CharacterEncoding -> "UTF-8"
  ],
- ExpressionUUID -> "26bb64bb-99ad-43ec-a93d-755fbb860290"
+ ExpressionUUID -> "8d990ce0-5753-48a1-92e5-8e1d3b3c9102"
 ]

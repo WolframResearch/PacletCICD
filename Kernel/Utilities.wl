@@ -3,7 +3,6 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-PacletCICD;
 $ExamplesLocation;
 ExampleDirectory;
 
@@ -15,46 +14,6 @@ $thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version" ];
 
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
-(*PacletCICD*)
-(* PacletCICD is just a symbol for attaching general messages *)
-PacletCICD::unknown   =
-"An internal error occurred.";
-
-PacletCICD::undefined =
-"An internal error occurred (encountered unexpected pattern for `1`).";
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
-(*Definition Utilities*)
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*catchUndefined*)
-catchUndefined // Attributes = { HoldFirst };
-
-catchUndefined[ sym_Symbol ] :=
-    catchUndefined [ sym, DownValues ];
-
-catchUndefined[ sym_Symbol, DownValues ] :=
-    e: sym[ ___ ] :=
-        throwMessageFailure[
-            PacletCICD::undefined,
-            HoldForm @ sym,
-            HoldForm @ e,
-            DownValues
-        ];
-
-catchUndefined[ sym_Symbol, SubValues ] :=
-    e: sym[ ___ ][ ___ ] :=
-        throwMessageFailure[
-            PacletCICD::undefined,
-            HoldForm @ sym,
-            HoldForm @ e,
-            SubValues
-        ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -165,168 +124,9 @@ fetchExampleData0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*Error Handling*)
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*catchTop*)
-catchTop // Attributes = { HoldFirst };
-
-catchTop[ eval_ ] :=
-    Block[ { $catching = True, $MessageList = { }, catchTop = # & },
-        Catch[ eval, $top ]
-    ];
-
-catchTop // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*catch*)
-catch // Attributes = { HoldFirst };
-
-catch[ eval_ ] :=
-    Block[ { $catching = True, $MessageList = { } },
-        Catch[ eval, $top ]
-    ];
-
-catch // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*catchQuiet*)
-catchQuiet // Attributes = { HoldFirst };
-catchQuiet[ eval_ ] := Quiet @ catch @ eval;
-catchQuiet // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*throwFailure*)
-throwFailure // Attributes = { HoldFirst };
-throwFailure[ args___ ] := Quiet @ throwMessageFailure @ args;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*throwMessageFailure*)
-throwMessageFailure // Attributes = { HoldFirst };
-
-throwMessageFailure[ msg_MessageName, args___ ] :=
-    Module[ { failure },
-        failure = messageFailure[ msg, args ];
-        If[ TrueQ @ $catching,
-            Throw[ failure, $top ],
-            failure
-        ]
-    ];
-
-throwMessageFailure[ msg_String ] :=
-    throwMessageFailure[ PacletCICD::error, msg ];
-
-throwMessageFailure[ args___ ] :=
-    throwMessageFailure[
-        PacletCICD::unknown,
-        HoldForm @ throwMessageFailure @ args
-    ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*messageFailure*)
-messageFailure // Attributes = { HoldFirst };
-
-messageFailure[ msg: MessageName[ sym_Symbol, mtag__ ], args___ ] :=
-    Module[ { tag, info, failure },
-        tag = StringRiffle[ { SymbolName @ Unevaluated @ sym, mtag }, "::" ];
-        info = <| "MessageTemplate" :> msg, "MessageParameters" :> { args } |>;
-        failure = Failure[ tag, info ];
-        If[ $MessageList === { },
-            Message @ Evaluate @ failure;
-            dnc`ConsolePrint[ failure[ "Message" ], "Level" -> "Error" ];
-            dnc`ConsolePrint[ SequenceForm[ "Stack trace: ", Stack[ ] ] ];
-        ];
-
-        failure
-    ];
-
-messageFailure // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*generalMessage*)
-$$messageType = "error"|"warning"|"notice"|"debug";
-
-PacletCICD::error   = "`1`";
-PacletCICD::warning = "`1`";
-PacletCICD::notice  = "`1`";
-PacletCICD::debug   = "`1`";
-
-generalMessage[ tag: $$messageType, template_, as_Association ] :=
-    messageFailure[
-        MessageName[ PacletCICD, tag ],
-        TemplateApply[ template, as ],
-        as
-    ];
-
-generalMessage[ tag: $$messageType, template_, a___ ] :=
-    messageFailure[
-        MessageName[ PacletCICD, tag ],
-        TemplateApply[ template, { a } ],
-        a
-    ];
-
-generalMessage[ template_, a___ ] := generalMessage[ "notice", template, a ];
-
-generalMessage // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*throwGeneralMessage*)
-throwGeneralMessage[ tag: $$messageType, template_, a___ ] :=
-    Module[ { failure },
-        failure = generalMessage[ tag, template, a ];
-        If[ TrueQ @ $catching,
-            Throw[ failure, $top ],
-            failure
-        ]
-    ];
-
-throwGeneralMessage[ template_, a___ ] :=
-    throwGeneralMessage[ "error", template, a ];
-
-throwGeneralMessage // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*throwError*)
-throwError[ template_, a___ ] := throwGeneralMessage[ "error", template, a ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*exitFailure*)
-exitFailure // Attributes = { HoldFirst };
-
-(* :!CodeAnalysis::BeginBlock:: *)
-(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
-exitFailure[ msg_MessageName, code_, result_ ] :=
-    If[ $EvaluationEnvironment === "Script"
-        ,
-        Block[ { DefinitionNotebookClient`$ConsoleType = Automatic },
-            DefinitionNotebookClient`ConsolePrint[
-                ToString @ Unevaluated @ msg <> ": " <> ToString @ msg,
-                "Level" -> "Error"
-            ]
-        ];
-        Print @ result;
-        Exit @ code
-        ,
-        throwMessageFailure[ msg, result ]
-    ];
-
-exitFailure // catchUndefined;
-
-(* :!CodeAnalysis::EndBlock:: *)
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
 (*Definition Notebook Utilities *)
+
+$simpleTextMode := MatchQ[ dnc`$ConsoleType, "TTY"|"GitHub" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

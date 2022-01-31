@@ -38,7 +38,9 @@ CheckPaclet // Options = {
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Argument patterns*)
-$$cpFMT  = "JSON"|"Dataset"|Automatic|None;
+$$hintProp   = _String | All | Automatic | { ___String };
+$$cpFMTName  = "JSON"|"Dataset"|Automatic|None;
+$$cpFMT      = $$cpFMTName | { $$cpFMTName, $$hintProp };
 
 $$cpOpts = OptionsPattern @ {
                CheckPaclet,
@@ -64,7 +66,7 @@ CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
         takeCheckDefNBOpts @ opts,
         "ConsoleType"      -> Automatic,
         "ClickedButton"    -> OptionValue[ "Target" ],
-        "Format"           -> fmt,
+        "Format"           -> toCheckFormat @ fmt,
         "FailureCondition" -> OptionValue[ "FailureCondition" ]
     ];
 
@@ -115,7 +117,15 @@ checkPaclet[ nb_, opts___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkExit*)
 checkExit[ Failure[ "FailureCondition", as_Association ] ] :=
-    exitFailure[ CheckPaclet::errors, 1, as[ "Result" ] ];
+    exitFailure[
+        "CheckPaclet::errors",
+        Association[
+            "MessageTemplate"   :> CheckPaclet::errors,
+            "MessageParameters" :> { },
+            KeyTake[ as, { "FailureCondition", "Result" } ]
+        ],
+        1
+    ];
 
 checkExit[ res_? FailureQ ] :=
     exitFailure[ CheckPaclet::unknown, 1, res ];
@@ -153,6 +163,15 @@ toDisabledHints[ hints_List ] :=
     DeleteDuplicates @ Flatten[ toDisabledHints /@ hints ];
 
 toDisabledHints[ ___ ] := { };
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toCheckFormat*)
+toCheckFormat[ None             ] := None;
+toCheckFormat[ fmt: $$cpFMTName ] := { fmt, $defaultHintProps };
+toCheckFormat[ fmt_             ] := fmt;
+
+$defaultHintProps = { "Level", "Message", "Tag", "CellID" };
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
