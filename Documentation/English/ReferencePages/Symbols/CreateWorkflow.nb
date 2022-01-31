@@ -566,7 +566,7 @@ Notebook[
              Selectable -> False
             ],
             DefaultBaseStyle -> "ImageGraphics",
-            ImageSize -> Magnification[1],
+            ImageSize -> Magnification[2],
             ImageSizeRaw -> {391., 245.5},
             PlotRange -> {{0, 391.}, {0, 245.5}}
            ],
@@ -612,6 +612,7 @@ Notebook[
              Selectable -> False
             ],
             DefaultBaseStyle -> "ImageGraphics",
+            ImageSize -> Magnification[2],
             ImageSizeRaw -> {410., 296.5},
             PlotRange -> {{0, 410.}, {0, 296.5}}
            ],
@@ -729,6 +730,7 @@ Notebook[
              Selectable -> False
             ],
             DefaultBaseStyle -> "ImageGraphics",
+            ImageSize -> Magnification[2],
             ImageSizeRaw -> {338.5, 264.},
             PlotRange -> {{0, 338.5}, {0, 264.}}
            ],
