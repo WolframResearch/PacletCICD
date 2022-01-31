@@ -174,11 +174,7 @@ Notebook[
           GraphicsBox[
            {
             InsetBox[
-             StyleBox[
-              "\"In[xxx]:=\"",
-              "CellLabel",
-              StripOnInput -> False
-             ],
+             StyleBox["\"In[1]:=\"", "CellLabel", StripOnInput -> False],
              {-7.5, 96.},
              {1, Baseline}
             ],
@@ -544,11 +540,7 @@ Notebook[
             GraphicsBox[
              {
               InsetBox[
-               StyleBox[
-                "\"Out[xxx]=\"",
-                "CellLabel",
-                StripOnInput -> False
-               ],
+               StyleBox["\"Out[1]=\"", "CellLabel", StripOnInput -> False],
                {-6., 40.5},
                {1, Baseline}
               ],
@@ -2293,11 +2285,7 @@ Notebook[
              GraphicsBox[
               {
                InsetBox[
-                StyleBox[
-                 "\"In[xxx]:=\"",
-                 "CellLabel",
-                 StripOnInput -> False
-                ],
+                StyleBox["\"In[2]:=\"", "CellLabel", StripOnInput -> False],
                 {-7, 1},
                 {1, Baseline}
                ],
@@ -2466,7 +2454,7 @@ Notebook[
              ]
             ],
             "Output",
-            CellLabel -> "Out[21]=",
+            CellLabel -> "Out[2]=",
             CellID -> 313321536
            ]
           },
@@ -2561,12 +2549,13 @@ Notebook[
    ]
   ]
  },
+ ScreenStyleEnvironment -> "FutureObject",
  WindowStatusArea -> Automatic,
  ShowSelection -> True,
  TaggingRules -> <|
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 1, 31, 9, 29, 11.7767283`8.823599614752},
+   {2022, 1, 31, 9, 49, 11.6254562`8.817984963407739},
    "Instant",
    "Gregorian",
    -5.

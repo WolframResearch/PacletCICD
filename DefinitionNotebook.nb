@@ -692,6 +692,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -747,6 +748,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -802,6 +804,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -857,6 +860,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -912,6 +916,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -967,6 +972,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -1022,6 +1028,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -1077,6 +1084,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -1208,6 +1216,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
@@ -1390,6 +1399,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
@@ -4533,7 +4543,8 @@ Notebook[
            ],
            Cell["Paclet", "Item", CellID -> 20032733],
            Cell["Workflow", "Item", CellID -> 11977519],
-           Cell["Build", "Item", CellID -> 476638544]
+           Cell["Build", "Item", CellID -> 476638544],
+           Cell["Actions", "Item", CellID -> 160454701]
           },
           Open
          ]
@@ -5174,6 +5185,21 @@ Notebook[
             DefaultNewCellStyle -> "Item",
             CellTags -> {"Links", "TemplateCellGroup"},
             CellID -> 179193585
+           ],
+           Cell[
+            TextData[
+             ButtonBox[
+              "Build Paclet \[CenterDot] Actions \[CenterDot] GitHub Marketplace \[CenterDot] GitHub",
+              BaseStyle -> "Hyperlink",
+              ButtonData -> {
+               URL["https://github.com/marketplace/actions/build-paclet"],
+               None
+              },
+              ButtonNote -> "https://github.com/marketplace/actions/build-paclet"
+             ]
+            ],
+            "Item",
+            CellID -> 10325678
            ],
            Cell[
             TextData[
@@ -6109,7 +6135,7 @@ Notebook[
   "SubmissionReviewData" -> {"Review" -> False},
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 1, 30, 21, 4, 36.6704239`9.3168908212831},
+   {2022, 1, 31, 10, 9, 12.8904153`8.86284186599346},
    "Instant",
    "Gregorian",
    -5.
@@ -6117,7 +6143,7 @@ Notebook[
   "NotebookUUID" -> "41d4b859-2c5b-4b6e-a2ae-9d96841a4653",
   "AutoUpdate" -> True,
   "PacletBuildData" -> {
-   "FileHashes" -> ByteArray["OEM6eJyVl31QFGUcx8uBqEZC3o6CbnjRlLe9A3m14Ibj7njROwUeGKAAWfaeO1b2dml3bw5IVGIaZyjGQqoRCQfGlxxHFGUi/vCPKLWsCC1qLKYsQNGRbNTKYSo7uJfn7jiXu7/u7rv7/X72eXb39/udXIKBGCVDGA2Q5nGeZGipitZTJFcvLaS1sEm6PUlC6Dj5Kgw8ARgjS0DOZytDQ/PPUpzVQ17dmdE2GTs7LcXAeqEcDuoXD3HbUwSyRqpXD5wuHknHQKwnWRI9pAXSAjXX2g433diEgZfcp5VAHWQhTcAiXA85KWg21DEUJ801kpS2CCcoyEvoOgeA+sIce4ZIr6xCjNrZafHZ4T9E3jIU9ZBocMuYUvKHg670BiDG9+H50dg+SRAGZN4xWIjzsJxhG3QUY3LBLPy1pk+W+V4ewpwgvrpYcfrCbgxkeYVRwkaKaXa7lr+VrQFEXyCBIDlRb+/J2vOn+Z7keAVRNeGGRgoqSRYSPMM2u4Cu98x/sOPHG00IlDd8Mjkm7GoNBhRegfJJvsBYZ1lNIc3xOEW5sMSiXakHyI8oxMLHgtI+SX6+0tuds7AAJNhlOxf+vv8c09/zCoLMT5h8Evf7t2DgRa8glqUoChVKFwRzr/9BV2j10wgx8dOQrLjqlK+36wDGOgPJu30CnhsajdqP+VYjSKy0bbwlai7R23WUQs494uZUvXI+80g8QkSce6sgT5yfiQG5V4h11qeMUzPEksGF9MbgyfnaOwdFiBSzfi541wCjx0C8exKAOEvUW8pWmqWYQoGSZcL81iWEZ9d5kydUnF+IHP/4SnecAgNxHuZxpEDc1fLhY5EPcnZgAPMkTkdCSstJTJRApJ9p9T5lTo35ClM9iSQXPzWQx7U4jwsn4zH/3rmbOu2DAYknyfYGtVEg83Hi3TOzM/GxHmaaWJKHEoohGgQyybJtMRW/lW3BwIZHZDZCirJ2440r3PBb3QFFHdEmzqOwlBXCLuVuG0wIO2Fuxwkrhtm3L0Mg8GJyX/RlcWe8V4GbBAJfX9P97bmHT8Y/+oFcHrjC1DCaLfqv6/6vagwkuY8sNZobEInb67ecWDzMudSKvberv5lILK5EwQd/ad/5efDuJAxsXilYTRKQ5qCK5kmegktXLae1JbCR4cjF7mdpGa7I6eO151Ou75QhZF9tVsTRiq/Nr0CorbRJ86CpkOOM0OW9VLeTsjjgc20tciNFZHdrGBa6tZdKeoaiF8YBsiMlpNCwVGcLIMssfZU00npHM/bw0O9xZw3FyIyU0C2QpSHlNJU5o2X3jFUzkzNZyI0Um9tx3nJ2R6693PjYhwBHbqSIrG6nEcfZfmjm5SOTzfIkZEdKmNWuYlmGLcBpLUXSehd/dgfVf7y19RnkR4rY6nc3kzinbE757PzA/bRolIKUZ60pGshx5r3Pw0nKyEKXgNHv0rmRDSGO74FdCbEGOEwSzuYvgnsvvXpsKgiZkWLbQqcZwdmuPzVW1V6+IEV2pNjYDt3f2dxV39DU83PvKmRGSrDVXMaTFMmTy57ZMDn1ZTvfUoO8SLF5beOzq7eWH05uHrulc/grYFf81IUK1Vagcjz/nU9j/HVHO3LR+Ujxt91aHeNCuTt4IL0143YJciEl0OLS4DSpM++OcDPEOqOmb8oizG32qRKVXKlRSQxaR9BrLf+I3/xB4oscNuV/dxYycw=="],
+   "FileHashes" -> ByteArray["OEM6eJyVln9QFGUYx9WgtEaUhIMcGQEZVPS9A0EUQvPkTjm9U+GFwIJw2XvvWNnbvXb3PNDAIQYUmn5AOgUKRhOEMtE4aQ5jjkJao6bmr2pEifFHlklO2ahjpQF3x3u3nMvtX3f33H0/n3vf3X3eRx0HYKSGJW0WxAiEQLGMSsuYaYovVOkYIypW5ccqSROvHgfg05C1cSTi/VaxDBr4mElwZiToC3rvnTevPR8FYLQUh0fmwa/4/HgJ1v2243c7J9tfBnCWLyylGTEStEBDX/knxTeTAHzROy0DmRCHGBKtIcyIV8ESSwFL86qlNoo2riFIGglKpsBNoK9LnNW/vXJqEnYcOvDw3o7yGQlyHamFiCzy6jh1aP+D2AXlAdiR9R1X2732v00ALpbn4BAhoGyWKzLRrF2k+eVSwNWyuGQb1mzuzAYpN97NBjBFlkaDrDRb4nUt9zWlk8imQBJLriws7R67IWpAskSWRFtMWKw00lAcIgWWKxGvpqG/cf2lm8VY1H7uZoeq+crA7ZAqS7ScEtJsBY7V6BheIGha5ApTlCXUU1/S2HWmOaclYMv2PLk753BBRHIjdm7qBxN/ZZsbXsUSdPLaU0f99ywBMFmWxLGUVF2qRqRg7zY/qAvOexYr8o7U77JpVoXIXQe0FVgowesd8MLezvD3gX8eljA/t+snxDcGy11HJuK9K367XKjpX9gSgxWK6uztK0O/KQRQLUsR5bzLeD1LDgVEpsqOz/rX3dmhwKbJ+YHshuhp4QDGeDdBRHBkoaNtzXc0UyTRsk7si2q/bzi4Xg5PqjnXVyf798VeEwCc7SOPpyRwrdVHDt8oj1wEIPAFZ6IQbeSVdloCWRrNcj21ySYAE3xBUoOvBiQQRkIgpMm/nzPsv/NPox+ASl/IwwfUPAkmqEzr+WFsb6iPTDtHCUhJs2SRBJPKWh2ZczVrJYAzn8C0Ipp2nsbzRrngt7ZNWlMTYed9gsWPAjuxdHXHnJD2RJ9gCaPAesb0KNoepacAOGdU2PC1WCAB/DauKeJs2NsxsoBJEsA3J287f+jxeHnAAgngrGnhPyUci0t88uMyEjjKTDN2XFdV8KnN6QDGekdm2gaOR4oYPl3U5ODXvKiTbbmdd+b7uelrMbjpNDg8t3K5EcAVo4H1FIkYHmkZgRJoNPSv1YwxA1lZnho8mx0HmlhZdXb8Vx9N7XsJK7tSDuZ27cl+7olzjWt0cY0y6pFmnfhUS9r63qN3zAq3Hm39842K1unmMgCDXf1dtQzZdTxvQ6LmpK+gFs+Gfn0zcBpXFMNpA8shr/FMZcPeiIenIY7jSpDOMnTYpCGOHXqrtDJm9zB4vOuP2V9Y0t26zXAleCXiGER7jKae6sV3bbnXL15PwWlccaXdh07P9PQZZ61j2iCB07iicKY95jzP+K7rr7RcLFHH4jiuhDjjWo5juTSCMdIUYxblF9XQzbtLS91mXlwJc+a9DWaelBXxR499/Pf8CEzBlVAnxYB4fmDvlxEUbeOQCNB5IZE/MDPI7XHDlSAnwG2c8gwfn7LzxOufXn4eh3HFtYUeg5Jn3Px5d25F9kMVjuOKy+02AnmG6wqLiht6d47DYVyZ4gxnCRRNCdSIezZETZ+sEDa+hrO44soOP4ii7DphX1xJ9y0TzuLKM3pdqnYV1Lr/vvbryImm1pql+Pe4MtF1aU2syPJXR31i6YLbGTiFK4GOlIFgKNPA7khPBDlVF3Zv+1BjB3BChlatMWiVFqO7aNPGf8Pe+lHpjxOuyv9HfZqZ"],
    "LastBuiltArchive" -> "H:\\Documents\\PacletCICD\\build\\Wolfram__PacletCICD-0.2.1"
   },
   "Openers" -> {

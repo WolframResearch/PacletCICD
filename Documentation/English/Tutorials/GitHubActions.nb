@@ -138,6 +138,7 @@ Notebook[
    ]
   ]
  },
+ ScreenStyleEnvironment -> "FutureObject",
  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},

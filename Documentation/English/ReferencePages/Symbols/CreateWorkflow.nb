@@ -160,7 +160,13 @@ Notebook[
          },
          ButtonNote -> "https://docs.github.com/en/actions/security-guides/encrypted-secrets"
         ],
-        " using the name \"WOLFRAMSCRIPT_ENTITLEMENTID\"."
+        " using the name \"WOLFRAMSCRIPT_ENTITLEMENTID\". See the ",
+        ButtonBox[
+         "license entitlement tutorial",
+         BaseStyle -> "Link",
+         ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+        ],
+        " for more information."
        }
       ],
       "Notes",
@@ -278,8 +284,18 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 97265816],
-     Cell["XXXX", "Tutorials", CellID -> 92530123]
+     Cell["Tutorials", "TutorialsSection", CellID -> 97265816],
+     Cell[
+      TextData[
+       ButtonBox[
+        "License Entitlements and Repository Secrets",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+       ]
+      ],
+      "Tutorials",
+      CellID -> 92530123
+     ]
     },
     Open
    ]
@@ -314,7 +330,35 @@ Notebook[
    CellGroupData[
     {
      Cell["See Also", "SeeAlsoSection", CellID -> 50345842],
-     Cell["XXXX", "SeeAlso", CellID -> 106648997]
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "CheckPaclet",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CheckPaclet"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "BuildPaclet",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "SeeAlso",
+      CellID -> 402914854
+     ]
     },
     Open
    ]
@@ -1511,7 +1555,7 @@ Notebook[
   "CreationDate" -> "01-30-2022 11:25:16",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 1, 30, 19, 9, 5.8048447`8.516365580848364},
+   {2022, 1, 31, 10, 9, 12.5894153`8.852580516729653},
    "Instant",
    "Gregorian",
    -5.
