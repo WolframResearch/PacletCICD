@@ -69,9 +69,6 @@ BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
                         buildPaclet[ file, opts ]
                     ];
 
-            Global`checked = checked;
-            Global`built = built;
-            (* <| "BuildResult" -> built, "CheckResult" -> checked |>; *)
             combineBuildResult[ file, built, checked ]
         ]
     ];
