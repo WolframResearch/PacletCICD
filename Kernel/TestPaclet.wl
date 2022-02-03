@@ -106,11 +106,11 @@ annotateTestResult[
             tro[ "Outcome" ],
             "\""
         ],
-        "Tag" -> testID,
         "Level" -> "Error",
         "SourceInformation" -> <|
-            "Scope" -> "PacletCICD/PacletTest",
-            "File" -> file,
+            "Scope"    -> "PacletCICD/PacletTest",
+            "File"     -> file,
+            "Type"     -> "LineColumn",
             "Position" -> ToExpression @ { p1, p2 }
         |>
     ];
