@@ -278,8 +278,7 @@ $suppressWarningFile :=
     FileNameJoin @ {
         $UserBaseDirectory,
         "ApplicationData",
-        "Wolfram",
-        "PacletCICD",
+        $thisPacletName,
         "SuppressWarning.wl"
     };
 

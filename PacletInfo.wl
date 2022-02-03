@@ -7,7 +7,7 @@ PacletObject[ <|
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
     "Version"          -> "0.3.0",
-    "WolframVersion"   -> "13.1+",
+    "WolframVersion"   -> "13.0+",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> { "Wolfram/GitLink" },
     "Extensions"       -> {

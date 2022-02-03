@@ -21,16 +21,17 @@ $ExamplesLocation::exdir =
 "Cannot find the Wolfram/PacletCICD examples directory.";
 
 $ExamplesLocation :=
-    catchTop @ Module[ { pac, dir },
-        pac = PacletObject[ "Wolfram/PacletCICD" ];
-        If[ ! PacletObjectQ @ pac,
-            throwMessageFailure[ $ExamplesLocation::pacfail ]
-        ];
-        dir = pac[ "AssetLocation", "Examples" ];
+    catchTop @ Module[ { dir },
+        dir = GeneralUtilities`EnsureDirectory @ {
+            $UserBaseDirectory,
+            "ApplicationData",
+            $thisPacletName,
+            "Examples"
+        };
         If[ ! DirectoryQ @ dir,
             throwMessageFailure[ $ExamplesLocation::exdir ]
         ];
-        File @ dir
+        Flatten @ File @ dir
     ];
 
 (* ::**********************************************************************:: *)
@@ -53,11 +54,11 @@ ExampleDirectory[ name_String ] :=
         ];
 
         root = ExpandFileName @ root;
-        dir = FileNameJoin @ { root, name };
+        dir = fileNameJoin @ { root, name };
 
         If[ DirectoryQ @ dir,
             File @ dir,
-            tryFetchExampleData[ root, name ]
+            tryFetchExampleData @ name
         ];
 
         File @ dir
@@ -80,9 +81,13 @@ ExampleDirectory[ args___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*tryFetchExampleData*)
-tryFetchExampleData[ root_String, name_String ] :=
-    Module[ { file },
-        file = FileNameJoin @ { root, name <> ".wl" };
+tryFetchExampleData[ name_String ] :=
+    Module[ { root, file },
+        root = $thisPaclet[ "AssetLocation", "Examples" ];
+        If[ ! DirectoryQ @ root,
+            throwMessageFailure @ ExampleDirectory::exdir
+        ];
+        file = fileNameJoin @ { root, name <> ".wl" };
         If[ FileExistsQ @ file,
             fetchExampleData[ file, name ],
             throwMessageFailure[ ExampleDirectory::exdnf, name ]
@@ -109,11 +114,11 @@ fetchExampleData0[ tmp_, file_, name_ ] := Enclose[
     Module[ { data, url, tgt, zip, files, top },
         data  = ConfirmBy[ Get @ file, AssociationQ ];
         url   = ConfirmBy[ Lookup[ data, "URL" ], StringQ ];
-        tgt   = FileNameJoin @ { tmp, name<>".zip" };
+        tgt   = fileNameJoin @ { tmp, name<>".zip" };
         zip   = ConfirmBy[ URLDownload[ url, tgt ], FileExistsQ ];
         files = ConfirmBy[ ExtractArchive[ zip, tmp ], AllTrue @ StringQ ];
         top   = First[ SortBy[ files, StringLength ], Confirm @ $Failed ];
-        CopyDirectory[ top, FileNameJoin @ { DirectoryName @ file, name } ]
+        CopyDirectory[ top, fileNameJoin @ { $ExamplesLocation, name } ]
     ],
     throwMessageFailure[ ExampleDirectory::exdnf, name ] &
 ];
@@ -144,7 +149,7 @@ defNBQ0[ ___ ] := False;
 findDefinitionNotebook[ dir_? DirectoryQ ] :=
     findDefinitionNotebook[
         dir,
-        FileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
+        fileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
     ];
 
 findDefinitionNotebook[ pac_PacletObject ] :=
