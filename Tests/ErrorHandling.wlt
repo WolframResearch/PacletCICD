@@ -184,7 +184,7 @@ VerificationTest[
             Wolfram`PacletCICD`Private`throwError[ "a" ],
         Wolfram`PacletCICD`Private`catch @
             Wolfram`PacletCICD`Private`throwError[ "b" ]
-    },
+    };,
     {
         Failure[
             "PacletCICD::error",

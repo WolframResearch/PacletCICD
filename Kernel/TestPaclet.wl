@@ -8,10 +8,110 @@ AnnotateTestIDs;
 
 Begin[ "`Private`" ];
 
+Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*TestPaclet*)
-TestPaclet[ ___ ] := Failure[ "NotImplemented", <| |> ];
+
+TestPaclet::failures =
+"Failures encountered while testing paclet.";
+
+TestPaclet[ dir_? DirectoryQ ] :=
+    (* TODO: do the right stuff here *)
+    Internal`InheritedBlock[ { dnc`$ConsoleType },
+        dnc`$ConsoleType = Automatic;
+        testPaclet @ dir
+    ];
+
+testPaclet[ dir_? DirectoryQ ] :=
+    Module[ { files, report },
+        files = FileNames[ "*.wlt", dir, Infinity ];
+        report = TestReport @ files;
+        annotateTestResult /@ report[ "TestResults" ];
+        If[ TrueQ @ report[ "AllTestsSucceeded" ],
+            report,
+            exitFailure[
+                "TestPaclet::failures",
+                Association[
+                    "MessageTemplate"   :> TestPaclet::failures,
+                    "MessageParameters" :> { },
+                    "Result"            -> report
+                ],
+                1
+            ]
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*annotateTestResult*)
+annotateTestResult[
+    tro: TestResultObject[
+        KeyValuePattern @ {
+            "TestID" | TestID -> testID_String,
+            "Outcome"         -> "Success"
+        },
+        ___
+    ]
+] :=
+    dnc`ConsolePrint[ "Test passed: " <> testID ];
+
+annotateTestResult[
+    tro: TestResultObject[
+        KeyValuePattern @ {
+            "TestID" | TestID -> testID_String,
+            "Outcome"         -> outcome: Except[ "Success" ]
+        },
+        ___
+    ]
+] :=
+    annotateTestResult[ tro, testID ];
+
+annotateTestResult[ tro_, testID_String ] :=
+    annotateTestResult[ tro, StringSplit[ testID, $testIDDelimiter ] ];
+
+annotateTestResult[ tro_, { testID_String, annotation_String } ] :=
+    annotateTestResult[ tro, testID, StringSplit[ annotation, ":" ] ];
+
+annotateTestResult[ tro_, testID_String, { file_String, pos_String } ] :=
+    annotateTestResult[ tro, testID, file, StringSplit[ pos, "-" ] ];
+
+annotateTestResult[
+    tro_,
+    testID_String,
+    file_String,
+    { lc1_String, lc2_String }
+] :=
+    annotateTestResult[
+        tro,
+        testID,
+        file,
+        StringSplit[ lc1, "," ],
+        StringSplit[ lc2, "," ]
+    ];
+
+annotateTestResult[
+    tro_TestResultObject,
+    testID_String,
+    file_String,
+    p1: { _String, _String },
+    p2: { _String, _String }
+] :=
+    dnc`ConsolePrint[
+        StringJoin[
+            "Test \"",
+            testID,
+            "\" failed with outcome: \"",
+            tro[ "Outcome" ],
+            "\""
+        ],
+        "Level" -> "Error",
+        "SourceInformation" -> <|
+            "File" -> file,
+            "Position" -> ToExpression @ { p1, p2 }
+        |>
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
