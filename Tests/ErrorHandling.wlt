@@ -87,7 +87,6 @@ VerificationTest[
     Failure[
         "PacletCICD::error",
         <|
-
             "MessageParameters" :> { "a" },
             "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
         |>
@@ -110,7 +109,6 @@ VerificationTest[
     Failure[
         "PacletCICD::warning",
         <|
-
             "MessageParameters" :> { "b" },
             "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::warning
         |>
@@ -133,7 +131,6 @@ VerificationTest[
     Failure[
         "PacletCICD::warning",
         <|
-
             "MessageParameters" :> { "b" },
             "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::warning
         |>
@@ -150,7 +147,6 @@ VerificationTest[
     Failure[
         "PacletCICD::error",
         <|
-
             "MessageParameters" :> { "a" },
             "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
         |>
@@ -169,7 +165,6 @@ VerificationTest[
     Failure[
         "PacletCICD::error",
         <|
-
             "MessageParameters" :> { "a" },
             "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
         |>
@@ -189,7 +184,6 @@ VerificationTest[
         Failure[
             "PacletCICD::error",
             <|
-
                 "MessageParameters" :> { "a" },
                 "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
             |>
@@ -197,7 +191,6 @@ VerificationTest[
         Failure[
             "PacletCICD::error",
             <|
-
                 "MessageParameters" :> { "b" },
                 "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
             |>
