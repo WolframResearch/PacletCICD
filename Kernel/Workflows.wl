@@ -37,6 +37,9 @@ CreateWorkflow::entitlement = "`1`";
 CreateWorkflow::invaction =
 "`1` is not a valid action specification.";
 
+CreateWorkflow::target =
+"`1` is not a valid target specification.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
@@ -45,7 +48,8 @@ CreateWorkflow // Options = {
     "CheckPacletAction" -> "rhennigan/check-paclet@latest",
     "DefaultBranch"     -> "main",
     OverwriteTarget     -> False,
-    TimeConstraint      -> Quantity[ 10, "Minutes" ]
+    TimeConstraint      -> Quantity[ 10, "Minutes" ],
+    "Target"            -> "Submit"
 };
 
 (* ::**********************************************************************:: *)
@@ -55,10 +59,12 @@ CreateWorkflow[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { workflow },
         workflow = createWorkflow[
             spec,
-            OptionValue[ "DefaultBranch"     ],
-            OptionValue[ TimeConstraint      ],
+            toDefNBLocation @ pac,
+            toDefaultBranch @ OptionValue[ "DefaultBranch" ],
+            toTimeConstraint @ OptionValue[ TimeConstraint ],
             toBuildPacletAction @ OptionValue[ "BuildPacletAction" ],
-            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ]
+            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ],
+            toActionTarget @ OptionValue[ "Target" ]
         ];
         exportWorkflow[ pac, workflow ]
     ];
@@ -71,19 +77,26 @@ $defaultTimeConstraint = 10;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*createWorkflow*)
-createWorkflow[ spec_, branch_String, timeConstraint_, build_, check_ ] :=
+createWorkflow[
+    spec_,
+    defNotebookLocation_,
+    branch_,
+    timeConstraint_,
+    buildPacletAction_,
+    checkPacletAction_,
+    actionTarget_
+] :=
     Block[
         {
             $defaultBranch         = branch,
-            $defaultTimeConstraint = toTimeConstraint @ timeConstraint,
-            $buildPacletAction     = build,
-            $checkPacletAction     = check
+            $defaultTimeConstraint = timeConstraint,
+            $buildPacletAction     = buildPacletAction,
+            $checkPacletAction     = checkPacletAction,
+            $defNotebookLocation   = defNotebookLocation,
+            $defaultActionTarget   = actionTarget
         },
         createWorkflow0 @ spec
     ];
-
-createWorkflow[ spec_, branch: Except[ _String? StringQ ] ] :=
-    throwMessageFailure[ CreateWorkflow::defbranch, branch ];
 
 createWorkflow // catchUndefined;
 
@@ -105,6 +118,42 @@ createWorkflow0[ spec_Association ] :=
     ];
 
 createWorkflow0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toActionTarget*)
+toActionTarget[ str_String? StringQ ] := str;
+toActionTarget[ Automatic ] := $defaultActionTarget;
+
+toActionTarget[ str: Except[ _String? StringQ ] ] :=
+    throwMessageFailure[ CreateWorkflow::target, str ];
+
+toActionTarget // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toDefaultBranch*)
+toDefaultBranch[ branch_String? StringQ ] := branch;
+
+toDefaultBranch[ branch: Except[ _String? StringQ ] ] :=
+    throwMessageFailure[ CreateWorkflow::defbranch, branch ];
+
+toDefaultBranch // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toDefNBLocation*)
+toDefNBLocation[ dir_? DirectoryQ ] := Enclose[
+    Module[ { file },
+        file = ConfirmBy[ findDefinitionNotebook @ dir, FileExistsQ ];
+        ConfirmBy[ relativePath[ dir, file ], StringQ ]
+    ],
+    $defNotebookLocation &
+];
+
+toDefNBLocation[ pac_PacletObject ] := toDefNBLocation @ pac[ "Location" ];
+
+toDefNBLocation // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -184,7 +233,7 @@ exportWorkflow[ dir_? DirectoryQ, workflow_ ] :=
     Module[ { wfDir, file },
         wfDir  = toWorkFlowDir @ dir;
         file   = FileNameJoin @ { wfDir, workflowFileName @ workflow };
-        exportWorkflow[ file, workflow ] (* TODO *)
+        exportWorkflow[ file, workflow ]
     ];
 
 exportWorkflow[ file_, workflow_ ] := Enclose[
@@ -564,11 +613,64 @@ $defaultJobContainer = <|
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*name*)
+(*$defaultJobEnv*)
 $defaultJobEnv = <|
     "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
     "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$latestPacletCICDVersion*)
+$latestPacletCICDVersion := getPacletCICDReleaseVersion[ ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getPacletCICDReleaseVersion*)
+getPacletCICDReleaseVersion[ ] :=
+    getPacletCICDReleaseVersion @ $thisPacletVersion;
+
+getPacletCICDReleaseVersion[ ver_String ] :=
+    getPacletCICDReleaseVersion[ $thisRepository, ver ];
+
+getPacletCICDReleaseVersion[ repo_String, ver_String ] := Enclose[
+    Module[ { url, data, tags, sel },
+
+        url = URLBuild @ <|
+            "Scheme" -> "https",
+            "Domain" -> "api.github.com",
+            "Path" -> { "repos", repo, "releases" }
+        |>;
+
+        data = ConfirmMatch[ URLExecute[ url, "RawJSON" ], { __Association } ];
+        tags = ConfirmMatch[ Lookup[ data, "tag_name" ], { __String } ];
+        sel  = ConfirmBy[ chooseMatchingTagVersion[ tags, "v"<>ver ], StringQ ];
+        getPacletCICDReleaseVersion[ repo, ver ] = sel
+    ],
+    "latest" &
+];
+
+getPacletCICDReleaseVersion // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*chooseMatchingTagVersion*)
+chooseMatchingTagVersion[ { ___, ver_, ___ }, ver_ ] :=
+    StringDelete[ ver, StartOfString~~"v" ];
+
+chooseMatchingTagVersion[ tags_List, tag_String ] :=
+    Module[ { sorted, sel },
+        sorted = Sort[ Append[ tags, tag ], versionOrder ];
+        sel =
+            Replace[
+                sorted,
+                {
+                    { ___, v_, tag, ___ } :> v,
+                    { ___, tag, v_, ___ } :> v
+                }
+            ];
+        StringDelete[ sel, StartOfString~~"v" ] /; StringQ @ sel
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -588,13 +690,23 @@ normalizeStep[ "checkout"|"checkoutcode" ] := <|
 normalizeStep[ "check"|"checkpaclet" ] := <|
     "name" -> "Check Paclet",
     "id"   -> "check-paclet-step",
-    "uses" -> $checkPacletAction
+    "uses" -> $checkPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
 |>;
 
 normalizeStep[ "build"|"buildpaclet" ] := <|
     "name" -> "Build Paclet",
     "id"   -> "build-paclet-step",
-    "uses" -> $buildPacletAction
+    "uses" -> $buildPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
 |>;
 
 normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
@@ -602,6 +714,7 @@ normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
     "id"   -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
+        (* TODO: prepend something like PacletCICD to these env vars *)
         "path"              -> "${{ env.BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
@@ -626,7 +739,7 @@ normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
     "uses" -> "actions/upload-release-asset@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
-        "upload_url" -> "${{ steps.create_release.outputs.upload_url }}",
+        "upload_url" -> "${{ steps.create-release-step.outputs.upload_url }}",
         "asset_path" -> "${{ env.PACLET_PATH }}",
         "asset_name" -> "${{ env.PACLET_FILE }}",
         "asset_content_type" -> "application/zip"
@@ -641,6 +754,9 @@ normalizeStep[ step_String ] :=
 normalizeStep[ as_Association ] := as;
 
 (*TODO: check against schema *)
+
+$defaultActionTarget = "Submit";
+$defNotebookLocation = "./DefinitionNotebook.nb";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

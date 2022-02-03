@@ -15,6 +15,7 @@ Wolfram`PacletCICD`TestPaclet;
 
 Quiet[
     Block[ { $ContextPath },
+        Get[ "Wolfram`PacletCICD`Config`"              ];
         Get[ "Wolfram`PacletCICD`ErrorHandling`"       ];
         Get[ "Wolfram`PacletCICD`Utilities`"           ];
         Get[ "Wolfram`PacletCICD`BuildPaclet`"         ];

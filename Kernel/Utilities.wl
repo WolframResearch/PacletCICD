@@ -8,10 +8,6 @@ ExampleDirectory;
 
 Begin[ "`Private`" ];
 
-$thisPacletDir      = DirectoryName[ $InputFileName, 2 ];
-$thisPaclet        := $thisPaclet = PacletObject @ File @ $thisPacletDir;
-$thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version" ];
-
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
 
@@ -45,6 +41,8 @@ ExampleDirectory::exdir =
 
 ExampleDirectory::exdnf =
 "No example directory with the name \"`1`\" exists.";
+
+(* TODO: move to ApplicationData *)
 
 ExampleDirectory[ name_String ] :=
     catchTop @ Module[ { root, dir },
@@ -149,11 +147,14 @@ findDefinitionNotebook[ dir_? DirectoryQ ] :=
         FileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
     ];
 
+findDefinitionNotebook[ pac_PacletObject ] :=
+    findDefinitionNotebook @ pac[ "Location" ];
+
 findDefinitionNotebook[ dir_, file_? defNBQ ] :=
     Flatten @ File @ file;
 
 findDefinitionNotebook[ dir_, _ ] :=
-    SelectFirst[ FileNames[ "*.nb", dir ], defNBQ ];
+    SelectFirst[ File /@ FileNames[ "*.nb", dir ], defNBQ ];
 
 findDefinitionNotebook // catchUndefined;
 
@@ -312,6 +313,14 @@ expandURL // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Programming Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*versionOrder*)
+versionOrder := versionOrder = (* TODO: inline this definition *)
+    Block[ { PrintTemporary },
+        ResourceFunction[ "VersionOrder", "Function" ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
