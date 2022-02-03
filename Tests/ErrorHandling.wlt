@@ -46,7 +46,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::undefined },
-    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:30,1-45,2"
+    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:30,1-50,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -62,7 +62,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:50,1-61,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:55,1-66,2"
 ]
 
 VerificationTest[
@@ -81,7 +81,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:63,1-80,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:68,1-85,2"
 ]
 
 VerificationTest[
@@ -97,7 +97,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:82,1-96,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:87,1-101,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -122,7 +122,7 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::warning
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:101,1-121,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:106,1-126,2"
 ]
 
 VerificationTest[
@@ -141,7 +141,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::warning },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:123,1-140,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:128,1-145,2"
 ]
 
 VerificationTest[
@@ -157,7 +157,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:142,1-156,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:147,1-161,2"
 ]
 
 VerificationTest[
@@ -175,7 +175,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:158,1-174,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:163,1-179,2"
 ]
 
 VerificationTest[
@@ -205,5 +205,5 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:176,1-204,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-209,2"
 ]
