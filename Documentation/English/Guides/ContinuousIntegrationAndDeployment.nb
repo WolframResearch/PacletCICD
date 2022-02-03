@@ -1,0 +1,358 @@
+Notebook[
+ {
+  Cell[
+   TextData[
+    {
+     "New in: ",
+     Cell["", "HistoryData", CellTags -> "New"],
+     " | Modified in: ",
+     Cell[" ", "HistoryData", CellTags -> "Modified"],
+     " | Obsolete in: ",
+     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
+     " | Excised in: ",
+     Cell[" ", "HistoryData", CellTags -> "Excised"]
+    }
+   ],
+   "History",
+   CellID -> 573997680
+  ],
+  Cell[
+   "Created by: rhennigan on 02-03-2022 08:29:36",
+   "AuthorDate",
+   CellID -> 42806193
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Categorization",
+      "CategorizationSection",
+      CellID -> 117185866
+     ],
+     Cell[
+      "Guide",
+      "Categorization",
+      CellLabel -> "Entity Type",
+      CellID -> 134905241
+     ],
+     Cell[
+      "Wolfram/PacletCICD",
+      "Categorization",
+      CellLabel -> "Paclet Name",
+      CellID -> 18210329
+     ],
+     Cell[
+      "Wolfram`PacletCICD`",
+      "Categorization",
+      CellLabel -> "Context",
+      CellID -> 403465466
+     ],
+     Cell[
+      "Wolfram/PacletCICD/guide/ContinuousIntegrationAndDeployment",
+      "Categorization",
+      CellLabel -> "URI",
+      CellID -> 276736885
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Keywords", "KeywordsSection", CellID -> 267280560],
+     Cell["XXXX", "Keywords", CellID -> 3490022]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Continuous Integration and Deployment",
+      "GuideTitle",
+      CellID -> 108885434
+     ],
+     Cell[
+      TextData[
+       {
+        "In software engineering, CI/CD is the combined practices of continuous integration (CI) and continuous deployment (CD). For Paclets, the process of continuous integration typically involves checking the Paclet structure and code for potential issues, running verification tests, and building the Paclet. Continuous deployment typically involves releasing the Paclet via the ",
+        ButtonBox[
+         "Wolfram Language Paclet Repository",
+         BaseStyle -> "Hyperlink",
+         ButtonData -> {
+          URL["https://resources.wolframcloud.com/PacletRepository/"],
+          None
+         },
+         ButtonNote -> "https://resources.wolframcloud.com/PacletRepository/"
+        ],
+        ", GitHub releases, and/or deploying to a personal cloud location."
+       }
+      ],
+      "GuideAbstract",
+      CellID -> 44553487
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["", "GuideFunctionsSection", CellID -> 138926937],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Continuous Integration",
+         "GuideFunctionsSubsection",
+         CellID -> 2296372
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "CheckPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/CheckPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "check a Paclet for potential issues using a definition notebook file"
+          }
+         ],
+         "GuideText",
+         CellID -> 32886646
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "BuildPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "build a Paclet using a definition notebook as a configuration file"
+          }
+         ],
+         "GuideText",
+         CellID -> 312641998
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "TestPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/TestPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "run a test suite for a Paclet"
+          }
+         ],
+         "GuideText",
+         CellID -> 493739729
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell["\t", "GuideDelimiter", CellID -> 149233359],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "CreateWorkflow",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreateWorkflow"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "generate a GitHub CI/CD workflow"
+          }
+         ],
+         "GuideText",
+         CellID -> 388104346
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "DeployReleaseHandler",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeployReleaseHandler"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "deploy an API to your cloud account to handle releases that require authentication"
+          }
+         ],
+         "GuideText",
+         CellID -> 214158616
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Continuous Deployment",
+         "GuideFunctionsSubsection",
+         CellID -> 779290292
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "DeployPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeployPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "deploy a Paclet to the ",
+           ButtonBox[
+            "Wolfram Cloud",
+            BaseStyle -> "Hyperlink",
+            ButtonData -> {URL["https://www.wolframcloud.com/"], None},
+            ButtonNote -> "https://www.wolframcloud.com/"
+           ]
+          }
+         ],
+         "GuideText",
+         CellID -> 546278519
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "SubmitPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/SubmitPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "submit a Paclet to the ",
+           ButtonBox[
+            "Wolfram Language Paclet Repository",
+            BaseStyle -> "Hyperlink",
+            ButtonData -> {
+             URL["https://resources.wolframcloud.com/PacletRepository/"],
+             None
+            },
+            ButtonNote -> "https://resources.wolframcloud.com/PacletRepository/"
+           ]
+          }
+         ],
+         "GuideText",
+         CellID -> 125980623
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Tech Notes",
+      "GuideTutorialsSection",
+      CellID -> 146954331
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "License Entitlements and Repository Secrets",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+       ]
+      ],
+      "GuideTutorial",
+      CellID -> 166195608
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Guides",
+      "GuideMoreAboutSection",
+      CellID -> 537181055
+     ],
+     Cell["XXXX", "GuideMoreAbout", CellID -> 790513756],
+     Cell["XXXX", "GuideMoreAbout", CellID -> 33012823]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   "Related Links",
+   "GuideRelatedLinksSection",
+   CellID -> 29173910
+  ]
+ },
+ WindowStatusArea -> Automatic,
+ TaggingRules -> <|
+  "Author" -> "rhennigan",
+  "CreationDate" -> "02-03-2022 08:29:36",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 2, 3, 8, 46, 47.9286427`9.433169991267118},
+   "Instant",
+   "Gregorian",
+   -5.
+  ],
+  "NotebookUUID" -> "44bc5355-79b1-42ff-81ed-3d943aa72aac"
+ |>,
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ StyleDefinitions -> FrontEnd`FileName[
+  {"Wolfram"},
+  "GuidePageStylesExt.nb",
+  CharacterEncoding -> "UTF-8"
+ ],
+ ExpressionUUID -> "44bc5355-79b1-42ff-81ed-3d943aa72aac"
+]

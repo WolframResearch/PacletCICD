@@ -1,11 +1,16 @@
 PacletObject[ <|
-    "Name"           -> "Wolfram/PacletCICD",
-    "Description"    -> "CI/CD utilities for Wolfram Language Paclets",
-    "Creator"        -> "Richard Hennigan <richardh@wolfram.com>",
-    "Version"        -> "0.2.2",
-    "WolframVersion" -> "13+",
-    "PublisherID"    -> "Wolfram",
-    "Extensions"     -> {
+    "Name"             -> "Wolfram/PacletCICD",
+    "Description"      -> "CI/CD utilities for Wolfram Language Paclets",
+    "Creator"          -> "Richard Hennigan <richardh@wolfram.com>",
+    "URL"              -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
+    "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+    "License"          -> "MIT",
+    "PublisherID"      -> "Wolfram",
+    "Version"          -> "0.3.0",
+    "WolframVersion"   -> "13.1+",
+    "Icon"             -> "Images/PacletIcon.png",
+    "Dependencies"     -> { "Wolfram/GitLink" },
+    "Extensions"       -> {
         {
             "Kernel",
             "Root"    -> "Kernel",
@@ -16,6 +21,7 @@ PacletObject[ <|
                 "Wolfram`PacletCICD`CheckPaclet",
                 "Wolfram`PacletCICD`CreateWorkflow",
                 "Wolfram`PacletCICD`DeployPaclet",
+                "Wolfram`PacletCICD`DeployReleaseHandler",
                 "Wolfram`PacletCICD`ExampleDirectory",
                 "Wolfram`PacletCICD`GitHubPacletInstall",
                 "Wolfram`PacletCICD`GitHubSecret",
