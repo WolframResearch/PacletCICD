@@ -43,7 +43,6 @@ ExampleDirectory::exdir =
 ExampleDirectory::exdnf =
 "No example directory with the name \"`1`\" exists.";
 
-(* TODO: move to ApplicationData *)
 
 ExampleDirectory[ name_String ] :=
     catchTop @ Module[ { root, dir },
