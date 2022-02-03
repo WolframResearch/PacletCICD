@@ -34,7 +34,12 @@ VerificationTest[
         <|
             "MessageParameters" :> {
                 HoldForm @ Wolfram`PacletCICD`Private`tryFetchExampleData,
-                HoldForm @ Wolfram`PacletCICD`Private`tryFetchExampleData[ 1, 2, 3, 4 ],
+                HoldForm @ Wolfram`PacletCICD`Private`tryFetchExampleData[
+                    1,
+                    2,
+                    3,
+                    4
+                ],
                 DownValues
             },
             "MessageTemplate" :> Wolfram`PacletCICD`PacletCICD::undefined
@@ -92,7 +97,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:82,1-97,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:82,1-96,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -117,7 +122,7 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::warning
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:102,1-123,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:101,1-121,2"
 ]
 
 VerificationTest[
@@ -136,7 +141,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::warning },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:125,1-143,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:123,1-140,2"
 ]
 
 VerificationTest[
@@ -152,7 +157,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:145,1-160,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:142,1-156,2"
 ]
 
 VerificationTest[
@@ -170,7 +175,7 @@ VerificationTest[
         |>
     ],
     { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:162,1-179,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:158,1-174,2"
 ]
 
 VerificationTest[
@@ -200,5 +205,5 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-211,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:176,1-204,2"
 ]

@@ -53,10 +53,12 @@ annotateTestIDs[ file_ ] :=
 (* ::Subsection::Closed:: *)
 (*toPacletRoot*)
 toPacletRoot[ file_, Automatic ] :=
-    SelectFirst[
-        FixedPointList[ DirectoryName, file ],
-        Composition[ PacletObjectQ, PacletObject, Flatten, File ],
-        None
+    Quiet[ SelectFirst[
+               FixedPointList[ DirectoryName, file ],
+               Composition[ PacletObjectQ, PacletObject, Flatten, File ],
+               None
+           ],
+           PacletManager`CreatePaclet::badarg
     ];
 
 toPacletRoot[ file_, root_ ] := root;
