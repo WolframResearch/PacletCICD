@@ -106,6 +106,7 @@ annotateTestResult[
             tro[ "Outcome" ],
             "\""
         ],
+        "Tag" -> testID,
         "Level" -> "Error",
         "SourceInformation" -> <|
             "File" -> file,
