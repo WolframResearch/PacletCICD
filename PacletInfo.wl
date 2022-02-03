@@ -17,6 +17,7 @@ PacletObject[ <|
             "Context" -> { "Wolfram`PacletCICD`" },
             "Symbols" -> {
                 "Wolfram`PacletCICD`$ExamplesLocation",
+                "Wolfram`PacletCICD`AnnotateTestIDs",
                 "Wolfram`PacletCICD`BuildPaclet",
                 "Wolfram`PacletCICD`CheckPaclet",
                 "Wolfram`PacletCICD`CreateWorkflow",
@@ -43,6 +44,11 @@ PacletObject[ <|
                 { "Images"   , "./Images"    },
                 { "Examples" , "./Examples"  }
             }
+        },
+        {
+            "Tests",
+            "Root"   -> "Tests",
+            "Method" -> "Experimental-v1"
         }
     }
 |> ]

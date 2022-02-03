@@ -2,6 +2,7 @@ BeginPackage[ "Wolfram`PacletCICD`" ];
 EndPackage[ ];
 
 Wolfram`PacletCICD`$ExamplesLocation;
+Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
 Wolfram`PacletCICD`CreateWorkflow;

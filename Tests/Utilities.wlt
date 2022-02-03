@@ -33,17 +33,19 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:50,1-57,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:30,1-37,2"
 ]
 
 VerificationTest[
     Wolfram`PacletCICD`Private`relativePath[ "path/to/file", "path/to/file" ],
     ".",
-    TestID -> "relativePath@@Tests/Utilities.wlt:59,1-63,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:39,1-43,2"
 ]
 
 VerificationTest[
-    Wolfram`PacletCICD`Private`relativePath[ "path/to/file" ][ "path/another/file" ],
+    Wolfram`PacletCICD`Private`relativePath[ "path/to/file" ][
+        "path/another/file"
+    ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:65,1-69,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:45,1-51,2"
 ]

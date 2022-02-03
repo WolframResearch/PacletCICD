@@ -4,6 +4,7 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
 TestPaclet;
+AnnotateTestIDs;
 
 Begin[ "`Private`" ];
 
@@ -20,16 +21,24 @@ $testIDDelimiter = "@@";
 $pacletRoot      = None;
 
 (* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*annotateTestIDs*)
-annotateTestIDs // Options = { "PacletRoot" -> None };
+(* ::Section::Closed:: *)
+(*AnnotateTestIDs*)
+AnnotateTestIDs // Options = { "PacletRoot" -> Automatic };
 
-annotateTestIDs[ file_? FileExistsQ, opts: OptionsPattern[ ] ] :=
-    Block[ { $pacletRoot = OptionValue[ "PacletRoot" ] },
-        annotateTestIDs0 @ file
+AnnotateTestIDs[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
+    Block[ { $pacletRoot = toPacletRoot[ dir, OptionValue[ "PacletRoot" ] ] },
+        annotateTestIDs /@ FileNames[ "*.wlt", dir, Infinity ]
     ];
 
-annotateTestIDs0[ file_ ] :=
+AnnotateTestIDs[ file_? FileExistsQ, opts: OptionsPattern[ ] ] :=
+    Block[ { $pacletRoot = toPacletRoot[ file, OptionValue[ "PacletRoot" ] ] },
+        annotateTestIDs @ file
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*annotateTestIDs*)
+annotateTestIDs[ file_ ] :=
     Module[ { data, pairs, string, replace, newString },
         data      = parseTestIDs @ file;
         pairs     = { #NewTestID, #IDSourceCharacterIndex } & /@ data;
@@ -39,6 +48,20 @@ annotateTestIDs0[ file_ ] :=
 
         Export[ file, newString, "String" ]
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toPacletRoot*)
+toPacletRoot[ file_, Automatic ] :=
+    SelectFirst[
+        FixedPointList[ DirectoryName, file ],
+        Composition[ PacletObjectQ, PacletObject, Flatten, File ],
+        None
+    ];
+
+toPacletRoot[ file_, root_ ] := root;
+
+toPacletRoot // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -62,13 +85,16 @@ parseTestIDs[ file_, type_ ] :=
         Cases[
             ast,
             CodeParser`CallNode[
-                CodeParser`LeafNode[ Symbol, "VerificationTest", _ ],
+                CodeParser`LeafNode[ Symbol, "VerificationTest"|"Test", _ ],
                 {
                     __,
                     CodeParser`CallNode[
                         CodeParser`LeafNode[ Symbol, "Rule", _ ],
                         {
-                            CodeParser`LeafNode[ Symbol, "TestID", _ ],
+                            Alternatives[
+                                CodeParser`LeafNode[ Symbol, "TestID", _ ],
+                                CodeParser`LeafNode[ "String", "\"TestID\"", _ ]
+                            ],
                             CodeParser`LeafNode[
                                 String,
                                 id_,

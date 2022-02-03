@@ -8,20 +8,20 @@ VerificationTest[
             2
         ]
     ],
-    TestID -> "Initialize"
+    TestID -> "Initialize@@Tests/ExampleDirectory.wlt:4,1-12,2"
 ]
 
 VerificationTest[
     PacletDirectoryLoad @ Wolfram`PacletCICD`Tests`$pacletDir,
     { ___, Wolfram`PacletCICD`Tests`$pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize"
+    TestID -> "Initialize@@Tests/ExampleDirectory.wlt:14,1-19,2"
 ]
 
 VerificationTest[
     Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`" ] ],
     Null,
-    TestID -> "Initialize"
+    TestID -> "Initialize@@Tests/ExampleDirectory.wlt:21,1-25,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -33,13 +33,13 @@ VerificationTest[
         DeleteContents -> True
     ],
     Null,
-    TestID -> "$ExamplesLocation-Delete"
+    TestID -> "$ExamplesLocation-Delete@@Tests/ExampleDirectory.wlt:30,1-37,2"
 ]
 
 VerificationTest[
     DirectoryQ @ Wolfram`PacletCICD`$ExamplesLocation,
     True,
-    TestID -> "$ExamplesLocation-Create"
+    TestID -> "$ExamplesLocation-Create@@Tests/ExampleDirectory.wlt:39,1-43,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -51,7 +51,7 @@ VerificationTest[
         DeleteContents -> True
     ],
     Null,
-    TestID -> "ExampleDirectory-FewIssues-Delete"
+    TestID -> "ExampleDirectory-FewIssues-Delete@@Tests/ExampleDirectory.wlt:48,1-55,2"
 ]
 
 VerificationTest[
@@ -60,19 +60,19 @@ VerificationTest[
         DeleteContents -> True
     ],
     Null,
-    TestID -> "ExampleDirectory-MoreIssues-Delete"
+    TestID -> "ExampleDirectory-MoreIssues-Delete@@Tests/ExampleDirectory.wlt:57,1-64,2"
 ]
 
 VerificationTest[
     DirectoryQ @ Wolfram`PacletCICD`ExampleDirectory[ "FewIssues" ],
     True,
-    TestID -> "ExampleDirectory-FewIssues-Create"
+    TestID -> "ExampleDirectory-FewIssues-Create@@Tests/ExampleDirectory.wlt:66,1-70,2"
 ]
 
 VerificationTest[
     DirectoryQ @ Wolfram`PacletCICD`ExampleDirectory[ "MoreIssues" ],
     True,
-    TestID -> "ExampleDirectory-MoreIssues-Create"
+    TestID -> "ExampleDirectory-MoreIssues-Create@@Tests/ExampleDirectory.wlt:72,1-76,2"
 ]
 
 VerificationTest[
@@ -87,7 +87,7 @@ VerificationTest[
         "Kernel",
         "PacletInfo.wl"
     },
-    TestID -> "ExampleDirectory-FewIssues-Files"
+    TestID -> "ExampleDirectory-FewIssues-Files@@Tests/ExampleDirectory.wlt:78,1-91,2"
 ]
 
 VerificationTest[
@@ -102,5 +102,5 @@ VerificationTest[
         "Kernel",
         "PacletInfo.wl"
     },
-    TestID -> "ExampleDirectory-MoreIssues-Files"
+    TestID -> "ExampleDirectory-MoreIssues-Files@@Tests/ExampleDirectory.wlt:93,1-106,2"
 ]
