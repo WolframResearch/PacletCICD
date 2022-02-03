@@ -179,12 +179,6 @@ VerificationTest[
 ]
 
 VerificationTest[
-    1+1,
-    3,
-    TestID -> "one-plus-one@@Tests/ErrorHandling.wlt:181,1-185,2"
-]
-
-VerificationTest[
     Wolfram`PacletCICD`Private`catchTop @ {
         Wolfram`PacletCICD`Private`catch @
             Wolfram`PacletCICD`Private`throwError[ "a" ],
@@ -211,11 +205,5 @@ VerificationTest[
         Wolfram`PacletCICD`PacletCICD::error,
         Wolfram`PacletCICD`PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:187,1-215,2"
-]
-
-VerificationTest[
-    1/0,
-    2,
-    TestID -> "divide-by-zero@@Tests/ErrorHandling.wlt:217,1-221,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-209,2"
 ]

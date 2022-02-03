@@ -14,6 +14,8 @@ Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
 (* ::Section::Closed:: *)
 (*TestPaclet*)
 
+(* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
+
 TestPaclet::failures =
 "Failures encountered while testing paclet.";
 
