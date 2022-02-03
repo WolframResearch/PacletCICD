@@ -207,3 +207,9 @@ VerificationTest[
     },
     TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-209,2"
 ]
+
+VerificationTest[
+    1/0,
+    2,
+    TestID -> "divide-by-zero@@Tests/ErrorHandling.wlt:211,1-215,2"
+]

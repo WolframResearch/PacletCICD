@@ -109,6 +109,7 @@ annotateTestResult[
         "Tag" -> testID,
         "Level" -> "Error",
         "SourceInformation" -> <|
+            "Scope" -> "PacletCICD/PacletTest",
             "File" -> file,
             "Position" -> ToExpression @ { p1, p2 }
         |>
