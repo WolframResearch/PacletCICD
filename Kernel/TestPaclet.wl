@@ -173,6 +173,7 @@ annotateTestIDs[ file_ ] :=
         Module[ { annotated },
             annotated = annotateTestIDs0 @ file;
             If[ TrueQ[ $reparseTests && $needsReparse ],
+                $untitledTestNumber = 1;
                 annotateTestIDs0 @ file,
                 annotated
             ]
