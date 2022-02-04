@@ -74,8 +74,10 @@ annotateTestResult[
         },
         ___
     ]
-] :=
-    annotateTestResult[ tro, testID ];
+] := (
+    dnc`ConsolePrint[ "Test failed: " <> testID ];
+    annotateTestResult[ tro, testID ]
+);
 
 annotateTestResult[ tro_, testID_String ] :=
     annotateTestResult[ tro, StringSplit[ testID, $testIDDelimiter ] ];
@@ -320,7 +322,7 @@ getTestIDData[ type_ ][
         KeyValuePattern[ CodeParser`Source -> testSrc_ ]
     ]
 ] := <|
-    "TestID"       -> "",
+    "TestID"       -> "None",
     "ID" <> type   -> None,
     "Test" <> type -> testSrc
 |>;
