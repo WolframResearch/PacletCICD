@@ -6,15 +6,17 @@ on:
   push:
     branches: ["release/*"]
 
+env:
+  WOLFRAM_SYSTEM_ID: Linux-x86-64
+  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+
 jobs:
-  release-paclet:
+  check-paclet:
+    name: Check Paclet
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
       options: --user root
-    env:
-      WOLFRAM_SYSTEM_ID: Linux-x86-64
-      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
     timeout-minutes: 10
     steps:
       - name: Checkout files
@@ -26,8 +28,38 @@ jobs:
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
 
+  test-paclet:
+    name: Test Paclet
+    runs-on: ubuntu-latest
+    container:
+      image: wolframresearch/wolframengine:latest
+      options: --user root
+    timeout-minutes: 10
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: wolframscript Scripts/InstallDependencies.wls
+
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
+
+  release-paclet:
+    name: Release Paclet
+    needs: [check-paclet, test-paclet]
+    runs-on: ubuntu-latest
+    container:
+      image: wolframresearch/wolframengine:latest
+      options: --user root
+
+    timeout-minutes: 10
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: wolframscript Scripts/InstallDependencies.wls
 
       - name: Build paclet
         run: wolframscript Scripts/BuildPaclet.wls

@@ -24,6 +24,17 @@ VerificationTest[
     TestID -> "Initialize@@Tests/ErrorHandling.wlt:21,1-25,2"
 ]
 
+ VerificationTest[1+1, 3]
+
+ VerificationTest[1/0, ComplexInfinity,{First::argx},TestID->None]
+
+ VerificationTest[1/0, ComplexInfinity,{First::argx},
+SameTest-> SameQ
+ ]
+
+VerificationTest   @
+    FailureQ[ $Failed/ 0]
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*catchUndefined*)
@@ -207,14 +218,3 @@ VerificationTest[
     },
     TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-209,2"
 ]
-
- VerificationTest[1+1, 3]
-
- VerificationTest[1/0, ComplexInfinity,{First::argx},TestID->None]
-
- VerificationTest[1/0, ComplexInfinity,{First::argx},
-SameTest-> SameQ
- ]
-
-VerificationTest   @
-    FailureQ[ $Failed/ 0]

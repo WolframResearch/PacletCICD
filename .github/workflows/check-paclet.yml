@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main", "feature/0.3.0-updates"]
   pull_request:
-    branches: ["main"]
+    branches: ["main", "release/*"]
   workflow_dispatch:
 
 env:
@@ -47,27 +47,3 @@ jobs:
         run: wolframscript Scripts/TestPaclet.wls
 
       # TODO upload test results if there are failures (set env like build-paclet)
-  
-  build-paclet:
-    name: Build Paclet
-    needs: [check-paclet, test-paclet]
-    runs-on: ubuntu-latest
-    container:
-      image: wolframresearch/wolframengine:latest
-      options: --user root
-    timeout-minutes: 10
-    steps:
-      - name: Checkout files
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
-      
-      - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
-      
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ env.BUILD_DIR }}
-          if-no-files-found: error
