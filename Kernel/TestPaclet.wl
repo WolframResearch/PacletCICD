@@ -14,15 +14,22 @@ Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
 (* ::Section::Closed:: *)
 (*TestPaclet*)
 
+TestPaclet // Options = {
+    "AnnotateTestIDs" -> True
+};
+
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
 
 TestPaclet::failures =
 "Failures encountered while testing paclet.";
 
-TestPaclet[ dir_? DirectoryQ ] :=
+TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
     (* TODO: do the right stuff here *)
-    Internal`InheritedBlock[ { dnc`$ConsoleType },
+    catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = Automatic;
+        If[ TrueQ @ OptionValue[ "AnnotateTestIDs" ],
+            AnnotateTestIDs[ dir, "Reparse" -> False ]
+        ];
         testPaclet @ dir
     ];
 
@@ -127,31 +134,106 @@ $pacletRoot      = None;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*AnnotateTestIDs*)
-AnnotateTestIDs // Options = { "PacletRoot" -> Automatic };
+AnnotateTestIDs // Options = {
+    "PacletRoot" -> Automatic,
+    "Reparse"    -> True
+};
 
 AnnotateTestIDs[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
-    Block[ { $pacletRoot = toPacletRoot[ dir, OptionValue[ "PacletRoot" ] ] },
+    Block[
+        {
+            $pacletRoot   = toPacletRoot[ dir, OptionValue[ "PacletRoot" ] ],
+            $reparseTests = OptionValue[ "Reparse" ]
+        },
         annotateTestIDs /@ FileNames[ "*.wlt", dir, Infinity ]
     ];
 
 AnnotateTestIDs[ file_? FileExistsQ, opts: OptionsPattern[ ] ] :=
-    Block[ { $pacletRoot = toPacletRoot[ file, OptionValue[ "PacletRoot" ] ] },
+    Block[
+        {
+            $pacletRoot   = toPacletRoot[ file, OptionValue[ "PacletRoot" ] ],
+            $reparseTests = OptionValue[ "Reparse" ]
+        },
         annotateTestIDs @ file
     ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*annotateTestIDs*)
+annotateTestIDs[ dir_? DirectoryQ ] :=
+    annotateTestIDs /@ FileNames[ "*.wlt"|"*.mt", dir, Infinity ];
+
 annotateTestIDs[ file_ ] :=
-    Module[ { data, pairs, string, replace, newString },
+    Block[ { $needsReparse = False },
+        Module[ { annotated },
+            annotated = annotateTestIDs0 @ file;
+            If[ TrueQ[ $reparseTests && $needsReparse ],
+                annotateTestIDs0 @ file,
+                annotated
+            ]
+        ]
+    ];
+
+annotateTestIDs0[ file_ ] :=
+    Module[ { data, string, pairs, replace, newString },
         data      = parseTestIDs @ file;
-        pairs     = { #NewTestID, #IDSourceCharacterIndex } & /@ data;
         string    = ReadString @ file;
+        pairs     = makeReplacementPair[ string ] /@ data;
         replace   = StringReplacePart[ string, ##1 ] &;
         newString = replace @@ Transpose @ pairs;
 
         Export[ file, newString, "String" ]
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*makeReplacementPair*)
+makeReplacementPair[ string_ ][ KeyValuePattern @ {
+    "NewTestID"              -> id_String,
+    "IDSourceCharacterIndex" -> { a_Integer, b_Integer }
+} ] := { id, { a, b } };
+
+makeReplacementPair[ string_ ][ KeyValuePattern @ {
+    "NewTestID"                -> id_String,
+    "IDSourceCharacterIndex"   -> None,
+    "TestSourceCharacterIndex" -> { a_Integer, b_Integer }
+} ] := (
+    $needsReparse = True;
+    {
+        insertTestID[
+            ToExpression @ id,
+            ToExpression[
+                StringTake[ string, { a, b } ],
+                InputForm,
+                HoldComplete
+            ]
+        ],
+        { a, b }
+    }
+);
+
+makeReplacementPair ~catchUndefined~ SubValues;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*insertTestID*)
+insertTestID[ id_String, HoldComplete @ VerificationTest[ a___ ] ] :=
+    StringJoin[
+        "VerificationTest[\n",
+        StringRiffle[
+            Cases[
+                Append[
+                    DeleteCases[ HoldComplete @ a, TestID -> _ ],
+                    TestID -> id
+                ],
+                e_ :> "  " <> ToString[ Unevaluated @ e, InputForm ]
+            ],
+            ",\n"
+        ],
+        "\n]"
+    ];
+
+insertTestID // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -175,8 +257,8 @@ toPacletRoot // catchUndefined;
 parseTestIDs[ file_ ] :=
     Module[ { as1, as2, idPositions, base },
 
-        as1         = parseTestIDs[ file, "LineColumn" ];
-        as2         = parseTestIDs[ file, "SourceCharacterIndex" ];
+        as1         = parseTestIDs[ file, "SourceCharacterIndex" ];
+        as2         = parseTestIDs[ file, "LineColumn" ];
         idPositions = Join @@@ Transpose[ { as1, as2 } ];
         base        = testIDFilePart @ file;
 
@@ -184,44 +266,66 @@ parseTestIDs[ file_ ] :=
     ];
 
 parseTestIDs[ file_, type_ ] :=
-    Module[ { ast },
+    Module[ { ast, all },
 
         ast = codeParseType[ file, type ];
 
-        Cases[
+        all = Cases[
             ast,
             CodeParser`CallNode[
-                CodeParser`LeafNode[ Symbol, "VerificationTest"|"Test", _ ],
-                {
-                    __,
-                    CodeParser`CallNode[
-                        CodeParser`LeafNode[ Symbol, "Rule", _ ],
-                        {
-                            Alternatives[
-                                CodeParser`LeafNode[ Symbol, "TestID", _ ],
-                                CodeParser`LeafNode[ "String", "\"TestID\"", _ ]
-                            ],
-                            CodeParser`LeafNode[
-                                String,
-                                id_,
-                                KeyValuePattern[
-                                    CodeParser`Source -> idSrc_
-                                ]
-                            ]
-                        },
-                        _
-                    ],
-                    ___
-                },
-                KeyValuePattern[ CodeParser`Source -> testSrc_ ]
-            ] :> <|
-                "TestID"       -> ToExpression[ id, InputForm ],
-                "ID" <> type   -> idSrc,
-                "Test" <> type -> testSrc
-            |>,
+                CodeParser`LeafNode[ Symbol, "VerificationTest", _ ],
+                __
+            ],
             Infinity
-        ]
+        ];
+
+        getTestIDData[ type ] /@ all
     ];
+
+
+getTestIDData[ type_ ][
+    CodeParser`CallNode[
+        CodeParser`LeafNode[ Symbol, "VerificationTest" | "Test", _ ],
+        {
+            __,
+            CodeParser`CallNode[
+                CodeParser`LeafNode[ Symbol, "Rule", _ ],
+                {
+                    Alternatives[
+                        CodeParser`LeafNode[ Symbol, "TestID", _ ],
+                        CodeParser`LeafNode[ "String", "\"TestID\"", _ ]
+                    ],
+                    CodeParser`LeafNode[
+                        String,
+                        id_,
+                        KeyValuePattern[ CodeParser`Source -> idSrc_ ]
+                    ]
+                },
+                _
+            ],
+            ___
+        },
+        KeyValuePattern[ CodeParser`Source -> testSrc_ ]
+    ]
+] := <|
+    "TestID"       -> ToExpression[ id, InputForm ],
+    "ID" <> type   -> idSrc,
+    "Test" <> type -> testSrc
+|>;
+
+getTestIDData[ type_ ][
+    CodeParser`CallNode[
+        CodeParser`LeafNode[ Symbol, "VerificationTest", _ ],
+        _,
+        KeyValuePattern[ CodeParser`Source -> testSrc_ ]
+    ]
+] := <|
+    "TestID"       -> "",
+    "ID" <> type   -> None,
+    "Test" <> type -> testSrc
+|>;
+
+getTestIDData ~catchUndefined~ SubValues;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
