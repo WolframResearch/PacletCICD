@@ -36,7 +36,7 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
 testPaclet[ dir_? DirectoryQ ] :=
     Module[ { files, report },
         files = FileNames[ "*.wlt", dir, Infinity ];
-        report = TestReport @ files;
+        report = Block[ { $catching = False }, TestReport @ files ];
         annotateTestResult /@ report[ "TestResults" ];
         If[ TrueQ @ report[ "AllTestsSucceeded" ],
             report,

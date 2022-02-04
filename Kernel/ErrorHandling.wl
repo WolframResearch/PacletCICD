@@ -78,8 +78,10 @@ PacletCICD::message =
 (*catchTop*)
 catchTop // Attributes = { HoldFirst };
 
+catchTop[ eval_ ] /; $catching := eval;
+
 catchTop[ eval_ ] :=
-    Block[ { $catching = True, $messaged = False, catchTop = # & },
+    Block[ { $catching = True, $messaged = False },
         Catch[ eval, $top ]
     ];
 
