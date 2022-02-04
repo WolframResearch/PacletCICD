@@ -7,6 +7,10 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+env:
+  WOLFRAM_SYSTEM_ID: Linux-x86-64
+  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+
 jobs:
   check-paclet:
     name: Check Paclet
@@ -14,9 +18,6 @@ jobs:
     container:
       image: wolframresearch/wolframengine:latest
       options: --user root
-    env:
-      WOLFRAM_SYSTEM_ID: Linux-x86-64
-      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
     timeout-minutes: 10
     steps:
       - name: Checkout files
@@ -34,9 +35,6 @@ jobs:
     container:
       image: wolframresearch/wolframengine:latest
       options: --user root
-    env:
-      WOLFRAM_SYSTEM_ID: Linux-x86-64
-      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
     timeout-minutes: 10
     steps:
       - name: Checkout files
@@ -57,9 +55,6 @@ jobs:
     container:
       image: wolframresearch/wolframengine:latest
       options: --user root
-    env:
-      WOLFRAM_SYSTEM_ID: Linux-x86-64
-      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
     timeout-minutes: 10
     steps:
       - name: Checkout files

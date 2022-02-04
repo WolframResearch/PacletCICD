@@ -44,11 +44,6 @@ PacletObject[ <|
                 { "Images"   , "./Images"    },
                 { "Examples" , "./Examples"  }
             }
-        },
-        {
-            "Tests",
-            "Root"   -> "Tests",
-            "Method" -> "Experimental-v1"
         }
     }
 |> ]
