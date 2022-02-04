@@ -2,7 +2,7 @@ name: Check Paclet
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feature/0.3.0-updates"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -47,3 +47,32 @@ jobs:
 
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
+
+      # TODO upload test results if there are failures (set env like build-paclet)
+  
+  build-paclet:
+    name: Build Paclet
+    needs: [check-paclet, test-paclet]
+    runs-on: ubuntu-latest
+    container:
+      image: wolframresearch/wolframengine:latest
+      options: --user root
+    env:
+      WOLFRAM_SYSTEM_ID: Linux-x86-64
+      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+    timeout-minutes: 10
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: wolframscript Scripts/InstallDependencies.wls
+      
+      - name: Build paclet
+        run: wolframscript Scripts/BuildPaclet.wls
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ env.BUILD_DIR }}
+          if-no-files-found: error

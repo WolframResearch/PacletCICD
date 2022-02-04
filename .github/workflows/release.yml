@@ -26,6 +26,9 @@ jobs:
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
 
+      - name: Test paclet
+        run: wolframscript Scripts/TestPaclet.wls
+
       - name: Build paclet
         run: wolframscript Scripts/BuildPaclet.wls
 
