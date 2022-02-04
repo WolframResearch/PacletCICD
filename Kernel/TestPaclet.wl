@@ -132,6 +132,7 @@ annotateTestResult[
 
 $testIDDelimiter = "@@";
 $pacletRoot      = None;
+$untitledTestNumber = 1;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -145,7 +146,8 @@ AnnotateTestIDs[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
     Block[
         {
             $pacletRoot   = toPacletRoot[ dir, OptionValue[ "PacletRoot" ] ],
-            $reparseTests = OptionValue[ "Reparse" ]
+            $reparseTests = OptionValue[ "Reparse" ],
+            $untitledTestNumber = 1
         },
         annotateTestIDs /@ FileNames[ "*.wlt", dir, Infinity ]
     ];
@@ -154,7 +156,8 @@ AnnotateTestIDs[ file_? FileExistsQ, opts: OptionsPattern[ ] ] :=
     Block[
         {
             $pacletRoot   = toPacletRoot[ file, OptionValue[ "PacletRoot" ] ],
-            $reparseTests = OptionValue[ "Reparse" ]
+            $reparseTests = OptionValue[ "Reparse" ],
+            $untitledTestNumber = 1
         },
         annotateTestIDs @ file
     ];
@@ -322,7 +325,7 @@ getTestIDData[ type_ ][
         KeyValuePattern[ CodeParser`Source -> testSrc_ ]
     ]
 ] := <|
-    "TestID"       -> "None",
+    "TestID"       -> "Untitled-" <> ToString[ $untitledTestNumber++ ],
     "ID" <> type   -> None,
     "Test" <> type -> testSrc
 |>;
