@@ -244,17 +244,8 @@ insertTestID // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toPacletRoot*)
-toPacletRoot[ file_, Automatic ] :=
-    Quiet[ SelectFirst[
-               FixedPointList[ DirectoryName, file ],
-               Composition[ PacletObjectQ, PacletObject, Flatten, File ],
-               None
-           ],
-           PacletManager`CreatePaclet::badarg
-    ];
-
+toPacletRoot[ file_, Automatic ] := parentPacletDirectory @ file;
 toPacletRoot[ file_, root_ ] := root;
-
 toPacletRoot // catchUndefined;
 
 (* ::**********************************************************************:: *)

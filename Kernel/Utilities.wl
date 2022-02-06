@@ -168,6 +168,39 @@ findDefinitionNotebook // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*parentPacletDirectory*)
+parentPacletDirectory[ file_ ] := Enclose[
+    Module[ { expanded, dir, parent },
+        expanded = ConfirmBy[ ExpandFileName @ file, StringQ ];
+        parent = parentPacletDirectory0 @ expanded;
+        ConfirmMatch[ parent, None | _?DirectoryQ ]
+    ],
+    throwError[
+        "Cannot determine parent paclet directory of `1`.",
+        file, ##
+    ] &
+];
+
+parentPacletDirectory0[ file_ ] :=
+    Quiet[ SelectFirst[ FixedPointList[ DirectoryName, file, 50 ],
+                        pacletDirectoryQ,
+                        None
+           ],
+           PacletManager`CreatePaclet::badarg
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*pacletDirectoryQ*)
+pacletDirectoryQ[ "" ] := False;
+
+pacletDirectoryQ[ dir_? DirectoryQ ] :=
+    PacletObjectQ @ PacletObject @ Flatten @ File @ dir;
+
+pacletDirectoryQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*ensureDirectory*)
 ensureDirectory[ dir_ ] := GeneralUtilities`EnsureDirectory @ dir;
 

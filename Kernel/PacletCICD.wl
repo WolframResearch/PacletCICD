@@ -5,6 +5,7 @@ Wolfram`PacletCICD`$ExamplesLocation;
 Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
+Wolfram`PacletCICD`CompileLibraryResources;
 Wolfram`PacletCICD`CreateWorkflow;
 Wolfram`PacletCICD`DeployPaclet;
 Wolfram`PacletCICD`ExampleDirectory;
@@ -21,6 +22,7 @@ Quiet[
         Get[ "Wolfram`PacletCICD`Utilities`"           ];
         Get[ "Wolfram`PacletCICD`BuildPaclet`"         ];
         Get[ "Wolfram`PacletCICD`CheckPaclet`"         ];
+        Get[ "Wolfram`PacletCICD`Compilation`"         ];
         Get[ "Wolfram`PacletCICD`DeployPaclet`"        ];
         Get[ "Wolfram`PacletCICD`GitHubPacletInstall`" ];
         Get[ "Wolfram`PacletCICD`SubmitPaclet`"        ];
