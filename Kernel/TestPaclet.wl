@@ -304,6 +304,9 @@ parseTestIDs[ file_, type_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*maskNestedTests*)
+
+(* TODO: simplify parsing patterns  with ASTPattern and FromAST *)
+
 maskNestedTests[ ast_, mask_ ] :=
     ReplaceAll[
         ast,

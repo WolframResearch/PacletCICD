@@ -56,35 +56,50 @@ astPattern[ Verbatim[ Pattern ][ sym_Symbol? symbolQ, patt_ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Special patterns*)
-astPattern[ patt_ASTPattern ] := patt;
+astPattern[ patt_ASTPattern  ] := patt;
 astPattern[ patt_$astPattern ] := patt;
-astPattern[ Verbatim[ Verbatim ][ a___ ] ] := a;
-astPattern[ Verbatim[ HoldPattern ][ a_ ] ] := astPattern @ a;
+
+astPattern[ Verbatim[ Verbatim     ][ a___ ] ] := a;
+astPattern[ Verbatim[ HoldPattern  ][ a_   ] ] := astPattern @ a;
 astPattern[ Verbatim[ Alternatives ][ a___ ] ] :=
     Alternatives @@ (astPattern /@ HoldComplete @ a);
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Blanks*)
-astPattern[ Verbatim[ _ ] ] := _CallNode|_LeafNode;
-astPattern[ Verbatim[ __ ] ] := (_CallNode|_LeafNode)..;
+astPattern[ Verbatim[ _   ] ] := (_CallNode|_LeafNode);
+astPattern[ Verbatim[ __  ] ] := (_CallNode|_LeafNode)..;
 astPattern[ Verbatim[ ___ ] ] := (_CallNode|_LeafNode)...;
 
-astPattern[ Verbatim[ Blank ][ sym_? symbolQ ] ] := blank @ sym;
-astPattern[ Verbatim[ BlankSequence ][ sym_? symbolQ ] ] := blank @ sym ..;
-astPattern[ Verbatim[ BlankNullSequence ][ sym_? symbolQ ] ] := blank @ sym ...;
+astPattern[ Verbatim[ Blank             ][ sym_? symbolQ ] ] := blank @ sym;
+astPattern[ Verbatim[ BlankSequence     ][ sym_? symbolQ ] ] := blank @ sym..;
+astPattern[ Verbatim[ BlankNullSequence ][ sym_? symbolQ ] ] := blank @ sym...;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*blank*)
 blank // Attributes = { HoldAllComplete };
-
-blank[ sym_? leafHeadQ ] :=
-    LeafNode[ sym, _, _ ] | CallNode[ symNamePatt @ sym, _, _ ];
-
-blank[ sym_ ] := CallNode[ symNamePatt @ sym, _, _ ];
-
+blank[ sym_? leafHeadQ ] := leafNode @ sym | callNode @ symNamePatt @ sym;
+blank[ sym_ ] := callNode @ symNamePatt @ sym;
 blank // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*leafNode*)
+leafNode[ a_         ] := LeafNode[ a, _, _ ];
+leafNode[ a_, b_     ] := LeafNode[ a, b, _ ];
+leafNode[ a_, b_, c_ ] := LeafNode[ a, b, c ];
+
+leafNode // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*callNode*)
+callNode[ a_         ] := CallNode[ a, _, _ ];
+callNode[ a_, b_     ] := CallNode[ a, b, _ ];
+callNode[ a_, b_, c_ ] := CallNode[ a, b, c ];
+
+callNode // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -105,30 +120,47 @@ astPattern[ Verbatim[ RepeatedNull ][ x_, a___ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*PatternTest*)
-astPattern[
-    Verbatim[ PatternTest ][
-        Verbatim[ Blank ][ sym_? symbolQ ],
-        test_
-    ] ] /; leafTestQ[ sym, test ] :=
-    LeafNode[ sym, _, _ ];
+astPattern[ Verbatim[ PatternTest ][
+    Verbatim[ Pattern ][ s_Symbol? symbolQ, patt_ ],
+    test_
+] ] :=
+    With[ { p = astPattern @ PatternTest[ patt, test ] },
+        Pattern @@ HoldComplete[ s, p ]
+    ];
 
 astPattern[
     Verbatim[ PatternTest ][
-        Verbatim[ BlankSequence ][ sym_? symbolQ ],
+        Verbatim[ Blank ][ head_? symbolQ ],
+        test_
+    ] ] /; leafTestQ[ head, test ] :=
+    leafNode @ head;
+
+astPattern[
+    Verbatim[ PatternTest ][
+        Verbatim[ BlankSequence ][ head_? symbolQ ],
         test_
     ]
-] /; leafTestQ[ sym, test ] :=
-    LeafNode[ sym, _, _ ]..;
+] /; leafTestQ[ head, test ] :=
+    leafNode @ head..;
 
 astPattern[
     Verbatim[ PatternTest ][
-        Verbatim[ BlankNullSequence ][ sym_? symbolQ ],
+        Verbatim[ BlankNullSequence ][ head_? symbolQ ],
         test_
     ]
-] /; leafTestQ[ sym, test ] :=
-    LeafNode[ sym, _, _ ]...;
+] /; leafTestQ[ head, test ] :=
+    leafNode @ head...;
 
-(* TODO: general pattern tests (convert to equivalent Condition ) *)
+astPattern[ Verbatim[ PatternTest ][ patt_, test_ ] ] :=
+    With[ { p = astPattern @ patt },
+        Apply[
+            PatternTest,
+            HoldComplete[
+                p,
+                FromAST[ #, test ] &
+            ]
+        ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -203,20 +235,12 @@ astConditionPattern // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*rhsConditionRules*)
 rhsConditionRules[ lhs_ ] :=
-    Cases[
-        HoldComplete @ lhs,
-        Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :>
-            HoldPattern @ s :>
-                RuleCondition[
-                    ToExpression[
-                        ToFullFormString @ s,
-                        InputForm,
-                        $ConditionHold
-                    ],
-                    True
-                ],
-        Infinity,
-        Heads -> True
+    Cases[ HoldComplete @ lhs,
+           Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :>
+               HoldPattern @ s :>
+                   RuleCondition[ FromAST[ s, $ConditionHold ], True ],
+           Infinity,
+           Heads -> True
     ];
 
 rhsConditionRules // catchUndefined;
@@ -287,6 +311,8 @@ expandNestedASTPatterns[ expr_ ] :=
         HoldPattern @ ASTPattern[ a___ ] :>
             With[ { p = astPattern @ a }, $astPattern @ p /; True ]
     ];
+
+expandNestedASTPatterns // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

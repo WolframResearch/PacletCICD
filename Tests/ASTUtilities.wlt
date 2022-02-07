@@ -220,6 +220,24 @@ VerificationTest[
     TestID -> "TestParse-Condition-4@@Tests/ASTUtilities.wlt:214,1-221,2"
 ]
 
+VerificationTest[
+    testParse[ "5", _Integer? IntegerQ ],
+    True,
+    TestID -> "TestParse-PatternTest-1"
+]
+
+VerificationTest[
+    testParse[ "5", x_Integer? IntegerQ ],
+    True,
+    TestID -> "TestParse-PatternTest-2"
+]
+
+VerificationTest[
+    testParse[ "5", x_ /; IntegerQ @ x ],
+    True,
+    TestID -> "TestParse-PatternTest-3"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*FromAST*)
@@ -238,4 +256,38 @@ VerificationTest[
     ],
     { "Addition" },
     TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:226,1-241,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Sample File*)
+VerificationTest[
+    ast = CodeParse @ File[ "ExampleData/Collatz.m" ],
+    ContainerNode[ File, _, _ ],
+    SameTest -> MatchQ,
+    TestID -> "CodeParse-ExampleData-Collatz"
+]
+
+VerificationTest[
+    Cases[
+        ast,
+        ASTPattern[
+            sd_SetDelayed,
+            KeyValuePattern @ { "Definitions" -> defs_, Source -> src_ }
+        ] :> <|
+            "Expression"  -> FromAST[ sd, Hold ],
+            "Definitions" -> FromAST[ defs, Hold ],
+            "Source"      -> src
+        |>,
+        Infinity
+    ],
+    {
+        KeyValuePattern @ {
+            "Expression"  -> Hold[ _SetDelayed ],
+            "Definitions" -> { Hold[ _Symbol ] },
+            "Source"      -> { { _Integer, _Integer }, { _Integer, _Integer } }
+        }..
+    },
+    SameTest -> MatchQ,
+    TestID   -> "Combined-Application"
 ]
