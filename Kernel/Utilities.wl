@@ -3,6 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
+ASTPattern;
 $ExamplesLocation;
 ExampleDirectory;
 
@@ -10,6 +11,16 @@ Begin[ "`Private`" ];
 
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ASTPattern*)
+ASTPattern :=
+    Block[ { $ContextPath },
+        ASTPattern // ClearAll;
+        Get[ "Wolfram`PacletCICD`ASTPattern`" ];
+        ASTPattern
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -350,6 +361,20 @@ expandURL // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Programming Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*symbolQ*)
+symbolQ // Attributes = { HoldAllComplete };
+
+symbolQ[ s_Symbol ] :=
+    TrueQ @ And[
+        AtomQ @ Unevaluated @ s,
+        ! Internal`RemovedSymbolQ @ Unevaluated @ s,
+        Unevaluated @ s =!= Internal`$EFAIL
+    ];
+
+symbolQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
