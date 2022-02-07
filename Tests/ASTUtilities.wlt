@@ -223,19 +223,19 @@ VerificationTest[
 VerificationTest[
     testParse[ "5", _Integer? IntegerQ ],
     True,
-    TestID -> "TestParse-PatternTest-1"
+    TestID -> "TestParse-PatternTest-1@@Tests/ASTUtilities.wlt:223,1-227,2"
 ]
 
 VerificationTest[
     testParse[ "5", x_Integer? IntegerQ ],
     True,
-    TestID -> "TestParse-PatternTest-2"
+    TestID -> "TestParse-PatternTest-2@@Tests/ASTUtilities.wlt:229,1-233,2"
 ]
 
 VerificationTest[
     testParse[ "5", x_ /; IntegerQ @ x ],
     True,
-    TestID -> "TestParse-PatternTest-3"
+    TestID -> "TestParse-PatternTest-3@@Tests/ASTUtilities.wlt:235,1-239,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -255,5 +255,5 @@ VerificationTest[
         Infinity
     ],
     { "Addition" },
-    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:226,1-241,2"
+    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:244,1-259,2"
 ]
