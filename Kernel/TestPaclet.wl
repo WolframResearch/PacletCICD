@@ -35,8 +35,8 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
 
 testPaclet[ dir_? DirectoryQ ] :=
     Module[ { files, report },
-        files = FileNames[ "*.wlt", dir, Infinity ];
-        report = Block[ { $catching = False }, TestReport @ files ];
+        files  = FileNames[ "*.wlt", dir, Infinity ];
+        report = testContext @ TestReport @ files;
         annotateTestResult /@ report[ "TestResults" ];
         If[ TrueQ @ report[ "AllTestsSucceeded" ],
             report,
@@ -50,6 +50,21 @@ testPaclet[ dir_? DirectoryQ ] :=
                 1
             ]
         ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*testContext*)
+testContext // Attributes = { HoldFirst };
+
+testContext[ eval_ ] :=
+    Block[
+        {
+            $catching    = False,
+            $Context     = "PacletCICDTest`",
+            $ContextPath = { "PacletCICDTest`", "System`" }
+        },
+        eval
     ];
 
 (* ::**********************************************************************:: *)

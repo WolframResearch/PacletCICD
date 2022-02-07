@@ -3,25 +3,31 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        Wolfram`PacletCICD`Tests`$pacletDir = DirectoryName[
-            System`$TestFileName,
-            2
-        ]
+        $pacletDir = DirectoryName[ $TestFileName, 2 ]
     ],
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:4,1-12,2"
+    TestID -> "Initialize@@Tests/ErrorHandling.wlt:4,1-9,2"
 ]
 
 VerificationTest[
-    PacletDirectoryLoad @ Wolfram`PacletCICD`Tests`$pacletDir,
-    { ___, Wolfram`PacletCICD`Tests`$pacletDir, ___ },
+    PacletDirectoryLoad @ $pacletDir,
+    { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:14,1-19,2"
+    TestID -> "Initialize@@Tests/ErrorHandling.wlt:11,1-16,2"
 ]
 
 VerificationTest[
-    Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`" ] ],
+    Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:21,1-25,2"
+    TestID -> "Initialize@@Tests/ErrorHandling.wlt:18,1-22,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Context Check*)
+VerificationTest[
+    Context @ PacletCICD,
+    "Wolfram`PacletCICD`",
+    TestID -> "PacletCICD-Context@@Tests/ErrorHandling.wlt:27,1-31,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -42,11 +48,11 @@ VerificationTest[
                 ],
                 DownValues
             },
-            "MessageTemplate" :> Wolfram`PacletCICD`PacletCICD::undefined
+            "MessageTemplate" :> PacletCICD::undefined
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::undefined },
-    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:30,1-50,2"
+    { PacletCICD::undefined },
+    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:36,1-56,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -58,11 +64,11 @@ VerificationTest[
         "PacletCICD::error",
         <|
             "MessageParameters" :> { "Error message: 1", 1, 2, 3 },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+            "MessageTemplate"   :> PacletCICD::error
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:55,1-66,2"
+    { PacletCICD::error },
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:61,1-72,2"
 ]
 
 VerificationTest[
@@ -77,11 +83,11 @@ VerificationTest[
                 "Error message: {1, 2, 3}",
                 <| "expr" -> { 1, 2, 3 }, "other" -> 123 |>
             },
-            "MessageTemplate" :> Wolfram`PacletCICD`PacletCICD::error
+            "MessageTemplate" :> PacletCICD::error
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:68,1-85,2"
+    { PacletCICD::error },
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:74,1-91,2"
 ]
 
 VerificationTest[
@@ -93,11 +99,11 @@ VerificationTest[
         "PacletCICD::error",
         <|
             "MessageParameters" :> { "a" },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+            "MessageTemplate"   :> PacletCICD::error
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:87,1-101,2"
+    { PacletCICD::error },
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:93,1-107,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -115,14 +121,14 @@ VerificationTest[
         "PacletCICD::warning",
         <|
             "MessageParameters" :> { "b" },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::warning
+            "MessageTemplate"   :> PacletCICD::warning
         |>
     ],
     {
-        Wolfram`PacletCICD`PacletCICD::error,
-        Wolfram`PacletCICD`PacletCICD::warning
+        PacletCICD::error,
+        PacletCICD::warning
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:106,1-126,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:112,1-132,2"
 ]
 
 VerificationTest[
@@ -137,11 +143,11 @@ VerificationTest[
         "PacletCICD::warning",
         <|
             "MessageParameters" :> { "b" },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::warning
+            "MessageTemplate"   :> PacletCICD::warning
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::warning },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:128,1-145,2"
+    { PacletCICD::warning },
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:134,1-151,2"
 ]
 
 VerificationTest[
@@ -153,11 +159,11 @@ VerificationTest[
         "PacletCICD::error",
         <|
             "MessageParameters" :> { "a" },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+            "MessageTemplate"   :> PacletCICD::error
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:147,1-161,2"
+    { PacletCICD::error },
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:153,1-167,2"
 ]
 
 VerificationTest[
@@ -171,11 +177,11 @@ VerificationTest[
         "PacletCICD::error",
         <|
             "MessageParameters" :> { "a" },
-            "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+            "MessageTemplate"   :> PacletCICD::error
         |>
     ],
-    { Wolfram`PacletCICD`PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:163,1-179,2"
+    { PacletCICD::error },
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:169,1-185,2"
 ]
 
 VerificationTest[
@@ -190,20 +196,20 @@ VerificationTest[
             "PacletCICD::error",
             <|
                 "MessageParameters" :> { "a" },
-                "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+                "MessageTemplate"   :> PacletCICD::error
             |>
         ],
         Failure[
             "PacletCICD::error",
             <|
                 "MessageParameters" :> { "b" },
-                "MessageTemplate"   :> Wolfram`PacletCICD`PacletCICD::error
+                "MessageTemplate"   :> PacletCICD::error
             |>
         ]
     },
     {
-        Wolfram`PacletCICD`PacletCICD::error,
-        Wolfram`PacletCICD`PacletCICD::error
+        PacletCICD::error,
+        PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:181,1-209,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:187,1-215,2"
 ]

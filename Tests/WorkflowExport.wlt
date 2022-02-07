@@ -3,25 +3,37 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        Wolfram`PacletCICD`Tests`$pacletDir = DirectoryName[
-            System`$TestFileName,
-            2
-        ]
+        $pacletDir = DirectoryName[ $TestFileName, 2 ]
     ],
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:4,1-12,2"
+    TestID -> "Initialize@@Tests/WorkflowExport.wlt:4,1-9,2"
 ]
 
 VerificationTest[
-    PacletDirectoryLoad @ Wolfram`PacletCICD`Tests`$pacletDir,
-    { ___, Wolfram`PacletCICD`Tests`$pacletDir, ___ },
+    PacletDirectoryLoad @ $pacletDir,
+    { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:14,1-19,2"
+    TestID -> "Initialize@@Tests/WorkflowExport.wlt:11,1-16,2"
 ]
 
 VerificationTest[
-    Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`" ] ],
+    Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:21,1-25,2"
+    TestID -> "Initialize@@Tests/WorkflowExport.wlt:18,1-22,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Context Check*)
+VerificationTest[
+    Context @ WorkflowExport,
+    "Wolfram`PacletCICD`",
+    TestID -> "WorkflowExport-Context@@Tests/WorkflowExport.wlt:27,1-31,2"
+]
+
+VerificationTest[
+    Context @ ExampleDirectory,
+    "Wolfram`PacletCICD`",
+    TestID -> "ExampleDirectory-Context@@Tests/WorkflowExport.wlt:33,1-37,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -29,61 +41,37 @@ VerificationTest[
 (*WorkflowExport*)
 VerificationTest[
     Quiet[
-        Wolfram`PacletCICD`Tests`check =
-            Wolfram`PacletCICD`WorkflowExport[
-                Wolfram`PacletCICD`ExampleDirectory[ "FewIssues" ],
-                "Check"
-            ],
-        Wolfram`PacletCICD`WorkflowExport::entitlement
+        check = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Check" ],
+        WorkflowExport::entitlement
     ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Check@@Tests/WorkflowExport.wlt:30,1-42,2"
+    TestID -> "WorkflowExport-Check@@Tests/WorkflowExport.wlt:42,1-50,2"
 ]
 
 VerificationTest[
-    Wolfram`PacletCICD`Tests`build =
-        Wolfram`PacletCICD`WorkflowExport[
-            Wolfram`PacletCICD`ExampleDirectory[ "FewIssues" ],
-            "Build"
-        ],
+    build = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Build" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Build@@Tests/WorkflowExport.wlt:44,1-53,2"
+    TestID -> "WorkflowExport-Build@@Tests/WorkflowExport.wlt:52,1-57,2"
 ]
 
 VerificationTest[
-    Wolfram`PacletCICD`Tests`release =
-        Wolfram`PacletCICD`WorkflowExport[
-            Wolfram`PacletCICD`ExampleDirectory[ "FewIssues" ],
-            "Release"
-        ],
+    release = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Release" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Release@@Tests/WorkflowExport.wlt:55,1-64,2"
+    TestID -> "WorkflowExport-Release@@Tests/WorkflowExport.wlt:59,1-64,2"
 ]
 
 VerificationTest[
-    Wolfram`PacletCICD`Tests`compile =
-        Wolfram`PacletCICD`WorkflowExport[
-            Wolfram`PacletCICD`ExampleDirectory[ "FewIssues" ],
-            "Compile"
-        ],
+    compile = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Compile" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Compile@@Tests/WorkflowExport.wlt:66,1-75,2"
+    TestID -> "WorkflowExport-Compile@@Tests/WorkflowExport.wlt:66,1-71,2"
 ]
 
 VerificationTest[
-    AllTrue[
-        Gather @ {
-            Wolfram`PacletCICD`Tests`check,
-            Wolfram`PacletCICD`Tests`build,
-            Wolfram`PacletCICD`Tests`release,
-            Wolfram`PacletCICD`Tests`compile
-        },
-        Length[ #1 ] === 1 &
-    ],
+    AllTrue[ Gather @ { check, build, release, compile }, Length[ # ] === 1 & ],
     True,
-    TestID -> "WorkflowExport-Uniqueness@@Tests/WorkflowExport.wlt:77,1-89,2"
+    TestID -> "WorkflowExport-Uniqueness@@Tests/WorkflowExport.wlt:73,1-77,2"
 ]

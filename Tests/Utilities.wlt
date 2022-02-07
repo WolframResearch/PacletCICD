@@ -3,25 +3,22 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        Wolfram`PacletCICD`Tests`$pacletDir = DirectoryName[
-            System`$TestFileName,
-            2
-        ]
+        $pacletDir = DirectoryName[ $TestFileName, 2 ]
     ],
-    TestID -> "Initialize@@Tests/Utilities.wlt:4,1-12,2"
+    TestID -> "Initialize@@Tests/Utilities.wlt:4,1-9,2"
 ]
 
 VerificationTest[
-    PacletDirectoryLoad @ Wolfram`PacletCICD`Tests`$pacletDir,
-    { ___, Wolfram`PacletCICD`Tests`$pacletDir, ___ },
+    PacletDirectoryLoad @ $pacletDir,
+    { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/Utilities.wlt:14,1-19,2"
+    TestID -> "Initialize@@Tests/Utilities.wlt:11,1-16,2"
 ]
 
 VerificationTest[
-    Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`" ] ],
+    Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize@@Tests/Utilities.wlt:21,1-25,2"
+    TestID -> "Initialize@@Tests/Utilities.wlt:18,1-22,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -33,13 +30,13 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:30,1-37,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:27,1-34,2"
 ]
 
 VerificationTest[
     Wolfram`PacletCICD`Private`relativePath[ "path/to/file", "path/to/file" ],
     ".",
-    TestID -> "relativePath@@Tests/Utilities.wlt:39,1-43,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:36,1-40,2"
 ]
 
 VerificationTest[
@@ -47,5 +44,5 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:45,1-51,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:42,1-48,2"
 ]
