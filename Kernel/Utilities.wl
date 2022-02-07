@@ -19,7 +19,7 @@ Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
 ASTPattern :=
     Block[ { $ContextPath },
         ASTPattern // ClearAll;
-        Get[ "Wolfram`PacletCICD`ASTPattern`" ];
+        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
         ASTPattern
     ];
 
@@ -29,7 +29,7 @@ ASTPattern :=
 FromAST :=
     Block[ { $ContextPath },
         FromAST // ClearAll;
-        Get[ "Wolfram`PacletCICD`ASTPattern`" ];
+        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
         FromAST
     ];
 
