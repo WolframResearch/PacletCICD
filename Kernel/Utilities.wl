@@ -3,17 +3,35 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
+ASTPattern;
+FromAST;
 $ExamplesLocation;
 ExampleDirectory;
 
 Begin[ "`Private`" ];
 
-$thisPacletDir      = DirectoryName[ $InputFileName, 2 ];
-$thisPaclet        := $thisPaclet = PacletObject @ File @ $thisPacletDir;
-$thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version" ];
-
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ASTPattern*)
+ASTPattern :=
+    Block[ { $ContextPath },
+        ASTPattern // ClearAll;
+        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
+        ASTPattern
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*FromAST*)
+FromAST :=
+    Block[ { $ContextPath },
+        FromAST // ClearAll;
+        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
+        FromAST
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -25,16 +43,17 @@ $ExamplesLocation::exdir =
 "Cannot find the Wolfram/PacletCICD examples directory.";
 
 $ExamplesLocation :=
-    catchTop @ Module[ { pac, dir },
-        pac = PacletObject[ "Wolfram/PacletCICD" ];
-        If[ ! PacletObjectQ @ pac,
-            throwMessageFailure[ $ExamplesLocation::pacfail ]
-        ];
-        dir = pac[ "AssetLocation", "Examples" ];
+    catchTop @ Module[ { dir },
+        dir = GeneralUtilities`EnsureDirectory @ {
+            $UserBaseDirectory,
+            "ApplicationData",
+            $thisPacletName,
+            "Examples"
+        };
         If[ ! DirectoryQ @ dir,
             throwMessageFailure[ $ExamplesLocation::exdir ]
         ];
-        File @ dir
+        Flatten @ File @ dir
     ];
 
 (* ::**********************************************************************:: *)
@@ -46,6 +65,7 @@ ExampleDirectory::exdir =
 ExampleDirectory::exdnf =
 "No example directory with the name \"`1`\" exists.";
 
+
 ExampleDirectory[ name_String ] :=
     catchTop @ Module[ { root, dir },
         root = $ExamplesLocation;
@@ -55,11 +75,11 @@ ExampleDirectory[ name_String ] :=
         ];
 
         root = ExpandFileName @ root;
-        dir = FileNameJoin @ { root, name };
+        dir = fileNameJoin @ { root, name };
 
         If[ DirectoryQ @ dir,
             File @ dir,
-            tryFetchExampleData[ root, name ]
+            tryFetchExampleData @ name
         ];
 
         File @ dir
@@ -82,9 +102,13 @@ ExampleDirectory[ args___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*tryFetchExampleData*)
-tryFetchExampleData[ root_String, name_String ] :=
-    Module[ { file },
-        file = FileNameJoin @ { root, name <> ".wl" };
+tryFetchExampleData[ name_String ] :=
+    Module[ { root, file },
+        root = $thisPaclet[ "AssetLocation", "Examples" ];
+        If[ ! DirectoryQ @ root,
+            throwMessageFailure @ ExampleDirectory::exdir
+        ];
+        file = fileNameJoin @ { root, name <> ".wl" };
         If[ FileExistsQ @ file,
             fetchExampleData[ file, name ],
             throwMessageFailure[ ExampleDirectory::exdnf, name ]
@@ -111,11 +135,11 @@ fetchExampleData0[ tmp_, file_, name_ ] := Enclose[
     Module[ { data, url, tgt, zip, files, top },
         data  = ConfirmBy[ Get @ file, AssociationQ ];
         url   = ConfirmBy[ Lookup[ data, "URL" ], StringQ ];
-        tgt   = FileNameJoin @ { tmp, name<>".zip" };
+        tgt   = fileNameJoin @ { tmp, name<>".zip" };
         zip   = ConfirmBy[ URLDownload[ url, tgt ], FileExistsQ ];
         files = ConfirmBy[ ExtractArchive[ zip, tmp ], AllTrue @ StringQ ];
         top   = First[ SortBy[ files, StringLength ], Confirm @ $Failed ];
-        CopyDirectory[ top, FileNameJoin @ { DirectoryName @ file, name } ]
+        CopyDirectory[ top, fileNameJoin @ { $ExamplesLocation, name } ]
     ],
     throwMessageFailure[ ExampleDirectory::exdnf, name ] &
 ];
@@ -146,20 +170,56 @@ defNBQ0[ ___ ] := False;
 findDefinitionNotebook[ dir_? DirectoryQ ] :=
     findDefinitionNotebook[
         dir,
-        FileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
+        fileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
     ];
+
+findDefinitionNotebook[ pac_PacletObject ] :=
+    findDefinitionNotebook @ pac[ "Location" ];
 
 findDefinitionNotebook[ dir_, file_? defNBQ ] :=
     Flatten @ File @ file;
 
 findDefinitionNotebook[ dir_, _ ] :=
-    SelectFirst[ FileNames[ "*.nb", dir ], defNBQ ];
+    SelectFirst[ File /@ FileNames[ "*.nb", dir ], defNBQ ];
 
 findDefinitionNotebook // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*General File Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*parentPacletDirectory*)
+parentPacletDirectory[ file_ ] := Enclose[
+    Module[ { expanded, dir, parent },
+        expanded = ConfirmBy[ ExpandFileName @ file, StringQ ];
+        parent = parentPacletDirectory0 @ expanded;
+        ConfirmMatch[ parent, None | _?DirectoryQ ]
+    ],
+    throwError[
+        "Cannot determine parent paclet directory of `1`.",
+        file, ##
+    ] &
+];
+
+parentPacletDirectory0[ file_ ] :=
+    Quiet[ SelectFirst[ FixedPointList[ DirectoryName, file, 50 ],
+                        pacletDirectoryQ,
+                        None
+           ],
+           PacletManager`CreatePaclet::badarg
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*pacletDirectoryQ*)
+pacletDirectoryQ[ "" ] := False;
+
+pacletDirectoryQ[ dir_? DirectoryQ ] :=
+    PacletObjectQ @ PacletObject @ Flatten @ File @ dir;
+
+pacletDirectoryQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -312,6 +372,28 @@ expandURL // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Programming Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*symbolQ*)
+symbolQ // Attributes = { HoldAllComplete };
+
+symbolQ[ s_Symbol ] :=
+    TrueQ @ And[
+        AtomQ @ Unevaluated @ s,
+        ! Internal`RemovedSymbolQ @ Unevaluated @ s,
+        Unevaluated @ s =!= Internal`$EFAIL
+    ];
+
+symbolQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*versionOrder*)
+versionOrder := versionOrder = (* TODO: inline this definition *)
+    Block[ { PrintTemporary },
+        ResourceFunction[ "VersionOrder", "Function" ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

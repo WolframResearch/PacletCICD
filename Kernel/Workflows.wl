@@ -3,62 +3,68 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-CreateWorkflow;
+WorkflowExport;
 GitHubSecret;
 
 Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*CreateWorkflow*)
-CreateWorkflow::defbranch =
+(*WorkflowExport*)
+WorkflowExport::defbranch =
 "Expected a string instead of `1` for the default branch.";
 
-CreateWorkflow::wfname =
+WorkflowExport::wfname =
 "`1` is not a recognized workflow name.";
 
-CreateWorkflow::invspec =
+WorkflowExport::invspec =
 "Invalid workflow specification: `1`";
 
-CreateWorkflow::invtimeout =
+WorkflowExport::invtimeout =
 "Invalid TimeConstraint: `1`";
 
-CreateWorkflow::yamlfail =
+WorkflowExport::yamlfail =
 "Failed to export workflow to YAML format.";
 
-CreateWorkflow::ymlconv =
+WorkflowExport::ymlconv =
 "Unable to convert `1` to valid YAML.";
 
-CreateWorkflow::export =
+WorkflowExport::export =
 "Failed to export YAML to the file `1`.";
 
-CreateWorkflow::entitlement = "`1`";
+WorkflowExport::entitlement = "`1`";
 
-CreateWorkflow::invaction =
+WorkflowExport::invaction =
 "`1` is not a valid action specification.";
+
+WorkflowExport::target =
+"`1` is not a valid target specification.";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
-CreateWorkflow // Options = {
+WorkflowExport // Options = {
     "BuildPacletAction" -> "rhennigan/build-paclet@latest",
     "CheckPacletAction" -> "rhennigan/check-paclet@latest",
     "DefaultBranch"     -> "main",
     OverwriteTarget     -> False,
-    TimeConstraint      -> Quantity[ 10, "Minutes" ]
+    TimeConstraint      -> Quantity[ 20, "Minutes" ],
+    "Target"            -> "Submit"
 };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
-CreateWorkflow[ pac_, spec_, opts: OptionsPattern[ ] ] :=
+WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { workflow },
-        workflow = createWorkflow[
+        workflow = workflowExport[
             spec,
-            OptionValue[ "DefaultBranch"     ],
-            OptionValue[ TimeConstraint      ],
+            toDefNBLocation @ pac,
+            toDefaultBranch @ OptionValue[ "DefaultBranch" ],
+            toTimeConstraint @ OptionValue[ TimeConstraint ],
             toBuildPacletAction @ OptionValue[ "BuildPacletAction" ],
-            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ]
+            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ],
+            toActionTarget @ OptionValue[ "Target" ]
         ];
         exportWorkflow[ pac, workflow ]
     ];
@@ -70,41 +76,84 @@ $defaultTimeConstraint = 10;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*createWorkflow*)
-createWorkflow[ spec_, branch_String, timeConstraint_, build_, check_ ] :=
+(*workflowExport*)
+workflowExport[
+    spec_,
+    defNotebookLocation_,
+    branch_,
+    timeConstraint_,
+    buildPacletAction_,
+    checkPacletAction_,
+    actionTarget_
+] :=
     Block[
         {
             $defaultBranch         = branch,
-            $defaultTimeConstraint = toTimeConstraint @ timeConstraint,
-            $buildPacletAction     = build,
-            $checkPacletAction     = check
+            $defaultTimeConstraint = timeConstraint,
+            $buildPacletAction     = buildPacletAction,
+            $checkPacletAction     = checkPacletAction,
+            $defNotebookLocation   = defNotebookLocation,
+            $defaultActionTarget   = actionTarget
         },
-        createWorkflow0 @ spec
+        workflowExport0 @ spec
     ];
 
-createWorkflow[ spec_, branch: Except[ _String? StringQ ] ] :=
-    throwMessageFailure[ CreateWorkflow::defbranch, branch ];
-
-createWorkflow // catchUndefined;
+workflowExport // catchUndefined;
 
 
-createWorkflow0[ name_String ] :=
-    createWorkflow0 @ Lookup[
+workflowExport0[ name_String ] :=
+    workflowExport0 @ Lookup[
         $namedWorkflows,
         toWorkflowName @ name,
-        throwMessageFailure[ CreateWorkflow::wfname, name ]
+        throwMessageFailure[ WorkflowExport::wfname, name ]
     ];
 
-createWorkflow0[ spec_Association ] :=
+workflowExport0[ spec_Association ] :=
     Module[ { workflow },
         workflow = normalizeForYAML @ spec;
         If[ TrueQ @ validValueQ @ workflow,
             workflow,
-            throwMessageFailure[ CreateWorkflow::invspec, spec ]
+            throwMessageFailure[ WorkflowExport::invspec, spec ]
         ]
     ];
 
-createWorkflow0 // catchUndefined;
+workflowExport0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toActionTarget*)
+toActionTarget[ str_String? StringQ ] := str;
+toActionTarget[ Automatic ] := $defaultActionTarget;
+
+toActionTarget[ str: Except[ _String? StringQ ] ] :=
+    throwMessageFailure[ WorkflowExport::target, str ];
+
+toActionTarget // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toDefaultBranch*)
+toDefaultBranch[ branch_String? StringQ ] := branch;
+
+toDefaultBranch[ branch: Except[ _String? StringQ ] ] :=
+    throwMessageFailure[ WorkflowExport::defbranch, branch ];
+
+toDefaultBranch // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toDefNBLocation*)
+toDefNBLocation[ dir_? DirectoryQ ] := Enclose[
+    Module[ { file },
+        file = ConfirmBy[ findDefinitionNotebook @ dir, FileExistsQ ];
+        ConfirmBy[ relativePath[ dir, file ], StringQ ]
+    ],
+    $defNotebookLocation &
+];
+
+toDefNBLocation[ pac_PacletObject ] := toDefNBLocation @ pac[ "Location" ];
+
+toDefNBLocation // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -134,7 +183,7 @@ normalizeActionName[ name_, { owner_, "/", repo_, "@", ref_ } ] :=
     StringJoin[ owner, "/", repo, "@", ref ];
 
 normalizeActionName[ name_, _ ] :=
-    throwMessageFailure[ CreateWorkflow::invaction, name ];
+    throwMessageFailure[ WorkflowExport::invaction, name ];
 
 normalizeActionName // catchUndefined;
 
@@ -170,7 +219,7 @@ toTimeConstraint[ q_Quantity ] :=
     QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
 
 toTimeConstraint[ other_ ] :=
-    throwMessageFailure[ CreateWorkflow::invtimeout, other ];
+    throwMessageFailure[ WorkflowExport::invtimeout, other ];
 
 toTimeConstraint // catchUndefined;
 
@@ -184,7 +233,7 @@ exportWorkflow[ dir_? DirectoryQ, workflow_ ] :=
     Module[ { wfDir, file },
         wfDir  = toWorkFlowDir @ dir;
         file   = FileNameJoin @ { wfDir, workflowFileName @ workflow };
-        exportWorkflow[ file, workflow ] (* TODO *)
+        exportWorkflow[ file, workflow ]
     ];
 
 exportWorkflow[ file_, workflow_ ] := Enclose[
@@ -194,10 +243,10 @@ exportWorkflow[ file_, workflow_ ] := Enclose[
         If[ FileExistsQ @ exported,
             entitlementWarning[ ];
             File @ exported,
-            throwMessageFailure[ CreateWorkflow::export, file ]
+            throwMessageFailure[ WorkflowExport::export, file ]
         ]
     ],
-    throwMessageFailure[ CreateWorkflow::ymlconv ] &
+    throwMessageFailure[ WorkflowExport::ymlconv ] &
 ];
 
 (* ::**********************************************************************:: *)
@@ -212,7 +261,7 @@ $hasLicenseEntitlements :=
 entitlementWarning[ ] := entitlementWarning[ ] =
     If[ TrueQ @ suppressedEntitlementWarning[ ],
         Null,
-        messageFailure[ CreateWorkflow::entitlement, $licenseWarningText ]
+        messageFailure[ WorkflowExport::entitlement, $licenseWarningText ]
     ];
 
 suppressedEntitlementWarning[ ] :=
@@ -229,8 +278,7 @@ $suppressWarningFile :=
     FileNameJoin @ {
         $UserBaseDirectory,
         "ApplicationData",
-        "Wolfram",
-        "PacletCICD",
+        $thisPacletName,
         "SuppressWarning.wl"
     };
 
@@ -345,6 +393,16 @@ $namedWorkflows := <|
             "WorkflowDispatch" -> True
         |>,
         "Jobs" -> "Check"
+    |>
+    ,
+    "Compile" -> <|
+        "Name" -> "Compile Paclet",
+        "On"   -> <|
+            "Push"             -> <| "Branches" -> $defaultBranch |>,
+            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
+            "WorkflowDispatch" -> True
+        |>,
+        "Jobs" -> "Compile"
     |>
 |>;
 
@@ -544,6 +602,14 @@ normalizeJob[ "release" | "releasepaclet" ] :=
         }
     |>;
 
+normalizeJob[ "compile" ] := normalizeJob @ { "compile" };
+normalizeJob[ { "compile", config___ } ] := normalizeCompilationJobs @ config;
+
+normalizeJob[ { job_String, rest___ } ] :=
+    With[ { lc = StringDelete[ ToLowerCase @ job, "-" | "_" ] },
+        normalizeJob @ { lc, rest } /; lc =!= job
+    ];
+
 normalizeJob[ job_String ] :=
     With[ { lc = StringDelete[ ToLowerCase @ job, "-" | "_" ] },
         normalizeJob @ lc /; lc =!= job
@@ -556,6 +622,310 @@ normalizeJob // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*normalizeCompilationJobs*)
+normalizeCompilationJobs[ rules: (_Rule|_RuleDelayed)... ] :=
+    normalizeCompilationJobs @ <| rules |>;
+
+normalizeCompilationJobs[ jobs_List ] := normalizeCompilationJob /@ jobs;
+
+normalizeCompilationJobs[ as_Association? AssociationQ ] :=
+    Module[ { tgts, jobs },
+        tgts = Lookup[ as, "Platforms", $compilationTargets ];
+        jobs = normalizeCompilationJob[ #, as ] & /@ tgts;
+        Association[ jobs, buildCompiledPacletJob @ as ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*normalizeCompilationJob*)
+normalizeCompilationJob[ as_Association? AssociationQ ] :=
+    normalizeCompilationJob[ Lookup[ as, "SystemID" ], as ];
+
+normalizeCompilationJob[ sys_String, as_Association ] :=
+    normalizeCompilationJob[ sys, Lookup[ as, "Name", "Compile" ], as ];
+
+normalizeCompilationJob[ sys_String, name_String, as_Association ] :=
+    name<>"-"<>sys -> normalizeCompilationJob0[ sys, as ];
+
+normalizeCompilationJob // catchUndefined;
+
+normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
+    "name"            -> "Compile (Windows-x86-64)",
+    "runs-on"         -> "windows-latest",
+    "env"             -> compilationEnv[ "Windows-x86-64" ],
+    "timeout-minutes" -> $defaultTimeConstraint,
+    "steps" -> {
+        normalizeStep[ "Checkout" ],
+        windowsCacheRestoreStep @ as,
+        windowsInstallWLStep @ as,
+        windowsCompileStep @ as,
+        windowsUploadCompiledStep @ as
+    }
+|>;
+
+normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
+    "name"            -> "Compile (MacOSX-x86-64)",
+    "runs-on"         -> "macos-latest",
+    "env"             -> compilationEnv[ "MacOSX-x86-64" ],
+    "timeout-minutes" -> $defaultTimeConstraint,
+    "steps" -> {
+        normalizeStep[ "Checkout" ],
+        macCacheRestoreStep @ as,
+        macInstallWLStep @ as,
+        macCompileStep @ as,
+        macUploadCompiledStep @ as
+    }
+|>;
+
+normalizeCompilationJob0[ "Linux-x86-64", as_Association ] := <|
+    "name"            -> "Compile (Linux-x86-64)",
+    "runs-on"         -> "ubuntu-latest",
+    "container"       -> $defaultJobContainer,
+    "env"             -> compilationEnv[ "Linux-x86-64" ],
+    "timeout-minutes" -> $defaultTimeConstraint,
+    "steps" -> {
+        normalizeStep[ "Checkout" ],
+        linuxInstallBuildStep @ as,
+        linuxCompileStep @ as,
+        linuxUploadCompiledStep @ as
+    }
+|>;
+
+normalizeCompilationJob0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*buildCompiledPacletJob*)
+buildCompiledPacletJob[ as_Association ] :=
+    "BuildPaclet" -> <|
+        "name"            -> "Build Paclet",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "needs"           -> {
+            "Compile-Windows-x86-64",
+            "Compile-MacOSX-x86-64",
+            "Compile-Linux-x86-64"
+        },
+        "steps"           -> {
+            normalizeStep[ "Checkout"                     ],
+            normalizeStep[ "DownloadCompilationArtifacts" ],
+            normalizeStep[ "BuildPaclet"                  ],
+            normalizeStep[ "UploadBuildArtifacts"         ]
+        }
+    |>;
+
+buildCompiledPacletJob // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Windows Compilation Parameters*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*windowsCacheRestoreStep*)
+windowsCacheRestoreStep[ _ ] := <|
+    "name" -> "Cache/restore Wolfram Engine install",
+    "id"   -> "cache-restore-step",
+    "uses" -> "actions/cache@v2",
+    "env"  -> <|
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'"
+    |>,
+    "with" -> <|
+        "path" -> "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}",
+        "key"  -> "wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}"
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*windowsInstallWLStep*)
+windowsInstallWLStep[ _ ] := <|
+    "name" -> "Download and install Wolfram Engine",
+    "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
+    "env"  -> <|
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'",
+        "WOLFRAMENGINE_INSTALL_MSI_PATH"       -> "'${{ runner.temp }}\\WolframEngine-Install.msi'",
+        "WOLFRAMENGINE_INSTALL_LOG_PATH"       -> "'${{ runner.temp }}\\WolframEngine-Install.log'"
+    |>,
+    "run" -> $windowsInstallWLString
+|>;
+
+$windowsInstallWLString = "\
+echo 'Downloading Wolfram Engine installer...'
+$msiFile = '${{ env.WOLFRAMENGINE_INSTALL_MSI_PATH }}'
+$logFile = '${{ env.WOLFRAMENGINE_INSTALL_LOG_PATH }}'
+Import-Module BitsTransfer
+Start-BitsTransfer '${{ env.WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL }}' $msiFile
+echo 'Downloaded Wolfram Engine installer.'
+$DataStamp = get-date -Format yyyyMMddTHHmmss
+$MSIArguments = @(
+    \"/i\"
+    ('\"{0}\"' -f $msiFile)
+    'INSTALLLOCATION=\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\"'
+    \"/qn\"
+    \"/norestart\"
+    \"/L*v\"
+    $logFile
+)
+echo 'Installing Wolfram Engine...'
+Start-Process \"msiexec.exe\" -ArgumentList $MSIArguments -Wait -NoNewWindow
+echo 'Installed Wolfram Engine.'";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*windowsCompileStep*)
+windowsCompileStep[ as_ ] := <|
+    "name" -> "Compile libraries",
+    "env" -> <|
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'",
+        "WOLFRAMINIT" -> "\"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\""
+    |>,
+    "run" -> "\
+$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
+wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*windowsUploadCompiledStep*)
+windowsUploadCompiledStep[ as_ ] := <|
+    "name" -> "Archive compiled libraries",
+    "uses" -> "actions/upload-artifact@v2",
+    "with" -> <|
+        "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
+        "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Mac Compilation Parameters*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*macCacheRestoreStep*)
+macCacheRestoreStep[ as_ ] := <|
+    "name" -> "Cache/restore Wolfram Engine install",
+    "id"   -> "cache-restore-step",
+    "uses" -> "actions/cache@v2",
+    "with" -> <|
+        "path" -> "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}",
+        "key"  -> "wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}"
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*macInstallWLStep*)
+macInstallWLStep[ as_ ] := <|
+    "name" -> "Download and install Wolfram Engine",
+    "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
+    "run"  -> $macInstallWLString
+|>;
+
+$macInstallWLString = "\
+echo 'Installing Wolfram Engine...'
+brew install --cask wolfram-engine
+echo 'Installed Wolfram Engine.'";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*macCompileStep*)
+macCompileStep[ as_ ] := <|
+    "name" -> "Compile libraries",
+    "env" -> <|
+        "WOLFRAMENGINE_EXECUTABLES_DIRECTORY" -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS\"",
+        "WOLFRAMSCRIPT_KERNELPATH"            -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel\""
+    |>,
+    "run" -> "\
+export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
+wolframscript -debug -verbose -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*macUploadCompiledStep*)
+macUploadCompiledStep[ as_ ] := <|
+    "name" -> "Archive compiled libraries",
+    "uses" -> "actions/upload-artifact@v2",
+    "with" -> <|
+        "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
+        "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Linux Compilation Parameters*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*linuxInstallBuildStep*)
+linuxInstallBuildStep[ as_ ] := <|
+    "name" -> "Install build tools",
+    "run" -> "\
+apt-get -y update
+apt-get -y install build-essential"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*linuxCompileStep*)
+linuxCompileStep[ as_ ] := <|
+    "name" -> "Compile libraries",
+    "run"  -> "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*linuxUploadCompiledStep*)
+linuxUploadCompiledStep[ as_ ] := <|
+    "name" -> "Archive compiled libraries",
+    "uses" -> "actions/upload-artifact@v2",
+    "with" -> <|
+        "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
+        "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*compilationEnv*)
+compilationEnv[ "Windows-x86-64" ] := <|
+    "WOLFRAMSCRIPT_ENTITLEMENTID"             -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"            -> "./Scripts/Compile.wls",
+    "WOLFRAM_LIBRARY_BUILD_OUTPUT"            -> "LibraryResources/",
+    "WOLFRAM_SYSTEM_ID"                       -> "Windows-x86-64",
+    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL"  -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
+    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A",
+    "WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY" -> "WolframEngine"
+|>;
+
+compilationEnv[ "MacOSX-x86-64" ] := <|
+    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"         -> "./Scripts/Compile.wls",
+    "WOLFRAM_LIBRARY_BUILD_OUTPUT"         -> "LibraryResources/",
+    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+|>;
+
+compilationEnv[ "Linux-x86-64" ] := <|
+    "WOLFRAMSCRIPT_ENTITLEMENTID"  -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT" -> "./Scripts/Compile.wls",
+    "WOLFRAM_LIBRARY_BUILD_OUTPUT" -> "LibraryResources/",
+    "WOLFRAM_SYSTEM_ID"            -> "Linux-x86-64"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$compilationTargets*)
+$compilationTargets = { "Windows-x86-64", "MacOSX-x86-64", "Linux-x86-64" };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*$defaultJobContainer*)
 $defaultJobContainer = <|
     "image"   -> "wolframresearch/wolframengine:latest",
@@ -564,11 +934,64 @@ $defaultJobContainer = <|
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*name*)
+(*$defaultJobEnv*)
 $defaultJobEnv = <|
     "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
     "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$latestPacletCICDVersion*)
+$latestPacletCICDVersion := getPacletCICDReleaseVersion[ ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getPacletCICDReleaseVersion*)
+getPacletCICDReleaseVersion[ ] :=
+    getPacletCICDReleaseVersion @ $thisPacletVersion;
+
+getPacletCICDReleaseVersion[ ver_String ] :=
+    getPacletCICDReleaseVersion[ $thisRepository, ver ];
+
+getPacletCICDReleaseVersion[ repo_String, ver_String ] := Enclose[
+    Module[ { url, data, tags, sel },
+
+        url = URLBuild @ <|
+            "Scheme" -> "https",
+            "Domain" -> "api.github.com",
+            "Path" -> { "repos", repo, "releases" }
+        |>;
+
+        data = ConfirmMatch[ URLExecute[ url, "RawJSON" ], { __Association } ];
+        tags = ConfirmMatch[ Lookup[ data, "tag_name" ], { __String } ];
+        sel  = ConfirmBy[ chooseMatchingTagVersion[ tags, "v"<>ver ], StringQ ];
+        getPacletCICDReleaseVersion[ repo, ver ] = sel
+    ],
+    "latest" &
+];
+
+getPacletCICDReleaseVersion // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*chooseMatchingTagVersion*)
+chooseMatchingTagVersion[ { ___, ver_, ___ }, ver_ ] :=
+    StringDelete[ ver, StartOfString~~"v" ];
+
+chooseMatchingTagVersion[ tags_List, tag_String ] :=
+    Module[ { sorted, sel },
+        sorted = Sort[ Append[ tags, tag ], versionOrder ];
+        sel =
+            Replace[
+                sorted,
+                {
+                    { ___, v_, tag, ___ } :> v,
+                    { ___, tag, v_, ___ } :> v
+                }
+            ];
+        StringDelete[ sel, StartOfString~~"v" ] /; StringQ @ sel
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -588,13 +1011,23 @@ normalizeStep[ "checkout"|"checkoutcode" ] := <|
 normalizeStep[ "check"|"checkpaclet" ] := <|
     "name" -> "Check Paclet",
     "id"   -> "check-paclet-step",
-    "uses" -> $checkPacletAction
+    "uses" -> $checkPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
 |>;
 
 normalizeStep[ "build"|"buildpaclet" ] := <|
     "name" -> "Build Paclet",
     "id"   -> "build-paclet-step",
-    "uses" -> $buildPacletAction
+    "uses" -> $buildPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
 |>;
 
 normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
@@ -602,6 +1035,7 @@ normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
     "id"   -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
+        (* TODO: prepend something like PacletCICD to these env vars *)
         "path"              -> "${{ env.BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
@@ -626,11 +1060,18 @@ normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
     "uses" -> "actions/upload-release-asset@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
-        "upload_url" -> "${{ steps.create_release.outputs.upload_url }}",
+        "upload_url" -> "${{ steps.create-release-step.outputs.upload_url }}",
         "asset_path" -> "${{ env.PACLET_PATH }}",
         "asset_name" -> "${{ env.PACLET_FILE }}",
         "asset_content_type" -> "application/zip"
     |>
+|>;
+
+normalizeStep[ "downloadcompilationartifacts" ] := <|
+    "name" -> "Download compiled library resources",
+    "id"   -> "download-compilation-artifacts-step",
+    "uses" -> "actions/download-artifact@v2",
+    "with" -> <| "path" -> "LibraryResources" |>
 |>;
 
 normalizeStep[ step_String ] :=
@@ -641,6 +1082,9 @@ normalizeStep[ step_String ] :=
 normalizeStep[ as_Association ] := as;
 
 (*TODO: check against schema *)
+
+$defaultActionTarget = "Submit";
+$defNotebookLocation = "./DefinitionNotebook.nb";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -669,7 +1113,7 @@ toYAMLString[ expr_ ] :=
             ] :>
                 a <> " " <> b
         ],
-        throwMessageFailure[ CreateWorkflow::yamlfail, expr ] &
+        throwMessageFailure[ WorkflowExport::yamlfail, expr ] &
     ];
 
 toYAMLString // catchUndefined;
@@ -709,7 +1153,7 @@ toYAMLString0[ list_List ] :=
         "\n"
     ];
 
-toYAMLString0[ val_String  ] := val;
+toYAMLString0[ val_String  ] := checkMultilineString @ val;
 toYAMLString0[ int_Integer ] := ToString @ int;
 toYAMLString0[ r_Real      ] := TextString @ r;
 toYAMLString0[ True        ] := "true";
@@ -717,9 +1161,23 @@ toYAMLString0[ False       ] := "false";
 toYAMLString0[ Null        ] := "null";
 
 toYAMLString0[ other_ ] :=
-    throwMessageFailure[ CreateWorkflow::ymlconv, other ];
+    throwMessageFailure[ WorkflowExport::ymlconv, other ];
 
 toYAMLString0 // catchUndefined;
+
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkMultilineString*)
+checkMultilineString[ str_String ] /; StringFreeQ[ str, "\n" ] := str;
+checkMultilineString[ str_String ] :=
+    Module[ { lines },
+        lines = StringSplit[ str, "\r\n" | "\n" ];
+        StringJoin[
+            "|",
+            descend[ (stringJoin[ "\n", $indent, #1 ] &) /@ lines ]
+        ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
