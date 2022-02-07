@@ -67,9 +67,9 @@ astPattern[ Verbatim[ Alternatives ][ a___ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Blanks*)
-astPattern[ Verbatim[ _   ] ] := (_CallNode|_LeafNode);
-astPattern[ Verbatim[ __  ] ] := (_CallNode|_LeafNode)..;
-astPattern[ Verbatim[ ___ ] ] := (_CallNode|_LeafNode)...;
+astPattern[ Verbatim[ _   ] ] := callOrLeafNode[ ];
+astPattern[ Verbatim[ __  ] ] := callOrLeafNode[ ]..;
+astPattern[ Verbatim[ ___ ] ] := callOrLeafNode[ ]...;
 
 astPattern[ Verbatim[ Blank             ][ sym_? symbolQ ] ] := blank @ sym;
 astPattern[ Verbatim[ BlankSequence     ][ sym_? symbolQ ] ] := blank @ sym..;
@@ -86,6 +86,7 @@ blank // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*leafNode*)
+leafNode[            ] := LeafNode[ _, _, _ ];
 leafNode[ a_         ] := LeafNode[ a, _, _ ];
 leafNode[ a_, b_     ] := LeafNode[ a, b, _ ];
 leafNode[ a_, b_, c_ ] := LeafNode[ a, b, c ];
@@ -95,11 +96,22 @@ leafNode // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*callNode*)
+callNode[            ] := CallNode[ _, _, _ ];
 callNode[ a_         ] := CallNode[ a, _, _ ];
 callNode[ a_, b_     ] := CallNode[ a, b, _ ];
 callNode[ a_, b_, c_ ] := CallNode[ a, b, c ];
 
 callNode // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*callOrLeafNode*)
+callOrLeafNode[            ] := (CallNode|LeafNode)[ _, _, _ ];
+callOrLeafNode[ a_         ] := (CallNode|LeafNode)[ a, _, _ ];
+callOrLeafNode[ a_, b_     ] := (CallNode|LeafNode)[ a, b, _ ];
+callOrLeafNode[ a_, b_, c_ ] := (CallNode|LeafNode)[ a, b, c ];
+
+callOrLeafNode // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -259,7 +271,10 @@ astPattern[ patt_, meta_ ] := insertMetaPatt[ astPattern @ patt, meta ];
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*insertMetaPatt*)
-insertMetaPatt[ (h: LeafNode|CallNode)[ a_, b_, _ ], meta_ ] :=
+insertMetaPatt[ (h: CallNode|LeafNode)[ a_, b_, _ ], meta_ ] :=
+    h[ a, b, meta ];
+
+insertMetaPatt[ (h: Verbatim[ CallNode|LeafNode ])[ a_, b_, _ ], meta_ ] :=
     h[ a, b, meta ];
 
 insertMetaPatt[ Verbatim[ Pattern ][ s_, p_ ], meta_ ] :=
