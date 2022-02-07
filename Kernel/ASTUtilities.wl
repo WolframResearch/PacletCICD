@@ -4,6 +4,7 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
 ASTPattern // ClearAll;
+FromAST // ClearAll;
 
 Begin[ "`Private`" ];
 
@@ -11,16 +12,40 @@ Needs[ "CodeParser`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*FromAST*)
+FromAST[ ast_ ] := FromAST[ ast, ##1 & ];
+
+FromAST[ ast: _LeafNode|_CallNode, wrapper_ ] :=
+    ToExpression[ ToFullFormString @ ast, InputForm, wrapper ];
+
+FromAST[ ContainerNode[ _, ast_List, _ ], wrapper_ ] :=
+    FromAST[ ast, wrapper ];
+
+FromAST[ ast_List, wrapper_ ] := FromAST[ #, wrapper ] & /@ ast;
+
+FromAST // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*ASTPattern*)
 ASTPattern // Attributes = { HoldFirst };
 
 ASTPattern[ patt_ ] := catchTop @ astPattern @ patt;
-
-(* TODO: allow second arg to bind source info? *)
+ASTPattern[ patt_, meta_ ] := catchTop @ astPattern[ patt, meta ];
 
 ASTPattern // catchUndefined;
 
+
 astPattern // Attributes = { HoldAllComplete };
+$astPattern // Attributes = { HoldAllComplete };
+
+astPattern[ patt_ ] /; ! FreeQ[ Unevaluated @ patt, _ASTPattern ] :=
+    Module[ { held, expanded, new },
+        held     = HoldComplete @ patt;
+        expanded = expandNestedASTPatterns @ held;
+        new      = astPattern @@ expanded;
+        new /. $astPattern[ a_ ] :> a
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -31,6 +56,8 @@ astPattern[ Verbatim[ Pattern ][ sym_Symbol? symbolQ, patt_ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Special patterns*)
+astPattern[ patt_ASTPattern ] := patt;
+astPattern[ patt_$astPattern ] := patt;
 astPattern[ Verbatim[ Verbatim ][ a___ ] ] := a;
 astPattern[ Verbatim[ HoldPattern ][ a_ ] ] := astPattern @ a;
 astPattern[ Verbatim[ Alternatives ][ a___ ] ] :=
@@ -202,6 +229,32 @@ astPattern[ head_[ args___ ] ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Two argument form*)
+astPattern[ patt_, meta_ ] := insertMetaPatt[ astPattern @ patt, meta ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*insertMetaPatt*)
+insertMetaPatt[ (h: LeafNode|CallNode)[ a_, b_, _ ], meta_ ] :=
+    h[ a, b, meta ];
+
+insertMetaPatt[ Verbatim[ Pattern ][ s_, p_ ], meta_ ] :=
+    With[ { ins = insertMetaPatt[ p, meta ] },
+        Pattern @@ Hold[ s, ins ]
+    ];
+
+insertMetaPatt[ patt_Alternatives, meta_ ] :=
+    insertMetaPatt[ #1, meta ] & /@ patt;
+
+insertMetaPatt[ Verbatim[ Condition ][ lhs_, rhs_ ], meta_ ] :=
+    With[ { ins = insertMetaPatt[ lhs, meta ] },
+        Condition @@ Hold[ ins, rhs ]
+    ];
+
+insertMetaPatt // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Undefined*)
 astPattern // catchUndefined;
 
@@ -224,6 +277,16 @@ symNamePatt[ sym_Symbol? symbolQ ] :=
     ];
 
 symNamePatt // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*expandNestedASTPatterns*)
+expandNestedASTPatterns[ expr_ ] :=
+    ReplaceAll[
+        expr,
+        HoldPattern @ ASTPattern[ a___ ] :>
+            With[ { p = astPattern @ a }, $astPattern @ p /; True ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

@@ -98,6 +98,38 @@ VerificationTest[
     TestID -> "HoldPattern@@Tests/ASTPattern.wlt:91,1-99,2"
 ]
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Two Arguments*)
+VerificationTest[
+    ASTPattern[ id_String, as1_ ],
+    id: Alternatives[
+        LeafNode[ String, _, as1_ ],
+        CallNode[ LeafNode[ Symbol, "String" | "System`String", _ ], _, as1_ ]
+    ],
+    TestID -> "Two-Arguments"
+]
+
+VerificationTest[
+    Cases[
+        CodeParse[ "VerificationTest[1 + 1, 2, TestID -> \"Addition\", SameTest -> SameQ]" ],
+        ASTPattern[
+            VerificationTest[
+                __,
+                TestID -> ASTPattern[ id_String, as1_ ],
+                ___
+            ] /; StringQ @ id,
+            as2_
+        ] :> Lookup[ { as1, as2 }, Source ],
+        Infinity
+    ],
+    { { { { 1, 38 }, { 1, 48 } }, { { 1, 1 }, { 1, 68 } } } },
+    TestID -> "Nested-Meta-Bindings"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*TestParse*)
 VerificationTest[
     testParse[ "VerificationTest[x,y]", VerificationTest[ ___ ] ],
     True,
@@ -186,4 +218,24 @@ VerificationTest[
     ],
     False,
     TestID -> "TestParse-Condition-4@@Tests/ASTPattern.wlt:182,1-189,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*FromAST*)
+VerificationTest[
+    Cases[
+        CodeParse[ "VerificationTest[1 + 1, 2, TestID -> \"Addition\", SameTest -> SameQ]" ],
+        ASTPattern[
+            VerificationTest[
+                __,
+                TestID -> ASTPattern[ id_String, as1_ ],
+                ___
+            ] /; StringQ @ id,
+            as2_
+        ] :> FromAST @ id,
+        Infinity
+    ],
+    { "Addition" },
+    TestID -> "FromAST-Bindings"
 ]

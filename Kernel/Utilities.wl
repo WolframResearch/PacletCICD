@@ -4,6 +4,7 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
 ASTPattern;
+FromAST;
 $ExamplesLocation;
 ExampleDirectory;
 
@@ -20,6 +21,16 @@ ASTPattern :=
         ASTPattern // ClearAll;
         Get[ "Wolfram`PacletCICD`ASTPattern`" ];
         ASTPattern
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*FromAST*)
+FromAST :=
+    Block[ { $ContextPath },
+        FromAST // ClearAll;
+        Get[ "Wolfram`PacletCICD`ASTPattern`" ];
+        FromAST
     ];
 
 (* ::**********************************************************************:: *)
