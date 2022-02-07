@@ -278,23 +278,62 @@ parseTestIDs[ file_ ] :=
     ];
 
 parseTestIDs[ file_, type_ ] :=
-    Module[ { ast, all },
+    Module[ { ast, mask, masked, all, unmasked },
 
-        ast = codeParseType[ file, type ];
+        ast    = codeParseType[ file, type ];
+        masked = maskNestedTests[ ast, mask ];
 
         all = Cases[
-            ast,
+            masked,
             CodeParser`CallNode[
-                CodeParser`LeafNode[ Symbol, "VerificationTest", _ ],
+                CodeParser`LeafNode[
+                    Symbol,
+                    "VerificationTest"|"System`VerificationTest",
+                    _
+                ],
                 __
             ],
             Infinity
         ];
 
-        getTestIDData[ type ] /@ all
+        unmasked = all /. masked[ h_ ] :> h;
+
+        getTestIDData[ type ] /@ unmasked
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*maskNestedTests*)
+maskNestedTests[ ast_, mask_ ] :=
+    ReplaceAll[
+        ast,
+        CodeParser`CallNode[
+            CodeParser`LeafNode[
+                Symbol,
+                s1: "VerificationTest"|"System`VerificationTest",
+                as1_
+            ],
+            args_,
+            as2_
+        ] :>
+            CodeParser`CallNode[
+                CodeParser`LeafNode[ Symbol, s1, as1 ],
+                ReplaceAll[
+                    args,
+                    CodeParser`LeafNode[
+                        Symbol,
+                        s2: "VerificationTest"|"System`VerificationTest",
+                        a_
+                    ] :>
+                        CodeParser`LeafNode[ Symbol, mask @ s2, a ]
+                ],
+                as2
+            ]
+    ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getTestIDData*)
 getTestIDData[ type_ ][
     CodeParser`CallNode[
         CodeParser`LeafNode[ Symbol, "VerificationTest" | "Test", _ ],

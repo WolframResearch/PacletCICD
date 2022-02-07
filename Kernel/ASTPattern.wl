@@ -12,6 +12,8 @@ Needs[ "CodeParser`" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ASTPattern*)
+ASTPattern // Attributes = { HoldFirst };
+
 ASTPattern[ patt_ ] := catchTop @ astPattern @ patt;
 
 (* TODO: allow second arg to bind source info? *)
