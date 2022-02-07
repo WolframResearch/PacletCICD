@@ -20,7 +20,7 @@ PacletObject[ <|
                 "Wolfram`PacletCICD`AnnotateTestIDs",
                 "Wolfram`PacletCICD`BuildPaclet",
                 "Wolfram`PacletCICD`CheckPaclet",
-                "Wolfram`PacletCICD`CreateWorkflow",
+                "Wolfram`PacletCICD`WorkflowExport",
                 "Wolfram`PacletCICD`DeployPaclet",
                 "Wolfram`PacletCICD`DeployReleaseHandler",
                 "Wolfram`PacletCICD`ExampleDirectory",

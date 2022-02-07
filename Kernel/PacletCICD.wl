@@ -6,7 +6,6 @@ Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`BuildPaclet;
 Wolfram`PacletCICD`CheckPaclet;
 Wolfram`PacletCICD`CompileLibraryResources;
-Wolfram`PacletCICD`CreateWorkflow;
 Wolfram`PacletCICD`DeployPaclet;
 Wolfram`PacletCICD`ExampleDirectory;
 Wolfram`PacletCICD`GitHubPacletInstall;
@@ -14,6 +13,7 @@ Wolfram`PacletCICD`GitHubSecret;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`SubmitPaclet;
 Wolfram`PacletCICD`TestPaclet;
+Wolfram`PacletCICD`WorkflowExport;
 
 Quiet[
     Block[ { $ContextPath },

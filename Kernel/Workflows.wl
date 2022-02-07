@@ -3,47 +3,47 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-CreateWorkflow;
+WorkflowExport;
 GitHubSecret;
 
 Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*CreateWorkflow*)
-CreateWorkflow::defbranch =
+(*WorkflowExport*)
+WorkflowExport::defbranch =
 "Expected a string instead of `1` for the default branch.";
 
-CreateWorkflow::wfname =
+WorkflowExport::wfname =
 "`1` is not a recognized workflow name.";
 
-CreateWorkflow::invspec =
+WorkflowExport::invspec =
 "Invalid workflow specification: `1`";
 
-CreateWorkflow::invtimeout =
+WorkflowExport::invtimeout =
 "Invalid TimeConstraint: `1`";
 
-CreateWorkflow::yamlfail =
+WorkflowExport::yamlfail =
 "Failed to export workflow to YAML format.";
 
-CreateWorkflow::ymlconv =
+WorkflowExport::ymlconv =
 "Unable to convert `1` to valid YAML.";
 
-CreateWorkflow::export =
+WorkflowExport::export =
 "Failed to export YAML to the file `1`.";
 
-CreateWorkflow::entitlement = "`1`";
+WorkflowExport::entitlement = "`1`";
 
-CreateWorkflow::invaction =
+WorkflowExport::invaction =
 "`1` is not a valid action specification.";
 
-CreateWorkflow::target =
+WorkflowExport::target =
 "`1` is not a valid target specification.";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
-CreateWorkflow // Options = {
+WorkflowExport // Options = {
     "BuildPacletAction" -> "rhennigan/build-paclet@latest",
     "CheckPacletAction" -> "rhennigan/check-paclet@latest",
     "DefaultBranch"     -> "main",
@@ -55,9 +55,9 @@ CreateWorkflow // Options = {
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
-CreateWorkflow[ pac_, spec_, opts: OptionsPattern[ ] ] :=
+WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { workflow },
-        workflow = createWorkflow[
+        workflow = workflowExport[
             spec,
             toDefNBLocation @ pac,
             toDefaultBranch @ OptionValue[ "DefaultBranch" ],
@@ -76,8 +76,8 @@ $defaultTimeConstraint = 10;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*createWorkflow*)
-createWorkflow[
+(*workflowExport*)
+workflowExport[
     spec_,
     defNotebookLocation_,
     branch_,
@@ -95,29 +95,29 @@ createWorkflow[
             $defNotebookLocation   = defNotebookLocation,
             $defaultActionTarget   = actionTarget
         },
-        createWorkflow0 @ spec
+        workflowExport0 @ spec
     ];
 
-createWorkflow // catchUndefined;
+workflowExport // catchUndefined;
 
 
-createWorkflow0[ name_String ] :=
-    createWorkflow0 @ Lookup[
+workflowExport0[ name_String ] :=
+    workflowExport0 @ Lookup[
         $namedWorkflows,
         toWorkflowName @ name,
-        throwMessageFailure[ CreateWorkflow::wfname, name ]
+        throwMessageFailure[ WorkflowExport::wfname, name ]
     ];
 
-createWorkflow0[ spec_Association ] :=
+workflowExport0[ spec_Association ] :=
     Module[ { workflow },
         workflow = normalizeForYAML @ spec;
         If[ TrueQ @ validValueQ @ workflow,
             workflow,
-            throwMessageFailure[ CreateWorkflow::invspec, spec ]
+            throwMessageFailure[ WorkflowExport::invspec, spec ]
         ]
     ];
 
-createWorkflow0 // catchUndefined;
+workflowExport0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -126,7 +126,7 @@ toActionTarget[ str_String? StringQ ] := str;
 toActionTarget[ Automatic ] := $defaultActionTarget;
 
 toActionTarget[ str: Except[ _String? StringQ ] ] :=
-    throwMessageFailure[ CreateWorkflow::target, str ];
+    throwMessageFailure[ WorkflowExport::target, str ];
 
 toActionTarget // catchUndefined;
 
@@ -136,7 +136,7 @@ toActionTarget // catchUndefined;
 toDefaultBranch[ branch_String? StringQ ] := branch;
 
 toDefaultBranch[ branch: Except[ _String? StringQ ] ] :=
-    throwMessageFailure[ CreateWorkflow::defbranch, branch ];
+    throwMessageFailure[ WorkflowExport::defbranch, branch ];
 
 toDefaultBranch // catchUndefined;
 
@@ -183,7 +183,7 @@ normalizeActionName[ name_, { owner_, "/", repo_, "@", ref_ } ] :=
     StringJoin[ owner, "/", repo, "@", ref ];
 
 normalizeActionName[ name_, _ ] :=
-    throwMessageFailure[ CreateWorkflow::invaction, name ];
+    throwMessageFailure[ WorkflowExport::invaction, name ];
 
 normalizeActionName // catchUndefined;
 
@@ -219,7 +219,7 @@ toTimeConstraint[ q_Quantity ] :=
     QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
 
 toTimeConstraint[ other_ ] :=
-    throwMessageFailure[ CreateWorkflow::invtimeout, other ];
+    throwMessageFailure[ WorkflowExport::invtimeout, other ];
 
 toTimeConstraint // catchUndefined;
 
@@ -243,10 +243,10 @@ exportWorkflow[ file_, workflow_ ] := Enclose[
         If[ FileExistsQ @ exported,
             entitlementWarning[ ];
             File @ exported,
-            throwMessageFailure[ CreateWorkflow::export, file ]
+            throwMessageFailure[ WorkflowExport::export, file ]
         ]
     ],
-    throwMessageFailure[ CreateWorkflow::ymlconv ] &
+    throwMessageFailure[ WorkflowExport::ymlconv ] &
 ];
 
 (* ::**********************************************************************:: *)
@@ -261,7 +261,7 @@ $hasLicenseEntitlements :=
 entitlementWarning[ ] := entitlementWarning[ ] =
     If[ TrueQ @ suppressedEntitlementWarning[ ],
         Null,
-        messageFailure[ CreateWorkflow::entitlement, $licenseWarningText ]
+        messageFailure[ WorkflowExport::entitlement, $licenseWarningText ]
     ];
 
 suppressedEntitlementWarning[ ] :=
@@ -743,7 +743,7 @@ windowsCacheRestoreStep[ _ ] := <|
 (*windowsInstallWLStep*)
 windowsInstallWLStep[ _ ] := <|
     "name" -> "Download and install Wolfram Engine",
-    "if"   -> "steps.cache-restore.outputs.cache-hit != 'true'",
+    "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
     "env"  -> <|
         "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'",
         "WOLFRAMENGINE_INSTALL_MSI_PATH"       -> "'${{ runner.temp }}\\WolframEngine-Install.msi'",
@@ -821,7 +821,7 @@ macCacheRestoreStep[ as_ ] := <|
 (*macInstallWLStep*)
 macInstallWLStep[ as_ ] := <|
     "name" -> "Download and install Wolfram Engine",
-    "if"   -> "steps.cache-restore.outputs.cache-hit != 'true'",
+    "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
     "run"  -> $macInstallWLString
 |>;
 
@@ -1113,7 +1113,7 @@ toYAMLString[ expr_ ] :=
             ] :>
                 a <> " " <> b
         ],
-        throwMessageFailure[ CreateWorkflow::yamlfail, expr ] &
+        throwMessageFailure[ WorkflowExport::yamlfail, expr ] &
     ];
 
 toYAMLString // catchUndefined;
@@ -1161,7 +1161,7 @@ toYAMLString0[ False       ] := "false";
 toYAMLString0[ Null        ] := "null";
 
 toYAMLString0[ other_ ] :=
-    throwMessageFailure[ CreateWorkflow::ymlconv, other ];
+    throwMessageFailure[ WorkflowExport::ymlconv, other ];
 
 toYAMLString0 // catchUndefined;
 

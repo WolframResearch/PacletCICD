@@ -63,7 +63,7 @@ PacletCICD functions can be used indirectly via the following GitHub Marketplace
 * [build-paclet](https://github.com/marketplace/actions/build-paclet)
 * [check-paclet](https://github.com/marketplace/actions/check-paclet)
 
-These actions can also be automatically configured for your Paclet by using CreateWorkflow:
+These actions can also be automatically configured for your Paclet by using WorkflowExport:
 
 <img src=".github/images/readme-create-workflow-1.png" style="width: 50%; height: 50%">
 
