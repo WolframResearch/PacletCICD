@@ -257,37 +257,3 @@ VerificationTest[
     { "Addition" },
     TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:226,1-241,2"
 ]
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
-(*Sample File*)
-VerificationTest[
-    ast = CodeParse @ File[ "ExampleData/Collatz.m" ],
-    ContainerNode[ File, _, _ ],
-    SameTest -> MatchQ,
-    TestID -> "CodeParse-ExampleData-Collatz"
-]
-
-VerificationTest[
-    Cases[
-        ast,
-        ASTPattern[
-            sd_SetDelayed,
-            KeyValuePattern @ { "Definitions" -> defs_, Source -> src_ }
-        ] :> <|
-            "Expression"  -> FromAST[ sd, Hold ],
-            "Definitions" -> FromAST[ defs, Hold ],
-            "Source"      -> src
-        |>,
-        Infinity
-    ],
-    {
-        KeyValuePattern @ {
-            "Expression"  -> Hold[ _SetDelayed ],
-            "Definitions" -> { Hold[ _Symbol ] },
-            "Source"      -> { { _Integer, _Integer }, { _Integer, _Integer } }
-        }..
-    },
-    SameTest -> MatchQ,
-    TestID   -> "Combined-Application"
-]
