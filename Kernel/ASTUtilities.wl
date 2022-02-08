@@ -189,41 +189,42 @@ leafTestQ[ ___                   ] := False;
 (* ::Subsection::Closed:: *)
 (*Atoms*)
 astPattern[ sym_Symbol? symbolQ ] := symNamePatt @ sym;
+astPattern[ r_Rational ] /; AtomQ @ Unevaluated @ r := rationalPattern @ r;
+astPattern[ c_Complex  ] /; AtomQ @ Unevaluated @ c := complexPattern  @ c;
 
 astPattern[ expr: _Integer|_Real|_String ] /; AtomQ @ Unevaluated @ expr :=
-    LeafNode[ Head @ expr, ToString[ expr, InputForm ], _ ];
+    leafNode[ Head @ expr, ToString[ expr, InputForm ] ];
 
-astPattern[ r_Rational ] /; AtomQ @ Unevaluated @ r :=
-    With[ { n = Numerator @ r, d = Denominator @ r },
-        CallNode[
-            LeafNode[ Symbol, "Times", _ ],
-            {
-                astPattern @ n,
-                CallNode[
-                    LeafNode[ Symbol, "Power", _ ],
-                    { astPattern @ d, LeafNode[ Integer, "-1", _ ] },
-                    _
-                ]
-            },
-            _
-        ]
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*rationalPattern*)
+rationalPattern[ r_ ] := rationalPattern[ Numerator @ r, Denominator @ r ];
+
+rationalPattern[ n_, d_ ] :=
+    Module[ { na, da, mo, pw },
+        na = astPattern @ n;
+        da = astPattern @ d;
+        mo = leafNode[ Integer, "-1" ];
+        pw = callNode[ symbolNode[ "Power" ], { da, mo } ];
+        callNode[ symbolNode[ "Times" ], { na, pw } ]
     ];
 
-astPattern[ c_Complex ] /; AtomQ @ Unevaluated @ c :=
-    With[ { r = Re @ c, i = Im @ c },
-        CallNode[
-            LeafNode[ Symbol, "Plus", _ ],
-            {
-                astPattern @ r,
-                CallNode[
-                    LeafNode[ Symbol, "Times", _ ],
-                    { astPattern @ i, LeafNode[ Symbol, "I", _ ] },
-                    _
-                ]
-            },
-            _
-        ]
+rationalPattern // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*complexPattern*)
+complexPattern[ c_ ] := complexPattern[ Re @ c, Im @ c ];
+
+complexPattern[ r_, i_ ] :=
+    Module[ { ra, ia, im },
+        ra = astPattern @ r;
+        ia = astPattern @ i;
+        im = callNode[ symbolNode[ "Times" ], { ia, symbolNode[ "I" ] } ];
+        callNode[ symbolNode[ "Plus" ], { ra, im } ]
     ];
+
+complexPattern // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -300,6 +301,13 @@ astPattern // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*symbolNode*)
+symbolNode[ name_String ] := LeafNode[ Symbol, name, _ ];
+symbolNode[ sym_Symbol  ] := symNamePatt @ sym;
+symbolNode // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
