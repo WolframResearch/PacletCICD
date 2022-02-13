@@ -541,7 +541,7 @@ Notebook[
             BoxData[
              TemplateBox[
               {
-               "CreateWorkflow",
+               "WorkflowExport",
                "entitlement",
                "\"Warning: An on-demand license entitlement is required for this workflow to run.\\nSee the \\!\\(\\*TemplateBox[List[\\\"\\\\\\\"license entitlement tutorial\\\\\\\"\\\", \\\"paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets\\\"], \\\"HyperlinkPaclet\\\"]\\) for details on creating license entitlements. \\!\\(\\*TagBox[ButtonBox[StyleBox[\\\"\\\\\\\"Don't show this message again \[RightGuillemet]\\\\\\\"\\\", Rule[ShowStringCharacters, False]], Rule[BaseStyle, \\\"Hyperlink\\\"], RuleDelayed[ButtonFunction, CompoundExpression[GeneralUtilities`EnsureDirectory[DirectoryName[\\\"C:\\\\\\\\Users\\\\\\\\rhennigan\\\\\\\\AppData\\\\\\\\Roaming\\\\\\\\Mathematica\\\\\\\\ApplicationData\\\\\\\\Wolfram\\\\\\\\PacletCICD\\\\\\\\SuppressWarning.wl\\\"]], Put[\\\"0.1.11\\\", \\\"C:\\\\\\\\Users\\\\\\\\rhennigan\\\\\\\\AppData\\\\\\\\Roaming\\\\\\\\Mathematica\\\\\\\\ApplicationData\\\\\\\\Wolfram\\\\\\\\PacletCICD\\\\\\\\SuppressWarning.wl\\\"]]], Rule[Evaluator, Automatic], Rule[Method, \\\"Queued\\\"]], MouseAppearanceTag[\\\"LinkHand\\\"]]\\)\"",
                2,
@@ -549,7 +549,7 @@ Notebook[
                1,
                33979799785475130880,
                "Local",
-               "Wolfram`PacletCICD`CreateWorkflow"
+               "Wolfram`PacletCICD`WorkflowExport"
               },
               "MessageTemplate2"
              ]
