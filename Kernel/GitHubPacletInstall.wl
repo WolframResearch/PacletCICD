@@ -3,7 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-GitHubPacletInstall;
+GitHubPacletInstall // ClearAll;
 
 Begin[ "`Private`" ];
 

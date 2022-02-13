@@ -3,8 +3,17 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ASTPattern // ClearAll;
-FromAST // ClearAll;
+ClearAll[ ASTPattern, FromAST, EquivalentNodeQ ];
+
+(* TODO:
+    KeyValuePattern
+    Longest
+    Optional
+    OptionsPattern
+    OrderlessPatternSequence
+    PatternSequence
+    Shortest
+*)
 
 Begin[ "`Private`" ];
 
@@ -27,10 +36,16 @@ FromAST // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*EquivalentNodeQ*)
+EquivalentNodeQ[ nodes___ ] :=
+    SameQ @@ DeleteCases[ { nodes }, KeyValuePattern[ Source -> _ ], Infinity ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*ASTPattern*)
 ASTPattern // Attributes = { HoldFirst };
 
-ASTPattern[ patt_ ] := catchTop @ astPattern @ patt;
+ASTPattern[ patt_ ] := catchTop @ checkDuplicatePatterns @ astPattern @ patt;
 ASTPattern[ patt_, meta_ ] := catchTop @ astPattern[ patt, meta ];
 
 ASTPattern // catchUndefined;
@@ -79,7 +94,7 @@ astPattern[ Verbatim[ BlankNullSequence ][ sym_? symbolQ ] ] := blank @ sym...;
 (* ::Subsubsection::Closed:: *)
 (*blank*)
 blank // Attributes = { HoldAllComplete };
-blank[ sym_? leafHeadQ ] := leafNode @ sym | callNode @ symNamePatt @ sym;
+blank[ sym_? leafHeadQ ] := callOrLeafNode[ sym | symNamePatt @ sym, _, _ ];
 blank[ sym_ ] := callNode @ symNamePatt @ sym;
 blank // catchUndefined;
 
@@ -128,6 +143,21 @@ astPattern[ Verbatim[ Repeated ][ x_, a___ ] ] :=
 
 astPattern[ Verbatim[ RepeatedNull ][ x_, a___ ] ] :=
     RepeatedNull[ astPattern @ x, a ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Except*)
+astPattern[ Verbatim[ Except ][ c_ ] ] :=
+    Except @ astPattern @ c;
+
+astPattern[ Verbatim[ Except ][ c_, p_ ] ] :=
+    Except[ astPattern @ c, astPattern @ p ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Sequence Patterns*)
+astPattern[ Verbatim[ PatternSequence ][ a___ ] ] :=
+    PatternSequence @@ (astPattern /@ HoldComplete @ a);
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -239,7 +269,8 @@ astConditionPattern // Attributes = { HoldRest };
 
 astConditionPattern[ lhs_, rhs_ ] :=
     With[ { rules = rhsConditionRules @ lhs },
-        Condition @@ HoldComplete[ lhs, Unevaluated @ rhs /. rules ]
+        Condition @@ HoldComplete[ lhs, Unevaluated @ rhs /. rules ] /.
+            $conditionRules[ r___ ] :> Flatten @ { r }
     ];
 
 astConditionPattern // catchUndefined;
@@ -248,15 +279,27 @@ astConditionPattern // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*rhsConditionRules*)
 rhsConditionRules[ lhs_ ] :=
-    Cases[ HoldComplete @ lhs,
-           Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :>
-               HoldPattern @ s :>
-                   RuleCondition[ FromAST[ s, $ConditionHold ], True ],
-           Infinity,
-           Heads -> True
-    ];
+    Flatten[ $conditionRules @@ Cases[
+        HoldComplete @ lhs,
+        Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :>
+            $conditionRules @ Cases[
+                HoldComplete @ s,
+                e_ :> HoldPattern @ e :>
+                    RuleCondition[ FromAST[ e, $ConditionHold ], True ]
+            ],
+        Infinity,
+        Heads -> True
+    ] ];
 
 rhsConditionRules // catchUndefined;
+
+$conditionRules // Attributes = { HoldAllComplete };
+
+
+(* FIXME:
+    This is bad:
+    ASTPattern[{x_, x_} /; IntegerQ[x]]
+ *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -267,7 +310,8 @@ astPattern[ head_[ args___ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Two argument form*)
-astPattern[ patt_, meta_ ] := insertMetaPatt[ astPattern @ patt, meta ];
+astPattern[ patt_, meta_ ] :=
+    insertMetaPatt[ checkDuplicatePatterns @ astPattern @ patt, meta ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -301,6 +345,89 @@ astPattern // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*checkDuplicatePatterns*)
+checkDuplicatePatterns[ p_ ] :=
+    Module[ { names, realDups, possibleDups, dups },
+
+        names =
+            Cases[ p, Verbatim[ Pattern ][ s_, _ ] :> HoldPattern @ s, Infinity ];
+
+        realDups = Select[ Counts @ names, GreaterThan[ 1 ] ];
+
+        possibleDups = Association @ Cases[
+            p,
+            (Repeated | RepeatedNull)[ a_, ___ ] :>
+                Cases[
+                    HoldComplete @ a,
+                    Verbatim[ Pattern ][ s_, _ ] :> (HoldPattern @ s -> Infinity),
+                    Infinity
+                ],
+            Infinity
+        ];
+
+        dups = KeyDrop[ Join[ realDups, possibleDups ], HoldPattern @ e ];
+        If[ TrueQ[ Length @ dups > 0 ], rebindConditionPattern[ p, dups ], p ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*rebindConditionPattern*)
+rebindConditionPattern[ p_, dups_ ] :=
+    Module[
+        {
+            $replacements, unseen, patt, replaced, conditions, flat,
+            rhsHeld, lhsHeld
+        },
+
+        $replacements = <| |>;
+        unseen        = AssociationMap[ True &, HoldComplete @@@ Keys @ dups ];
+        patt          = Alternatives @@ Keys @ dups;
+
+        replaced =
+            ReplaceAll[
+                p,
+                {
+                    s: patt /; unseen[ HoldComplete @ s ] :>
+                        With[ { e = Null },
+                            unseen[ HoldComplete @ s ] = False;
+                            $replacements[ HoldComplete[ s ] ] = HoldComplete @ s;
+                            s /; True
+                        ],
+                    s: patt /; ! unseen[ HoldComplete @ s ] :>
+                        With[ { a = newPattSym @ s },
+                            $replacements[ HoldComplete[ a ] ] = HoldComplete @ s;
+                            a /; True
+                        ]
+                }
+            ];
+
+        conditions =
+            Cases[
+                GroupBy[ Normal @ $replacements, Last -> First ],
+                { syms__ } :>
+                    Replace[
+                        Flatten @ HoldComplete @ syms,
+                        HoldComplete[ a___ ] :>
+                            HoldComplete @ EquivalentNodeQ @ a
+                    ]
+            ];
+
+        flat = Flatten[ HoldComplete @@ conditions ];
+
+        rhsHeld = Replace[ flat, HoldComplete[ a_, b__ ] :> HoldComplete[ a && b ] ];
+
+        lhsHeld = HoldComplete @@ { replaced };
+        Condition @@ Flatten[ HoldComplete @@ { lhsHeld, rhsHeld } ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*newPattSym*)
+newPattSym // Attributes = { HoldAllComplete };
+newPattSym[ s_Symbol ] := Module @@ HoldComplete[ { s }, s ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

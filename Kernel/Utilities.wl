@@ -3,8 +3,6 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ASTPattern;
-FromAST;
 $ExamplesLocation;
 ExampleDirectory;
 
@@ -12,26 +10,6 @@ Begin[ "`Private`" ];
 
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
-(*ASTPattern*)
-ASTPattern :=
-    Block[ { $ContextPath },
-        ASTPattern // ClearAll;
-        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
-        ASTPattern
-    ];
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
-(*FromAST*)
-FromAST :=
-    Block[ { $ContextPath },
-        FromAST // ClearAll;
-        Get[ "Wolfram`PacletCICD`ASTUtilities`" ];
-        FromAST
-    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

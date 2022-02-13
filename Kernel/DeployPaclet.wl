@@ -3,7 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-DeployPaclet;
+DeployPaclet // ClearAll;
 
 Begin[ "`Private`" ];
 

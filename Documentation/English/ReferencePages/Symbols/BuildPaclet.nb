@@ -315,9 +315,9 @@ Notebook[
         Cell[
          BoxData[
           ButtonBox[
-           "CreateWorkflow",
+           "WorkflowExport",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreateWorkflow"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowExport"
           ]
          ],
          "InlineFormula"
