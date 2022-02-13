@@ -152,22 +152,25 @@ $banner =
                     Graphics[
                         First @ $icon,
                         PlotRange        -> { { 0, 60 }, { 0, 60 } },
-                        ImageSize        -> 50,
+                        ImageSize        -> 65,
                         BaselinePosition -> Scaled[ 0.4 ]
                     ],
                     Column @ {
                         Style[
                             "Paclet CI/CD",
-                            FontColor  -> RGBColor[ "#ff6a0f" ],
-                            FontFamily -> "Source Sans Pro",
-                            FontWeight -> "Heavy",
-                            FontSize   -> 40
+                            (* FontColor    -> RGBColor[ "#ff6a0f" ], *)
+                            FontColor    -> RGBColor[ "#ab3626" ],
+                            FontFamily   -> "Source Sans Pro",
+                            FontWeight   -> "Heavy",
+                            FontSize     -> 54,
+                            FontTracking -> "Plain"
                         ],
                         Style[
-                            "CI/CD utilities for Wolfram Language Paclets",
-                            FontSize   -> 12,
-                            FontColor  -> GrayLevel[ 0.5 ],
-                            FontFamily -> "Source Sans Pro"
+                            "  Continuous integration and deployment for Wolfram Language Paclets",
+                            FontSize     -> 10.5,
+                            FontColor    -> GrayLevel[ 0.5 ],
+                            FontFamily   -> "Roboto",
+                            FontTracking -> "Condensed"
                         ]
                     }
                 }
@@ -185,7 +188,7 @@ $bannerImage =
     Rasterize[
         $banner,
         ImageResolution -> 144,
-        RasterSize      -> { Automatic, 250 },
+        RasterSize      -> { Automatic, 300 },
         Background      -> None
     ];
 
@@ -193,5 +196,5 @@ Export[
     FileNameJoin @ { $pacDir, "Images", "Banner.png" },
     $bannerImage,
     "PNG",
-    ImageSize -> { Automatic, 250 }
+    ImageSize -> { Automatic, 300 }
 ]
