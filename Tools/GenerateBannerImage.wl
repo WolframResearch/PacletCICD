@@ -188,7 +188,7 @@ $bannerImage =
     Rasterize[
         $banner,
         ImageResolution -> 144,
-        RasterSize      -> { Automatic, 300 },
+        RasterSize      -> { Automatic, 250 },
         Background      -> None
     ];
 
@@ -196,5 +196,5 @@ Export[
     FileNameJoin @ { $pacDir, "Images", "Banner.png" },
     $bannerImage,
     "PNG",
-    ImageSize -> { Automatic, 300 }
+    ImageSize -> { Automatic, 250 }
 ]

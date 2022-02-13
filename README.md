@@ -1,4 +1,4 @@
-<img src="Images/Banner.png" alt="Continuous integration and deployment for Wolfram Language Paclets" height="150px">
+<img src="Images/Banner.png" alt="Continuous integration and deployment for Wolfram Language Paclets">
 
 ********************************************************************************
 
