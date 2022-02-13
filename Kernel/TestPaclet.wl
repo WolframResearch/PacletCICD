@@ -3,8 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-TestPaclet;
-AnnotateTestIDs;
+ClearAll[ TestPaclet, AnnotateTestIDs ];
 
 Begin[ "`Private`" ];
 

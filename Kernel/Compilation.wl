@@ -3,6 +3,8 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
+CompileLibraryResources // ClearAll;
+
 Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
