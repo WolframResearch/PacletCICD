@@ -1,8 +1,6 @@
-# PacletCICD
+<img src="Images/Banner.png" alt="CI/CD utilities for Wolfram Language Paclets" height="125px">
 
-<img src="Images/HeroImage.png" height="150px">
-
-CI/CD utilities for Wolfram Language Paclets
+********************************************************************************
 
 [![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW) [![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
 
