@@ -37,6 +37,18 @@ VerificationTest[
 ]
 
 VerificationTest[
+    Context @ FromAST,
+    "Wolfram`PacletCICD`",
+    TestID -> "Context-FromAST@@Tests/ASTUtilities.wlt:33,1-37,2"
+]
+
+VerificationTest[
+    Context @ EquivalentNodeQ,
+    "Wolfram`PacletCICD`",
+    TestID -> "Context-EquivalentNodeQ@@Tests/ASTUtilities.wlt:33,1-37,2"
+]
+
+VerificationTest[
     Context @ CodeParse,
     "CodeParser`",
     TestID -> "Context-CodeParse@@Tests/ASTUtilities.wlt:39,1-43,2"
@@ -54,6 +66,12 @@ VerificationTest[
     TestID -> "Context-CallNode@@Tests/ASTUtilities.wlt:51,1-55,2"
 ]
 
+VerificationTest[
+    Context @ Source,
+    "CodeParser`",
+    TestID -> "Context-Source@@Tests/ASTUtilities.wlt:51,1-55,2"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Test Utilities*)
@@ -69,9 +87,10 @@ testParse[ str_, patt_ ] :=
 (*ASTPattern*)
 VerificationTest[
     ASTPattern[ _Integer ],
-    Alternatives[
-        LeafNode[ Integer, _, _ ],
-        CallNode[ LeafNode[ Symbol, "Integer" | "System`Integer", _ ], _, _ ]
+    (CallNode | LeafNode)[
+        Integer | LeafNode[ Symbol, "Integer" | "System`Integer", _ ],
+        _,
+        _
     ],
     TestID -> "Leaf-Call@@Tests/ASTUtilities.wlt:70,1-77,2"
 ]
@@ -100,12 +119,42 @@ VerificationTest[
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Duplicate Pattern Symbols*)
+VerificationTest[
+    Count[ CodeParse[ "{{1,1},{2,2}}" ], ASTPattern @ { a_, a_ }, Infinity ],
+    2,
+    TestID -> "Duplicate-Pattern-Symbols-1"
+]
+
+VerificationTest[
+    Count[
+        CodeParse[ "{{{1,1},{2,2}},{{1,1},{2,2}}}" ],
+        ASTPattern @ { a_, a_ },
+        Infinity
+    ],
+    5,
+    TestID -> "Duplicate-Pattern-Symbols-2"
+]
+
+VerificationTest[
+    Cases[
+        CodeParse[ "{{1,1,1},{1,1},{1,1,1,2},{2,2,2}}" ],
+        ASTPattern[ expr: { a_, a_, a_ } ] :> FromAST @ expr,
+        Infinity
+    ],
+    { { 1, 1, 1 }, { 2, 2, 2 } },
+    TestID -> "Duplicate-Pattern-Symbols-3"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Two Arguments*)
 VerificationTest[
     ASTPattern[ id_String, as1_ ],
-    id: Alternatives[
-        LeafNode[ String, _, as1_ ],
-        CallNode[ LeafNode[ Symbol, "String" | "System`String", _ ], _, as1_ ]
+    id: (CallNode | LeafNode)[
+        String | LeafNode[ Symbol, "String" | "System`String", _ ],
+        _,
+        as1_
     ],
     TestID -> "Two-Arguments@@Tests/ASTUtilities.wlt:104,1-111,2"
 ]
@@ -244,6 +293,54 @@ VerificationTest[
     TestID -> "TestParse-PatternTest-3@@Tests/ASTUtilities.wlt:241,1-245,2"
 ]
 
+VerificationTest[
+    testParse[ "f[1.2]", f @ Except[ _Integer ] ],
+    True,
+    TestID -> "TestParse-Except-1"
+]
+
+VerificationTest[
+    testParse[ "f[1.2]", f @ Except[ _Real ] ],
+    False,
+    TestID -> "TestParse-Except-2"
+]
+
+VerificationTest[
+    testParse[ "f[1.2]", f @ Except[ _Integer, _Real ] ],
+    True,
+    TestID -> "TestParse-Except-3"
+]
+
+VerificationTest[
+    testParse[ "f[1.2]", f @ Except[ _Integer, _String ] ],
+    False,
+    TestID -> "TestParse-Except-4"
+]
+
+VerificationTest[
+    testParse[ "f[\"hello\"]", f @ Except[ _Integer, _String ] ],
+    True,
+    TestID -> "TestParse-Except-5"
+]
+
+VerificationTest[
+    testParse[ "{a,b,c,d,c,d,a,b}", { x__, PatternSequence[ c, d, c ], y__ } ],
+    True,
+    TestID -> "TestParse-PatternSequence-1"
+]
+
+VerificationTest[
+    testParse[ "{a,b,a,b,a,b,a,b,a,b}", { PatternSequence[ x_, x_ ].. } ],
+    False,
+    TestID -> "TestParse-PatternSequence-3"
+]
+
+VerificationTest[
+    testParse[ "{1,1,2,2}", ASTPattern @ { x_, x_, y_, y_ } ],
+    True,
+    TestID -> "Reused-Pattern-Bindings-1"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*FromAST*)
@@ -262,4 +359,41 @@ VerificationTest[
     ],
     { "Addition" },
     TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:250,1-265,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*EquivalentNodeQ*)
+VerificationTest[
+    Enclose @ Apply[
+        EquivalentNodeQ,
+        ConfirmMatch[
+            Cases[
+                CodeParse[ "{f[x],f[x]}" ],
+                ASTPattern[ _[ _ ] ],
+                Infinity
+            ],
+            { _, _ }
+        ]
+    ],
+    True,
+    TestID -> "EquivalentNodeQ-1"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Regression Tests*)
+VerificationTest[
+    testParse[ "{a,a,a}", ASTPattern[ { x: (_).. } /; SameQ @ x ] ],
+    True,
+    TestID -> "FromAST-Sequence-1"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Future*)
+Hold @ VerificationTest[
+    testParse[ "{a,b,a,b,a,b,a,b,a,b}", { PatternSequence[ x_, y_ ].. } ],
+    True,
+    TestID -> "TestParse-PatternSequence-2"
 ]
