@@ -142,13 +142,16 @@ makeReadable[ file_, hash_, HoldComplete[ overrides___ ] ] :=
         Format[ x_RawArray? rawArrayQ, InputForm ] :=
             OutputForm[ "CompressedData[\"" <> Compress @ x <> "\"]" ];
 
-
         Format[ x_NumericArray? numericArrayQ, InputForm ] :=
             OutputForm[ "CompressedData[\"" <> Compress @ x <> "\"]" ];
 
         ResourceFunction[ "SaveReadableNotebook" ][
-            ReplaceAll[
-                DeleteCases[ Import @ file, TaggingRules -> { }, Infinity ],
+            unpackImages @ ReplaceAll[
+                DeleteCases[
+                    Import[ file, "NB" ],
+                    TaggingRules -> { },
+                    Infinity
+                ],
                 a: _RawArray | _NumericArray :>
                     With[ { b = Check[ a, $Failed ] }, b /; ! FailureQ @ b ]
             ],
@@ -199,6 +202,24 @@ overrideFormat[ sym_Symbol ] := (
     Format[ x_sym, InputForm ] :=
         OutputForm @ ToString @ Unevaluated @ FullForm @ x
 );
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*unpackImages*)
+unpackImages[ expr_ ] :=
+    ReplaceAll[
+        expr,
+        img_Image /; ImageQ @ Unevaluated @ img :>
+            With[ { u = unpackImage @ img }, RuleCondition[ u, True ] ]
+    ];
+
+unpackImage[ img_Image, wrapper_: $ConditionHold ] :=
+    Module[ { type, arr, opts },
+        type = ImageType @ img;
+        arr  = NumericArray[ ImageData[ img, type ], type ];
+        opts = Sequence @@ Options @ img;
+        Replace[ { arr, opts }, { a___ } :> wrapper @ Image @ a ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
