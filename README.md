@@ -48,13 +48,13 @@ PacletUninstall["Wolfram/PacletCICD"]
 
 Automatically check Paclets for potential issues in a GitHub CI/CD workflow:
 
-<img src=".github/images/readme-1.png" style="width: 50%; height: 50%">
+<img src=".github/images/readme-1.png">
 
 Generate code annotations automatically whenever code is pushed to a branch:
 
-<img src=".github/images/readme-2.png" style="width: 50%; height: 50%">
+<img src=".github/images/readme-2.png">
 
-<img src=".github/images/readme-3.png" style="width: 50%; height: 50%">
+<img src=".github/images/readme-3.png">
 
 
 ### GitHub Actions
