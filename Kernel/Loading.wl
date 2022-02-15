@@ -3,6 +3,8 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
+setContextLoad;
+
 Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
@@ -20,6 +22,8 @@ setContextLoad[ sym_Symbol, context_String ] :=
         sym
     ];
 
+End[ ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Definitions*)
@@ -27,9 +31,12 @@ setContextLoad[ sym_Symbol, context_String ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*ASTUtilities*)
-setContextLoad[ ASTPattern     , "ASTUtilities" ];
-setContextLoad[ FromAST        , "ASTUtilities" ];
-setContextLoad[ EquivalentNodeQ, "ASTUtilities" ];
+setContextLoad[ ASTCondition       , "ASTUtilities" ];
+setContextLoad[ ASTConditionValue  , "ASTUtilities" ];
+setContextLoad[ ASTPattern         , "ASTUtilities" ];
+setContextLoad[ ASTPatternTest     , "ASTUtilities" ];
+setContextLoad[ EquivalentNodeQ    , "ASTUtilities" ];
+setContextLoad[ FromAST            , "ASTUtilities" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -55,6 +62,7 @@ setContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Footer*)
-End[ ];
+
+Remove @ setContextLoad;
 
 EndPackage[ ];

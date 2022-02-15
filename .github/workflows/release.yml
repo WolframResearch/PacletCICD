@@ -1,4 +1,4 @@
-name: Release Paclet
+name: Release
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ env:
 
 jobs:
   check-paclet:
-    name: Check Paclet
+    name: Check
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
@@ -29,7 +29,7 @@ jobs:
         run: wolframscript Scripts/CheckPaclet.wls
 
   test-paclet:
-    name: Test Paclet
+    name: Test
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
@@ -46,7 +46,7 @@ jobs:
         run: wolframscript Scripts/TestPaclet.wls
 
   release-paclet:
-    name: Release Paclet
+    name: Release
     needs: [check-paclet, test-paclet]
     runs-on: ubuntu-latest
     container:

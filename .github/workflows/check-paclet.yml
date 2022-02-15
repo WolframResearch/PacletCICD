@@ -1,10 +1,10 @@
 name: Check Paclet
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     branches: ["main", "release/*"]
+  push:
+    branches: ["feature/0.5.0-updates"]
   workflow_dispatch:
 
 env:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   check-paclet:
-    name: Check Paclet
+    name: Check
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
@@ -30,7 +30,7 @@ jobs:
         run: wolframscript Scripts/CheckPaclet.wls
 
   test-paclet:
-    name: Test Paclet
+    name: Test
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest

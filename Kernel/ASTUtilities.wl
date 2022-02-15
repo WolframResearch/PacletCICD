@@ -3,7 +3,14 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ClearAll[ ASTPattern, FromAST, EquivalentNodeQ ];
+ClearAll[
+    ASTCondition,
+    ASTConditionValue,
+    ASTPattern,
+    ASTPatternTest,
+    FromAST,
+    EquivalentNodeQ
+];
 
 (* TODO:
     KeyValuePattern
@@ -33,6 +40,31 @@ FromAST[ ContainerNode[ _, ast_List, _ ], wrapper_ ] :=
 FromAST[ ast_List, wrapper_ ] := FromAST[ #, wrapper ] & /@ ast;
 
 FromAST // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ASTPatternTest*)
+ASTPatternTest[ func_ ][ node_ ] := FromAST[ node, func ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ASTCondition*)
+ASTCondition // Attributes = { HoldRest };
+
+ASTCondition[ vals_List, cond_ ] :=
+    Module[ { rules, replaced },
+        rules    = MapIndexed[ astCVRule, vals ];
+        replaced = HoldComplete @ cond /. rules;
+        ReleaseHold[ replaced /. $conditionHold[ e_ ] :> e ]
+    ];
+
+$conditionHold // Attributes = { HoldAllComplete };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*astCVRule*)
+astCVRule[ node_, { pos_ } ] :=
+    ASTConditionValue @ pos -> FromAST[ node, $conditionHold ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -195,13 +227,7 @@ astPattern[
 
 astPattern[ Verbatim[ PatternTest ][ patt_, test_ ] ] :=
     With[ { p = astPattern @ patt },
-        Apply[
-            PatternTest,
-            HoldComplete[
-                p,
-                FromAST[ #, test ] &
-            ]
-        ]
+        PatternTest @@ HoldComplete[ p, ASTPatternTest @ test ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -260,7 +286,64 @@ complexPattern // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*Condition*)
 astPattern[ Verbatim[ Condition ][ patt_, test_ ] ] :=
-    astConditionPattern[ astPattern @ patt, test ];
+    makeASTCondition[ patt, test ] /.
+        $ASTCondition[ { }, cond_ ] :> cond  /.
+            $ASTCondition -> ASTCondition;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*makeASTCondition*)
+makeASTCondition // Attributes = { HoldAll };
+
+makeASTCondition[ lhs_, rhs_ ] :=
+    Module[ { syms, bound, vals, hs, cvRules, cv },
+
+        syms    = DeleteDuplicates @ patternSymbols @ lhs;
+        bound   = Select[ syms, appearsIn @ rhs ];
+        vals    = Array[ ASTConditionValue, Length @ bound ];
+        hs      = Cases[ bound, e_ :> HoldPattern @ e ];
+        cvRules = Thread[ hs -> vals ];
+        cv      = HoldComplete @ rhs /. cvRules;
+
+        Condition @@ Replace[
+            { bound, cv },
+            { HoldComplete[ s___ ], HoldComplete[ c_ ] } :> {
+                astPattern @ lhs,
+                $ASTCondition[ { s }, c ]
+            }
+        ]
+    ];
+
+$ASTCondition // Attributes = { HoldAllComplete };
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*appearsIn*)
+appearsIn // Attributes = { HoldFirst };
+
+appearsIn[ rhs_ ] :=
+    Function[ s, ! FreeQ[ Unevaluated @ rhs, HoldPattern @ s ], HoldFirst ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*patternSymbols*)
+patternSymbols // Attributes = { HoldFirst };
+patternSymbols[ patt_ ] := Flatten[ HoldComplete @@ patternSymbols0 @ patt ];
+
+patternSymbols0 // Attributes = { HoldFirst };
+patternSymbols0[ patt_ ] :=
+    Cases[ HoldComplete @ patt,
+           Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :> HoldComplete @ s,
+           Infinity,
+           Heads -> True
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Subsubsubsection*)
+astConditionRule // Attributes = { HoldAllComplete };
+astConditionRule[ x_ ] :=
+    HoldPattern @ x :> RuleCondition[ FromAST[ x, $ConditionHold ], True ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

@@ -5,6 +5,7 @@ BeginPackage[ "Wolfram`PacletCICD`" ];
 
 $ExamplesLocation;
 ExampleDirectory;
+`Internal`ResetExampleDirectory;
 
 Begin[ "`Private`" ];
 
@@ -43,6 +44,9 @@ ExampleDirectory::exdir =
 ExampleDirectory::exdnf =
 "No example directory with the name \"`1`\" exists.";
 
+ExampleDirectory[ ] := catchTop @ $exampleNames;
+
+ExampleDirectory[ All ] := catchTop[ ExampleDirectory /@ $exampleNames ];
 
 ExampleDirectory[ name_String ] :=
     catchTop @ Module[ { root, dir },
@@ -75,6 +79,15 @@ ExampleDirectory[ args___ ] :=
         ExampleDirectory::argx,
         ExampleDirectory,
         Length @ HoldComplete @ args
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$exampleNames*)
+$exampleNames :=
+    Map[
+        FileBaseName,
+        FileNames[ "*.wl", $thisPaclet[ "AssetLocation", "Examples" ] ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -126,9 +139,55 @@ fetchExampleData0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*ResetExampleDirectory*)
+Wolfram`PacletCICD`Internal`ResetExampleDirectory[ args___ ] :=
+    catchTop @ resetExampleDirectory @ args;
+
+resetExampleDirectory[ name_String ] :=
+    Module[ { dir },
+        dir = First[ FileNames[ name, $ExamplesLocation ], None ];
+        resetExampleDirectory[ name, dir ]
+    ];
+
+resetExampleDirectory[ All ] :=
+    resetExampleDirectory[ All, $ExamplesLocation ];
+
+resetExampleDirectory[ name_, dir_? DirectoryQ ] :=
+    Module[ { deleted },
+        deleted = DeleteDirectory[ dir, DeleteContents -> True ];
+        If[ DirectoryQ @ deleted,
+            throwError[ "Failed to delete directory `1`", dir ],
+            Success[
+                "ResetExampleDirectory",
+                <|
+                    "MessageTemplate"   -> "Directory `1` deleted.",
+                    "MessageParameters" -> { dir },
+                    "Name"              -> name,
+                    "Result"            -> deleted
+                |>
+            ]
+        ]
+    ];
+
+resetExampleDirectory // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*Definition Notebook Utilities *)
 
 $simpleTextMode := MatchQ[ dnc`$ConsoleType, "TTY"|"GitHub" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*withDNCSettings*)
+withDNCSettings // Attributes = { HoldRest };
+
+withDNCSettings[ { type_, tgt_ }, eval_ ] :=
+    Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
+        dnc`$ConsoleType = type;
+        dnc`$ClickedButton = tgt;
+        eval
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

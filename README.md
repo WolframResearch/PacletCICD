@@ -2,7 +2,9 @@
 
 ********************************************************************************
 
-[![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW) [![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
+[![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
+
+[![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW)
 
 # Installing PacletCICD
 
