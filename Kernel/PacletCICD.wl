@@ -34,7 +34,6 @@ Quiet[
         Get[ "Wolfram`PacletCICD`Utilities`"         ];
         Get[ "Wolfram`PacletCICD`BuildPaclet`"       ];
         Get[ "Wolfram`PacletCICD`CheckPaclet`"       ];
-        Get[ "Wolfram`PacletCICD`CheckDependencies`" ];
     ],
     General::shdw
 ];

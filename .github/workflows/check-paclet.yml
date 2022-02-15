@@ -3,8 +3,6 @@ name: Check Paclet
 on:
   pull_request:
     branches: ["main", "release/*"]
-  push:
-    branches: ["feature/0.5.0-updates"]
   workflow_dispatch:
 
 env:

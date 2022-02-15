@@ -53,6 +53,7 @@ setContextLoad[ GitHubSecret  , "Workflows" ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Other*)
+setContextLoad[ CheckDependencies      , "CheckDependencies"   ];
 setContextLoad[ CompileLibraryResources, "Compilation"         ];
 setContextLoad[ DeployPaclet           , "DeployPaclet"        ];
 setContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
