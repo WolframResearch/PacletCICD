@@ -205,18 +205,6 @@ openNotebookAndBuild[ file_, opts___ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*withDNCSettings*)
-withDNCSettings // Attributes = { HoldRest };
-
-withDNCSettings[ { type_, tgt_ }, eval_ ] :=
-    Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
-        dnc`$ConsoleType = type;
-        dnc`$ClickedButton = tgt;
-        eval
-    ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
 (*setGHBuildOutput*)
 setGHBuildOutput[ res_ ] := Enclose[
     Confirm @ setGHBuildOutput0 @ res,

@@ -150,12 +150,12 @@ messageFailure := (
     Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`MessageFailure`" ] ];
 
     SetOptions[
-        Wolfram`PacletCICD`MessageFailure`MessageFailure,
+        Wolfram`PacletCICD`MessageFailure,
         "GeneralSymbol" -> PacletCICD,
         "MessagedFlag" :> $messaged
     ];
 
-    messageFailure = Wolfram`PacletCICD`MessageFailure`MessageFailure
+    messageFailure = Wolfram`PacletCICD`MessageFailure
 );
 
 (* ::**********************************************************************:: *)
