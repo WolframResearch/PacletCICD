@@ -18,7 +18,7 @@ setContextLoad[ sym_Symbol, name_String ] /; StringFreeQ[ name, "`" ] :=
 setContextLoad[ sym_Symbol, context_String ] :=
     sym := Block[ { $ContextPath },
         sym // ClearAll;
-        Quiet[ Get @ Echo @ context, General::shdw ];
+        Quiet[ Get @ context, General::shdw ];
         sym
     ];
 
@@ -31,12 +31,12 @@ End[ ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*ASTUtilities*)
-setContextLoad[ ASTCondition       , "ASTUtilities" ];
-setContextLoad[ ASTConditionValue  , "ASTUtilities" ];
-setContextLoad[ ASTPattern         , "ASTUtilities" ];
-setContextLoad[ ASTPatternTest     , "ASTUtilities" ];
-setContextLoad[ EquivalentNodeQ    , "ASTUtilities" ];
-setContextLoad[ FromAST            , "ASTUtilities" ];
+setContextLoad[ ASTCondition     , "ASTUtilities" ];
+setContextLoad[ ASTConditionValue, "ASTUtilities" ];
+setContextLoad[ ASTPattern       , "ASTUtilities" ];
+setContextLoad[ ASTPatternTest   , "ASTUtilities" ];
+setContextLoad[ EquivalentNodeQ  , "ASTUtilities" ];
+setContextLoad[ FromAST          , "ASTUtilities" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

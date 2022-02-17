@@ -14,7 +14,10 @@ Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
 (*TestPaclet*)
 
 TestPaclet // Options = {
-    "AnnotateTestIDs" -> True
+    "Target"          -> "Submit",
+    "Debug"           -> False,
+    "AnnotateTestIDs" -> True,
+    "ConsoleType"     -> Automatic
 };
 
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
@@ -25,12 +28,16 @@ TestPaclet::failures =
 TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
     (* TODO: do the right stuff here *)
     catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
-        dnc`$ConsoleType = Automatic;
+        dnc`$ConsoleType = OptionValue[ "ConsoleType" ];
         If[ TrueQ @ OptionValue[ "AnnotateTestIDs" ],
             AnnotateTestIDs[ dir, "Reparse" -> False ]
         ];
         testPaclet @ dir
     ];
+
+TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ TestPaclet[ parentPacletDirectory @ file, opts ];
+
 
 testPaclet[ dir_? DirectoryQ ] :=
     Module[ { files, report },

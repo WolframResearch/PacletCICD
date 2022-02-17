@@ -9,6 +9,173 @@ Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Workflow*)
+Workflow::invname =
+"`1` is not a known workflow name.";
+
+Workflow::invprop =
+"`1` is not a valid Workflow property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+Workflow // Options = {
+    TimeConstraint -> Infinity
+};
+(* TODO: set options like WorkflowExport *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+Workflow[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    Module[ { new },
+        new = catchTop @ makeWorkflowData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ Workflow[ name, a ]
+            ]
+        ]
+    ];
+
+Workflow[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ workflowNameQ @ name,
+        Workflow[ name, <| |>, opts ],
+        throwMessageFailure[ Workflow::invname, name ]
+    ];
+
+Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        Workflow[ id, new, opts ]
+    ];
+
+(workflow_Workflow? workflowQ)[ prop_ ] :=
+    catchTop @ workflowProperty[ workflow, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+Workflow /: MakeBoxes[ workflow_Workflow? workflowQ, fmt_ ] :=
+    FormattingHelper[ workflow, fmt ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$workflowNames*)
+$workflowNames := Keys @ $namedWorkflows;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowNameQ*)
+workflowNameQ[ name_ ] := MemberQ[ $workflowNames, toWorkflowName @ name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowQ*)
+workflowQ // Attributes = { HoldFirst };
+
+workflowQ[ workflow: Workflow[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ workflow;
+
+workflowQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*genericWFProperty*)
+genericWFProperty[ _[ _, data_ ], "Data"    ] := data;
+genericWFProperty[ _[ _, data_ ], "Dataset" ] := Dataset @ data;
+genericWFProperty[ _[ name_, _ ], "Name"    ] := name;
+genericWFProperty[ _[ _, data_ ], "YAML"    ] := toYAMLString @ data;
+genericWFProperty // catchUndefined;
+
+$$wfProp = Alternatives[ "Data", "Dataset", "Name", "YAML" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowProperty*)
+workflowProperty[ wf_, prop: $$wfProp ] := genericWFProperty[ wf, prop ];
+workflowProperty[ wf_, "Jobs" ] := getWorkflowJobs @ wf;
+workflowProperty[ wf_, "JobGraph" ] := jobGraph @ wf;
+
+workflowProperty[ _, prop_ ] :=
+    throwMessageFailure[ Workflow::invprop, prop ];
+
+workflowProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getWorkflowJobs*)
+getWorkflowJobs[ wf_? workflowQ ] :=
+    Enclose @ Module[ { data, jobs },
+        data = ConfirmBy[ genericWFProperty[ wf, "Data" ], AssociationQ ];
+        jobs = ConfirmBy[ Lookup[ data, "jobs" ], AssociationQ ];
+        ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*jobGraph*)
+jobGraph[ wf_? workflowQ ] :=
+    Enclose @ Module[ { jobs, needs, vertices, edges },
+        jobs = ConfirmBy[ getWorkflowJobs @ wf, AllTrue @ workflowJobQ ];
+        needs = ConfirmBy[ (Slot[ 1 ][ "Needs" ] &) /@ jobs, AssociationQ ];
+        vertices = Keys @ needs;
+        edges = Flatten[ Thread /@ Normal @ DeleteCases[ needs, None ] ];
+        Graph[
+            vertices,
+            Reverse[ edges, 2 ],
+            VertexLabels -> Placed[ "Name", Center, graphLabel ]
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*graphLabel*)
+graphLabel[ lbl_ ] :=
+    Framed[
+        lbl,
+        FrameMargins -> { { 1, 1 }, { 0, 0 } },
+        RoundingRadius -> 3,
+        FrameStyle -> GrayLevel[ 0.8 ],
+        Background -> White
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowData*)
+makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
+    Enclose @ Module[ { as1, as2, data },
+        as1 = Lookup[
+            $namedWorkflows,
+            toWorkflowName @ name,
+            throwMessageFailure[ Workflow::invname, name ]
+        ];
+
+        as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
+        as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowData[ name_String, custom_Association ] :=
+    makeWorkflowData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowData[ custom_Association ] :=
+    Enclose @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+
+makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*WorkflowJob*)
 WorkflowJob::invname =
 "`1` is not a known job name.";
@@ -20,6 +187,7 @@ WorkflowJob::invprop =
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowJob // Options = { };
+(* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -29,15 +197,15 @@ WorkflowJob[
     as_Association,
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
-    Module[ { new },
-        new = catchTop @ makeWorkflowJobData[ name, as, opts ];
+    catchTop @ Module[ { new },
+        new = makeWorkflowJobData[ name, as, opts ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
                 a,
                 System`Private`HoldSetValid @ WorkflowJob[ name, a ]
             ]
-        ] /; new =!= as
+        ]
     ];
 
 WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
@@ -68,7 +236,7 @@ WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$jobNames*)
-$jobNames = { "Check", "Build", "Release", "Compile" };
+$jobNames = { "Check", "Build", "Release", "Compile", "Test" };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -88,8 +256,10 @@ workflowJobQ[ ___ ] := False;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowJobProperty*)
-workflowJobProperty[ WorkflowJob[ _, data_ ], "Data" ] := data;
-workflowJobProperty[ WorkflowJob[ name_, _ ], "Name" ] := name;
+workflowJobProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
+
+workflowJobProperty[ job_, "Needs" ] :=
+    Lookup[ genericWFProperty[ job, "Data" ], "needs", None ];
 
 workflowJobProperty[ _, prop_ ] :=
     throwMessageFailure[ WorkflowJob::invprop, prop ];
@@ -190,6 +360,7 @@ WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
 
 $buildPacletAction     = "rhennigan/build-paclet@latest";
 $checkPacletAction     = "rhennigan/check-paclet@latest";
+$testPacletAction      = "rhennigan/test-paclet@latest";
 $defaultBranch         = "main";
 $defaultTimeConstraint = 10;
 
@@ -486,7 +657,7 @@ workflowFileName[ ___ ] := "workflow.yml";
 (*$namedWorkflows*)
 $namedWorkflows := <|
     "Release" -> <|
-        "Name" -> "Release Paclet",
+        "Name" -> "Release",
         "On" -> <|
             "Push"             -> <| "Branches" -> { "release/*" } |>,
             "WorkflowDispatch" -> True
@@ -495,7 +666,7 @@ $namedWorkflows := <|
     |>
     ,
     "Build" -> <|
-        "Name" -> "Build Paclet",
+        "Name" -> "Build",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -505,7 +676,7 @@ $namedWorkflows := <|
     |>
     ,
     "Check" -> <|
-        "Name" -> "Check Paclet",
+        "Name" -> "Check",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -514,8 +685,18 @@ $namedWorkflows := <|
         "Jobs" -> "Check"
     |>
     ,
+    "Test" -> <|
+        "Name" -> "Test",
+        "On"   -> <|
+            "Push"             -> <| "Branches" -> $defaultBranch |>,
+            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
+            "WorkflowDispatch" -> True
+        |>,
+        "Jobs" -> "Test"
+    |>
+    ,
     "Compile" -> <|
-        "Name" -> "Compile Paclet",
+        "Name" -> "Compile",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -538,6 +719,8 @@ toWorkflowName0[ "build"         ] := "Build";
 toWorkflowName0[ "buildpaclet"   ] := "Build";
 toWorkflowName0[ "check"         ] := "Check";
 toWorkflowName0[ "checkpaclet"   ] := "Check";
+toWorkflowName0[ "test"          ] := "Test";
+toWorkflowName0[ "testpaclet"    ] := "Test";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -557,6 +740,8 @@ validValueQ[ ___ ] := False;
 (*normalizeForYAML*)
 normalizeForYAML[ keys___, as_Association ] :=
     AssociationMap[ normalizeForYAML[ keys, #1 ] &, as ];
+
+normalizeForYAML[ wf_Workflow? workflowQ ] := normalizeForYAML @ wf[ "Data" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -696,7 +881,7 @@ normalizeJobs // catchUndefined;
 (*normalizeJob*)
 normalizeJob[ "check" | "checkpaclet" ] :=
     "Check" -> <|
-        "name"            -> "Check Paclet",
+        "name"            -> "Check",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -709,7 +894,7 @@ normalizeJob[ "check" | "checkpaclet" ] :=
 
 normalizeJob[ "build" | "buildpaclet" ] :=
     "Build" -> <|
-        "name"            -> "Build Paclet",
+        "name"            -> "Build",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -723,7 +908,7 @@ normalizeJob[ "build" | "buildpaclet" ] :=
 
 normalizeJob[ "release" | "releasepaclet" ] :=
     "Release" -> <|
-        "name"            -> "Release Paclet",
+        "name"            -> "Release",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -734,6 +919,18 @@ normalizeJob[ "release" | "releasepaclet" ] :=
             normalizeStep[ "UploadBuildArtifacts" ],
             normalizeStep[ "CreateRelease"        ],
             normalizeStep[ "UploadRelease"        ]
+        }
+    |>;
+normalizeJob[ "test" | "testpaclet" ] :=
+    "Test" -> <|
+        "name"            -> "Test",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "steps"           -> {
+            normalizeStep[ "Checkout"   ],
+            normalizeStep[ "TestPaclet" ]
         }
     |>;
 
@@ -1164,6 +1361,17 @@ normalizeStep[ "build"|"buildpaclet" ] := <|
     "name" -> "Build Paclet",
     "id"   -> "build-paclet-step",
     "uses" -> $buildPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
+|>;
+
+normalizeStep[ "test"|"testpaclet" ] := <|
+    "name" -> "Test Paclet",
+    "id"   -> "test-paclet-step",
+    "uses" -> $testPacletAction,
     "with" -> <|
         "target"              -> $defaultActionTarget,
         "paclet_cicd_version" -> $latestPacletCICDVersion,

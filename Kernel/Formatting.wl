@@ -14,19 +14,44 @@ FormattingHelper // Attributes = { HoldFirst };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Workflow*)
+FormattingHelper[ workflow: Workflow[ name_String, as_ ], fmt_ ] :=
+    Module[ { detail, jobs },
+        detail = assocViewer @ as;
+        jobs = Lookup[ as, "jobs", <| |> ];
+        BoxForm`ArrangeSummaryBox[
+            Workflow,
+            Unevaluated @ workflow,
+            boxIcon @ Workflow,
+            {
+                { BoxForm`SummaryItem @ { "Name: ", name } },
+                { BoxForm`SummaryItem @ { "Jobs: ", Length @ jobs } }
+            },
+            {
+                { BoxForm`SummaryItem @ { "Data: ", detail } }
+            },
+            fmt
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*WorkflowJob*)
 FormattingHelper[ job: WorkflowJob[ name_String, as_ ], fmt_ ] :=
-    Module[ { detail },
+    Module[ { detail, steps },
         detail = assocViewer @ as;
+        steps = Lookup[ as, "steps", { } ];
         BoxForm`ArrangeSummaryBox[
             WorkflowJob,
             Unevaluated @ job,
             boxIcon @ WorkflowJob,
             {
                 { BoxForm`SummaryItem @ { "Name: ", name } },
+                { BoxForm`SummaryItem @ { "Steps: ", Length @ steps } }
+            },
+            {
                 { BoxForm`SummaryItem @ { "Data: ", detail } }
             },
-            { },
             fmt
         ]
     ];
@@ -51,11 +76,14 @@ assocViewer[ as_Association ] :=
                     Opener @ Dynamic @ x,
                     PaneSelector[
                         {
-                            False -> $elidedAssoc,
+                            False -> elidedAssoc @ as,
                             True ->
                                 Grid[
                                     KeyValueMap[ assocViewer, as ],
-                                    Alignment -> { Left, Baseline }
+                                    Alignment -> { Left, Baseline },
+                                    Dividers -> {False, {False, {True}, False}},
+                                    (* Dividers -> Center, *)
+                                    FrameStyle -> GrayLevel[0, 0.1]
                                 ]
                         },
                         Dynamic @ x,
@@ -71,6 +99,9 @@ assocViewer[ as_Association ] :=
 assocViewer[ key_, value_ ] :=
     { Style[ key, "SummaryItemAnnotation" ], assocViewer @ value };
 
+assocViewer[ list_List ] /; StringLength[ ToString @ list ] < 50 :=
+    list;
+
 assocViewer[ list_List ] :=
     DynamicModule[ { x = False },
         Grid[
@@ -83,7 +114,10 @@ assocViewer[ list_List ] :=
                             True ->
                                 Column[
                                     assocViewer /@ list,
-                                    Alignment -> { Left, Top }
+                                    Alignment -> { Left, Top },
+                                    Dividers -> {False, {False, {True}, False}},
+                                    (* Dividers -> Center, *)
+                                    FrameStyle -> GrayLevel[0, 0.1]
                                 ]
                         },
                         Dynamic @ x,
@@ -96,7 +130,27 @@ assocViewer[ list_List ] :=
         ]
     ];
 
+assocViewer[ Null ] := "";
 assocViewer[ other_ ] := Style[ other, "SummaryItem" ];
+
+
+elidedAssoc[ KeyValuePattern[ "name" -> name_String ] ] := elidedAssoc @ name;
+
+elidedAssoc[ name_String ] :=
+    Row @ {
+        Style[ name, "SummaryItemAnnotation", FontSlant -> Italic ],
+        " ",
+        $elidedAssoc
+    };
+
+elidedAssoc[ name_String ] :=
+    Row @ {
+        "\[LeftAssociation] ",
+        Style[ name, "SummaryItemAnnotation", FontSlant -> Italic ],
+        " \[RightAssociation]"
+    };
+
+elidedAssoc[ other_ ] := $elidedAssoc;
 
 $elidedAssoc = "\[LeftAssociation]\[Ellipsis]\[RightAssociation]";
 $elidedList = "{\[Ellipsis]}";
