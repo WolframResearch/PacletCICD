@@ -77,8 +77,13 @@ EquivalentNodeQ[ nodes___ ] :=
 (*ASTPattern*)
 ASTPattern // Attributes = { HoldFirst };
 
-ASTPattern[ patt_ ] := catchTop @ checkDuplicatePatterns @ astPattern @ patt;
-ASTPattern[ patt_, meta_ ] := catchTop @ astPattern[ patt, meta ];
+ASTPattern[ patt_ ] :=
+    catchTop @ With[ { p = astBlockPattern @ patt },
+        checkDuplicatePatterns @ astPattern @ p
+    ];
+
+ASTPattern[ patt_, meta_ ] :=
+    catchTop @ With[ { p = astBlockPattern @ patt }, astPattern[ p, meta ] ];
 
 ASTPattern // catchUndefined;
 
@@ -106,10 +111,27 @@ astPattern[ Verbatim[ Pattern ][ sym_Symbol? symbolQ, patt_ ] ] :=
 astPattern[ patt_ASTPattern  ] := patt;
 astPattern[ patt_$astPattern ] := patt;
 
-astPattern[ Verbatim[ Verbatim     ][ a___ ] ] := a;
+astPattern[ Verbatim[ Verbatim     ][ a_   ] ] := verbatimAST @ a;
 astPattern[ Verbatim[ HoldPattern  ][ a_   ] ] := astPattern @ a;
 astPattern[ Verbatim[ Alternatives ][ a___ ] ] :=
     Alternatives @@ (astPattern /@ HoldComplete @ a);
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*verbatimAST*)
+verbatimAST // Attributes = { HoldAllComplete };
+
+verbatimAST[ sym_Symbol? symbolQ ] := symNamePatt @ sym;
+verbatimAST[ r_Rational ] /; AtomQ @ Unevaluated @ r := rationalPattern @ r;
+verbatimAST[ c_Complex  ] /; AtomQ @ Unevaluated @ c := complexPattern  @ c;
+
+verbatimAST[ expr: _Integer|_Real|_String ] /; AtomQ @ Unevaluated @ expr :=
+    leafNode[ Head @ expr, ToString[ expr, InputForm ] ];
+
+verbatimAST[ head_[ args___ ] ] :=
+    CallNode[ astPattern @ head, astPattern /@ Unevaluated @ { args }, _ ];
+
+verbatimAST // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -308,7 +330,7 @@ makeASTCondition[ lhs_, rhs_ ] :=
         Condition @@ Replace[
             { bound, cv },
             { HoldComplete[ s___ ], HoldComplete[ c_ ] } :> {
-                astPattern @ lhs,
+                checkDuplicatePatterns @ astPattern @ lhs,
                 $ASTCondition[ { s }, c ]
             }
         ]
@@ -541,11 +563,28 @@ symNamePatt // catchUndefined;
 expandNestedASTPatterns[ expr_ ] :=
     ReplaceAll[
         expr,
-        HoldPattern @ ASTPattern[ a___ ] :>
-            With[ { p = astPattern @ a }, $astPattern @ p /; True ]
+        {
+            Verbatim[ Verbatim ][ a___ ] :> Verbatim @ a,
+            HoldPattern @ ASTPattern[ a___ ] :>
+                With[ { p = astPattern @ a }, $astPattern @ p /; True ]
+        }
     ];
 
 expandNestedASTPatterns // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*astBlockPattern*)
+astBlockPattern // Attributes = { HoldFirst };
+
+astBlockPattern[ patt: Verbatim[ HoldPattern ][ ___ ] ] := patt;
+astBlockPattern[ patt_ ] :=
+    Block[ { ASTPattern },
+        SetAttributes[ ASTPattern, HoldFirst ];
+        HoldPattern @ Evaluate @ patt
+    ];
+
+astBlockPattern // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

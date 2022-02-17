@@ -232,6 +232,11 @@ Notebook[
            "builds your paclet and creates a tagged release from the paclet version number when pusing to a release branch",
            "TableText"
           ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          "\"Compile\"",
+          Cell["XXXX", "TableText"]
          }
         }
        ]
@@ -1433,6 +1438,104 @@ Notebook[
           },
           Open
          ]
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[
+             InterpretationBox[
+              Cell["\t", "ExampleDelimiter"],
+              $Line = 0;
+              Null
+             ]
+            ],
+            "ExampleDelimiter",
+            CellID -> 70956192
+           ],
+           Cell[
+            "Create a workflow to compile libraries:",
+            "ExampleText",
+            CellID -> 465325869
+           ],
+           Cell[
+            CellGroupData[
+             {
+              Cell[
+               BoxData[
+                RowBox[
+                 {
+                  "workflow",
+                  "=",
+                  RowBox[
+                   {
+                    "WorkflowExport",
+                    "[",
+                    RowBox[
+                     {
+                      RowBox[
+                       {"ExampleDirectory", "[", "\"CompiledLibrary\"", "]"}
+                      ],
+                      ",",
+                      "\"Compile\""
+                     }
+                    ],
+                    "]"
+                   }
+                  ]
+                 }
+                ]
+               ],
+               "Input",
+               CellLabel -> "In[4]:=",
+               CellID -> 46189176
+              ],
+              Cell[
+               BoxData[
+                RowBox[
+                 {
+                  "File",
+                  "[",
+                  TemplateBox[
+                   {
+                    "\"C:\\\\Users\\\\rhennigan\\\\AppData\\\\Roaming\\\\Mathematica\\\\ApplicationData\\\\Wolfram\\\\PacletCICD\\\\Examples\\\\CompiledLibrary\\\\.github\\\\workflows\\\\CompilePaclet.yml\""
+                   },
+                   "FileArgument"
+                  ],
+                  "]"
+                 }
+                ]
+               ],
+               "Output",
+               CellLabel -> "Out[4]=",
+               CellID -> 569358251
+              ]
+             },
+             Open
+            ]
+           ],
+           Cell[
+            CellGroupData[
+             {
+              Cell[
+               BoxData[RowBox[{"FilePrint", "[", "workflow", "]"}]],
+               "Input",
+               CellLabel -> "In[5]:=",
+               CellID -> 434775684
+              ],
+              Cell[
+               "name: Compile Paclet\non: \n  push: \n    branches:  [main]\n  pull_request: \n    branches:  [main]\n  workflow_dispatch:\njobs: \n  Compile-Windows-x86-64: \n    name: Compile (Windows-x86-64)\n    runs-on: windows-latest\n    env: \n      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\n      WOLFRAM_LIBRARY_BUILD_SCRIPT: ./Scripts/Compile.wls\n      WOLFRAM_LIBRARY_BUILD_OUTPUT: LibraryResources/\n      WOLFRAM_SYSTEM_ID: Windows-x86-64\n      WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL: https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi\n      WOLFRAMENGINE_CACHE_KEY: WolframEngine-A\n      WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY: WolframEngine\n    timeout-minutes: 20\n    steps: \n    - name: Checkout Code\n      id: checkout-code\n      uses: actions/checkout@v2\n    - name: Cache/restore Wolfram Engine install\n      id: cache-restore-step\n      uses: actions/cache@v2\n      env: \n        WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'\n      with: \n        path: ${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\n        key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}\n    - name: Download and install Wolfram Engine\n      if: steps.cache-restore-step.outputs.cache-hit != 'true'\n      env: \n        WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'\n        WOLFRAMENGINE_INSTALL_MSI_PATH: '${{ runner.temp }}\\WolframEngine-Install.msi'\n        WOLFRAMENGINE_INSTALL_LOG_PATH: '${{ runner.temp }}\\WolframEngine-Install.log'\n      run: |\n        echo 'Downloading Wolfram Engine installer...'\n        $msiFile = '${{ env.WOLFRAMENGINE_INSTALL_MSI_PATH }}'\n        $logFile = '${{ env.WOLFRAMENGINE_INSTALL_LOG_PATH }}'\n        Import-Module BitsTransfer\n        Start-BitsTransfer '${{ env.WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL }}' $msiFile\n        echo 'Downloaded Wolfram Engine installer.'\n        $DataStamp = get-date -Format yyyyMMddTHHmmss\n        $MSIArguments = @(\n            \"/i\"\n            ('\"{0}\"' -f $msiFile)\n            'INSTALLLOCATION=\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\"'\n            \"/qn\"\n            \"/norestart\"\n            \"/L*v\"\n            $logFile\n        )\n        echo 'Installing Wolfram Engine...'\n        Start-Process \"msiexec.exe\" -ArgumentList $MSIArguments -Wait -NoNewWindow\n        echo 'Installed Wolfram Engine.'\n    - name: Compile libraries\n      env: \n        WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'\n        WOLFRAMINIT: \"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\"\n      run: |\n        $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'\n        wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}\n    - name: Archive compiled libraries\n      uses: actions/upload-artifact@v2\n      with: \n        name: ${{ env.WOLFRAM_SYSTEM_ID }}\n        path: ${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}\n  Compile-MacOSX-x86-64: \n    name: Compile (MacOSX-x86-64)\n    runs-on: macos-latest\n    env: \n      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\n      WOLFRAM_LIBRARY_BUILD_SCRIPT: ./Scripts/Compile.wls\n      WOLFRAM_LIBRARY_BUILD_OUTPUT: LibraryResources/\n      WOLFRAM_SYSTEM_ID: MacOSX-x86-64\n      WOLFRAMENGINE_CACHE_KEY: WolframEngine-A\n      WOLFRAMENGINE_INSTALLATION_DIRECTORY: \"/Applications/Wolfram Engine.app\"\n    timeout-minutes: 20\n    steps: \n    - name: Checkout Code\n      id: checkout-code\n      uses: actions/checkout@v2\n    - name: Cache/restore Wolfram Engine install\n      id: cache-restore-step\n      uses: actions/cache@v2\n      with: \n        path: ${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\n        key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}\n    - name: Download and install Wolfram Engine\n      if: steps.cache-restore-step.outputs.cache-hit != 'true'\n      run: |\n        echo 'Installing Wolfram Engine...'\n        brew install --cask wolfram-engine\n        echo 'Installed Wolfram Engine.'\n    - name: Compile libraries\n      env: \n        WOLFRAMENGINE_EXECUTABLES_DIRECTORY: \"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS\"\n        WOLFRAMSCRIPT_KERNELPATH: \"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel\"\n      run: |\n        export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"\n        wolframscript -debug -verbose -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}\n    - name: Archive compiled libraries\n      uses: actions/upload-artifact@v2\n      with: \n        name: ${{ env.WOLFRAM_SYSTEM_ID }}\n        path: ${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}\n  Compile-Linux-x86-64: \n    name: Compile (Linux-x86-64)\n    runs-on: ubuntu-latest\n    container: \n      image: wolframresearch/wolframengine:latest\n      options: --user root\n    env: \n      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\n      WOLFRAM_LIBRARY_BUILD_SCRIPT: ./Scripts/Compile.wls\n      WOLFRAM_LIBRARY_BUILD_OUTPUT: LibraryResources/\n      WOLFRAM_SYSTEM_ID: Linux-x86-64\n    timeout-minutes: 20\n    steps: \n    - name: Checkout Code\n      id: checkout-code\n      uses: actions/checkout@v2\n    - name: Install build tools\n      run: |\n        apt-get -y update\n        apt-get -y install build-essential\n    - name: Compile libraries\n      run: wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}\n    - name: Archive compiled libraries\n      uses: actions/upload-artifact@v2\n      with: \n        name: ${{ env.WOLFRAM_SYSTEM_ID }}\n        path: ${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}\n  BuildPaclet: \n    name: Build Paclet\n    runs-on: ubuntu-latest\n    container: \n      image: wolframresearch/wolframengine:latest\n      options: --user root\n    env: \n      WOLFRAM_SYSTEM_ID: Linux-x86-64\n      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\n    timeout-minutes: 20\n    needs:  [Compile-Windows-x86-64, Compile-MacOSX-x86-64, Compile-Linux-x86-64]\n    steps: \n    - name: Checkout Code\n      id: checkout-code\n      uses: actions/checkout@v2\n    - name: Download compiled library resources\n      id: download-compilation-artifacts-step\n      uses: actions/download-artifact@v2\n      with: \n        path: LibraryResources\n    - name: Build Paclet\n      id: build-paclet-step\n      uses: rhennigan/build-paclet@v1.4.0\n      with: \n        target: Submit\n        paclet_cicd_version: 0.5.0\n        definition_notebook: ./DefinitionNotebook.nb\n    - name: Upload Build Artifacts\n      id: upload-build-artifacts-step\n      uses: actions/upload-artifact@v2\n      with: \n        path: ${{ env.BUILD_DIR }}\n        if-no-files-found: error",
+               "Print",
+               CellLabel -> "During evaluation of In[5]:=",
+               CellID -> 87327412
+              ]
+             },
+             Open
+            ]
+           ]
+          },
+          Open
+         ]
         ]
        },
        Open
@@ -1563,7 +1666,7 @@ Notebook[
   "NotebookUUID" -> "f30a751a-3c39-4fff-85f3-1af3eafc8a57"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

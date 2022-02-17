@@ -3,6 +3,8 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
+CheckPaclet // ClearAll;
+
 Begin[ "`Private`" ];
 
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];

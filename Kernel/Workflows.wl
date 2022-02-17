@@ -3,10 +3,129 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-WorkflowExport;
-GitHubSecret;
+ClearAll[ Workflow, WorkflowJob, WorkflowExport, WorkflowStep, GitHubSecret ];
 
 Begin[ "`Private`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowJob*)
+WorkflowJob::invname =
+"`1` is not a known job name.";
+
+WorkflowJob::invprop =
+"`1` is not a valid WorkflowJob property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+WorkflowJob // Options = { };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+WorkflowJob[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    Module[ { new },
+        new = catchTop @ makeWorkflowJobData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ WorkflowJob[ name, a ]
+            ]
+        ] /; new =!= as
+    ];
+
+WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ jobNameQ @ name,
+        WorkflowJob[ name, <| |>, opts ],
+        throwMessageFailure[ WorkflowJob::invname, name ]
+    ];
+
+WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowJobData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        WorkflowJob[ id, new, opts ]
+    ];
+
+(job_WorkflowJob? workflowJobQ)[ prop_ ] :=
+    catchTop @ workflowJobProperty[ job, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
+    FormattingHelper[ job, fmt ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$jobNames*)
+$jobNames = { "Check", "Build", "Release", "Compile" };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*jobNameQ*)
+jobNameQ[ name_ ] := MemberQ[ $jobNames, name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowJobQ*)
+workflowJobQ // Attributes = { HoldFirst };
+
+workflowJobQ[ job: WorkflowJob[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ job;
+
+workflowJobQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowJobProperty*)
+workflowJobProperty[ WorkflowJob[ _, data_ ], "Data" ] := data;
+workflowJobProperty[ WorkflowJob[ name_, _ ], "Name" ] := name;
+
+workflowJobProperty[ _, prop_ ] :=
+    throwMessageFailure[ WorkflowJob::invprop, prop ];
+
+workflowJobProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowJobData*)
+makeWorkflowJobData[ name_String? jobNameQ, as_Association ] :=
+    Enclose @ Module[ { rule, as1, as2, data },
+        rule = ConfirmMatch[ normalizeJob @ name, _ -> _ ];
+        as1  = ConfirmBy[ Last @ rule, AssociationQ ];
+        as2  = ConfirmBy[ normalizeForYAML[ "jobs", name, as ], AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowJobData[ name_String, custom_Association ] :=
+    makeWorkflowJobData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowJobData[ custom_Association ] :=
+    Enclose @ Module[ { rule, data, id },
+        rule = ConfirmMatch[ normalizeJob @ custom, _ -> _ ];
+        data = ConfirmBy[ Last @ rule, AssociationQ ];
+        data
+    ];
+
+makeWorkflowJobData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*merger*)
+merger[ as: { ___Association? AssociationQ } ] := Merge[ { as }, merger ];
+merger[ stuff_List ] := Last[ stuff, Missing[ ] ];
+merger // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -493,6 +612,18 @@ normalizeForYAML[ "jobs", _, "id"|"ID" -> id_String ] :=
 normalizeForYAML[ "jobs", _, "runs-on"|"RunsOn" -> str_String ] :=
     "runs-on" -> str;
 
+normalizeForYAML[ "jobs", name_, "Needs" -> needs_ ] :=
+    normalizeForYAML[ "jobs", name, "needs" -> needs ];
+
+normalizeForYAML[ "jobs", name_, "needs" -> str_String ] :=
+    normalizeForYAML[ "jobs", name, "needs" -> Flatten @ { str } ];
+
+normalizeForYAML[ "jobs", name_, "needs" -> names: { __String } ] :=
+    "needs" -> names;
+
+normalizeForYAML[ "jobs", name_, "needs" -> { } ] :=
+    "needs" -> None;
+
 normalizeForYAML[ "jobs", name_, "Container" -> container_ ] :=
     normalizeForYAML[ "jobs", name, "container" -> container ];
 
@@ -546,13 +677,17 @@ normalizeForYAML[ keys___, key_String :> Environment[ env_String ] ] :=
 normalizeForYAML[ keys___, key_String -> GitHubSecret[ sec_String ] ] :=
     normalizeForYAML[ keys, key -> "${{ secrets."<>sec<>" }}" ];
 
+normalizeForYAML[ keys___, key_String -> None ] :=
+    key -> None;
+
 normalizeForYAML // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeJobs*)
-normalizeJobs[ job_String ] := normalizeJobs @ { job };
-normalizeJobs[ jobs_List  ] := Association[ normalizeJob /@ jobs ];
+normalizeJobs[ job_WorkflowJob ] := normalizeJobs @ { job };
+normalizeJobs[ job_String      ] := normalizeJobs @ { job };
+normalizeJobs[ jobs_List       ] := Association[ normalizeJob /@ jobs ];
 normalizeJobs[ jobs_Association? validValueQ ] := jobs; (* TODO: validate against schema *)
 normalizeJobs // catchUndefined;
 
@@ -560,7 +695,7 @@ normalizeJobs // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*normalizeJob*)
 normalizeJob[ "check" | "checkpaclet" ] :=
-    "CheckPaclet" -> <|
+    "Check" -> <|
         "name"            -> "Check Paclet",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
@@ -573,7 +708,7 @@ normalizeJob[ "check" | "checkpaclet" ] :=
     |>;
 
 normalizeJob[ "build" | "buildpaclet" ] :=
-    "BuildPaclet" -> <|
+    "Build" -> <|
         "name"            -> "Build Paclet",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
@@ -587,7 +722,7 @@ normalizeJob[ "build" | "buildpaclet" ] :=
     |>;
 
 normalizeJob[ "release" | "releasepaclet" ] :=
-    "ReleasePaclet" -> <|
+    "Release" -> <|
         "name"            -> "Release Paclet",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
@@ -605,6 +740,9 @@ normalizeJob[ "release" | "releasepaclet" ] :=
 normalizeJob[ "compile" ] := normalizeJob @ { "compile" };
 normalizeJob[ { "compile", config___ } ] := normalizeCompilationJobs @ config;
 
+normalizeJob[ job_WorkflowJob? workflowJobQ ] :=
+    job[ "Name" ] -> job[ "Data" ];
+
 normalizeJob[ { job_String, rest___ } ] :=
     With[ { lc = StringDelete[ ToLowerCase @ job, "-" | "_" ] },
         normalizeJob @ { lc, rest } /; lc =!= job
@@ -616,7 +754,10 @@ normalizeJob[ job_String ] :=
     ];
 
 normalizeJob[ as: KeyValuePattern[ "id"|"ID" -> id_ ] ] :=
-    id -> as;
+    normalizeForYAML[ "jobs", id -> as ];
+
+normalizeJob[ as: KeyValuePattern[ "name"|"Name" -> name_String ] ] :=
+    normalizeForYAML[ "jobs", name -> as ];
 
 normalizeJob // catchUndefined;
 
@@ -1120,7 +1261,10 @@ toYAMLString // catchUndefined;
 
 
 toYAMLString0[ as_Association ] :=
-    stringJoin @ Riffle[ KeyValueMap[ toYAMLString0, as ], "\n" ];
+    stringJoin @ Riffle[
+        KeyValueMap[ toYAMLString0, DeleteCases[ as, None ] ],
+        "\n"
+    ];
 
 toYAMLString0[ key_String, as_Association ] :=
     stringJoin[ toYAMLKey @ key, "\n", descend @ toYAMLString0 @ as ];
@@ -1182,8 +1326,16 @@ checkMultilineString[ str_String ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*toYAMLKey*)
-toYAMLKey[ key_ ] := stringJoin[ $indent, key, ": " ];
+toYAMLKey[ key_ ] := stringJoin[ $indent, yamlKeyString @ key, ": " ];
 toYAMLKey // catchUndefined;
+
+yamlKeyString[ key_String ] :=
+    StringDelete[
+        StringReplace[ key, WhitespaceCharacter -> "-" ],
+        Except[ LetterCharacter | DigitCharacter | "-" ]
+    ];
+
+yamlKeyString[ other_ ] := yamlKeyString @ ToString @ other;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

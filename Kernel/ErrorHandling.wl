@@ -3,7 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-PacletCICD;
+PacletCICD // ClearAll;
 
 Begin[ "`Private`" ];
 
@@ -147,15 +147,13 @@ throwMessageFailure[ args___ ] :=
 (* ::Subsection::Closed:: *)
 (*messageFailure*)
 messageFailure := (
-    Block[ { $ContextPath }, Needs[ "Wolfram`PacletCICD`MessageFailure`" ] ];
-
     SetOptions[
-        Wolfram`PacletCICD`MessageFailure,
+        MessageFailure,
         "GeneralSymbol" -> PacletCICD,
         "MessagedFlag" :> $messaged
     ];
 
-    messageFailure = Wolfram`PacletCICD`MessageFailure
+    messageFailure = MessageFailure
 );
 
 (* ::**********************************************************************:: *)

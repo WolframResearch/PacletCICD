@@ -22,7 +22,10 @@ Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`setContextLoad;
 Wolfram`PacletCICD`SubmitPaclet;
 Wolfram`PacletCICD`TestPaclet;
+Wolfram`PacletCICD`Workflow;
 Wolfram`PacletCICD`WorkflowExport;
+Wolfram`PacletCICD`WorkflowJob;
+Wolfram`PacletCICD`WorkflowStep;
 
 Wolfram`PacletCICD`Internal`ResetExampleDirectory;
 
