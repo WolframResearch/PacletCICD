@@ -29,6 +29,7 @@ VerificationTest[
     "Wolfram`PacletCICD`",
     TestID -> "Context-BuildPaclet@@Tests/BuildPaclet.wlt:27,1-31,2"
 ]
+
 VerificationTest[
     Context @ ResetExampleDirectory,
     "Wolfram`PacletCICD`",
