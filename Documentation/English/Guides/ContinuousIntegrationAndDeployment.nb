@@ -203,6 +203,46 @@ Notebook[
            Cell[
             BoxData[
              ButtonBox[
+              "Workflow",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowJob",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowStep",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+             ]
+            ],
+            "InlineFormula"
+           ]
+          }
+         ],
+         "InlineGuideFunctionListing",
+         CellID -> 552882336
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
               "DeployReleaseHandler",
               BaseStyle -> "Link",
               ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeployReleaseHandler"
@@ -348,7 +388,7 @@ Notebook[
   ],
   "NotebookUUID" -> "44bc5355-79b1-42ff-81ed-3d943aa72aac"
  |>,
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "GuidePageStylesExt.nb",

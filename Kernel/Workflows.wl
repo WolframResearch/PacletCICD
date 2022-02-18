@@ -57,6 +57,20 @@ Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
         Workflow[ id, new, opts ]
     ];
 
+Workflow[
+    wf_Workflow? workflowQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name   = wf[ "Name" ];
+        as1    = wf[ "Data" ];
+        as2    = makeWorkflowData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        Workflow[ name, data, opts ]
+    ];
+
 (workflow_Workflow? workflowQ)[ prop_ ] :=
     catchTop @ workflowProperty[ workflow, prop ];
 
@@ -66,7 +80,9 @@ Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
 (* ::Subsection::Closed:: *)
 (*Formatting*)
 Workflow /: MakeBoxes[ workflow_Workflow? workflowQ, fmt_ ] :=
-    FormattingHelper[ workflow, fmt ];
+    With[ { boxes = FormattingHelper[ workflow, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -222,6 +238,20 @@ WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
         WorkflowJob[ id, new, opts ]
     ];
 
+WorkflowJob[
+    wf_WorkflowJob? workflowJobQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name   = wf[ "Name" ];
+        as1    = wf[ "Data" ];
+        as2    = makeWorkflowJobData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        WorkflowJob[ name, data, opts ]
+    ];
+
 (job_WorkflowJob? workflowJobQ)[ prop_ ] :=
     catchTop @ workflowJobProperty[ job, prop ];
 
@@ -231,7 +261,9 @@ WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
 (* ::Subsection::Closed:: *)
 (*Formatting*)
 WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
-    FormattingHelper[ job, fmt ];
+    With[ { boxes = FormattingHelper[ job, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -260,6 +292,9 @@ workflowJobProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
 
 workflowJobProperty[ job_, "Needs" ] :=
     Lookup[ genericWFProperty[ job, "Data" ], "needs", None ];
+
+workflowJobProperty[ job_, "Steps" ] :=
+    WorkflowStep /@ Lookup[ genericWFProperty[ job, "Data" ], "steps", { } ];
 
 workflowJobProperty[ _, prop_ ] :=
     throwMessageFailure[ WorkflowJob::invprop, prop ];
@@ -296,6 +331,137 @@ makeWorkflowJobData // catchUndefined;
 merger[ as: { ___Association? AssociationQ } ] := Merge[ { as }, merger ];
 merger[ stuff_List ] := Last[ stuff, Missing[ ] ];
 merger // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowStep*)
+WorkflowStep::invname =
+"`1` is not a known step name.";
+
+WorkflowStep::invprop =
+"`1` is not a valid WorkflowStep property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+WorkflowStep // Options = { };
+(* TODO: set options like WorkflowExport *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+WorkflowStep[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    catchTop @ Module[ { new },
+        new = makeWorkflowStepData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ WorkflowStep[ name, a ]
+            ]
+        ]
+    ];
+
+WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ stepNameQ @ name,
+        WorkflowStep[ name, <| |>, opts ],
+        throwMessageFailure[ WorkflowStep::invname, name ]
+    ];
+
+WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowStepData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        WorkflowStep[ id, new, opts ]
+    ];
+
+WorkflowStep[
+    wf_WorkflowStep? workflowStepQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name = wf[ "Name" ];
+        as1 = wf[ "Data" ];
+        as2 = makeWorkflowStepData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        WorkflowStep[ name, data, opts ]
+    ];
+
+(job_WorkflowStep? workflowStepQ)[ prop_ ] :=
+    catchTop @ workflowStepProperty[ job, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+WorkflowStep /: MakeBoxes[ step_WorkflowStep? workflowStepQ, fmt_ ] :=
+    With[ { boxes = FormattingHelper[ step, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$stepNames*)
+$stepNames = {
+    "Checkout",
+    "Check",
+    "Build",
+    "Test",
+    "UploadBuildArtifacts",
+    "CreateRelease",
+    "UploadRelease",
+    "DownloadCompilationArtifacts"
+};
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*stepNameQ*)
+stepNameQ[ name_ ] := MemberQ[ $stepNames, name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowStepQ*)
+workflowStepQ[ job: WorkflowStep[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ job;
+
+workflowStepQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowStepProperty*)
+workflowStepProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
+
+workflowStepProperty[ _, prop_ ] :=
+    throwMessageFailure[ WorkflowStep::invprop, prop ];
+
+workflowStepProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowStepData*)
+makeWorkflowStepData[ name_String? stepNameQ, as_Association ] :=
+    Enclose @ Module[ { rule, as1, as2, data },
+        as1  = ConfirmBy[ normalizeStep @ name, AssociationQ ];
+        as2  = ConfirmBy[ normalizeStep @ as, AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowStepData[ name_String, custom_Association ] :=
+    makeWorkflowStepData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowStepData[ custom_Association ] :=
+    Enclose @ ConfirmBy[ normalizeStep @ custom, AssociationQ ];
+
+makeWorkflowStepData // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -390,6 +556,8 @@ workflowExport[
 
 workflowExport // catchUndefined;
 
+
+workflowExport0[ wf_Workflow? workflowQ ] := workflowExport0 @ wf[ "Data" ];
 
 workflowExport0[ name_String ] :=
     workflowExport0 @ Lookup[
@@ -662,7 +830,11 @@ $namedWorkflows := <|
             "Push"             -> <| "Branches" -> { "release/*" } |>,
             "WorkflowDispatch" -> True
         |>,
-        "Jobs" -> "Release"
+        "Jobs" -> {
+            "Check",
+            "Test",
+            { "Release", <| "Needs" -> { "Check", "Test" } |> }
+        }
     |>
     ,
     "Build" -> <|
@@ -738,10 +910,8 @@ validValueQ[ ___ ] := False;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeForYAML*)
-normalizeForYAML[ keys___, as_Association ] :=
-    AssociationMap[ normalizeForYAML[ keys, #1 ] &, as ];
-
-normalizeForYAML[ wf_Workflow? workflowQ ] := normalizeForYAML @ wf[ "Data" ];
+$$ymlKey  = _String|_Integer|Automatic;
+$$ymlKeys = $$ymlKey...;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -832,14 +1002,43 @@ normalizeForYAML[ "jobs", name_, "Environment"|Environment -> env_ ] :=
 normalizeForYAML[ "jobs", _, "env", key_String -> val_String ] :=
     key -> val;
 
-normalizeForYAML[ "jobs", _, "steps"|"Steps" -> steps_ ] :=
-    "steps" -> normalizeSteps @ steps;
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*Steps*)
+(* normalizeForYAML[ "jobs", _, "steps"|"Steps" -> steps_ ] :=
+    "steps" -> normalizeSteps @ steps; *)
+normalizeForYAML[ "jobs", job_, "Steps" -> steps_ ] :=
+    normalizeForYAML[ "jobs", job, "steps" -> steps ];
+
+normalizeForYAML[ "jobs", job_, "steps" -> name_String ] :=
+    normalizeForYAML[ "jobs", job, "steps" -> { name } ];
+
+normalizeForYAML[ "jobs", job_, "steps", idx_Integer, step_ ] :=
+    normalizeStep[ "jobs", job, "steps", idx, step ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*General*)
+normalizeForYAML[ keys___, as_Association ] :=
+    AssociationMap[ normalizeForYAML[ keys, #1 ] &, as ];
+
+normalizeForYAML[ keys___, list_List ] :=
+    MapIndexed[ normalizeForYAML[ keys, First[ #2 ], #1 ] &, list ];
+
+normalizeForYAML[ wf_Workflow? workflowQ ] :=
+    normalizeForYAML @ wf[ "Data" ];
+
+normalizeForYAML[ job_WorkflowJob? workflowJobQ ] :=
+    normalizeForYAML @ job[ "Data" ];
+
+normalizeForYAML[ step_WorkflowStep? workflowStepQ ] :=
+    normalizeForYAML @ step[ "Data" ];
+
 normalizeForYAML[ keys___, key_String -> as_Association ] :=
     key -> normalizeForYAML[ keys, key, as ];
+
+normalizeForYAML[ keys___, "Environment"|Environment -> env_ ] :=
+    normalizeForYAML[ keys, "env" -> env ];
 
 normalizeForYAML[ keys___, key_Symbol -> value_ ] :=
     normalizeForYAML[ keys, SymbolName @ key -> value ];
@@ -939,6 +1138,11 @@ normalizeJob[ { "compile", config___ } ] := normalizeCompilationJobs @ config;
 
 normalizeJob[ job_WorkflowJob? workflowJobQ ] :=
     job[ "Name" ] -> job[ "Data" ];
+
+normalizeJob[ { job_String, rest___ } ] :=
+    With[ { wfj = Quiet @ catch @ WorkflowJob[ job, rest ] },
+        (wfj[ "Name" ] -> wfj[ "Data" ]) /; workflowJobQ @ wfj
+    ];
 
 normalizeJob[ { job_String, rest___ } ] :=
     With[ { lc = StringDelete[ ToLowerCase @ job, "-" | "_" ] },
@@ -1340,14 +1544,14 @@ normalizeSteps[ steps_List ] := normalizeStep /@ steps;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeStep*)
-normalizeStep[ "checkout"|"checkoutcode" ] := <|
-    "name" -> "Checkout Code",
-    "id"   -> "checkout-code",
+normalizeStep[ ___, "checkout"|"checkoutcode" ] := <|
+    "name" -> "Checkout",
+    "id"   -> "checkout-code-step",
     "uses" -> "actions/checkout@v2"
 |>;
 
-normalizeStep[ "check"|"checkpaclet" ] := <|
-    "name" -> "Check Paclet",
+normalizeStep[ ___, "check"|"checkpaclet" ] := <|
+    "name" -> "Check",
     "id"   -> "check-paclet-step",
     "uses" -> $checkPacletAction,
     "with" -> <|
@@ -1357,8 +1561,8 @@ normalizeStep[ "check"|"checkpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ "build"|"buildpaclet" ] := <|
-    "name" -> "Build Paclet",
+normalizeStep[ ___, "build"|"buildpaclet" ] := <|
+    "name" -> "Build",
     "id"   -> "build-paclet-step",
     "uses" -> $buildPacletAction,
     "with" -> <|
@@ -1368,8 +1572,8 @@ normalizeStep[ "build"|"buildpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ "test"|"testpaclet" ] := <|
-    "name" -> "Test Paclet",
+normalizeStep[ ___, "test"|"testpaclet" ] := <|
+    "name" -> "Test",
     "id"   -> "test-paclet-step",
     "uses" -> $testPacletAction,
     "with" -> <|
@@ -1379,19 +1583,27 @@ normalizeStep[ "test"|"testpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
-    "name" -> "Upload Build Artifacts",
-    "id"   -> "upload-build-artifacts-step",
+normalizeStep[
+    ___,
+    Alternatives[
+        "uploadbuildartifacts",
+        "uploadartifacts",
+        "uploadbuildartifact",
+        "uploadartifact",
+        "uploadbuild"
+    ]
+] := <|
+    "name" -> "UploadArtifact",
+    "id" -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
-        (* TODO: prepend something like PacletCICD to these env vars *)
         "path"              -> "${{ env.BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
 |>;
 
-normalizeStep[ "createrelease" ] := <|
-    "name" -> "Create Release",
+normalizeStep[ ___, "createrelease" ] := <|
+    "name" -> "CreateRelease",
     "id"   -> "create-release-step",
     "uses" -> "actions/create-release@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
@@ -1403,8 +1615,8 @@ normalizeStep[ "createrelease" ] := <|
     |>
 |>;
 
-normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
-    "name" -> "Upload Release Asset",
+normalizeStep[ ___, "uploadrelease"|"uploadreleaseasset" ] := <|
+    "name" -> "UploadRelease",
     "id"   -> "upload-release-asset-step",
     "uses" -> "actions/upload-release-asset@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
@@ -1416,19 +1628,65 @@ normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
     |>
 |>;
 
-normalizeStep[ "downloadcompilationartifacts" ] := <|
-    "name" -> "Download compiled library resources",
+normalizeStep[ ___, "downloadcompilationartifacts" ] := <|
+    "name" -> "DownloadCompilationArtifacts",
     "id"   -> "download-compilation-artifacts-step",
     "uses" -> "actions/download-artifact@v2",
     "with" -> <| "path" -> "LibraryResources" |>
 |>;
 
-normalizeStep[ step_String ] :=
+normalizeStep[ keys___, step_String ] :=
     With[ { lc = StringDelete[ ToLowerCase @ step, "-" | "_" ] },
-        normalizeStep @ lc /; lc =!= step
+        normalizeStep[ keys, lc ] /; lc =!= step
     ];
 
-normalizeStep[ as_Association ] := as;
+normalizeStep[ keys___, step_String ] :=
+    throwError[
+        "Invalid step name \"`1`\" (`2`)",
+        step,
+        keySeqDocLink @ keys
+    ];
+
+normalizeStep[ as_Association ] :=
+    normalizeForYAML[
+        "jobs",
+        Automatic,
+        "steps",
+        Automatic,
+        KeyMap[ toLowerCase, as ]
+    ];
+
+normalizeStep[ keys__, as_Association ] :=
+    normalizeForYAML[ keys, KeyMap[ toLowerCase, as ] ];
+
+keySeqDocLink[ keys___ ] :=
+    Module[ { str, url },
+        str = keySeqString @ keys;
+        url = URLBuild @ <|
+            "Scheme" -> "https",
+            "Domain" -> "docs.github.com",
+            "Path" -> {
+                "",
+                "en",
+                "actions",
+                "using-workflows",
+                "workflow-syntax-for-github-actions"
+            },
+            "Fragment" -> StringDelete[ str, Except[ LetterCharacter | "_" ] ]
+        |>;
+        ToString[ Hyperlink[ str, url ], StandardForm ]
+    ];
+
+keySeqString[ "jobs", None|Automatic, keys___ ] :=
+    keySeqString[ "jobs", "<job_id>", keys ];
+
+keySeqString[ a___, key_String, int_Integer, b___ ] :=
+    keySeqString[ a, key <> "[" <> ToString[ int ] <> "]", b ];
+
+keySeqString[ a___ ] := StringRiffle[ { a }, "." ];
+
+toLowerCase[ str_String ] := ToLowerCase @ str;
+toLowerCase[ other_ ] := other;
 
 (*TODO: check against schema *)
 

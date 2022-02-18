@@ -118,7 +118,7 @@ throwFailure[ args___ ] := Quiet @ throwMessageFailure @ args;
 throwMessageFailure // Attributes = { HoldFirst };
 
 throwMessageFailure[ msg_MessageName, args___ ] :=
-    Module[ { failure },
+    StackInhibit @ Module[ { failure },
         failure = messageFailure[ msg, args ];
         If[ TrueQ @ $catching,
             Throw[ failure, $top ],
@@ -126,13 +126,11 @@ throwMessageFailure[ msg_MessageName, args___ ] :=
         ]
     ];
 
-throwMessageFailure[ failure_Failure ] := (
-    messageFailure @ failure;
-    If[ TrueQ @ $catching,
-        Throw[ failure, $top ],
-        failure
-    ]
-);
+throwMessageFailure[ failure_Failure ] :=
+    StackInhibit[
+        messageFailure @ failure;
+        If[ TrueQ @ $catching, Throw[ failure, $top ], failure ]
+    ];
 
 throwMessageFailure[ msg_String ] :=
     throwMessageFailure[ PacletCICD::error, msg ];
