@@ -7,7 +7,7 @@ PacletCICD // ClearAll;
 
 Begin[ "`Private`" ];
 
-Needs[ "DefinitionNotebookClient`" -> "dnc`"  ];
+$ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -224,8 +224,8 @@ exitFailure // Attributes = { HoldFirst };
 exitFailure[ msg_MessageName, code_, result_ ] := (
     If[ $EvaluationEnvironment === "Script"
         ,
-        Block[ { DefinitionNotebookClient`$ConsoleType = Automatic },
-            DefinitionNotebookClient`ConsolePrint[
+        Block[ { dnc`$ConsoleType = Automatic },
+            dnc`ConsolePrint[
                 ToString @ Unevaluated @ msg <> ": " <> ToString @ msg,
                 "Level" -> "Error"
             ]
@@ -238,8 +238,8 @@ exitFailure[ msg_MessageName, code_, result_ ] := (
 exitFailure[ fail_Failure, code_Integer: 1 ] := (
     If[ $EvaluationEnvironment === "Script"
         ,
-        Block[ { DefinitionNotebookClient`$ConsoleType = Automatic },
-            DefinitionNotebookClient`ConsolePrint[
+        Block[ { dnc`$ConsoleType = Automatic },
+            dnc`ConsolePrint[
                 fail[ "Message" ],
                 "Level" -> "Error"
             ]

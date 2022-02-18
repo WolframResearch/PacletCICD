@@ -3,9 +3,36 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ClearAll[ Workflow, WorkflowJob, WorkflowExport, WorkflowStep, GitHubSecret ];
+ClearAll[
+    Workflow,
+    WorkflowJob,
+    WorkflowExport,
+    WorkflowStep,
+    GitHubSecret,
+    WorkflowQ,
+    WorkflowJobQ,
+    WorkflowStepQ
+];
 
 Begin[ "`Private`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowQ*)
+WorkflowQ[ wf_ ] := workflowQ @ wf;
+WorkflowQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowJobQ*)
+WorkflowJobQ[ wf_ ] := workflowJobQ @ wf;
+WorkflowJobQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowStepQ*)
+WorkflowStepQ[ wf_ ] := workflowStepQ @ wf;
+WorkflowStepQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

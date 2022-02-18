@@ -8,6 +8,7 @@ ClearAll[ TestPaclet, AnnotateTestIDs ];
 Begin[ "`Private`" ];
 
 Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
+Needs[ "CodeParser`"               -> "cp`"  ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -285,26 +286,16 @@ parseTestIDs[ file_ ] :=
 
 parseTestIDs[ file_, type_ ] :=
     Module[ { ast, mask, masked, all, unmasked },
-
         ast    = codeParseType[ file, type ];
         masked = maskNestedTests[ ast, mask ];
 
-        all = Cases[
-            masked,
-            CodeParser`CallNode[
-                CodeParser`LeafNode[
-                    Symbol,
-                    "VerificationTest"|"System`VerificationTest",
-                    _
-                ],
-                __
-            ],
-            Infinity
-        ];
+        all = Cases[ masked,
+                     ASTPattern @ HoldPattern @ VerificationTest[ ___ ],
+                     Infinity
+              ];
 
         unmasked = all /. masked[ h_ ] :> h;
-
-        getTestIDData[ type ] /@ unmasked
+        getTestIDData @ type /@ unmasked
     ];
 
 (* ::**********************************************************************:: *)
@@ -316,8 +307,8 @@ parseTestIDs[ file_, type_ ] :=
 maskNestedTests[ ast_, mask_ ] :=
     ReplaceAll[
         ast,
-        CodeParser`CallNode[
-            CodeParser`LeafNode[
+        cp`CallNode[
+            cp`LeafNode[
                 Symbol,
                 s1: "VerificationTest"|"System`VerificationTest",
                 as1_
@@ -325,16 +316,16 @@ maskNestedTests[ ast_, mask_ ] :=
             args_,
             as2_
         ] :>
-            CodeParser`CallNode[
-                CodeParser`LeafNode[ Symbol, s1, as1 ],
+            cp`CallNode[
+                cp`LeafNode[ Symbol, s1, as1 ],
                 ReplaceAll[
                     args,
-                    CodeParser`LeafNode[
+                    cp`LeafNode[
                         Symbol,
                         s2: "VerificationTest"|"System`VerificationTest",
                         a_
                     ] :>
-                        CodeParser`LeafNode[ Symbol, mask @ s2, a ]
+                        cp`LeafNode[ Symbol, mask @ s2, a ]
                 ],
                 as2
             ]
@@ -344,28 +335,28 @@ maskNestedTests[ ast_, mask_ ] :=
 (* ::Subsubsection::Closed:: *)
 (*getTestIDData*)
 getTestIDData[ type_ ][
-    CodeParser`CallNode[
-        CodeParser`LeafNode[ Symbol, "VerificationTest" | "Test", _ ],
+    cp`CallNode[
+        cp`LeafNode[ Symbol, "VerificationTest" | "Test", _ ],
         {
             __,
-            CodeParser`CallNode[
-                CodeParser`LeafNode[ Symbol, "Rule", _ ],
+            cp`CallNode[
+                cp`LeafNode[ Symbol, "Rule", _ ],
                 {
                     Alternatives[
-                        CodeParser`LeafNode[ Symbol, "TestID", _ ],
-                        CodeParser`LeafNode[ "String", "\"TestID\"", _ ]
+                        cp`LeafNode[ Symbol, "TestID", _ ],
+                        cp`LeafNode[ "String", "\"TestID\"", _ ]
                     ],
-                    CodeParser`LeafNode[
+                    cp`LeafNode[
                         String,
                         id_,
-                        KeyValuePattern[ CodeParser`Source -> idSrc_ ]
+                        KeyValuePattern[ cp`Source -> idSrc_ ]
                     ]
                 },
                 _
             ],
             ___
         },
-        KeyValuePattern[ CodeParser`Source -> testSrc_ ]
+        KeyValuePattern[ cp`Source -> testSrc_ ]
     ]
 ] := <|
     "TestID"       -> ToExpression[ id, InputForm ],
@@ -374,10 +365,10 @@ getTestIDData[ type_ ][
 |>;
 
 getTestIDData[ type_ ][
-    CodeParser`CallNode[
-        CodeParser`LeafNode[ Symbol, "VerificationTest", _ ],
+    cp`CallNode[
+        cp`LeafNode[ Symbol, "VerificationTest", _ ],
         _,
-        KeyValuePattern[ CodeParser`Source -> testSrc_ ]
+        KeyValuePattern[ cp`Source -> testSrc_ ]
     ]
 ] := <|
     "TestID"       -> "Untitled-" <> ToString[ $untitledTestNumber++ ],
@@ -403,7 +394,7 @@ testIDFilePart[ file_ ] :=
 (* ::Subsection::Closed:: *)
 (*codeParseType*)
 codeParseType[ file_, type_ ] :=
-    CodeParser`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ];
+    cp`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

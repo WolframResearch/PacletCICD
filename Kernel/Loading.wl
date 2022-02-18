@@ -1,28 +1,54 @@
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Header*)
-BeginPackage[ "Wolfram`PacletCICD`" ];
+BeginPackage[ "Wolfram`PacletCICD`Internal`", { "Wolfram`PacletCICD`" } ];
 
-setContextLoad;
+ClearAll[ SetContextLoad, LoadSubPackages, $SubPackageSymbols ];
 
 Begin[ "`Private`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*Setup*)
-setContextLoad // Attributes = { HoldFirst };
+(*$SubPackageSymbols*)
+$SubPackageSymbols := Association @ Internal`BagPart[ $subPackageSymbols, All ];
+$subPackageSymbols = Internal`Bag[ ];
 
-setContextLoad[ sym_Symbol, name_String ] /; StringFreeQ[ name, "`" ] :=
-    setContextLoad[ sym, "Wolfram`PacletCICD`" <> name <> "`" ];
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*LoadSubPackages*)
+LoadSubPackages[ ] := Keys @ KeyValueMap[ Rule, $SubPackageSymbols ];
 
-setContextLoad[ sym_Symbol, context_String ] :=
-    sym := Block[ { $ContextPath },
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*SetContextLoad*)
+SetContextLoad // Attributes = { HoldFirst };
+SetContextLoad::context = "Warning: suspicious context in `1`.";
+
+SetContextLoad[ sym_Symbol, name_String ] /; StringFreeQ[ name, "`" ] :=
+    SetContextLoad[ sym, "Wolfram`PacletCICD`" <> name <> "`" ];
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+SetContextLoad[ sym_Symbol, context_String ] :=
+    With[ { full = Context @ sym <> SymbolName @ Unevaluated @ sym },
+        If[ $Debug && Context @ sym =!= "Wolfram`PacletCICD`",
+            Message[ SetContextLoad::context, full ]
+        ];
+        Internal`StuffBag[ $subPackageSymbols, full :> sym ];
         sym // ClearAll;
-        Quiet[ Get @ context, General::shdw ];
-        sym
+        sym := Block[ { $ContextPath },
+                   sym // ClearAll;
+                   If[ TrueQ @ $Debug,
+                       Print[ "Loading: ",     full,
+                              "\n\tContext: ", context,
+                              "\n\tFile:    ", FindFile @ context
+                       ]
+                   ];
+                   Quiet[ Get @ context, General::shdw ];
+                   sym
+               ]
     ];
-
-End[ ];
+(* :!CodeAnalysis::EndBlock:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -31,43 +57,53 @@ End[ ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*ASTUtilities*)
-setContextLoad[ ASTCondition     , "ASTUtilities" ];
-setContextLoad[ ASTConditionValue, "ASTUtilities" ];
-setContextLoad[ ASTPattern       , "ASTUtilities" ];
-setContextLoad[ ASTPatternTest   , "ASTUtilities" ];
-setContextLoad[ EquivalentNodeQ  , "ASTUtilities" ];
-setContextLoad[ FromAST          , "ASTUtilities" ];
+SetContextLoad[ ASTCondition     , "ASTUtilities" ];
+SetContextLoad[ ASTConditionValue, "ASTUtilities" ];
+SetContextLoad[ ASTPattern       , "ASTUtilities" ];
+SetContextLoad[ ASTPatternTest   , "ASTUtilities" ];
+SetContextLoad[ EquivalentNodeQ  , "ASTUtilities" ];
+SetContextLoad[ FromAST          , "ASTUtilities" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Examples*)
+SetContextLoad[ $ExamplesLocation    , "Examples" ];
+SetContextLoad[ ExampleDirectory     , "Examples" ];
+SetContextLoad[ ResetExampleDirectory, "Examples" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*TestPaclet*)
-setContextLoad[ TestPaclet     , "TestPaclet" ];
-setContextLoad[ AnnotateTestIDs, "TestPaclet" ];
+SetContextLoad[ TestPaclet     , "TestPaclet" ];
+SetContextLoad[ AnnotateTestIDs, "TestPaclet" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Workflows*)
-setContextLoad[ GitHubSecret  , "Workflows" ];
-setContextLoad[ Workflow      , "Workflows" ];
-setContextLoad[ WorkflowExport, "Workflows" ];
-setContextLoad[ WorkflowJob   , "Workflows" ];
-setContextLoad[ WorkflowStep  , "Workflows" ];
+SetContextLoad[ GitHubSecret  , "Workflows" ];
+SetContextLoad[ Workflow      , "Workflows" ];
+SetContextLoad[ WorkflowExport, "Workflows" ];
+SetContextLoad[ WorkflowJob   , "Workflows" ];
+SetContextLoad[ WorkflowStep  , "Workflows" ];
+SetContextLoad[ WorkflowQ     , "Workflows" ];
+SetContextLoad[ WorkflowJobQ  , "Workflows" ];
+SetContextLoad[ WorkflowStepQ , "Workflows" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Other*)
-setContextLoad[ CheckDependencies      , "CheckDependencies"   ];
-setContextLoad[ CompileLibraryResources, "Compilation"         ];
-setContextLoad[ DeployPaclet           , "DeployPaclet"        ];
-setContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
-setContextLoad[ MessageFailure         , "MessageFailure"      ];
-setContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
-setContextLoad[ FormattingHelper       , "Formatting"          ];
+SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
+SetContextLoad[ CheckPaclet            , "CheckPaclet"         ];
+SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
+SetContextLoad[ CompileLibraryResources, "Compilation"         ];
+SetContextLoad[ DeployPaclet           , "DeployPaclet"        ];
+SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
+SetContextLoad[ MessageFailure         , "MessageFailure"      ];
+SetContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
+SetContextLoad[ FormattingHelper       , "Formatting"          ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Footer*)
-
-Remove @ setContextLoad;
-
+End[ ];
 EndPackage[ ];

@@ -16,9 +16,12 @@ VerificationTest[
 ]
 
 VerificationTest[
-    Needs[ "Wolfram`PacletCICD`" ],
+    Needs[ "Wolfram`PacletCICD`" ];
+    PacletCICD;
+    MessageFailure;
+    ,
     Null,
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:18,1-22,2"
+    TestID -> "Initialize@@Tests/ErrorHandling.wlt:18,1-25,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -27,13 +30,20 @@ VerificationTest[
 VerificationTest[
     Context @ PacletCICD,
     "Wolfram`PacletCICD`",
-    TestID -> "PacletCICD-Context@@Tests/ErrorHandling.wlt:27,1-31,2"
+    TestID -> "PacletCICD-Context@@Tests/ErrorHandling.wlt:30,1-34,2"
+]
+
+VerificationTest[
+    Context @ MessageFailure,
+    "Wolfram`PacletCICD`",
+    TestID -> "MessageFailure-Context@@Tests/ErrorHandling.wlt:36,1-40,2"
 ]
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*catchUndefined*)
 VerificationTest[
+    ExampleDirectory;
     Wolfram`PacletCICD`Private`tryFetchExampleData[ 1, 2, 3, 4 ],
     Failure[
         "PacletCICD::undefined",
@@ -52,7 +62,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::undefined },
-    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:36,1-56,2"
+    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:45,1-66,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -68,7 +78,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:61,1-72,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:71,1-82,2"
 ]
 
 VerificationTest[
@@ -87,7 +97,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:74,1-91,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:84,1-101,2"
 ]
 
 VerificationTest[
@@ -103,7 +113,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:93,1-107,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:103,1-117,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -128,7 +138,7 @@ VerificationTest[
         PacletCICD::error,
         PacletCICD::warning
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:112,1-132,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:122,1-142,2"
 ]
 
 VerificationTest[
@@ -147,7 +157,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::warning },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:134,1-151,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:144,1-161,2"
 ]
 
 VerificationTest[
@@ -163,7 +173,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:153,1-167,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:163,1-177,2"
 ]
 
 VerificationTest[
@@ -181,7 +191,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:169,1-185,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:179,1-195,2"
 ]
 
 VerificationTest[
@@ -211,5 +221,5 @@ VerificationTest[
         PacletCICD::error,
         PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:187,1-215,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:197,1-225,2"
 ]

@@ -103,6 +103,11 @@ e: BuildPaclet[ ___ ] :=
 (* ::Subsection::Closed:: *)
 (*Dependencies*)
 
+$$cpOpts = OptionsPattern @ {
+               CheckPaclet,
+               dnc`CheckDefinitionNotebook
+           };
+
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkForBuild*)
