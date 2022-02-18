@@ -3,9 +3,11 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-$ExamplesLocation;
-ExampleDirectory;
-`Internal`ResetExampleDirectory;
+ClearAll[
+    $ExamplesLocation,
+    ExampleDirectory,
+    `Internal`ResetExampleDirectory
+];
 
 Begin[ "`Private`" ];
 

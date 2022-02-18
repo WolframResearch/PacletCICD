@@ -117,13 +117,32 @@ VerificationTest[
     TestID -> "HoldPattern@@Tests/ASTUtilities.wlt:110,1-118,2"
 ]
 
+VerificationTest[
+    ASTPattern @ f[ ASTPattern[ _ ], ASTPattern[ _ ] ],
+    ASTPattern @ f[ _, _ ],
+    TestID -> "Invisible-Nested@@Tests/ASTUtilities.wlt:120,1-124,2"
+]
+
+VerificationTest[
+    ASTPattern[ f[ ASTPattern[ _, a_ ], ASTPattern[ _, b_ ] ], c_ ],
+    CodeParser`CallNode[
+        CodeParser`LeafNode[ Symbol, "f" | Context @ f <> "f", _ ],
+        {
+            (CodeParser`CallNode | CodeParser`LeafNode)[ _, _, a_ ],
+            (CodeParser`CallNode | CodeParser`LeafNode)[ _, _, b_ ]
+        },
+        c_
+    ],
+    TestID -> "Bound-Nested@@Tests/ASTUtilities.wlt:126,1-137,2"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Duplicate Pattern Symbols*)
 VerificationTest[
     Count[ CodeParse[ "{{1,1},{2,2}}" ], ASTPattern @ { a_, a_ }, Infinity ],
     2,
-    TestID -> "Duplicate-Pattern-Symbols-1@@Tests/ASTUtilities.wlt:123,1-127,2"
+    TestID -> "Duplicate-Pattern-Symbols-1@@Tests/ASTUtilities.wlt:142,1-146,2"
 ]
 
 VerificationTest[
@@ -133,7 +152,7 @@ VerificationTest[
         Infinity
     ],
     5,
-    TestID -> "Duplicate-Pattern-Symbols-2@@Tests/ASTUtilities.wlt:129,1-137,2"
+    TestID -> "Duplicate-Pattern-Symbols-2@@Tests/ASTUtilities.wlt:148,1-156,2"
 ]
 
 VerificationTest[
@@ -143,7 +162,7 @@ VerificationTest[
         Infinity
     ],
     { { 1, 1, 1 }, { 2, 2, 2 } },
-    TestID -> "Duplicate-Pattern-Symbols-3@@Tests/ASTUtilities.wlt:139,1-147,2"
+    TestID -> "Duplicate-Pattern-Symbols-3@@Tests/ASTUtilities.wlt:158,1-166,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -156,14 +175,14 @@ VerificationTest[
         _,
         as1_
     ],
-    TestID -> "Two-Arguments@@Tests/ASTUtilities.wlt:152,1-160,2"
+    TestID -> "Two-Arguments@@Tests/ASTUtilities.wlt:171,1-179,2"
 ]
 
 VerificationTest[
     Cases[
         CodeParse[ "VerificationTest[1 + 1, 2, TestID -> \"Addition\", SameTest -> SameQ]" ],
         ASTPattern[
-            VerificationTest[
+            HoldPattern @ VerificationTest[
                 __,
                 TestID -> ASTPattern[ id_String, as1_ ],
                 ___
@@ -173,13 +192,13 @@ VerificationTest[
         Infinity
     ],
     { { { { 1, 38 }, { 1, 48 } }, { { 1, 1 }, { 1, 68 } } } },
-    TestID -> "Nested-Meta-Bindings@@Tests/ASTUtilities.wlt:162,1-177,2"
+    TestID -> "Nested-Meta-Bindings@@Tests/ASTUtilities.wlt:181,1-196,2"
 ]
 
 VerificationTest[
     ASTPattern[ id_, as1_ ],
     id: (CallNode | LeafNode)[ _, _, as1_ ],
-    TestID -> "Meta-Unknown-Head@@Tests/ASTUtilities.wlt:179,1-183,2"
+    TestID -> "Meta-Unknown-Head@@Tests/ASTUtilities.wlt:198,1-202,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -188,73 +207,73 @@ VerificationTest[
 VerificationTest[
     testParse[ "VerificationTest[x,y]", VerificationTest[ ___ ] ],
     True,
-    TestID -> "TestParse-VerificationTest@@Tests/ASTUtilities.wlt:188,1-192,2"
+    TestID -> "TestParse-VerificationTest@@Tests/ASTUtilities.wlt:207,1-211,2"
 ]
 
 VerificationTest[
     testParse[ "f[x,y]", f[ _, _ ] ],
     True,
-    TestID -> "TestParse-Normal@@Tests/ASTUtilities.wlt:194,1-198,2"
+    TestID -> "TestParse-Normal@@Tests/ASTUtilities.wlt:213,1-217,2"
 ]
 
 VerificationTest[
     testParse[ "2.5", _Real ],
     True,
-    TestID -> "TestParse-Atom-Real@@Tests/ASTUtilities.wlt:200,1-204,2"
+    TestID -> "TestParse-Atom-Real@@Tests/ASTUtilities.wlt:219,1-223,2"
 ]
 
 VerificationTest[
     testParse[ "2", _Integer ],
     True,
-    TestID -> "TestParse-Atom-Integer@@Tests/ASTUtilities.wlt:206,1-210,2"
+    TestID -> "TestParse-Atom-Integer@@Tests/ASTUtilities.wlt:225,1-229,2"
 ]
 
 VerificationTest[
     testParse[ "\"hello\"", _String ],
     True,
-    TestID -> "TestParse-Atom-String@@Tests/ASTUtilities.wlt:212,1-216,2"
+    TestID -> "TestParse-Atom-String@@Tests/ASTUtilities.wlt:231,1-235,2"
 ]
 
 VerificationTest[
     testParse[ "x", _Symbol ],
     True,
-    TestID -> "TestParse-Atom-Symbol@@Tests/ASTUtilities.wlt:218,1-222,2"
+    TestID -> "TestParse-Atom-Symbol@@Tests/ASTUtilities.wlt:237,1-241,2"
 ]
 
 VerificationTest[
     With[ { expr = 2/3 }, testParse[ "2/3", expr ] ],
     True,
-    TestID -> "TestParse-Atom-Rational@@Tests/ASTUtilities.wlt:224,1-228,2"
+    TestID -> "TestParse-Atom-Rational@@Tests/ASTUtilities.wlt:243,1-247,2"
 ]
 
 VerificationTest[
     With[ { expr = 2 + 3 I }, testParse[ "2 + 3 I", expr ] ],
     True,
-    TestID -> "TestParse-Atom-Complex@@Tests/ASTUtilities.wlt:230,1-234,2"
+    TestID -> "TestParse-Atom-Complex@@Tests/ASTUtilities.wlt:249,1-253,2"
 ]
 
 VerificationTest[
     testParse[ "5", x_Integer ],
     True,
-    TestID -> "TestParse-Pattern@@Tests/ASTUtilities.wlt:236,1-240,2"
+    TestID -> "TestParse-Pattern@@Tests/ASTUtilities.wlt:255,1-259,2"
 ]
 
 VerificationTest[
     testParse[ "f[5]", e: f[ x_Integer ] ],
     True,
-    TestID -> "TestParse-Nested-Pattern@@Tests/ASTUtilities.wlt:242,1-246,2"
+    TestID -> "TestParse-Nested-Pattern@@Tests/ASTUtilities.wlt:261,1-265,2"
 ]
 
 VerificationTest[
     testParse[ "f[5]", f[ x_Integer ] /; Positive @ x ],
     True,
-    TestID -> "TestParse-Condition-1@@Tests/ASTUtilities.wlt:248,1-252,2"
+    TestID -> "TestParse-Condition-1@@Tests/ASTUtilities.wlt:267,1-271,2"
 ]
 
 VerificationTest[
     testParse[ "f[5]", f[ x_Integer ] /; Negative @ x ],
     False,
-    TestID -> "TestParse-Condition-2@@Tests/ASTUtilities.wlt:254,1-258,2"
+    TestID -> "TestParse-Condition-2@@Tests/ASTUtilities.wlt:273,1-277,2"
 ]
 
 VerificationTest[
@@ -263,7 +282,7 @@ VerificationTest[
         VerificationTest[ __, TestID -> id_, ___ ] /; StringQ @ id
     ],
     True,
-    TestID -> "TestParse-Condition-3@@Tests/ASTUtilities.wlt:260,1-267,2"
+    TestID -> "TestParse-Condition-3@@Tests/ASTUtilities.wlt:279,1-286,2"
 ]
 
 VerificationTest[
@@ -272,73 +291,88 @@ VerificationTest[
         VerificationTest[ __, TestID -> id_, ___ ] /; StringQ @ id
     ],
     False,
-    TestID -> "TestParse-Condition-4@@Tests/ASTUtilities.wlt:269,1-276,2"
+    TestID -> "TestParse-Condition-4@@Tests/ASTUtilities.wlt:288,1-295,2"
 ]
 
 VerificationTest[
     testParse[ "5", _Integer? IntegerQ ],
     True,
-    TestID -> "TestParse-PatternTest-1@@Tests/ASTUtilities.wlt:278,1-282,2"
+    TestID -> "TestParse-PatternTest-1@@Tests/ASTUtilities.wlt:297,1-301,2"
 ]
 
 VerificationTest[
     testParse[ "5", x_Integer? IntegerQ ],
     True,
-    TestID -> "TestParse-PatternTest-2@@Tests/ASTUtilities.wlt:284,1-288,2"
+    TestID -> "TestParse-PatternTest-2@@Tests/ASTUtilities.wlt:303,1-307,2"
 ]
 
 VerificationTest[
     testParse[ "5", x_ /; IntegerQ @ x ],
     True,
-    TestID -> "TestParse-PatternTest-3@@Tests/ASTUtilities.wlt:290,1-294,2"
+    TestID -> "TestParse-PatternTest-3@@Tests/ASTUtilities.wlt:309,1-313,2"
 ]
 
 VerificationTest[
     testParse[ "f[1.2]", f @ Except[ _Integer ] ],
     True,
-    TestID -> "TestParse-Except-1@@Tests/ASTUtilities.wlt:296,1-300,2"
+    TestID -> "TestParse-Except-1@@Tests/ASTUtilities.wlt:315,1-319,2"
 ]
 
 VerificationTest[
     testParse[ "f[1.2]", f @ Except[ _Real ] ],
     False,
-    TestID -> "TestParse-Except-2@@Tests/ASTUtilities.wlt:302,1-306,2"
+    TestID -> "TestParse-Except-2@@Tests/ASTUtilities.wlt:321,1-325,2"
 ]
 
 VerificationTest[
     testParse[ "f[1.2]", f @ Except[ _Integer, _Real ] ],
     True,
-    TestID -> "TestParse-Except-3@@Tests/ASTUtilities.wlt:308,1-312,2"
+    TestID -> "TestParse-Except-3@@Tests/ASTUtilities.wlt:327,1-331,2"
 ]
 
 VerificationTest[
     testParse[ "f[1.2]", f @ Except[ _Integer, _String ] ],
     False,
-    TestID -> "TestParse-Except-4@@Tests/ASTUtilities.wlt:314,1-318,2"
+    TestID -> "TestParse-Except-4@@Tests/ASTUtilities.wlt:333,1-337,2"
 ]
 
 VerificationTest[
     testParse[ "f[\"hello\"]", f @ Except[ _Integer, _String ] ],
     True,
-    TestID -> "TestParse-Except-5@@Tests/ASTUtilities.wlt:320,1-324,2"
+    TestID -> "TestParse-Except-5@@Tests/ASTUtilities.wlt:339,1-343,2"
 ]
 
 VerificationTest[
     testParse[ "{a,b,c,d,c,d,a,b}", { x__, PatternSequence[ c, d, c ], y__ } ],
     True,
-    TestID -> "TestParse-PatternSequence-1@@Tests/ASTUtilities.wlt:326,1-330,2"
+    TestID -> "TestParse-PatternSequence-1@@Tests/ASTUtilities.wlt:345,1-349,2"
 ]
 
 VerificationTest[
     testParse[ "{a,b,a,b,a,b,a,b,a,b}", { PatternSequence[ x_, x_ ].. } ],
     False,
-    TestID -> "TestParse-PatternSequence-3@@Tests/ASTUtilities.wlt:332,1-336,2"
+    TestID -> "TestParse-PatternSequence-3@@Tests/ASTUtilities.wlt:351,1-355,2"
 ]
 
 VerificationTest[
     testParse[ "{1,1,2,2}", ASTPattern @ { x_, x_, y_, y_ } ],
     True,
-    TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:338,1-342,2"
+    TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:357,1-361,2"
+]
+
+VerificationTest[
+    testParse[
+        "1+1",
+        ASTPattern @ HoldPattern[ ASTPattern[ 1 ] + ASTPattern[ 1 ] ]
+    ],
+    True,
+    TestID -> "Nested-ASTPattern-Held@@Tests/ASTUtilities.wlt:363,1-370,2"
+]
+
+VerificationTest[
+    testParse[ "{1,1}", ASTPattern[ { x_, x_ } /; IntegerQ @ x ] ],
+    True,
+    TestID -> "Reused-Bindings-Condition@@Tests/ASTUtilities.wlt:372,1-376,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -348,7 +382,7 @@ VerificationTest[
     Cases[
         CodeParse[ "VerificationTest[1 + 1, 2, TestID -> \"Addition\", SameTest -> SameQ]" ],
         ASTPattern[
-            VerificationTest[
+            HoldPattern @ VerificationTest[
                 __,
                 TestID -> ASTPattern[ id_String, as1_ ],
                 ___
@@ -358,7 +392,7 @@ VerificationTest[
         Infinity
     ],
     { "Addition" },
-    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:347,1-362,2"
+    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:381,1-396,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -377,7 +411,7 @@ VerificationTest[
         ]
     ],
     True,
-    TestID -> "EquivalentNodeQ-1@@Tests/ASTUtilities.wlt:367,1-381,2"
+    TestID -> "EquivalentNodeQ-1@@Tests/ASTUtilities.wlt:401,1-415,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -386,7 +420,7 @@ VerificationTest[
 VerificationTest[
     testParse[ "{a,a,a}", ASTPattern[ { x: (_).. } /; SameQ @ x ] ],
     True,
-    TestID -> "FromAST-Sequence-1@@Tests/ASTUtilities.wlt:386,1-390,2"
+    TestID -> "FromAST-Sequence-1@@Tests/ASTUtilities.wlt:420,1-424,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -395,5 +429,5 @@ VerificationTest[
 Hold @ VerificationTest[
     testParse[ "{a,b,a,b,a,b,a,b,a,b}", { PatternSequence[ x_, y_ ].. } ],
     True,
-    TestID -> "TestParse-PatternSequence-2@@Tests/ASTUtilities.wlt:395,8-399,2"
+    TestID -> "TestParse-PatternSequence-2@@Tests/ASTUtilities.wlt:429,8-433,2"
 ]

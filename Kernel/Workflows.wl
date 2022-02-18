@@ -3,10 +3,465 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-WorkflowExport;
-GitHubSecret;
+ClearAll[ Workflow, WorkflowJob, WorkflowExport, WorkflowStep, GitHubSecret ];
 
 Begin[ "`Private`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Workflow*)
+Workflow::invname =
+"`1` is not a known workflow name.";
+
+Workflow::invprop =
+"`1` is not a valid Workflow property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+Workflow // Options = {
+    TimeConstraint -> Infinity
+};
+(* TODO: set options like WorkflowExport *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+Workflow[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    Module[ { new },
+        new = catchTop @ makeWorkflowData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ Workflow[ name, a ]
+            ]
+        ]
+    ];
+
+Workflow[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ workflowNameQ @ name,
+        Workflow[ name, <| |>, opts ],
+        throwMessageFailure[ Workflow::invname, name ]
+    ];
+
+Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        Workflow[ id, new, opts ]
+    ];
+
+Workflow[
+    wf_Workflow? workflowQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name   = wf[ "Name" ];
+        as1    = wf[ "Data" ];
+        as2    = makeWorkflowData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        Workflow[ name, data, opts ]
+    ];
+
+(workflow_Workflow? workflowQ)[ prop_ ] :=
+    catchTop @ workflowProperty[ workflow, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+Workflow /: MakeBoxes[ workflow_Workflow? workflowQ, fmt_ ] :=
+    With[ { boxes = FormattingHelper[ workflow, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$workflowNames*)
+$workflowNames := Keys @ $namedWorkflows;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowNameQ*)
+workflowNameQ[ name_ ] := MemberQ[ $workflowNames, toWorkflowName @ name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowQ*)
+workflowQ // Attributes = { HoldFirst };
+
+workflowQ[ workflow: Workflow[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ workflow;
+
+workflowQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*genericWFProperty*)
+genericWFProperty[ _[ _, data_ ], "Data"    ] := data;
+genericWFProperty[ _[ _, data_ ], "Dataset" ] := Dataset @ data;
+genericWFProperty[ _[ name_, _ ], "Name"    ] := name;
+genericWFProperty[ _[ _, data_ ], "YAML"    ] := toYAMLString @ data;
+genericWFProperty // catchUndefined;
+
+$$wfProp = Alternatives[ "Data", "Dataset", "Name", "YAML" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowProperty*)
+workflowProperty[ wf_, prop: $$wfProp ] := genericWFProperty[ wf, prop ];
+workflowProperty[ wf_, "Jobs" ] := getWorkflowJobs @ wf;
+workflowProperty[ wf_, "JobGraph" ] := jobGraph @ wf;
+
+workflowProperty[ _, prop_ ] :=
+    throwMessageFailure[ Workflow::invprop, prop ];
+
+workflowProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getWorkflowJobs*)
+getWorkflowJobs[ wf_? workflowQ ] :=
+    Enclose @ Module[ { data, jobs },
+        data = ConfirmBy[ genericWFProperty[ wf, "Data" ], AssociationQ ];
+        jobs = ConfirmBy[ Lookup[ data, "jobs" ], AssociationQ ];
+        ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*jobGraph*)
+jobGraph[ wf_? workflowQ ] :=
+    Enclose @ Module[ { jobs, needs, vertices, edges },
+        jobs = ConfirmBy[ getWorkflowJobs @ wf, AllTrue @ workflowJobQ ];
+        needs = ConfirmBy[ (Slot[ 1 ][ "Needs" ] &) /@ jobs, AssociationQ ];
+        vertices = Keys @ needs;
+        edges = Flatten[ Thread /@ Normal @ DeleteCases[ needs, None ] ];
+        Graph[
+            vertices,
+            Reverse[ edges, 2 ],
+            VertexLabels -> Placed[ "Name", Center, graphLabel ]
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*graphLabel*)
+graphLabel[ lbl_ ] :=
+    Framed[
+        lbl,
+        FrameMargins -> { { 1, 1 }, { 0, 0 } },
+        RoundingRadius -> 3,
+        FrameStyle -> GrayLevel[ 0.8 ],
+        Background -> White
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowData*)
+makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
+    Enclose @ Module[ { as1, as2, data },
+        as1 = Lookup[
+            $namedWorkflows,
+            toWorkflowName @ name,
+            throwMessageFailure[ Workflow::invname, name ]
+        ];
+
+        as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
+        as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowData[ name_String, custom_Association ] :=
+    makeWorkflowData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowData[ custom_Association ] :=
+    Enclose @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+
+makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowJob*)
+WorkflowJob::invname =
+"`1` is not a known job name.";
+
+WorkflowJob::invprop =
+"`1` is not a valid WorkflowJob property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+WorkflowJob // Options = { };
+(* TODO: set options like WorkflowExport *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+WorkflowJob[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    catchTop @ Module[ { new },
+        new = makeWorkflowJobData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ WorkflowJob[ name, a ]
+            ]
+        ]
+    ];
+
+WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ jobNameQ @ name,
+        WorkflowJob[ name, <| |>, opts ],
+        throwMessageFailure[ WorkflowJob::invname, name ]
+    ];
+
+WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowJobData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        WorkflowJob[ id, new, opts ]
+    ];
+
+WorkflowJob[
+    wf_WorkflowJob? workflowJobQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name   = wf[ "Name" ];
+        as1    = wf[ "Data" ];
+        as2    = makeWorkflowJobData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        WorkflowJob[ name, data, opts ]
+    ];
+
+(job_WorkflowJob? workflowJobQ)[ prop_ ] :=
+    catchTop @ workflowJobProperty[ job, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
+    With[ { boxes = FormattingHelper[ job, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$jobNames*)
+$jobNames = { "Check", "Build", "Release", "Compile", "Test" };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*jobNameQ*)
+jobNameQ[ name_ ] := MemberQ[ $jobNames, name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowJobQ*)
+workflowJobQ // Attributes = { HoldFirst };
+
+workflowJobQ[ job: WorkflowJob[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ job;
+
+workflowJobQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowJobProperty*)
+workflowJobProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
+
+workflowJobProperty[ job_, "Needs" ] :=
+    Lookup[ genericWFProperty[ job, "Data" ], "needs", None ];
+
+workflowJobProperty[ job_, "Steps" ] :=
+    WorkflowStep /@ Lookup[ genericWFProperty[ job, "Data" ], "steps", { } ];
+
+workflowJobProperty[ _, prop_ ] :=
+    throwMessageFailure[ WorkflowJob::invprop, prop ];
+
+workflowJobProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowJobData*)
+makeWorkflowJobData[ name_String? jobNameQ, as_Association ] :=
+    Enclose @ Module[ { rule, as1, as2, data },
+        rule = ConfirmMatch[ normalizeJob @ name, _ -> _ ];
+        as1  = ConfirmBy[ Last @ rule, AssociationQ ];
+        as2  = ConfirmBy[ normalizeForYAML[ "jobs", name, as ], AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowJobData[ name_String, custom_Association ] :=
+    makeWorkflowJobData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowJobData[ custom_Association ] :=
+    Enclose @ Module[ { rule, data, id },
+        rule = ConfirmMatch[ normalizeJob @ custom, _ -> _ ];
+        data = ConfirmBy[ Last @ rule, AssociationQ ];
+        data
+    ];
+
+makeWorkflowJobData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*merger*)
+merger[ as: { ___Association? AssociationQ } ] := Merge[ { as }, merger ];
+merger[ stuff_List ] := Last[ stuff, Missing[ ] ];
+merger // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowStep*)
+WorkflowStep::invname =
+"`1` is not a known step name.";
+
+WorkflowStep::invprop =
+"`1` is not a valid WorkflowStep property name.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+WorkflowStep // Options = { };
+(* TODO: set options like WorkflowExport *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+WorkflowStep[
+    name_String,
+    as_Association,
+    opts: OptionsPattern[ ]
+]? System`Private`HoldNotValidQ :=
+    catchTop @ Module[ { new },
+        new = makeWorkflowStepData[ name, as, opts ];
+        (* TODO: always insert "name" property as first arg *)
+        With[ { a = new },
+            If[ FailureQ @ a,
+                a,
+                System`Private`HoldSetValid @ WorkflowStep[ name, a ]
+            ]
+        ]
+    ];
+
+WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
+    catchTop @ If[ stepNameQ @ name,
+        WorkflowStep[ name, <| |>, opts ],
+        throwMessageFailure[ WorkflowStep::invname, name ]
+    ];
+
+WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { new, id },
+        new = makeWorkflowStepData @ as;
+        (* TODO: write a getWorkFlowID function *)
+        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        WorkflowStep[ id, new, opts ]
+    ];
+
+WorkflowStep[
+    wf_WorkflowStep? workflowStepQ,
+    as_Association,
+    opts: OptionsPattern[ ]
+] :=
+    Module[ { name, as1, as2, merged, data },
+        name = wf[ "Name" ];
+        as1 = wf[ "Data" ];
+        as2 = makeWorkflowStepData[ name, as ];
+        merged = merger @ { as1, as2 };
+        data = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+        WorkflowStep[ name, data, opts ]
+    ];
+
+(job_WorkflowStep? workflowStepQ)[ prop_ ] :=
+    catchTop @ workflowStepProperty[ job, prop ];
+
+(* TODO: handle undefined and not validQ *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Formatting*)
+WorkflowStep /: MakeBoxes[ step_WorkflowStep? workflowStepQ, fmt_ ] :=
+    With[ { boxes = FormattingHelper[ step, fmt ] },
+        boxes /; MatchQ[ boxes, _InterpretationBox ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$stepNames*)
+$stepNames = {
+    "Checkout",
+    "Check",
+    "Build",
+    "Test",
+    "UploadBuildArtifacts",
+    "CreateRelease",
+    "UploadRelease",
+    "DownloadCompilationArtifacts"
+};
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*stepNameQ*)
+stepNameQ[ name_ ] := MemberQ[ $stepNames, name ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowStepQ*)
+workflowStepQ[ job: WorkflowStep[ name_? StringQ, as_? AssociationQ ] ] :=
+    System`Private`HoldValidQ @ job;
+
+workflowStepQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*workflowStepProperty*)
+workflowStepProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
+
+workflowStepProperty[ _, prop_ ] :=
+    throwMessageFailure[ WorkflowStep::invprop, prop ];
+
+workflowStepProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeWorkflowStepData*)
+makeWorkflowStepData[ name_String? stepNameQ, as_Association ] :=
+    Enclose @ Module[ { rule, as1, as2, data },
+        as1  = ConfirmBy[ normalizeStep @ name, AssociationQ ];
+        as2  = ConfirmBy[ normalizeStep @ as, AssociationQ ];
+        data = merger @ { as1, as2 };
+        Join[ KeyTake[ data, Keys @ as2 ], data ]
+    ];
+
+makeWorkflowStepData[ name_String, custom_Association ] :=
+    makeWorkflowStepData @ Prepend[ custom, "name" -> name ];
+
+makeWorkflowStepData[ custom_Association ] :=
+    Enclose @ ConfirmBy[ normalizeStep @ custom, AssociationQ ];
+
+makeWorkflowStepData // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -71,6 +526,7 @@ WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
 
 $buildPacletAction     = "rhennigan/build-paclet@latest";
 $checkPacletAction     = "rhennigan/check-paclet@latest";
+$testPacletAction      = "rhennigan/test-paclet@latest";
 $defaultBranch         = "main";
 $defaultTimeConstraint = 10;
 
@@ -100,6 +556,8 @@ workflowExport[
 
 workflowExport // catchUndefined;
 
+
+workflowExport0[ wf_Workflow? workflowQ ] := workflowExport0 @ wf[ "Data" ];
 
 workflowExport0[ name_String ] :=
     workflowExport0 @ Lookup[
@@ -367,16 +825,20 @@ workflowFileName[ ___ ] := "workflow.yml";
 (*$namedWorkflows*)
 $namedWorkflows := <|
     "Release" -> <|
-        "Name" -> "Release Paclet",
+        "Name" -> "Release",
         "On" -> <|
             "Push"             -> <| "Branches" -> { "release/*" } |>,
             "WorkflowDispatch" -> True
         |>,
-        "Jobs" -> "Release"
+        "Jobs" -> {
+            "Check",
+            "Test",
+            { "Release", <| "Needs" -> { "Check", "Test" } |> }
+        }
     |>
     ,
     "Build" -> <|
-        "Name" -> "Build Paclet",
+        "Name" -> "Build",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -386,7 +848,7 @@ $namedWorkflows := <|
     |>
     ,
     "Check" -> <|
-        "Name" -> "Check Paclet",
+        "Name" -> "Check",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -395,8 +857,18 @@ $namedWorkflows := <|
         "Jobs" -> "Check"
     |>
     ,
+    "Test" -> <|
+        "Name" -> "Test",
+        "On"   -> <|
+            "Push"             -> <| "Branches" -> $defaultBranch |>,
+            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
+            "WorkflowDispatch" -> True
+        |>,
+        "Jobs" -> "Test"
+    |>
+    ,
     "Compile" -> <|
-        "Name" -> "Compile Paclet",
+        "Name" -> "Compile",
         "On"   -> <|
             "Push"             -> <| "Branches" -> $defaultBranch |>,
             "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
@@ -419,6 +891,8 @@ toWorkflowName0[ "build"         ] := "Build";
 toWorkflowName0[ "buildpaclet"   ] := "Build";
 toWorkflowName0[ "check"         ] := "Check";
 toWorkflowName0[ "checkpaclet"   ] := "Check";
+toWorkflowName0[ "test"          ] := "Test";
+toWorkflowName0[ "testpaclet"    ] := "Test";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -436,8 +910,8 @@ validValueQ[ ___ ] := False;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeForYAML*)
-normalizeForYAML[ keys___, as_Association ] :=
-    AssociationMap[ normalizeForYAML[ keys, #1 ] &, as ];
+$$ymlKey  = _String|_Integer|Automatic;
+$$ymlKeys = $$ymlKey...;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -493,6 +967,18 @@ normalizeForYAML[ "jobs", _, "id"|"ID" -> id_String ] :=
 normalizeForYAML[ "jobs", _, "runs-on"|"RunsOn" -> str_String ] :=
     "runs-on" -> str;
 
+normalizeForYAML[ "jobs", name_, "Needs" -> needs_ ] :=
+    normalizeForYAML[ "jobs", name, "needs" -> needs ];
+
+normalizeForYAML[ "jobs", name_, "needs" -> str_String ] :=
+    normalizeForYAML[ "jobs", name, "needs" -> Flatten @ { str } ];
+
+normalizeForYAML[ "jobs", name_, "needs" -> names: { __String } ] :=
+    "needs" -> names;
+
+normalizeForYAML[ "jobs", name_, "needs" -> { } ] :=
+    "needs" -> None;
+
 normalizeForYAML[ "jobs", name_, "Container" -> container_ ] :=
     normalizeForYAML[ "jobs", name, "container" -> container ];
 
@@ -516,14 +1002,43 @@ normalizeForYAML[ "jobs", name_, "Environment"|Environment -> env_ ] :=
 normalizeForYAML[ "jobs", _, "env", key_String -> val_String ] :=
     key -> val;
 
-normalizeForYAML[ "jobs", _, "steps"|"Steps" -> steps_ ] :=
-    "steps" -> normalizeSteps @ steps;
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*Steps*)
+(* normalizeForYAML[ "jobs", _, "steps"|"Steps" -> steps_ ] :=
+    "steps" -> normalizeSteps @ steps; *)
+normalizeForYAML[ "jobs", job_, "Steps" -> steps_ ] :=
+    normalizeForYAML[ "jobs", job, "steps" -> steps ];
+
+normalizeForYAML[ "jobs", job_, "steps" -> name_String ] :=
+    normalizeForYAML[ "jobs", job, "steps" -> { name } ];
+
+normalizeForYAML[ "jobs", job_, "steps", idx_Integer, step_ ] :=
+    normalizeStep[ "jobs", job, "steps", idx, step ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*General*)
+normalizeForYAML[ keys___, as_Association ] :=
+    AssociationMap[ normalizeForYAML[ keys, #1 ] &, as ];
+
+normalizeForYAML[ keys___, list_List ] :=
+    MapIndexed[ normalizeForYAML[ keys, First[ #2 ], #1 ] &, list ];
+
+normalizeForYAML[ wf_Workflow? workflowQ ] :=
+    normalizeForYAML @ wf[ "Data" ];
+
+normalizeForYAML[ job_WorkflowJob? workflowJobQ ] :=
+    normalizeForYAML @ job[ "Data" ];
+
+normalizeForYAML[ step_WorkflowStep? workflowStepQ ] :=
+    normalizeForYAML @ step[ "Data" ];
+
 normalizeForYAML[ keys___, key_String -> as_Association ] :=
     key -> normalizeForYAML[ keys, key, as ];
+
+normalizeForYAML[ keys___, "Environment"|Environment -> env_ ] :=
+    normalizeForYAML[ keys, "env" -> env ];
 
 normalizeForYAML[ keys___, key_Symbol -> value_ ] :=
     normalizeForYAML[ keys, SymbolName @ key -> value ];
@@ -546,13 +1061,17 @@ normalizeForYAML[ keys___, key_String :> Environment[ env_String ] ] :=
 normalizeForYAML[ keys___, key_String -> GitHubSecret[ sec_String ] ] :=
     normalizeForYAML[ keys, key -> "${{ secrets."<>sec<>" }}" ];
 
+normalizeForYAML[ keys___, key_String -> None ] :=
+    key -> None;
+
 normalizeForYAML // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeJobs*)
-normalizeJobs[ job_String ] := normalizeJobs @ { job };
-normalizeJobs[ jobs_List  ] := Association[ normalizeJob /@ jobs ];
+normalizeJobs[ job_WorkflowJob ] := normalizeJobs @ { job };
+normalizeJobs[ job_String      ] := normalizeJobs @ { job };
+normalizeJobs[ jobs_List       ] := Association[ normalizeJob /@ jobs ];
 normalizeJobs[ jobs_Association? validValueQ ] := jobs; (* TODO: validate against schema *)
 normalizeJobs // catchUndefined;
 
@@ -560,8 +1079,8 @@ normalizeJobs // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*normalizeJob*)
 normalizeJob[ "check" | "checkpaclet" ] :=
-    "CheckPaclet" -> <|
-        "name"            -> "Check Paclet",
+    "Check" -> <|
+        "name"            -> "Check",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -573,8 +1092,8 @@ normalizeJob[ "check" | "checkpaclet" ] :=
     |>;
 
 normalizeJob[ "build" | "buildpaclet" ] :=
-    "BuildPaclet" -> <|
-        "name"            -> "Build Paclet",
+    "Build" -> <|
+        "name"            -> "Build",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -587,8 +1106,8 @@ normalizeJob[ "build" | "buildpaclet" ] :=
     |>;
 
 normalizeJob[ "release" | "releasepaclet" ] :=
-    "ReleasePaclet" -> <|
-        "name"            -> "Release Paclet",
+    "Release" -> <|
+        "name"            -> "Release",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -601,9 +1120,29 @@ normalizeJob[ "release" | "releasepaclet" ] :=
             normalizeStep[ "UploadRelease"        ]
         }
     |>;
+normalizeJob[ "test" | "testpaclet" ] :=
+    "Test" -> <|
+        "name"            -> "Test",
+        "runs-on"         -> "ubuntu-latest",
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $defaultTimeConstraint,
+        "steps"           -> {
+            normalizeStep[ "Checkout"   ],
+            normalizeStep[ "TestPaclet" ]
+        }
+    |>;
 
 normalizeJob[ "compile" ] := normalizeJob @ { "compile" };
 normalizeJob[ { "compile", config___ } ] := normalizeCompilationJobs @ config;
+
+normalizeJob[ job_WorkflowJob? workflowJobQ ] :=
+    job[ "Name" ] -> job[ "Data" ];
+
+normalizeJob[ { job_String, rest___ } ] :=
+    With[ { wfj = Quiet @ catch @ WorkflowJob[ job, rest ] },
+        (wfj[ "Name" ] -> wfj[ "Data" ]) /; workflowJobQ @ wfj
+    ];
 
 normalizeJob[ { job_String, rest___ } ] :=
     With[ { lc = StringDelete[ ToLowerCase @ job, "-" | "_" ] },
@@ -616,7 +1155,10 @@ normalizeJob[ job_String ] :=
     ];
 
 normalizeJob[ as: KeyValuePattern[ "id"|"ID" -> id_ ] ] :=
-    id -> as;
+    normalizeForYAML[ "jobs", id -> as ];
+
+normalizeJob[ as: KeyValuePattern[ "name"|"Name" -> name_String ] ] :=
+    normalizeForYAML[ "jobs", name -> as ];
 
 normalizeJob // catchUndefined;
 
@@ -1002,14 +1544,14 @@ normalizeSteps[ steps_List ] := normalizeStep /@ steps;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*normalizeStep*)
-normalizeStep[ "checkout"|"checkoutcode" ] := <|
-    "name" -> "Checkout Code",
-    "id"   -> "checkout-code",
+normalizeStep[ ___, "checkout"|"checkoutcode" ] := <|
+    "name" -> "Checkout",
+    "id"   -> "checkout-code-step",
     "uses" -> "actions/checkout@v2"
 |>;
 
-normalizeStep[ "check"|"checkpaclet" ] := <|
-    "name" -> "Check Paclet",
+normalizeStep[ ___, "check"|"checkpaclet" ] := <|
+    "name" -> "Check",
     "id"   -> "check-paclet-step",
     "uses" -> $checkPacletAction,
     "with" -> <|
@@ -1019,8 +1561,8 @@ normalizeStep[ "check"|"checkpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ "build"|"buildpaclet" ] := <|
-    "name" -> "Build Paclet",
+normalizeStep[ ___, "build"|"buildpaclet" ] := <|
+    "name" -> "Build",
     "id"   -> "build-paclet-step",
     "uses" -> $buildPacletAction,
     "with" -> <|
@@ -1030,19 +1572,38 @@ normalizeStep[ "build"|"buildpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ "uploadbuildartifacts"|"uploadartifacts"|"uploadbuild" ] := <|
-    "name" -> "Upload Build Artifacts",
-    "id"   -> "upload-build-artifacts-step",
+normalizeStep[ ___, "test"|"testpaclet" ] := <|
+    "name" -> "Test",
+    "id"   -> "test-paclet-step",
+    "uses" -> $testPacletAction,
+    "with" -> <|
+        "target"              -> $defaultActionTarget,
+        "paclet_cicd_version" -> $latestPacletCICDVersion,
+        "definition_notebook" -> $defNotebookLocation
+    |>
+|>;
+
+normalizeStep[
+    ___,
+    Alternatives[
+        "uploadbuildartifacts",
+        "uploadartifacts",
+        "uploadbuildartifact",
+        "uploadartifact",
+        "uploadbuild"
+    ]
+] := <|
+    "name" -> "UploadArtifact",
+    "id" -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
-        (* TODO: prepend something like PacletCICD to these env vars *)
         "path"              -> "${{ env.BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
 |>;
 
-normalizeStep[ "createrelease" ] := <|
-    "name" -> "Create Release",
+normalizeStep[ ___, "createrelease" ] := <|
+    "name" -> "CreateRelease",
     "id"   -> "create-release-step",
     "uses" -> "actions/create-release@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
@@ -1054,8 +1615,8 @@ normalizeStep[ "createrelease" ] := <|
     |>
 |>;
 
-normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
-    "name" -> "Upload Release Asset",
+normalizeStep[ ___, "uploadrelease"|"uploadreleaseasset" ] := <|
+    "name" -> "UploadRelease",
     "id"   -> "upload-release-asset-step",
     "uses" -> "actions/upload-release-asset@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
@@ -1067,19 +1628,65 @@ normalizeStep[ "uploadrelease"|"uploadreleaseasset" ] := <|
     |>
 |>;
 
-normalizeStep[ "downloadcompilationartifacts" ] := <|
-    "name" -> "Download compiled library resources",
+normalizeStep[ ___, "downloadcompilationartifacts" ] := <|
+    "name" -> "DownloadCompilationArtifacts",
     "id"   -> "download-compilation-artifacts-step",
     "uses" -> "actions/download-artifact@v2",
     "with" -> <| "path" -> "LibraryResources" |>
 |>;
 
-normalizeStep[ step_String ] :=
+normalizeStep[ keys___, step_String ] :=
     With[ { lc = StringDelete[ ToLowerCase @ step, "-" | "_" ] },
-        normalizeStep @ lc /; lc =!= step
+        normalizeStep[ keys, lc ] /; lc =!= step
     ];
 
-normalizeStep[ as_Association ] := as;
+normalizeStep[ keys___, step_String ] :=
+    throwError[
+        "Invalid step name \"`1`\" (`2`)",
+        step,
+        keySeqDocLink @ keys
+    ];
+
+normalizeStep[ as_Association ] :=
+    normalizeForYAML[
+        "jobs",
+        Automatic,
+        "steps",
+        Automatic,
+        KeyMap[ toLowerCase, as ]
+    ];
+
+normalizeStep[ keys__, as_Association ] :=
+    normalizeForYAML[ keys, KeyMap[ toLowerCase, as ] ];
+
+keySeqDocLink[ keys___ ] :=
+    Module[ { str, url },
+        str = keySeqString @ keys;
+        url = URLBuild @ <|
+            "Scheme" -> "https",
+            "Domain" -> "docs.github.com",
+            "Path" -> {
+                "",
+                "en",
+                "actions",
+                "using-workflows",
+                "workflow-syntax-for-github-actions"
+            },
+            "Fragment" -> StringDelete[ str, Except[ LetterCharacter | "_" ] ]
+        |>;
+        ToString[ Hyperlink[ str, url ], StandardForm ]
+    ];
+
+keySeqString[ "jobs", None|Automatic, keys___ ] :=
+    keySeqString[ "jobs", "<job_id>", keys ];
+
+keySeqString[ a___, key_String, int_Integer, b___ ] :=
+    keySeqString[ a, key <> "[" <> ToString[ int ] <> "]", b ];
+
+keySeqString[ a___ ] := StringRiffle[ { a }, "." ];
+
+toLowerCase[ str_String ] := ToLowerCase @ str;
+toLowerCase[ other_ ] := other;
 
 (*TODO: check against schema *)
 
@@ -1120,7 +1727,10 @@ toYAMLString // catchUndefined;
 
 
 toYAMLString0[ as_Association ] :=
-    stringJoin @ Riffle[ KeyValueMap[ toYAMLString0, as ], "\n" ];
+    stringJoin @ Riffle[
+        KeyValueMap[ toYAMLString0, DeleteCases[ as, None ] ],
+        "\n"
+    ];
 
 toYAMLString0[ key_String, as_Association ] :=
     stringJoin[ toYAMLKey @ key, "\n", descend @ toYAMLString0 @ as ];
@@ -1182,8 +1792,16 @@ checkMultilineString[ str_String ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*toYAMLKey*)
-toYAMLKey[ key_ ] := stringJoin[ $indent, key, ": " ];
+toYAMLKey[ key_ ] := stringJoin[ $indent, yamlKeyString @ key, ": " ];
 toYAMLKey // catchUndefined;
+
+yamlKeyString[ key_String ] :=
+    StringDelete[
+        StringReplace[ key, WhitespaceCharacter -> "-" ],
+        Except[ LetterCharacter | DigitCharacter | "-" ]
+    ];
+
+yamlKeyString[ other_ ] := yamlKeyString @ ToString @ other;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
