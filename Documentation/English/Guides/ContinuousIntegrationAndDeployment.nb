@@ -377,11 +377,12 @@ Notebook[
  },
  WindowStatusArea -> Automatic,
  TaggingRules -> <|
+  "InformationPopupMenuItemAdded" -> True,
   "Author" -> "rhennigan",
   "CreationDate" -> "02-03-2022 08:29:36",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 3, 8, 46, 47.9286427`9.433169991267118},
+   {2022, 2, 18, 14, 13, 9.3530529`8.723528355293876},
    "Instant",
    "Gregorian",
    -5.
