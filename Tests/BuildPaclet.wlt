@@ -46,6 +46,9 @@ VerificationTest[
     TestID   -> "ResetExampleDirectory-Initialization@@Tests/BuildPaclet.wlt:42,1-47,2"
 ]
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Definitions*)
 VerificationTest[
     $PublisherID;
     $PublisherID = "MyPublisher",
@@ -53,21 +56,29 @@ VerificationTest[
     TestID -> "SetPublisherID@@Tests/BuildPaclet.wlt:49,1-54,2"
 ]
 
+VerificationTest[
+    DefinitionNotebookClient`ConsolePrint;
+    suppressConsole // Attributes = { HoldFirst };
+    suppressConsole[ eval_ ] :=
+        Block[ { DefinitionNotebookClient`ConsolePrint }, eval ],
+    Null,
+    TestID -> "SuppressConsole-Definition"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*BuildPaclet*)
 VerificationTest[
-    BuildPaclet[ ExampleDirectory[ "FewIssues" ], "ConsoleType" -> "TTY" ],
+    suppressConsole @ BuildPaclet @ ExampleDirectory[ "FewIssues" ],
     _Success,
     SameTest -> MatchQ,
     TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:59,1-64,2"
 ]
 
 VerificationTest[
-    BuildPaclet[
+    suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check"       -> True,
-        "ConsoleType" -> "TTY"
+        "Check" -> True
     ],
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
@@ -76,10 +87,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-    BuildPaclet[
+    suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check"       -> False,
-        "ConsoleType" -> "TTY"
+        "Check" -> False
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
@@ -94,9 +104,8 @@ VerificationTest[
 (* ::Subsubsection::Closed:: *)
 (*DisabledHints*)
 VerificationTest[
-    BuildPaclet[
+    suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "ConsoleType"   -> "TTY",
         "Check"         -> True,
         "DisabledHints" -> { Inherited, "CodeInspectionIssues" }
     ],
@@ -109,9 +118,8 @@ VerificationTest[
 (* ::Subsubsection::Closed:: *)
 (*FailureCondition*)
 VerificationTest[
-    BuildPaclet[
+    suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "ConsoleType"      -> "TTY",
         "Check"            -> True,
         "DisabledHints"    -> { Inherited, "CodeInspectionIssues" },
         "FailureCondition" -> { "Warning", "Error" }
@@ -129,7 +137,7 @@ VerificationTest[
     ResetExampleDirectory @ All,
     _Success,
     SameTest -> MatchQ,
-    TestID -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:128,1-133,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:128,1-133,2"
 ]
 
 VerificationTest[
