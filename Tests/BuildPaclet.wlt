@@ -53,7 +53,7 @@ VerificationTest[
     $PublisherID;
     $PublisherID = "MyPublisher",
     "MyPublisher",
-    TestID -> "SetPublisherID@@Tests/BuildPaclet.wlt:49,1-54,2"
+    TestID -> "SetPublisherID@@Tests/BuildPaclet.wlt:52,1-57,2"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
             Wolfram`PacletCICD`Private`noExit @ eval
         ],
     Null,
-    TestID -> "SuppressConsole-Definition"
+    TestID -> "SuppressConsole-Definition@@Tests/BuildPaclet.wlt:59,1-68,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -74,7 +74,7 @@ VerificationTest[
     suppressConsole @ BuildPaclet @ ExampleDirectory[ "FewIssues" ],
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:59,1-64,2"
+    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:73,1-78,2"
 ]
 
 VerificationTest[
@@ -85,7 +85,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:66,1-76,2"
+    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:80,1-89,2"
 ]
 
 VerificationTest[
@@ -95,7 +95,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:78,1-87,2"
+    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:91,1-99,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -109,11 +109,16 @@ VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
         "Check"         -> True,
-        "DisabledHints" -> { Inherited, "CodeInspectionIssues" }
+        "DisabledHints" -> {
+            Inherited,
+            "CodeInspectionIssues",
+            "PublisherUpdateNotAllowed",
+            "NotPublisherContext"
+        }
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints@@Tests/BuildPaclet.wlt:96,1-106,2"
+    TestID   -> "BuildPaclet-DisabledHints@@Tests/BuildPaclet.wlt:108,1-122,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -129,7 +134,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:111,1-123,2"
+    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:127,1-138,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -139,11 +144,11 @@ VerificationTest[
     ResetExampleDirectory @ All,
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:128,1-133,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:143,1-148,2"
 ]
 
 VerificationTest[
     $PublisherID = None,
     None,
-    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:135,1-139,2"
+    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:150,1-154,2"
 ]
