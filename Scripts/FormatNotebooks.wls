@@ -11,6 +11,7 @@
 
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+(* :!CodeAnalysis::Disable::NoSurroundingEnclose:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -45,7 +46,7 @@ getArg[ name_String, default_: None ] :=
 (* ::Subsection::Closed:: *)
 (*enclose*)
 enclose // Attributes = { HoldAll };
-enclose[ eval_           ] := enclose[ eval, "An unspecified error occured." ];
+enclose[ eval_           ] := enclose[ eval, "An unspecified error occurred." ];
 enclose[ eval_, msg_     ] := enclose[ eval, msg, 1 ];
 enclose[ eval_, msg_, n_ ] := Enclose[
     eval,

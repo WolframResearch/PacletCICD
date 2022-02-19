@@ -1,0 +1,311 @@
+Notebook[
+ {
+  Cell[
+   TextData[
+    {
+     "New in: ",
+     Cell["", "HistoryData", CellTags -> "New"],
+     " | Modified in: ",
+     Cell[" ", "HistoryData", CellTags -> "Modified"],
+     " | Obsolete in: ",
+     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
+     " | Excised in: ",
+     Cell[" ", "HistoryData", CellTags -> "Excised"]
+    }
+   ],
+   "History",
+   CellID -> 200684740
+  ],
+  Cell[
+   "Created by: rhennigan on 02-18-2022 14:01:28",
+   "AuthorDate",
+   CellID -> 422765739
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Categorization",
+      "CategorizationSection",
+      CellID -> 18144611
+     ],
+     Cell[
+      "Guide",
+      "Categorization",
+      CellLabel -> "Entity Type",
+      CellID -> 68176591
+     ],
+     Cell[
+      "Wolfram/PacletCICD",
+      "Categorization",
+      CellLabel -> "Paclet Name",
+      CellID -> 215398411
+     ],
+     Cell[
+      "Wolfram`PacletCICD`",
+      "Categorization",
+      CellLabel -> "Context",
+      CellID -> 99874327
+     ],
+     Cell[
+      "Wolfram/PacletCICD/guide/Workflows",
+      "Categorization",
+      CellLabel -> "URI",
+      CellID -> 544200671
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Keywords", "KeywordsSection", CellID -> 525568580],
+     Cell["XXXX", "Keywords", CellID -> 299995792]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Workflows", "GuideTitle", CellID -> 178925003],
+     Cell["XXXX", "GuideAbstract", CellID -> 190340457]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["", "GuideFunctionsSection", CellID -> 452930400],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineGuideFunction"
+        ],
+        " \[LongDash] ",
+        "an object representing a CI/CD workflow"
+       }
+      ],
+      "GuideText",
+      CellID -> 84834573
+     ],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineGuideFunction"
+        ],
+        " \[LongDash] ",
+        "a job in a ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "GuideText",
+      CellID -> 590574918
+     ],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
+         "InlineGuideFunction"
+        ],
+        " \[LongDash] ",
+        "a step in a ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "GuideText",
+      CellID -> 55138469
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell["\t", "GuideDelimiter", CellID -> 164000759],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowExport",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowExport"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] export a ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "Workflow",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " to a YAML file"
+          }
+         ],
+         "GuideText",
+         CellID -> 282419163
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Tech Notes",
+      "GuideTutorialsSection",
+      CellID -> 51490907
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "License Entitlements and Repository Secrets",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+       ]
+      ],
+      "GuideTutorial",
+      CellID -> 10713611
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Guides",
+      "GuideMoreAboutSection",
+      CellID -> 148515177
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Continuous Integration and Deployment",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/ContinuousIntegrationAndDeployment"
+       ]
+      ],
+      "GuideMoreAbout",
+      CellID -> 12117664
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Links",
+      "GuideRelatedLinksSection",
+      CellID -> 101173026
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Features \[Bullet] GitHub Actions \[CenterDot] GitHub",
+        BaseStyle -> "Hyperlink",
+        ButtonData -> {URL["https://github.com/features/actions"], None}
+       ]
+      ],
+      "GuideRelatedLinks",
+      CellID -> 41506
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflow syntax for GitHub Actions - GitHub Docs",
+        BaseStyle -> "Hyperlink",
+        ButtonData -> {
+         URL[
+          "https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions"
+         ],
+         None
+        }
+       ]
+      ],
+      "GuideRelatedLinks",
+      CellID -> 660352183
+     ]
+    },
+    Open
+   ]
+  ]
+ },
+ WindowStatusArea -> Automatic,
+ TaggingRules -> <|
+  "InformationPopupMenuItemAdded" -> True,
+  "Author" -> "rhennigan",
+  "CreationDate" -> "02-18-2022 14:01:28",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 2, 18, 14, 23, 9.6238677`8.735924608707595},
+   "Instant",
+   "Gregorian",
+   -5.
+  ],
+  "NotebookUUID" -> "aa98faa8-7040-45e4-9bbe-b20ff8c5bc36"
+ |>,
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ StyleDefinitions -> FrontEnd`FileName[
+  {"Wolfram"},
+  "GuidePageStylesExt.nb",
+  CharacterEncoding -> "UTF-8"
+ ],
+ ExpressionUUID -> "aa98faa8-7040-45e4-9bbe-b20ff8c5bc36"
+]

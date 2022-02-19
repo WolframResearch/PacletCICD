@@ -3,9 +3,36 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ClearAll[ Workflow, WorkflowJob, WorkflowExport, WorkflowStep, GitHubSecret ];
+ClearAll[
+    Workflow,
+    WorkflowJob,
+    WorkflowExport,
+    WorkflowStep,
+    GitHubSecret,
+    WorkflowQ,
+    WorkflowJobQ,
+    WorkflowStepQ
+];
 
 Begin[ "`Private`" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowQ*)
+WorkflowQ[ wf_ ] := workflowQ @ wf;
+WorkflowQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowJobQ*)
+WorkflowJobQ[ wf_ ] := workflowJobQ @ wf;
+WorkflowJobQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*WorkflowStepQ*)
+WorkflowStepQ[ wf_ ] := workflowStepQ @ wf;
+WorkflowStepQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -20,7 +47,8 @@ Workflow::invprop =
 (* ::Subsection::Closed:: *)
 (*Options*)
 Workflow // Options = {
-    TimeConstraint -> Infinity
+    TimeConstraint     -> Infinity,
+    ProcessEnvironment -> Automatic
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -30,10 +58,16 @@ Workflow // Options = {
 Workflow[
     name_String,
     as_Association,
-    opts: OptionsPattern[ ]
+    opts0: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
-    Module[ { new },
-        new = catchTop @ makeWorkflowData[ name, as, opts ];
+    catchTop @ Module[ { opts, ts, new },
+        opts = FilterRules[ { opts0 }, { ProcessEnvironment } ];
+
+        new = withDefaultTimeConstraint[
+            OptionValue[ TimeConstraint ],
+            removeDeleted @ makeWorkflowData[ name, <| as, opts |> ]
+        ];
+
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
@@ -62,7 +96,7 @@ Workflow[
     as_Association,
     opts: OptionsPattern[ ]
 ] :=
-    Module[ { name, as1, as2, merged, data },
+    catchTop @ Module[ { name, as1, as2, merged, data },
         name   = wf[ "Name" ];
         as1    = wf[ "Data" ];
         as2    = makeWorkflowData[ name, as ];
@@ -166,6 +200,18 @@ graphLabel[ lbl_ ] :=
     ];
 
 (* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*withDefaultTimeConstraint*)
+withDefaultTimeConstraint // Attributes = { HoldRest };
+
+withDefaultTimeConstraint[ ts0_, eval_ ] :=
+    Module[ { rule, ts },
+        rule = normalizeForYAML[ "jobs", Automatic, TimeConstraint -> ts0 ];
+        ts = Last[ rule, $noValue ];
+        Block[ { $defaultTimeConstraint = ts }, eval ]
+    ];
+
+(* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeWorkflowData*)
 makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
@@ -202,7 +248,10 @@ WorkflowJob::invprop =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
-WorkflowJob // Options = { };
+WorkflowJob // Options = {
+    TimeConstraint     -> Infinity,
+    ProcessEnvironment -> Automatic
+};
 (* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
@@ -214,7 +263,7 @@ WorkflowJob[
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
     catchTop @ Module[ { new },
-        new = makeWorkflowJobData[ name, as, opts ];
+        new = removeDeleted @ makeWorkflowJobData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
@@ -226,16 +275,16 @@ WorkflowJob[
 
 WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
     catchTop @ If[ jobNameQ @ name,
-        WorkflowJob[ name, <| |>, opts ],
+        WorkflowJob[ name, <| opts |> ],
         throwMessageFailure[ WorkflowJob::invname, name ]
     ];
 
 WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
-        new = makeWorkflowJobData @ as;
+        new = makeWorkflowJobData @ <| as, opts |>;
         (* TODO: write a getWorkFlowID function *)
         id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
-        WorkflowJob[ id, new, opts ]
+        WorkflowJob[ id, new ]
     ];
 
 WorkflowJob[
@@ -246,10 +295,10 @@ WorkflowJob[
     Module[ { name, as1, as2, merged, data },
         name   = wf[ "Name" ];
         as1    = wf[ "Data" ];
-        as2    = makeWorkflowJobData[ name, as ];
+        as2    = makeWorkflowJobData[ name, <| as, opts |> ];
         merged = merger @ { as1, as2 };
         data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
-        WorkflowJob[ name, data, opts ]
+        WorkflowJob[ name, data ]
     ];
 
 (job_WorkflowJob? workflowJobQ)[ prop_ ] :=
@@ -344,7 +393,10 @@ WorkflowStep::invprop =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
-WorkflowStep // Options = { };
+WorkflowStep // Options = {
+    TimeConstraint     -> Infinity,
+    ProcessEnvironment -> Automatic
+};
 (* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
@@ -356,7 +408,7 @@ WorkflowStep[
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
     catchTop @ Module[ { new },
-        new = makeWorkflowStepData[ name, as, opts ];
+        new = removeDeleted @ makeWorkflowStepData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
@@ -368,16 +420,16 @@ WorkflowStep[
 
 WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
     catchTop @ If[ stepNameQ @ name,
-        WorkflowStep[ name, <| |>, opts ],
+        WorkflowStep[ name, <| opts |> ],
         throwMessageFailure[ WorkflowStep::invname, name ]
     ];
 
 WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
-        new = makeWorkflowStepData @ as;
+        new = makeWorkflowStepData @ <| as, opts |>;
         (* TODO: write a getWorkFlowID function *)
         id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
-        WorkflowStep[ id, new, opts ]
+        WorkflowStep[ id, new ]
     ];
 
 WorkflowStep[
@@ -388,10 +440,10 @@ WorkflowStep[
     Module[ { name, as1, as2, merged, data },
         name = wf[ "Name" ];
         as1 = wf[ "Data" ];
-        as2 = makeWorkflowStepData[ name, as ];
+        as2 = makeWorkflowStepData[ name, <| as, opts |> ];
         merged = merger @ { as1, as2 };
         data = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
-        WorkflowStep[ name, data, opts ]
+        WorkflowStep[ name, data ]
     ];
 
 (job_WorkflowStep? workflowStepQ)[ prop_ ] :=
@@ -909,9 +961,54 @@ validValueQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*removeDeleted*)
+removeDeleted[ expr_ ] := DeleteCases[ expr, $noValue, Infinity ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*normalizeForYAML*)
 $$ymlKey  = _String|_Integer|Automatic;
 $$ymlKeys = $$ymlKey...;
+
+$$rootProp = Alternatives[
+    "name",
+    "on",
+    "env",
+    "defaults",
+    "concurrency",
+    "jobs",
+    "permissions"
+];
+
+normalizeForYAML[ key: Except[ $$rootProp ] -> val_ ] :=
+    With[ { p = toCanonicalProp @ key },
+        If[ MatchQ[ p, $$rootProp ],
+            normalizeForYAML[ p -> val ],
+            throwFailure[ "`1` is not a valid property", key ]
+        ]
+    ];
+
+normalizeForYAML[ k___, key_ -> val_ ] :=
+    With[ { p = toCanonicalProp[ k, key ] },
+        normalizeForYAML[ k, p -> val ] /; p =!= key
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toCanonicalProp*)
+toCanonicalProp[ k___, "Environment"|"ProcessEnvironment" ] := "env";
+toCanonicalProp[ "jobs", job_String ] := job;
+toCanonicalProp[ k___, "with", var_String ] := var;
+toCanonicalProp[ k___, "env", var_String ] := var;
+toCanonicalProp[ k___, s_String ] := fromCamelCase @ s;
+toCanonicalProp[ k___, s_Symbol ] := toCanonicalProp[ k, SymbolName @ s ];
+toCanonicalProp[ k___, other_ ] := other;
+
+fromCamelCase[ str_String ] :=
+    ToLowerCase @ StringReplace[
+        str,
+        a_? LowerCaseQ ~~ b_? UpperCaseQ :> a <> "_" <> b
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -977,16 +1074,7 @@ normalizeForYAML[ "jobs", name_, "needs" -> names: { __String } ] :=
     "needs" -> names;
 
 normalizeForYAML[ "jobs", name_, "needs" -> { } ] :=
-    "needs" -> None;
-
-normalizeForYAML[ "jobs", name_, "Container" -> container_ ] :=
-    normalizeForYAML[ "jobs", name, "container" -> container ];
-
-normalizeForYAML[ "jobs", _, "container", "image"|"Image" -> str_String ] :=
-    "image" -> str;
-
-normalizeForYAML[ "jobs", name_, "container", "Options"|Options -> opts_ ] :=
-    normalizeForYAML[ "jobs", name, "container", "options" -> opts ];
+    "needs" -> $noValue;
 
 normalizeForYAML[
     "jobs",
@@ -995,12 +1083,6 @@ normalizeForYAML[
     "options" -> opts: _String | { ___String }
 ] :=
     "options" -> Flatten @ { opts };
-
-normalizeForYAML[ "jobs", name_, "Environment"|Environment -> env_ ] :=
-    normalizeForYAML[ "jobs", name, "env" -> env ];
-
-normalizeForYAML[ "jobs", _, "env", key_String -> val_String ] :=
-    key -> val;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -1015,6 +1097,38 @@ normalizeForYAML[ "jobs", job_, "steps" -> name_String ] :=
 
 normalizeForYAML[ "jobs", job_, "steps", idx_Integer, step_ ] :=
     normalizeStep[ "jobs", job, "steps", idx, step ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*TimeConstraint*)
+$$tcKey = "timeout-minutes"|"time_constraint";
+
+normalizeForYAML[ keys___, $$tcKey -> Infinity | Automatic | None ] :=
+    "timeout-minutes" -> $noValue;
+
+normalizeForYAML[ keys___, $$tcKey -> q_Quantity ] :=
+    Module[ { minutes },
+        minutes = QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
+        "timeout-minutes" -> If[ IntegerQ @ minutes, minutes, N @ minutes ]
+    ];
+
+normalizeForYAML[ keys___, "time_constraint" -> t_? NumericQ ] :=
+    normalizeForYAML[ keys, "time_constraint" -> Quantity[ t, "Seconds" ] ];
+
+normalizeForYAML[ keys___, "time_constraint" -> other_ ] :=
+    normalizeForYAML[ keys, "timeout-minutes" -> other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*Environment*)
+normalizeForYAML[ keys___, "env", key_ -> None ] :=
+    normalizeForYAML[ keys, "env", key -> $noValue ];
+
+normalizeForYAML[ keys___, key_String :> Environment[ env_String ] ] :=
+    normalizeForYAML[ keys, key -> "${{ env."<>env<>" }}" ];
+
+normalizeForYAML[ keys___, key_String -> GitHubSecret[ sec_String ] ] :=
+    normalizeForYAML[ keys, key -> "${{ secrets."<>sec<>" }}" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -1037,32 +1151,17 @@ normalizeForYAML[ step_WorkflowStep? workflowStepQ ] :=
 normalizeForYAML[ keys___, key_String -> as_Association ] :=
     key -> normalizeForYAML[ keys, key, as ];
 
-normalizeForYAML[ keys___, "Environment"|Environment -> env_ ] :=
-    normalizeForYAML[ keys, "env" -> env ];
+normalizeForYAML[ keys___, key_String -> None ] :=
+    key -> None;
 
-normalizeForYAML[ keys___, key_Symbol -> value_ ] :=
-    normalizeForYAML[ keys, SymbolName @ key -> value ];
+normalizeForYAML[ k___, key_ -> $noValue ] :=
+    key -> $noValue;
 
 normalizeForYAML[ keys___, key_String -> value_? validValueQ ] :=
     key -> value;
 
-normalizeForYAML[ keys___, "TimeConstraint" -> t_ ] :=
-    normalizeForYAML[ keys, TimeConstraint -> t ];
-
-normalizeForYAML[ keys___, TimeConstraint -> t_? NumberQ ] :=
-    normalizeForYAML[ keys, TimeConstraint -> Quantity[ t, "Seconds" ] ];
-
-normalizeForYAML[ keys___, TimeConstraint -> q_Quantity ] :=
-    "timeout-minutes" -> QuantityMagnitude @ UnitConvert[ q, "Minutes" ];
-
-normalizeForYAML[ keys___, key_String :> Environment[ env_String ] ] :=
-    normalizeForYAML[ keys, key -> "${{ env."<>env<>" }}" ];
-
-normalizeForYAML[ keys___, key_String -> GitHubSecret[ sec_String ] ] :=
-    normalizeForYAML[ keys, key -> "${{ secrets."<>sec<>" }}" ];
-
-normalizeForYAML[ keys___, key_String -> None ] :=
-    key -> None;
+normalizeForYAML[ keys___, key_ -> val_ ] :=
+    throwError[ "Invalid value `1` (`2`)", val, keySeqDocLink[ keys, key ] ];
 
 normalizeForYAML // catchUndefined;
 
@@ -1662,18 +1761,22 @@ normalizeStep[ keys__, as_Association ] :=
 keySeqDocLink[ keys___ ] :=
     Module[ { str, url },
         str = keySeqString @ keys;
-        url = URLBuild @ <|
-            "Scheme" -> "https",
-            "Domain" -> "docs.github.com",
-            "Path" -> {
-                "",
-                "en",
-                "actions",
-                "using-workflows",
-                "workflow-syntax-for-github-actions"
-            },
-            "Fragment" -> StringDelete[ str, Except[ LetterCharacter | "_" ] ]
-        |>;
+
+        url =
+            URLBuild @ <|
+                "Scheme" -> "https",
+                "Domain" -> "docs.github.com",
+                "Path" -> {
+                    "",
+                    "en",
+                    "actions",
+                    "using-workflows",
+                    "workflow-syntax-for-github-actions"
+                },
+                "Fragment" ->
+                    StringDelete[ str, Except[ LetterCharacter | "_" | "-" ] ]
+            |>;
+
         ToString[ Hyperlink[ str, url ], StandardForm ]
     ];
 

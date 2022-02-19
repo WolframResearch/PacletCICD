@@ -103,6 +103,11 @@ e: BuildPaclet[ ___ ] :=
 (* ::Subsection::Closed:: *)
 (*Dependencies*)
 
+$$cpOpts = OptionsPattern @ {
+               CheckPaclet,
+               dnc`CheckDefinitionNotebook
+           };
+
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkForBuild*)
@@ -230,10 +235,7 @@ setGHBuildOutput0[
         setOutput[ "PACLET_FILE", FileNameTake @ file ];
         setOutput[ "RELEASE_TAG", "v" <> vers ];
 
-        If[ TrueQ @ $simpleTextMode,
-            file,
-            result
-        ]
+        result
     ];
 
 setGHBuildOutput0[ ___ ] := $Failed;

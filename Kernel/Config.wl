@@ -16,6 +16,11 @@ $thisPacletDir     := $thisPacletDir     = $thisPaclet[ "Location"       ];
 $thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version"        ];
 
 (* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Debug*)
+Wolfram`PacletCICD`$Debug = False;
+
+(* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Footer*)
 End[ ];

@@ -341,9 +341,9 @@ Notebook[
         Cell[
          BoxData[
           ButtonBox[
-           "CheckPaclet",
+           "Workflow",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CheckPaclet"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
           ]
          ],
          "InlineFormula"
@@ -352,9 +352,20 @@ Notebook[
         Cell[
          BoxData[
           ButtonBox[
-           "BuildPaclet",
+           "WorkflowJob",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
           ]
          ],
          "InlineFormula"
@@ -362,7 +373,7 @@ Notebook[
        }
       ],
       "SeeAlso",
-      CellID -> 402914854
+      CellID -> 145645536
      ]
     },
     Open
@@ -376,7 +387,17 @@ Notebook[
       "MoreAboutSection",
       CellID -> 82681409
      ],
-     Cell["XXXX", "MoreAbout", CellID -> 226534368]
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflows",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/Workflows"
+       ]
+      ],
+      "MoreAbout",
+      CellID -> 59394675
+     ]
     },
     Open
    ]
@@ -1654,11 +1675,12 @@ Notebook[
  },
  WindowStatusArea -> Automatic,
  TaggingRules -> <|
+  "InformationPopupMenuItemAdded" -> True,
   "Author" -> "rhennigan",
   "CreationDate" -> "01-30-2022 11:25:16",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 6, 19, 40, 0.966082`7.737588979587987},
+   {2022, 2, 18, 14, 23, 9.2398149`8.718238235755043},
    "Instant",
    "Gregorian",
    -5.
