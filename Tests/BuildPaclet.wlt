@@ -57,7 +57,7 @@ VerificationTest[
 (* ::Section::Closed:: *)
 (*BuildPaclet*)
 VerificationTest[
-    BuildPaclet[ ExampleDirectory[ "FewIssues" ], "ConsoleType" -> None ],
+    BuildPaclet[ ExampleDirectory[ "FewIssues" ], "ConsoleType" -> "TTY" ],
     _Success,
     SameTest -> MatchQ,
     TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:59,1-64,2"
@@ -66,8 +66,8 @@ VerificationTest[
 VerificationTest[
     BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check" -> True,
-        "ConsoleType" -> None
+        "Check"       -> True,
+        "ConsoleType" -> "TTY"
     ],
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
@@ -78,8 +78,8 @@ VerificationTest[
 VerificationTest[
     BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check" -> False,
-        "ConsoleType" -> None
+        "Check"       -> False,
+        "ConsoleType" -> "TTY"
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
@@ -96,7 +96,7 @@ VerificationTest[
 VerificationTest[
     BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "ConsoleType"   -> None,
+        "ConsoleType"   -> "TTY",
         "Check"         -> True,
         "DisabledHints" -> { Inherited, "CodeInspectionIssues" }
     ],
@@ -111,7 +111,7 @@ VerificationTest[
 VerificationTest[
     BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "ConsoleType"      -> None,
+        "ConsoleType"      -> "TTY",
         "Check"            -> True,
         "DisabledHints"    -> { Inherited, "CodeInspectionIssues" },
         "FailureCondition" -> { "Warning", "Error" }
