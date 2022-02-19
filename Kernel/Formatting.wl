@@ -92,16 +92,16 @@ actionLabel[ ___ ] := Nothing;
 
 actionCodeLabel[ { code_String } ] :=
     If[ StringLength[ code ] < 40,
-        { BoxForm`SummaryItem @ { "Code: ", code } },
+        { BoxForm`SummaryItem @ { "Command: ", code } },
         { BoxForm`SummaryItem @ {
-            "Code: ",
+            "Command: ",
             Tooltip[ StringTake[ code, UpTo[ 40 ] ] <> " \[Ellipsis]", code ]
         } }
     ];
 
 actionCodeLabel @ { code_String, rest__ } := {
     BoxForm`SummaryItem @ {
-        "Code: ",
+        "Command: ",
         Tooltip[
             StringTake[ code, UpTo[ 40 ] ] <> " \[Continuation]",
             StringRiffle[ { code, rest }, "\n" ]

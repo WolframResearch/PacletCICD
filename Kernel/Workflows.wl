@@ -65,7 +65,7 @@ Workflow[
 
         new = withDefaultTimeConstraint[
             OptionValue[ TimeConstraint ],
-            removeDeleted @ makeWorkflowData[ name, <| as, opts |> ]
+            postProcessYAML @ makeWorkflowData[ name, <| as, opts |> ]
         ];
 
         (* TODO: always insert "name" property as first arg *)
@@ -77,12 +77,18 @@ Workflow[
         ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Named*)
 Workflow[ name_String, opts: OptionsPattern[ ] ] :=
     catchTop @ If[ workflowNameQ @ name,
         Workflow[ name, <| |>, opts ],
         throwMessageFailure[ Workflow::invname, name ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Custom*)
 Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
         new = makeWorkflowData @ as;
@@ -91,6 +97,9 @@ Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
         Workflow[ id, new, opts ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Merged*)
 Workflow[
     wf_Workflow? workflowQ,
     as_Association,
@@ -105,6 +114,15 @@ Workflow[
         Workflow[ name, data, opts ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*File*)
+Workflow[ File[ file_String ], opts: OptionsPattern[ ] ] :=
+    Failure[ "NotImplemented", <| |> ]; (* TODO *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Properties*)
 (workflow_Workflow? workflowQ)[ prop_ ] :=
     catchTop @ workflowProperty[ workflow, prop ];
 
@@ -170,6 +188,8 @@ getWorkflowJobs[ wf_? workflowQ ] :=
         jobs = ConfirmBy[ Lookup[ data, "jobs" ], AssociationQ ];
         ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
     ];
+
+(* TODO: envInherit *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -263,7 +283,7 @@ WorkflowJob[
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
     catchTop @ Module[ { new },
-        new = removeDeleted @ makeWorkflowJobData[ name, <| as, opts |> ];
+        new = postProcessYAML @ makeWorkflowJobData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
@@ -273,12 +293,18 @@ WorkflowJob[
         ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Named*)
 WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
     catchTop @ If[ jobNameQ @ name,
         WorkflowJob[ name, <| opts |> ],
         throwMessageFailure[ WorkflowJob::invname, name ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Custom*)
 WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
         new = makeWorkflowJobData @ <| as, opts |>;
@@ -287,12 +313,15 @@ WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
         WorkflowJob[ id, new ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Merged*)
 WorkflowJob[
     wf_WorkflowJob? workflowJobQ,
     as_Association,
     opts: OptionsPattern[ ]
 ] :=
-    Module[ { name, as1, as2, merged, data },
+    catchTop @ Module[ { name, as1, as2, merged, data },
         name   = wf[ "Name" ];
         as1    = wf[ "Data" ];
         as2    = makeWorkflowJobData[ name, <| as, opts |> ];
@@ -301,6 +330,48 @@ WorkflowJob[
         WorkflowJob[ name, data ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*File*)
+WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { name },
+        name = FileBaseName @ file;
+        WorkflowJob[
+            <|
+                "name"      -> name,
+                "runs-on"   -> "ubuntu-latest",
+                "container" -> $defaultJobContainer,
+                "env"       -> $defaultJobEnv,
+                "Steps"     -> { "Checkout", File @ file }
+            |>,
+            opts
+        ]
+    ];
+
+WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ WorkflowJob[ File @ file, opts ], as, opts ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*List of Steps*)
+WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
+    catchTop @ WorkflowJob[
+        <|
+            "name"      -> "UntitledJob",
+            "runs-on"   -> "ubuntu-latest",
+            "container" -> $defaultJobContainer,
+            "env"       -> $defaultJobEnv,
+            "Steps"     -> steps
+        |>,
+        opts
+    ];
+
+WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ WorkflowJob[ steps, opts ], as, opts ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Properties*)
 (job_WorkflowJob? workflowJobQ)[ prop_ ] :=
     catchTop @ workflowJobProperty[ job, prop ];
 
@@ -408,7 +479,7 @@ WorkflowStep[
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
     catchTop @ Module[ { new },
-        new = removeDeleted @ makeWorkflowStepData[ name, <| as, opts |> ];
+        new = postProcessYAML @ makeWorkflowStepData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
@@ -418,12 +489,18 @@ WorkflowStep[
         ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Named*)
 WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
     catchTop @ If[ stepNameQ @ name,
         WorkflowStep[ name, <| opts |> ],
         throwMessageFailure[ WorkflowStep::invname, name ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Custom*)
 WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
         new = makeWorkflowStepData @ <| as, opts |>;
@@ -432,12 +509,15 @@ WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
         WorkflowStep[ id, new ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Merged*)
 WorkflowStep[
     wf_WorkflowStep? workflowStepQ,
     as_Association,
     opts: OptionsPattern[ ]
 ] :=
-    Module[ { name, as1, as2, merged, data },
+    catchTop @ Module[ { name, as1, as2, merged, data },
         name = wf[ "Name" ];
         as1 = wf[ "Data" ];
         as2 = makeWorkflowStepData[ name, <| as, opts |> ];
@@ -446,6 +526,29 @@ WorkflowStep[
         WorkflowStep[ name, data ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*File*)
+WorkflowStep[ File[ file_String ], opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { name, run },
+        name = FileBaseName @ file;
+        run  = "wolframscript " <> file;
+        WorkflowStep[
+            <|
+                "name" -> name,
+                "run"  -> run,
+                "env"  -> $defaultJobEnv
+            |>,
+            opts
+        ]
+    ];
+
+WorkflowStep[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
+    WorkflowStep[ WorkflowStep[ File @ file, opts ], as, opts ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Properties*)
 (job_WorkflowStep? workflowStepQ)[ prop_ ] :=
     catchTop @ workflowStepProperty[ job, prop ];
 
@@ -481,6 +584,8 @@ stepNameQ[ name_ ] := MemberQ[ $stepNames, name ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowStepQ*)
+workflowStepQ // Attributes = { HoldFirst };
+
 workflowStepQ[ job: WorkflowStep[ name_? StringQ, as_? AssociationQ ] ] :=
     System`Private`HoldValidQ @ job;
 
@@ -701,7 +806,7 @@ normalizeActionName // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*latestActionName*)
 latestActionName[ name_, owner_, repo_ ] := Enclose[
-    Module[ { url, data, tag },
+    Module[ { url, data, tag, new },
 
         url = URLBuild @ <|
             "Scheme" -> "https",
@@ -711,8 +816,9 @@ latestActionName[ name_, owner_, repo_ ] := Enclose[
 
         data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
         tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
+        new  = owner <> "/" <> repo <> "@" <> tag;
 
-        owner <> "/" <> repo <> "@" <> tag
+        latestActionName[ name, owner, repo ] = new
     ],
     name &
 ];
@@ -961,11 +1067,6 @@ validValueQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*removeDeleted*)
-removeDeleted[ expr_ ] := DeleteCases[ expr, $noValue, Infinity ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
 (*normalizeForYAML*)
 $$ymlKey  = _String|_Integer|Automatic;
 $$ymlKeys = $$ymlKey...;
@@ -1087,16 +1188,14 @@ normalizeForYAML[
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*Steps*)
-(* normalizeForYAML[ "jobs", _, "steps"|"Steps" -> steps_ ] :=
-    "steps" -> normalizeSteps @ steps; *)
 normalizeForYAML[ "jobs", job_, "Steps" -> steps_ ] :=
     normalizeForYAML[ "jobs", job, "steps" -> steps ];
 
-normalizeForYAML[ "jobs", job_, "steps" -> name_String ] :=
-    normalizeForYAML[ "jobs", job, "steps" -> { name } ];
-
 normalizeForYAML[ "jobs", job_, "steps", idx_Integer, step_ ] :=
     normalizeStep[ "jobs", job, "steps", idx, step ];
+
+normalizeForYAML[ "jobs", job_, "steps" -> step: Except[ _List ] ] :=
+    normalizeForYAML[ "jobs", job, "steps" -> { step } ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -1139,19 +1238,22 @@ normalizeForYAML[ keys___, as_Association ] :=
 normalizeForYAML[ keys___, list_List ] :=
     MapIndexed[ normalizeForYAML[ keys, First[ #2 ], #1 ] &, list ];
 
-normalizeForYAML[ wf_Workflow? workflowQ ] :=
+normalizeForYAML[ ___, wf_Workflow? workflowQ ] :=
     normalizeForYAML @ wf[ "Data" ];
 
-normalizeForYAML[ job_WorkflowJob? workflowJobQ ] :=
+normalizeForYAML[ ___, job_WorkflowJob? workflowJobQ ] :=
     normalizeForYAML @ job[ "Data" ];
 
-normalizeForYAML[ step_WorkflowStep? workflowStepQ ] :=
+normalizeForYAML[ ___, step_WorkflowStep? workflowStepQ ] :=
     normalizeForYAML @ step[ "Data" ];
 
-normalizeForYAML[ keys___, key_String -> as_Association ] :=
+normalizeForYAML[ keys___, key_ -> as_Association ] :=
     key -> normalizeForYAML[ keys, key, as ];
 
-normalizeForYAML[ keys___, key_String -> None ] :=
+normalizeForYAML[ keys___, key_ -> list_List ] :=
+    key -> MapIndexed[ normalizeForYAML[ keys, key, First[ #2 ], #1 ] &, list ];
+
+normalizeForYAML[ keys___, key_ -> None ] :=
     key -> None;
 
 normalizeForYAML[ k___, key_ -> $noValue ] :=
@@ -1652,7 +1754,7 @@ normalizeStep[ ___, "checkout"|"checkoutcode" ] := <|
 normalizeStep[ ___, "check"|"checkpaclet" ] := <|
     "name" -> "Check",
     "id"   -> "check-paclet-step",
-    "uses" -> $checkPacletAction,
+    "uses" -> normalizeActionName @ $checkPacletAction,
     "with" -> <|
         "target"              -> $defaultActionTarget,
         "paclet_cicd_version" -> $latestPacletCICDVersion,
@@ -1663,7 +1765,7 @@ normalizeStep[ ___, "check"|"checkpaclet" ] := <|
 normalizeStep[ ___, "build"|"buildpaclet" ] := <|
     "name" -> "Build",
     "id"   -> "build-paclet-step",
-    "uses" -> $buildPacletAction,
+    "uses" -> normalizeActionName @ $buildPacletAction,
     "with" -> <|
         "target"              -> $defaultActionTarget,
         "paclet_cicd_version" -> $latestPacletCICDVersion,
@@ -1674,7 +1776,7 @@ normalizeStep[ ___, "build"|"buildpaclet" ] := <|
 normalizeStep[ ___, "test"|"testpaclet" ] := <|
     "name" -> "Test",
     "id"   -> "test-paclet-step",
-    "uses" -> $testPacletAction,
+    "uses" -> normalizeActionName @ $testPacletAction,
     "with" -> <|
         "target"              -> $defaultActionTarget,
         "paclet_cicd_version" -> $latestPacletCICDVersion,
@@ -1756,7 +1858,18 @@ normalizeStep[ as_Association ] :=
     ];
 
 normalizeStep[ keys__, as_Association ] :=
-    normalizeForYAML[ keys, KeyMap[ toLowerCase, as ] ];
+    With[ { lc = KeyMap[ toLowerCase, as ] },
+        If[ lc =!= as,
+            normalizeForYAML[ keys, lc ],
+            lc
+        ]
+    ];
+
+normalizeStep[ keys___, step_WorkflowStep? workflowStepQ ] :=
+    step[ "Data" ];
+
+normalizeStep[ keys___, file_File ] :=
+    normalizeStep[ keys, WorkflowStep @ file ];
 
 keySeqDocLink[ keys___ ] :=
     Module[ { str, url },
@@ -1812,7 +1925,17 @@ $workflowSchema := $workflowSchema =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toYAMLString*)
-toYAMLString[ expr_ ] :=
+toYAMLString[ expr0_ ] := Enclose[ \
+    Module[ { expr, string, lines },
+        expr   = <| "YAML" -> expr0 |>;
+        string = ConfirmBy[ toYAMLString1 @ expr, StringQ ];
+        lines  = Rest @ StringSplit[ string, "\n" ];
+        StringRiffle[ StringDelete[ lines, StartOfString ~~ "  " ], "\n" ]
+    ],
+    throwMessageFailure[ WorkflowExport::yamlfail, expr0 ] &
+];
+
+toYAMLString1[ expr_ ] :=
     Enclose[
         StringReplace[
             ConfirmBy[ toYAMLString0 @ expr, StringQ ],
@@ -1826,7 +1949,7 @@ toYAMLString[ expr_ ] :=
         throwMessageFailure[ WorkflowExport::yamlfail, expr ] &
     ];
 
-toYAMLString // catchUndefined;
+toYAMLString1 // catchUndefined;
 
 
 toYAMLString0[ as_Association ] :=
@@ -1924,6 +2047,41 @@ descend[ eval_ ] := Internal`InheritedBlock[ { $depth }, $depth += 1; eval ];
 stringJoin[ str_String ] := str;
 stringJoin[ a___, b_String, c__String, d___ ] := stringJoin[ a, b <> c, d ];
 stringJoin[ a___, { b___ }, c___ ] := stringJoin[ a, b, c ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Misc Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*postProcessYAML*)
+postProcessYAML[ expr_ ] := envReduce @ DeleteCases[ expr, $noValue, Infinity ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*envReduce*)
+envReduce[ env_Association, data_ ] :=
+    ReplaceRepeated[
+        Replace[
+            data,
+            a: KeyValuePattern[ "env" -> e_Association ] :>
+                With[ { ec = Complement[ e, env ], ej = Join[ env, e ] },
+                    envReduce[ ej, Insert[ a, "env" -> ec, Key[ "env" ] ] ]
+                ],
+            { 1, Infinity }
+        ],
+        a: KeyValuePattern[ "env" -> <| |> ] :>
+            RuleCondition @ KeyDrop[ a, "env" ]
+    ];
+
+envReduce[ data_ ] :=
+    ReplaceAll[
+        data,
+        a: KeyValuePattern[ "env" -> env_Association ] :>
+            RuleCondition @ envReduce[ env, a ]
+    ];
+
+envReduce // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

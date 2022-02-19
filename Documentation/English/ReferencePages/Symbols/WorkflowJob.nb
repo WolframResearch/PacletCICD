@@ -144,22 +144,17 @@ Notebook[
          BoxData[
           RowBox[
            {
+            ButtonBox[
+             "WorkflowJob",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+            ],
+            "[",
             RowBox[
              {
-              RowBox[
-               {
-                ButtonBox[
-                 "WorkflowJob",
-                 BaseStyle -> "Link",
-                 ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
-                ],
-                "[",
-                RowBox[
-                 {"\[LeftAssociation]", StyleBox["\[Ellipsis]", "TR"]}
-                ]
-               }
-              ],
-              "|>"
+              "\[LeftAssociation]",
+              "\[Ellipsis]",
+              "\[RightAssociation]"
              }
             ],
             "]"
@@ -174,28 +169,49 @@ Notebook[
          BoxData[
           RowBox[
            {
+            ButtonBox[
+             "WorkflowJob",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+            ],
+            "[",
             RowBox[
              {
+              ButtonBox["File", BaseStyle -> "Link"],
+              "[",
+              "\"\!\(\*StyleBox[\"path\", \"TI\"]\)\"",
+              "]"
+             }
+            ],
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "\[LineSeparator]represents a workflow job that runs the given Wolfram Language script.\n",
+        Cell["   ", "ModInfo"],
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "WorkflowJob",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
+            ],
+            "[",
+            RowBox[
+             {
+              StyleBox["workflow", "TI"],
+              ",",
               RowBox[
                {
-                ButtonBox[
-                 "WorkflowJob",
-                 BaseStyle -> "Link",
-                 ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
-                ],
-                "[",
-                RowBox[
-                 {
-                  StyleBox["workflow", "TI"],
-                  ",",
-                  RowBox[
-                   {"\[LeftAssociation]", StyleBox["\[Ellipsis]", "TR"]}
-                  ]
-                 }
-                ]
+                "\[LeftAssociation]",
+                StyleBox["\[Ellipsis]", "TR"],
+                "\[RightAssociation]"
                }
-              ],
-              "|>"
+              ]
              }
             ],
             "]"
@@ -617,12 +633,12 @@ Notebook[
                              "\[InvisibleSpace]",
                              TagBox[
                               DynamicModuleBox[
-                               {Wolfram`PacletCICD`Private`x$58497$$ = False},
+                               {Wolfram`PacletCICD`Private`x$52974$$ = False},
                                TagBox[
                                 GridBox[
                                  {
                                   {
-                                   OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$58497$$]],
+                                   OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$52974$$]],
                                    PaneSelectorBox[
                                     {
                                      False -> TemplateBox[
@@ -812,12 +828,12 @@ Notebook[
                                           StripOnInput -> False
                                          ],
                                          DynamicModuleBox[
-                                          {Wolfram`PacletCICD`Private`x$58504$$ = False},
+                                          {Wolfram`PacletCICD`Private`x$52981$$ = False},
                                           TagBox[
                                            GridBox[
                                             {
                                              {
-                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$58504$$]],
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$52981$$]],
                                               PaneSelectorBox[
                                                {
                                                 False -> "\"{\[Ellipsis]}\"",
@@ -913,12 +929,12 @@ Notebook[
                                                    },
                                                    {
                                                     DynamicModuleBox[
-                                                     {Wolfram`PacletCICD`Private`x$58508$$ = False},
+                                                     {Wolfram`PacletCICD`Private`x$52985$$ = False},
                                                      TagBox[
                                                       GridBox[
                                                        {
                                                         {
-                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$58508$$]],
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$52985$$]],
                                                          PaneSelectorBox[
                                                           {
                                                            False -> TemplateBox[
@@ -1055,7 +1071,7 @@ Notebook[
                                                             "Grid"
                                                            ]
                                                           },
-                                                          Dynamic[Wolfram`PacletCICD`Private`x$58508$$],
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$52985$$],
                                                           ImageSize -> Automatic,
                                                           ContentPadding -> False
                                                          ]
@@ -1072,12 +1088,12 @@ Notebook[
                                                    },
                                                    {
                                                     DynamicModuleBox[
-                                                     {Wolfram`PacletCICD`Private`x$58514$$ = False},
+                                                     {Wolfram`PacletCICD`Private`x$52991$$ = False},
                                                      TagBox[
                                                       GridBox[
                                                        {
                                                         {
-                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$58514$$]],
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$52991$$]],
                                                          PaneSelectorBox[
                                                           {
                                                            False -> TemplateBox[
@@ -1206,7 +1222,7 @@ Notebook[
                                                             "Grid"
                                                            ]
                                                           },
-                                                          Dynamic[Wolfram`PacletCICD`Private`x$58514$$],
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$52991$$],
                                                           ImageSize -> Automatic,
                                                           ContentPadding -> False
                                                          ]
@@ -1231,7 +1247,7 @@ Notebook[
                                                  "Column"
                                                 ]
                                                },
-                                               Dynamic[Wolfram`PacletCICD`Private`x$58504$$],
+                                               Dynamic[Wolfram`PacletCICD`Private`x$52981$$],
                                                ImageSize -> Automatic,
                                                ContentPadding -> False
                                               ]
@@ -1256,7 +1272,7 @@ Notebook[
                                       "Grid"
                                      ]
                                     },
-                                    Dynamic[Wolfram`PacletCICD`Private`x$58497$$],
+                                    Dynamic[Wolfram`PacletCICD`Private`x$52974$$],
                                     ImageSize -> Automatic,
                                     ContentPadding -> False
                                    ]
@@ -1355,7 +1371,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 5430807
+            CellID -> 527661326
            ]
           },
           Open
@@ -1861,12 +1877,12 @@ Notebook[
                                  "\[InvisibleSpace]",
                                  TagBox[
                                   DynamicModuleBox[
-                                   {Wolfram`PacletCICD`Private`x$59524$$ = False},
+                                   {Wolfram`PacletCICD`Private`x$53166$$ = False},
                                    TagBox[
                                     GridBox[
                                      {
                                       {
-                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$59524$$]],
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$53166$$]],
                                        PaneSelectorBox[
                                         {
                                          False -> TemplateBox[
@@ -2007,7 +2023,7 @@ Notebook[
                                           "Grid"
                                          ]
                                         },
-                                        Dynamic[Wolfram`PacletCICD`Private`x$59524$$],
+                                        Dynamic[Wolfram`PacletCICD`Private`x$53166$$],
                                         ImageSize -> Automatic,
                                         ContentPadding -> False
                                        ]
@@ -2248,12 +2264,12 @@ Notebook[
                                  "\[InvisibleSpace]",
                                  TagBox[
                                   DynamicModuleBox[
-                                   {Wolfram`PacletCICD`Private`x$60087$$ = False},
+                                   {Wolfram`PacletCICD`Private`x$53974$$ = False},
                                    TagBox[
                                     GridBox[
                                      {
                                       {
-                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$60087$$]],
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$53974$$]],
                                        PaneSelectorBox[
                                         {
                                          False -> TemplateBox[
@@ -2382,7 +2398,7 @@ Notebook[
                                           "Grid"
                                          ]
                                         },
-                                        Dynamic[Wolfram`PacletCICD`Private`x$60087$$],
+                                        Dynamic[Wolfram`PacletCICD`Private`x$53974$$],
                                         ImageSize -> Automatic,
                                         ContentPadding -> False
                                        ]
@@ -2456,7 +2472,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[2]=",
-            CellID -> 105829403
+            CellID -> 197669250
            ]
           },
           Open
@@ -2672,7 +2688,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[3]=",
-            CellID -> 565763541
+            CellID -> 278629863
            ]
           },
           Open
@@ -2694,11 +2710,1519 @@ Notebook[
            ],
            Cell[
             BoxData[
-             "\"name: Build\\nruns-on: ubuntu-latest\\ncontainer: \\n  image: wolframresearch/wolframengine:latest\\n  options: --user root\\nenv: \\n  WOLFRAM_SYSTEM_ID: Linux-x86-64\\n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\\ntimeout-minutes: 10\\nsteps: \\n-   name: Checkout\\n  id: checkout-code-step\\n  uses: actions/checkout@v2\\n-   name: Build\\n  id: build-paclet-step\\n  uses: rhennigan/build-paclet@latest\\n  with: \\n    target: Submit\\n    paclet_cicd_version: 0.6.0\\n    definition_notebook: ./DefinitionNotebook.nb\\n-   name: UploadArtifact\\n  id: upload-build-artifacts-step\\n  uses: actions/upload-artifact@v2\\n  with: \\n    path: ${{ env.BUILD_DIR }}\\n    if-no-files-found: error\""
+             "\"name: Build\\nruns-on: ubuntu-latest\\ncontainer: \\n  image: wolframresearch/wolframengine:latest\\n  options: --user root\\nenv: \\n  WOLFRAM_SYSTEM_ID: Linux-x86-64\\n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\\ntimeout-minutes: 10\\nsteps: \\n- name: Checkout\\n  id: checkout-code-step\\n  uses: actions/checkout@v2\\n- name: Build\\n  id: build-paclet-step\\n  uses: rhennigan/build-paclet@latest\\n  with: \\n    target: Submit\\n    paclet_cicd_version: 0.6.0\\n    definition_notebook: ./DefinitionNotebook.nb\\n- name: UploadArtifact\\n  id: upload-build-artifacts-step\\n  uses: actions/upload-artifact@v2\\n  with: \\n    path: ${{ env.BUILD_DIR }}\\n    if-no-files-found: error\""
             ],
             "Output",
             CellLabel -> "Out[4]=",
-            CellID -> 328206821
+            CellID -> 8514021
+           ]
+          },
+          Open
+         ]
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["\t", "ExampleDelimiter"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleDelimiter",
+         CellID -> 558444108
+        ],
+        Cell[
+         "Create a job that runs a script:",
+         "ExampleText",
+         CellID -> 21240141
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[
+             RowBox[
+              {
+               "job",
+               "=",
+               RowBox[
+                {
+                 "WorkflowJob",
+                 "[",
+                 RowBox[{"File", "[", "\"Scripts/MyWorkflow.wls\"", "]"}],
+                 "]"
+                }
+               ]
+              }
+             ]
+            ],
+            "Input",
+            CellLabel -> "In[1]:=",
+            CellID -> 843863803
+           ],
+           Cell[
+            BoxData[
+             InterpretationBox[
+              RowBox[
+               {
+                TagBox["WorkflowJob", "SummaryHead"],
+                "[",
+                DynamicModuleBox[
+                 {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                 TemplateBox[
+                  {
+                   PaneSelectorBox[
+                    {
+                     False -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = True),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         RasterBox[
+                          CompressedData[
+                           "\n1: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\n+n6BXKhyPjo+sLuPXszNYAYzeG/4f2bzlWs=\n              "
+                          ],
+                          {{0, 0}, {69.81818181818181, 72.}},
+                          {0, 255},
+                          ImageResolution -> {132, 132},
+                          ColorFunction -> RGBColor
+                         ],
+                         {
+                          ImageSize -> Dynamic[
+                           {
+                            Automatic,
+                            Times[
+                             3*CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           }
+                          ],
+                          PlotRange -> {{0, 69.81818181818181}, {0, 72.}}
+                         }
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"MyWorkflow\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Steps: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["2", "SummaryItem"]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ],
+                     True -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = False),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         RasterBox[
+                          CompressedData[
+                           "\n1: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\n+n6BXKhyPjo+sLuPXszNYAYzeG/4f2bzlWs=\n              "
+                          ],
+                          {{0, 0}, {69.81818181818181, 72.}},
+                          {0, 255},
+                          ImageResolution -> {132, 132},
+                          ColorFunction -> RGBColor
+                         ],
+                         {
+                          ImageSize -> Dynamic[
+                           {
+                            Automatic,
+                            Times[
+                             3*CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           }
+                          ],
+                          PlotRange -> {{0, 69.81818181818181}, {0, 72.}}
+                         }
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"MyWorkflow\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Steps: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["2", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              DynamicModuleBox[
+                               {Wolfram`PacletCICD`Private`x$82191$$ = False},
+                               TagBox[
+                                GridBox[
+                                 {
+                                  {
+                                   OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$82191$$]],
+                                   PaneSelectorBox[
+                                    {
+                                     False -> TemplateBox[
+                                      {
+                                       "\"\[LeftAssociation] \"",
+                                       StyleBox[
+                                        "\"MyWorkflow\"",
+                                        "SummaryItemAnnotation",
+                                        FontSlant -> Italic,
+                                        StripOnInput -> False
+                                       ],
+                                       "\" \[RightAssociation]\""
+                                      },
+                                      "RowDefault"
+                                     ],
+                                     True -> TagBox[
+                                      GridBox[
+                                       {
+                                        {
+                                         StyleBox[
+                                          "\"name\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         StyleBox[
+                                          "\"MyWorkflow\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"runs-on\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         StyleBox[
+                                          "\"ubuntu-latest\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"container\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"\[LeftAssociation]\[Ellipsis]\[RightAssociation]\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    StyleBox[
+                                                     "\"image\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"wolframresearch/wolframengine:latest\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   },
+                                                   {
+                                                    StyleBox[
+                                                     "\"options\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    RowBox[{"{", "\"--user root\"", "}"}]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                  AutoDelete -> False,
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Grid"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"env\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"\[LeftAssociation]\[Ellipsis]\[RightAssociation]\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    StyleBox[
+                                                     "\"WOLFRAM_SYSTEM_ID\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"Linux-x86-64\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   },
+                                                   {
+                                                    StyleBox[
+                                                     "\"WOLFRAMSCRIPT_ENTITLEMENTID\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                  AutoDelete -> False,
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Grid"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"steps\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$82198$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$82198$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"{\[Ellipsis]}\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    DynamicModuleBox[
+                                                     {Wolfram`PacletCICD`Private`x$$ = False},
+                                                     TagBox[
+                                                      GridBox[
+                                                       {
+                                                        {
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                                         PaneSelectorBox[
+                                                          {
+                                                           False -> TemplateBox[
+                                                            {
+                                                             "\"\[LeftAssociation] \"",
+                                                             StyleBox[
+                                                              "\"Checkout\"",
+                                                              "SummaryItemAnnotation",
+                                                              FontSlant -> Italic,
+                                                              StripOnInput -> False
+                                                             ],
+                                                             "\" \[RightAssociation]\""
+                                                            },
+                                                            "RowDefault"
+                                                           ],
+                                                           True -> TagBox[
+                                                            GridBox[
+                                                             {
+                                                              {
+                                                               StyleBox[
+                                                                "\"name\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"Checkout\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"id\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"checkout-code-step\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"uses\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"actions/checkout@v2\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              }
+                                                             },
+                                                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                             AutoDelete -> False,
+                                                             GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                             FrameStyle -> GrayLevel[0, 0.1]
+                                                            ],
+                                                            "Grid"
+                                                           ]
+                                                          },
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                                          ImageSize -> Automatic,
+                                                          ContentPadding -> False
+                                                         ]
+                                                        }
+                                                       },
+                                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                       AutoDelete -> False,
+                                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                                      ],
+                                                      "Grid"
+                                                     ],
+                                                     DynamicModuleValues :> { }
+                                                    ]
+                                                   },
+                                                   {
+                                                    DynamicModuleBox[
+                                                     {Wolfram`PacletCICD`Private`x$$ = False},
+                                                     TagBox[
+                                                      GridBox[
+                                                       {
+                                                        {
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                                         PaneSelectorBox[
+                                                          {
+                                                           False -> TemplateBox[
+                                                            {
+                                                             "\"\[LeftAssociation] \"",
+                                                             StyleBox[
+                                                              "\"MyWorkflow\"",
+                                                              "SummaryItemAnnotation",
+                                                              FontSlant -> Italic,
+                                                              StripOnInput -> False
+                                                             ],
+                                                             "\" \[RightAssociation]\""
+                                                            },
+                                                            "RowDefault"
+                                                           ],
+                                                           True -> TagBox[
+                                                            GridBox[
+                                                             {
+                                                              {
+                                                               StyleBox[
+                                                                "\"name\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"MyWorkflow\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"run\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"wolframscript Scripts/MyWorkflow.wls\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              }
+                                                             },
+                                                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                             AutoDelete -> False,
+                                                             GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                             FrameStyle -> GrayLevel[0, 0.1]
+                                                            ],
+                                                            "Grid"
+                                                           ]
+                                                          },
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                                          ImageSize -> Automatic,
+                                                          ContentPadding -> False
+                                                         ]
+                                                        }
+                                                       },
+                                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                       AutoDelete -> False,
+                                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                                      ],
+                                                      "Grid"
+                                                     ],
+                                                     DynamicModuleValues :> { }
+                                                    ]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                  DefaultBaseStyle -> "Column",
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Column"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$82198$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        }
+                                       },
+                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                       AutoDelete -> False,
+                                       GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                       FrameStyle -> GrayLevel[0, 0.1]
+                                      ],
+                                      "Grid"
+                                     ]
+                                    },
+                                    Dynamic[Wolfram`PacletCICD`Private`x$82191$$],
+                                    ImageSize -> Automatic,
+                                    ContentPadding -> False
+                                   ]
+                                  }
+                                 },
+                                 GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                 AutoDelete -> False,
+                                 GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                ],
+                                "Grid"
+                               ],
+                               DynamicModuleValues :> { }
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ]
+                    },
+                    Dynamic[Typeset`open$$],
+                    ImageSize -> Automatic
+                   ]
+                  },
+                  "SummaryPanel"
+                 ],
+                 DynamicModuleValues :> { }
+                ],
+                "]"
+               }
+              ],
+              Wolfram`PacletCICD`WorkflowJob[
+               "MyWorkflow",
+               Association[
+                "name" -> "MyWorkflow",
+                "runs-on" -> "ubuntu-latest",
+                "container" -> Association[
+                 "image" -> "wolframresearch/wolframengine:latest",
+                 "options" -> {"--user root"}
+                ],
+                "env" -> Association[
+                 "WOLFRAM_SYSTEM_ID" -> "Linux-x86-64",
+                 "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+                ],
+                "steps" -> {
+                 Association[
+                  "name" -> "Checkout",
+                  "id" -> "checkout-code-step",
+                  "uses" -> "actions/checkout@v2"
+                 ],
+                 Association[
+                  "name" -> "MyWorkflow",
+                  "run" -> "wolframscript Scripts/MyWorkflow.wls"
+                 ]
+                }
+               ]
+              ],
+              Editable -> False,
+              SelectWithContents -> True,
+              Selectable -> False
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[1]=",
+            CellID -> 469293237
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell["View the steps:", "ExampleText", CellID -> 40742995],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"job", "[", "\"Steps\"", "]"}]],
+            "Input",
+            CellLabel -> "In[2]:=",
+            CellID -> 9767916
+           ],
+           Cell[
+            BoxData[
+             RowBox[
+              {
+               "{",
+               RowBox[
+                {
+                 InterpretationBox[
+                  RowBox[
+                   {
+                    TagBox["WorkflowStep", "SummaryHead"],
+                    "[",
+                    DynamicModuleBox[
+                     {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                     TemplateBox[
+                      {
+                       PaneSelectorBox[
+                        {
+                         False -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = True),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             RasterBox[
+                              CompressedData[
+                               "\n1:eJztnT2SJDuynZs/AsVZwuEOrkgxKFJrezTq8Z5x+IzKsG3eM6OFFiK14g5y\nCaVSyyXUEmIJtYTLwgXyVnZ1ZVZGxHG4A3E+M5+x6emuCkc4cAIOwPEf/+l/\n/cP/+Lffvn37l//w9h//8I//+z///e//OP3Xv7z9j//2t3/5n//8t7/+9//y\nt3/96z//9e//6Z/+3dsf/t9/k+3ffxOiP/B/fv/tzb6/2fxmpzc7F/v9AXsp\nf/e5/Psfbza82V+8/RK+TP/v99/e7PubzW92erNzsd8fsJfyd5/Lv//xZsOb\nKa6EcCKN60UrnlZoxFZbih4lTfnN23dhRxrXi1Y8rdCIrbYUPUqaorgSwpAy\nv5jLXMFSLx7Vk+/ebSL2U+YXc5krWOrFo3qiuBKCwNsYjaIZi7Nm3LLXoiWD\nd1uJx3kbo1E0Y3HWjFv2WrRk8G4rIVqj5Kas81IW85KU41JuOyglN2Wdl7KY\nl6Qcl+JKiDu8jb1j4LnGmjlJWpeBd3uKzNvYOwaea6yZk6R1GXi3pxCR6EQ3\nPrOT5iN+dKIbn9lJ8xFxdJD3yPaoGx/nI7N0pB5T3iPbo258nI/M0hFxNJDX\nxc8BxvaalnRSe2sMmfK6+DnA2F7Tkk4qrsQhQF5jfg0wnntZOqOob0YyU15j\nfg0wnntZOqOouBJdgmPOOW5Z0k99MxKYjjnnuGVJPxVXoiuQ9+Meec5xy568\n303LTHk/7pHnHLdMcSW6AHkvq/c4HdnSeXrlHVYy5b2s3uN0ZEvn6RVXokmQ\na1SdA4zPLViam6kG0gNMuUbVOcD43IKluZniSjQF8lqHd52q1ixpyOj97iIz\n5bUO7zpVrVnSkNH73QnxCMh1DrXWsd1G73cYkSnXOdRax3Ybvd+hEPcIrB3n\nOxbxeUfvdxmJwNpxvmMRn3f0fpdCfEYQ7Uh6kM56p3oow8rnTzm3ofz75wC+\njDZvqi2CaEfSg3TWO9VDGVY+f8q5DeXfPwfwZbR5U0Jsw1E7FuT9XSZ73otf\n6byj11rOaOFXKzhqxzLl/V0mcVX8SucdvdZyRgu/hFgL8j6rpeKY6nLnBvzu\nIhlr+hmFKe+zWiqOqS53bkx+d5GMNf0U4iNFO2p9m4epQ4i695Mcbm9v0Y5a\n3+Zh6hBOde8n0d5e4QryOsFhdOMjyOslNXTkNaL/Vkx5neAwuvGRKa+X1NCR\n14j+i/4pY7r1uPnUwriJvF5vvf7z4u1nDcqYbj1uPrUwbk55vd56/ecQcSXi\nUL67TcdKNJazQc7lWddq6bquUfnuNh0rp8ZyNlPO5VnXauk6rkQcyjhp+a09\ne/u4B9jXiuyyvmoZJy2/tWdvH/cw2deK7DKuRCxgt+aRxtzB2z8GsN1X0OVa\nyGS35pHG3MHbPwaT7b4CrYUIU8q3tcWYmMZaePvHBnmfsUV7PXv7xqR8W1uM\niWmshbd/bKa8z9iivbqKKxEH2OWtuq5fjnz+UHmsG0x2eauu65dP+fyh8lii\nCWCzNnyIu1yR92ex227poe0mm7XhQ9zlOuX9Wey2W47QdqIeyGev2ePf2duv\nmhhpyOzt1x6mfPaaPf4dKq6MNGT29kv0A/hn5LrOWd0C/FxW02vpE/+MXNc5\nq1tM/FyW1tIFBfDPenSRd9kK+GvqJ2+ftjDxz3ocOu8y8dfUm4wrEQvy3ONw\ntZw+A/y9vfD2aS3kuYdqOX37o03Ze3vh7ZNoF4O5x+jtUwTA38vW1Plhg7nH\n6O1TBCb+Xram4krEgpxr0Xz4CnDP0jS1DkLOtSiurpi4Z2m0DiI2Ae6eq6Wl\n8a0W4O6J/uHtzyNM3D1Xi8a3X5m4e6KbiCsRC/LYpjNJn0DOYy3e/jwCeWxT\nXH0COY/VRFyJWIB3z96h9uOvBdxzIYO3P18x8e7ZU1zdYeKeCxm8/RHtAG5u\nHt7+RAe8PW6h1wImbm4e3v5EZ+LtcQsdVyIW4K2bK+4eALx9bq/evtxj4q2b\nK64eYOLtcwsdVyIW4OXk4e1LKxDnIGHXBCZeTh7evrQCcQ4SNq5EHIi5K30j\nrqD3difmrkL6FxW1u6gJePuuBm9fWgOcPQsh98tMvH1Xg7cvrTFx9iyEjCsR\nC3Bqa7x4+9Eib+02k7Q7XC2PiVNbQ3G1gbd2m0naHS6uRByQzyMwxi+dOdoA\neGc2Q7X/lM8jMMavUH61wsQ7s6n2FzcBLwcPb19ahTT/C5Wrnng5eHj70iqk\n+V+ouBKxIOVPlGPYATh3hITKVZPyJ4qrHUycO0JCxZWIBTh7SGdvP1rmrf1+\nI80Bw9SFmjh7SGdvP1rmrf1+I80Bw8SViAU45z4Gbz9ap7f3MHHOfQzefrSO\n3oOwhPHd6+1DD7y14zPhXZitdU55PTydbf5e/vumlb+/+7vXypcj8daOz4R3\n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\nhm2jvBUBcOvZNRmrjwC7WsTXNnv7uQbkGmmsb49b1tTZ07VMNvuxPtrs7eca\n3p73+2SXr7pY13FVC+K3Y/f1FMhae8uW6GMm8prQuUJbdLMP4x4Tt3bsLVui\nj5lTXhOynI9d7BBxVQPiNzW8fakBbPb0fmZpfB68/b2m6Abre+NL/739rclk\ns6f3M0vj8+Dt7zVFN061/Pf2txfAq9F+qHdScQxNltZGRmd/Bwefm1/7XUvF\nMTRZWhsZnf0dHHw+XFxZAd49cIO3L7WpPJ4mey3vq8oaE/Jc4wdsznJ85Sdq\n+BiRyuNpsrT2ku7tqxJXZa7xY7I5y/GVn6jh41EAZ+3zsHVjHMbWP9u86Fea\nP9K+p5DnGbOjX92eq1yDw9h6saXo13fmd3qZZ8yOfnV7rtIL8OqVHPb8DezO\nWm/Rk+cy9o9FB4bPtOXq//te/v4piA/SjsJkd9Z6i548l7F/LDowfKYtV//f\n9/L3T0F8kHYYAN46MLx98SSQhrRs0o4PBNKQlk3aYQQ4+fsXbz+iQGrPI9oi\n7bjNVH89pBdbpB12gLP2cdjc1WdIQ1bbIfdZrUUastq0z8oQ8O74lr5/APXO\nh7Ruz9KOx5nqnQ9p3Z6lHbYgr5/u7f+v3n5EBfmcunWtk5Zt9n5HLTLlc+rW\ntU5attn7HR0BcO5mbfZu2hrA7g6lli1p6uD9blpmsrtDqWVLmjp4v5ujAE6e\nXmsfD4B8Bk9zEeWrqEz5DJ7mIspXVQec7+LB249WQL16gxEtaWfoun2tMtWr\nNxjRknYqrhwAZ++VNH8lsL1jKaI9KU7smWzvWIpoT5pz+MH4pvT2oVWQ10Xm\nznXkjIOfK63NlNdF5s515DyphpUr4OzdPVS9XQtQtxZ6Td0YvNv2yEx1a6HX\n1I3Bu20Fbe+u9l6RQB/zkZN0IxadzEdO0o1YkPRj9vajN4qOpPWRVmppLUX3\n4N124jZFR9L6SCu1tJaie/BuO/Er0o/4IOe2nmB/t/haey1zDe17aZAp57ae\nJvu7xdfaa5lrKK6CI/1oC+Sz7OkMydlJM16Klqlvd8SUz7KnMyRnJ814KVqm\nuGoI6Ufb4P2Op2fwc12vRafSz6feTSViM73f8fRskOt6LTqVfj71bipRF+lH\nf5Q5ylDmKTPe74U637D5yv64T8rbBxGPMkcZyjxlnt7vhTrfsPnK/rhPytsH\nwUX6IYQQYgvSDyGEEFuQfgghhNiC9EMIIcQWpB9CCCG2IP0QQgixBemHEEKI\nLUg/hBBCbEH6IYQQYgvSDyGEEFuQfgghhNiC9EMIIcQWpB9CCCG2IP0QQgix\nBemHEEKILUg/hBBCbEH60R/Q/VHCAMWV+Ij0o22g+2uFAYor8QjSj7Yo34A/\nSv9j9ulHLY0lT6nfe7eF4KG4EluQfsTnrX1R+tbi1LdvWfqOPKnPt4niSuxF\n+hGTtzb9y5uN4OcOrGwpYxG8207cRnElmEg/YlH6d8oLvwbou1st5cwH77YU\n7yiuhAXSjxgg5xJOAfoo087q774oroQl0g9f0Md34SP9Hd5tfSQUV6IGkH64\ngZyH7rl/f7SUx9ZeTWMUV6IWkH5UBzmncA7Q7zwsjWvaV2OA4kpxVRtIP6qC\nvMf+SN+GtyytheqbkYTiSnHlAaQfVUDOR58D9K9Ilsa7wfvdtIziSnHlCaQf\n5iCf7dW3oeKHiuJKceUNpB+mIK9levejFkx5hxUorhRXEYD0wwz0t+/e2l7U\n179GcaW4igKkHyaoj2+2lI/5zfv9RUVxpbiKBKQfVJDXM1upLRTV1Nc/oLhS\nXEUE0g8agfr4gpz3TeePx/KOk/0yh8f7nUDf8X4fUAQf1NcLiivFVVQg/aDh\n2D+W0j+pd/Hg/Q4hL7/U178prhRXcYH0gwLq56VTH3iq1Q+Qzzb/cOjzyU/U\n8DEiiivFVWQg/dhN5T6e+tno7O/g4PPh9s8orhRX0YH0Yxeotw//jGBnalG3\nNvjZ29+aKK4UVy0A6cdmkNcIreN7QfC6cKhXt+/J29caKK4yiqv4SD+2gbwn\nxrp2xOzt5xqQ11kX4zYJPebtRXH1K4qruEg/tgHb76KUl21yf0gZ/06GbdP1\nuqfi6nMUVzGRfqwHeb+IVRynPtL8mh5s7zDqMmetuPoaxVUspB/rQM7JWsXv\n6O0fE+Q8/mLUVj+8/WOiuHocxVUcpB/rgE1+odvzTLA7O91VvkFxtQ7FVQyk\nH48Dmz2V3fbxC7C746iLfIPiahuKK3+kH48Bm30x3ffxa2Cz/jl4+7UHxdV+\nFFd+SD8eA7lej/r4DmCTc1i8/dqD4mo/iis/pB9fA5u1zUP18QtGfX309msL\niiseiisfpB9fA/78ePT2yRODcbPJb0XFFRfFVX2kH/dB/q5h9vGTt08RIMVd\ns2On4sqGo8dVbaQf9wE3P616n1eQ27apb0XFlR1HjqvaSD9uA/7emEPmpu8B\nbs66iRpGiit7jhhXHkg/bgPuvvzZ+Fkv94Q+4/2O0fBxD26t2Sb27Suu7Dli\nXHkg/bgNeN8wZnNgfF2bNH3nhq7JgHzfHauvw9ufr1Bc1eFoceWB9ONzkPdy\nsGLP5HsN6/bvhF1fBTefM3v7cw/FVT2OFFdeSD8+B7xvF5O578o+3kJfZ615\nhl7vVFzV5Shx5YX043PAq+85GDzblj4euq+D+60Ydj1ZcVWXo8SVF9KPXwFv\n7e3F4Nn29PE/nwsB93uC9604e/vyGYorH3qPK08g/fgF8O7xGcnPxejjYfs6\neN+K9PGVgeLKh97jyhNIP34BnJrQr+RnYvbxyH2d5WcovxKKKz96jitPIP34\nBVKcPRGfx6KPh+zrpHhMFu6MguLKj57jyhNSu87efrAgxhllrc24j0ft60uk\ncZaB4sqfHuPKG1Jcz95+sABnrY2y169SHw/X18HZ4xrqzLDiyp8e48obSD9+\nArlGw9722L2XsXIfD9XXkc8+7/bH249rFFeKqx6B9OMnwKktsStH6tTHo/V1\nhi9h9usrrhRXPQLpx0+Q4mtzP3Hu42H6Ojh7lcKsdSquFFc9gg70A3l/d/Ij\n1TWd8V4v9LzB9rbF5hx1kD4eoq+DtF6wMQYsTHHVT1zNXs8fDTSmH8hacakp\nnfol+/7ovfa80a9Ifdy9r4Nb47wHU1wRIMVVyFotHqAB/UCu+/AE7p0wVra6\nLcA7l9xNXyfFZU82b2hDxdWvbcKIK+3BKpDaczZ4rotmRJtffGXjSj/Zd9H1\n1Ne9/Y5k48q2U1zdbpu9zy39KCCQfpSYT99MS4DY3mrDSp9bydNU7+sBfI5k\nw8q2U1zdbpvdz13zeSODAPqBfKfOCfG/lyz6OfOOtK76Ojjrzr3YsLLtFFe3\n22Z3XNV61ujAUT/wrhve8cu0Vf2AEcsf7BW2Olytrxu0TcumuCLBaJsaz9kC\ncNAP5DxVS99HZnHFiOUrS/37t2LN93Vy2zRtzm2nuNr5PnoFlfUDOS/bQ56K\n1c9PpN/9Rx+/+rnN93VIPxRXBjDiyvL5WgKV9AM5V7X7vUW3De3P2GP5Ux+/\n+tlN9/UjxIviqs24snq21kAF/Six3O2cY09cIefy6H386uc329ch/VBcGcCI\n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\nkItGXHRCuSghRLP8f1hqhPs=\n                "
+                              ],
+                              {{0, 0}, {400., 400.}},
+                              {0, 255},
+                              ColorFunction -> RGBColor
+                             ],
+                             {ImageSize -> 24, PlotRange -> {{0, 400.}, {0, 400.}}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"checkout-code-step\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Action: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TemplateBox[
+                                   {
+                                    "\"actions/checkout\"",
+                                    "https://github.com/actions/checkout"
+                                   },
+                                   "HyperlinkURL"
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ],
+                         True -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = False),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             RasterBox[
+                              CompressedData[
+                               "\n1:eJztnT2SJDuynZs/AsVZwuEOrkgxKFJrezTq8Z5x+IzKsG3eM6OFFiK14g5y\nCaVSyyXUEmIJtYTLwgXyVnZ1ZVZGxHG4A3E+M5+x6emuCkc4cAIOwPEf/+l/\n/cP/+Lffvn37l//w9h//8I//+z///e//OP3Xv7z9j//2t3/5n//8t7/+9//y\nt3/96z//9e//6Z/+3dsf/t9/k+3ffxOiP/B/fv/tzb6/2fxmpzc7F/v9AXsp\nf/e5/Psfbza82V+8/RK+TP/v99/e7PubzW92erNzsd8fsJfyd5/Lv//xZsOb\nKa6EcCKN60UrnlZoxFZbih4lTfnN23dhRxrXi1Y8rdCIrbYUPUqaorgSwpAy\nv5jLXMFSLx7Vk+/ebSL2U+YXc5krWOrFo3qiuBKCwNsYjaIZi7Nm3LLXoiWD\nd1uJx3kbo1E0Y3HWjFv2WrRk8G4rIVqj5Kas81IW85KU41JuOyglN2Wdl7KY\nl6Qcl+JKiDu8jb1j4LnGmjlJWpeBd3uKzNvYOwaea6yZk6R1GXi3pxCR6EQ3\nPrOT5iN+dKIbn9lJ8xFxdJD3yPaoGx/nI7N0pB5T3iPbo258nI/M0hFxNJDX\nxc8BxvaalnRSe2sMmfK6+DnA2F7Tkk4qrsQhQF5jfg0wnntZOqOob0YyU15j\nfg0wnntZOqOouBJdgmPOOW5Z0k99MxKYjjnnuGVJPxVXoiuQ9+Meec5xy568\n303LTHk/7pHnHLdMcSW6AHkvq/c4HdnSeXrlHVYy5b2s3uN0ZEvn6RVXokmQ\na1SdA4zPLViam6kG0gNMuUbVOcD43IKluZniSjQF8lqHd52q1ixpyOj97iIz\n5bUO7zpVrVnSkNH73QnxCMh1DrXWsd1G73cYkSnXOdRax3Ybvd+hEPcIrB3n\nOxbxeUfvdxmJwNpxvmMRn3f0fpdCfEYQ7Uh6kM56p3oow8rnTzm3ofz75wC+\njDZvqi2CaEfSg3TWO9VDGVY+f8q5DeXfPwfwZbR5U0Jsw1E7FuT9XSZ73otf\n6byj11rOaOFXKzhqxzLl/V0mcVX8SucdvdZyRgu/hFgL8j6rpeKY6nLnBvzu\nIhlr+hmFKe+zWiqOqS53bkx+d5GMNf0U4iNFO2p9m4epQ4i695Mcbm9v0Y5a\n3+Zh6hBOde8n0d5e4QryOsFhdOMjyOslNXTkNaL/Vkx5neAwuvGRKa+X1NCR\n14j+i/4pY7r1uPnUwriJvF5vvf7z4u1nDcqYbj1uPrUwbk55vd56/ecQcSXi\nUL67TcdKNJazQc7lWddq6bquUfnuNh0rp8ZyNlPO5VnXauk6rkQcyjhp+a09\ne/u4B9jXiuyyvmoZJy2/tWdvH/cw2deK7DKuRCxgt+aRxtzB2z8GsN1X0OVa\nyGS35pHG3MHbPwaT7b4CrYUIU8q3tcWYmMZaePvHBnmfsUV7PXv7xqR8W1uM\niWmshbd/bKa8z9iivbqKKxEH2OWtuq5fjnz+UHmsG0x2eauu65dP+fyh8lii\nCWCzNnyIu1yR92ex227poe0mm7XhQ9zlOuX9Wey2W47QdqIeyGev2ePf2duv\nmhhpyOzt1x6mfPaaPf4dKq6MNGT29kv0A/hn5LrOWd0C/FxW02vpE/+MXNc5\nq1tM/FyW1tIFBfDPenSRd9kK+GvqJ2+ftjDxz3ocOu8y8dfUm4wrEQvy3ONw\ntZw+A/y9vfD2aS3kuYdqOX37o03Ze3vh7ZNoF4O5x+jtUwTA38vW1Plhg7nH\n6O1TBCb+Xram4krEgpxr0Xz4CnDP0jS1DkLOtSiurpi4Z2m0DiI2Ae6eq6Wl\n8a0W4O6J/uHtzyNM3D1Xi8a3X5m4e6KbiCsRC/LYpjNJn0DOYy3e/jwCeWxT\nXH0COY/VRFyJWIB3z96h9uOvBdxzIYO3P18x8e7ZU1zdYeKeCxm8/RHtAG5u\nHt7+RAe8PW6h1wImbm4e3v5EZ+LtcQsdVyIW4K2bK+4eALx9bq/evtxj4q2b\nK64eYOLtcwsdVyIW4OXk4e1LKxDnIGHXBCZeTh7evrQCcQ4SNq5EHIi5K30j\nrqD3difmrkL6FxW1u6gJePuuBm9fWgOcPQsh98tMvH1Xg7cvrTFx9iyEjCsR\nC3Bqa7x4+9Eib+02k7Q7XC2PiVNbQ3G1gbd2m0naHS6uRByQzyMwxi+dOdoA\neGc2Q7X/lM8jMMavUH61wsQ7s6n2FzcBLwcPb19ahTT/C5Wrnng5eHj70iqk\n+V+ouBKxIOVPlGPYATh3hITKVZPyJ4qrHUycO0JCxZWIBTh7SGdvP1rmrf1+\nI80Bw9SFmjh7SGdvP1rmrf1+I80Bw8SViAU45z4Gbz9ap7f3MHHOfQzefrSO\n3oOwhPHd6+1DD7y14zPhXZitdU55PTydbf5e/vumlb+/+7vXypcj8daOz4R3\n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\nhm2jvBUBcOvZNRmrjwC7WsTXNnv7uQbkGmmsb49b1tTZ07VMNvuxPtrs7eca\n3p73+2SXr7pY13FVC+K3Y/f1FMhae8uW6GMm8prQuUJbdLMP4x4Tt3bsLVui\nj5lTXhOynI9d7BBxVQPiNzW8fakBbPb0fmZpfB68/b2m6Abre+NL/739rclk\ns6f3M0vj8+Dt7zVFN061/Pf2txfAq9F+qHdScQxNltZGRmd/Bwefm1/7XUvF\nMTRZWhsZnf0dHHw+XFxZAd49cIO3L7WpPJ4mey3vq8oaE/Jc4wdsznJ85Sdq\n+BiRyuNpsrT2ku7tqxJXZa7xY7I5y/GVn6jh41EAZ+3zsHVjHMbWP9u86Fea\nP9K+p5DnGbOjX92eq1yDw9h6saXo13fmd3qZZ8yOfnV7rtIL8OqVHPb8DezO\nWm/Rk+cy9o9FB4bPtOXq//te/v4piA/SjsJkd9Z6i548l7F/LDowfKYtV//f\n9/L3T0F8kHYYAN46MLx98SSQhrRs0o4PBNKQlk3aYQQ4+fsXbz+iQGrPI9oi\n7bjNVH89pBdbpB12gLP2cdjc1WdIQ1bbIfdZrUUastq0z8oQ8O74lr5/APXO\nh7Ruz9KOx5nqnQ9p3Z6lHbYgr5/u7f+v3n5EBfmcunWtk5Zt9n5HLTLlc+rW\ntU5attn7HR0BcO5mbfZu2hrA7g6lli1p6uD9blpmsrtDqWVLmjp4v5ujAE6e\nXmsfD4B8Bk9zEeWrqEz5DJ7mIspXVQec7+LB249WQL16gxEtaWfoun2tMtWr\nNxjRknYqrhwAZ++VNH8lsL1jKaI9KU7smWzvWIpoT5pz+MH4pvT2oVWQ10Xm\nznXkjIOfK63NlNdF5s515DyphpUr4OzdPVS9XQtQtxZ6Td0YvNv2yEx1a6HX\n1I3Bu20Fbe+u9l6RQB/zkZN0IxadzEdO0o1YkPRj9vajN4qOpPWRVmppLUX3\n4N124jZFR9L6SCu1tJaie/BuO/Er0o/4IOe2nmB/t/haey1zDe17aZAp57ae\nJvu7xdfaa5lrKK6CI/1oC+Sz7OkMydlJM16Klqlvd8SUz7KnMyRnJ814KVqm\nuGoI6Ufb4P2Op2fwc12vRafSz6feTSViM73f8fRskOt6LTqVfj71bipRF+lH\nf5Q5ylDmKTPe74U637D5yv64T8rbBxGPMkcZyjxlnt7vhTrfsPnK/rhPytsH\nwUX6IYQQYgvSDyGEEFuQfgghhNiC9EMIIcQWpB9CCCG2IP0QQgixBemHEEKI\nLUg/hBBCbEH6IYQQYgvSDyGEEFuQfgghhNiC9EMIIcQWpB9CCCG2IP0QQgix\nBemHEEKILUg/hBBCbEH60R/Q/VHCAMWV+Ij0o22g+2uFAYor8QjSj7Yo34A/\nSv9j9ulHLY0lT6nfe7eF4KG4EluQfsTnrX1R+tbi1LdvWfqOPKnPt4niSuxF\n+hGTtzb9y5uN4OcOrGwpYxG8207cRnElmEg/YlH6d8oLvwbou1st5cwH77YU\n7yiuhAXSjxgg5xJOAfoo087q774oroQl0g9f0Md34SP9Hd5tfSQUV6IGkH64\ngZyH7rl/f7SUx9ZeTWMUV6IWkH5UBzmncA7Q7zwsjWvaV2OA4kpxVRtIP6qC\nvMf+SN+GtyytheqbkYTiSnHlAaQfVUDOR58D9K9Ilsa7wfvdtIziSnHlCaQf\n5iCf7dW3oeKHiuJKceUNpB+mIK9levejFkx5hxUorhRXEYD0wwz0t+/e2l7U\n179GcaW4igKkHyaoj2+2lI/5zfv9RUVxpbiKBKQfVJDXM1upLRTV1Nc/oLhS\nXEUE0g8agfr4gpz3TeePx/KOk/0yh8f7nUDf8X4fUAQf1NcLiivFVVQg/aDh\n2D+W0j+pd/Hg/Q4hL7/U178prhRXcYH0gwLq56VTH3iq1Q+Qzzb/cOjzyU/U\n8DEiiivFVWQg/dhN5T6e+tno7O/g4PPh9s8orhRX0YH0Yxeotw//jGBnalG3\nNvjZ29+aKK4UVy0A6cdmkNcIreN7QfC6cKhXt+/J29caKK4yiqv4SD+2gbwn\nxrp2xOzt5xqQ11kX4zYJPebtRXH1K4qruEg/tgHb76KUl21yf0gZ/06GbdP1\nuqfi6nMUVzGRfqwHeb+IVRynPtL8mh5s7zDqMmetuPoaxVUspB/rQM7JWsXv\n6O0fE+Q8/mLUVj+8/WOiuHocxVUcpB/rgE1+odvzTLA7O91VvkFxtQ7FVQyk\nH48Dmz2V3fbxC7C746iLfIPiahuKK3+kH48Bm30x3ffxa2Cz/jl4+7UHxdV+\nFFd+SD8eA7lej/r4DmCTc1i8/dqD4mo/iis/pB9fA5u1zUP18QtGfX309msL\niiseiisfpB9fA/78ePT2yRODcbPJb0XFFRfFVX2kH/dB/q5h9vGTt08RIMVd\ns2On4sqGo8dVbaQf9wE3P616n1eQ27apb0XFlR1HjqvaSD9uA/7emEPmpu8B\nbs66iRpGiit7jhhXHkg/bgPuvvzZ+Fkv94Q+4/2O0fBxD26t2Sb27Suu7Dli\nXHkg/bgNeN8wZnNgfF2bNH3nhq7JgHzfHauvw9ufr1Bc1eFoceWB9ONzkPdy\nsGLP5HsN6/bvhF1fBTefM3v7cw/FVT2OFFdeSD8+B7xvF5O578o+3kJfZ615\nhl7vVFzV5Shx5YX043PAq+85GDzblj4euq+D+60Ydj1ZcVWXo8SVF9KPXwFv\n7e3F4Nn29PE/nwsB93uC9604e/vyGYorH3qPK08g/fgF8O7xGcnPxejjYfs6\neN+K9PGVgeLKh97jyhNIP34BnJrQr+RnYvbxyH2d5WcovxKKKz96jitPIP34\nBVKcPRGfx6KPh+zrpHhMFu6MguLKj57jyhNSu87efrAgxhllrc24j0ft60uk\ncZaB4sqfHuPKG1Jcz95+sABnrY2y169SHw/X18HZ4xrqzLDiyp8e48obSD9+\nArlGw9722L2XsXIfD9XXkc8+7/bH249rFFeKqx6B9OMnwKktsStH6tTHo/V1\nhi9h9usrrhRXPQLpx0+Q4mtzP3Hu42H6Ojh7lcKsdSquFFc9gg70A3l/d/Ij\n1TWd8V4v9LzB9rbF5hx1kD4eoq+DtF6wMQYsTHHVT1zNXs8fDTSmH8hacakp\nnfol+/7ovfa80a9Ifdy9r4Nb47wHU1wRIMVVyFotHqAB/UCu+/AE7p0wVra6\nLcA7l9xNXyfFZU82b2hDxdWvbcKIK+3BKpDaczZ4rotmRJtffGXjSj/Zd9H1\n1Ne9/Y5k48q2U1zdbpu9zy39KCCQfpSYT99MS4DY3mrDSp9bydNU7+sBfI5k\nw8q2U1zdbpvdz13zeSODAPqBfKfOCfG/lyz6OfOOtK76Ojjrzr3YsLLtFFe3\n22Z3XNV61ujAUT/wrhve8cu0Vf2AEcsf7BW2Olytrxu0TcumuCLBaJsaz9kC\ncNAP5DxVS99HZnHFiOUrS/37t2LN93Vy2zRtzm2nuNr5PnoFlfUDOS/bQ56K\n1c9PpN/9Rx+/+rnN93VIPxRXBjDiyvL5WgKV9AM5V7X7vUW3De3P2GP5Ux+/\n+tlN9/UjxIviqs24snq21kAF/Six3O2cY09cIefy6H386uc329ch/VBcGcCI\n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\nkItGXHRCuSghRLP8f1hqhPs=\n                "
+                              ],
+                              {{0, 0}, {400., 400.}},
+                              {0, 255},
+                              ColorFunction -> RGBColor
+                             ],
+                             {ImageSize -> 24, PlotRange -> {{0, 400.}, {0, 400.}}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"checkout-code-step\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Action: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TemplateBox[
+                                   {
+                                    "\"actions/checkout\"",
+                                    "https://github.com/actions/checkout"
+                                   },
+                                   "HyperlinkURL"
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  DynamicModuleBox[
+                                   {Wolfram`PacletCICD`Private`x$$ = False},
+                                   TagBox[
+                                    GridBox[
+                                     {
+                                      {
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                       PaneSelectorBox[
+                                        {
+                                         False -> TemplateBox[
+                                          {
+                                           "\"\[LeftAssociation] \"",
+                                           StyleBox[
+                                            "\"checkout-code-step\"",
+                                            "SummaryItemAnnotation",
+                                            FontSlant -> Italic,
+                                            StripOnInput -> False
+                                           ],
+                                           "\" \[RightAssociation]\""
+                                          },
+                                          "RowDefault"
+                                         ],
+                                         True -> TagBox[
+                                          GridBox[
+                                           {
+                                            {
+                                             StyleBox[
+                                              "\"name\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"checkout-code-step\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"id\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"checkout-code-step\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"uses\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"actions/checkout@v2\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            }
+                                           },
+                                           GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                           AutoDelete -> False,
+                                           GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                           GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                           FrameStyle -> GrayLevel[0, 0.1]
+                                          ],
+                                          "Grid"
+                                         ]
+                                        },
+                                        Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                        ImageSize -> Automatic,
+                                        ContentPadding -> False
+                                       ]
+                                      }
+                                     },
+                                     GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                     AutoDelete -> False,
+                                     GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                    ],
+                                    "Grid"
+                                   ],
+                                   DynamicModuleValues :> { }
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ]
+                        },
+                        Dynamic[Typeset`open$$],
+                        ImageSize -> Automatic
+                       ]
+                      },
+                      "SummaryPanel"
+                     ],
+                     DynamicModuleValues :> { }
+                    ],
+                    "]"
+                   }
+                  ],
+                  Wolfram`PacletCICD`WorkflowStep[
+                   "checkout-code-step",
+                   Association[
+                    "name" -> "checkout-code-step",
+                    "id" -> "checkout-code-step",
+                    "uses" -> "actions/checkout@v2"
+                   ]
+                  ],
+                  Editable -> False,
+                  SelectWithContents -> True,
+                  Selectable -> False
+                 ],
+                 ",",
+                 InterpretationBox[
+                  RowBox[
+                   {
+                    TagBox["WorkflowStep", "SummaryHead"],
+                    "[",
+                    DynamicModuleBox[
+                     {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                     TemplateBox[
+                      {
+                       PaneSelectorBox[
+                        {
+                         False -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"],
+                               ImageSizeCache -> {10.032937898673117, {0., 10.032937898673117}}
+                              ],
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              ButtonFunction :> (Typeset`open$$ = True),
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"MyWorkflow\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  "\"wolframscript Scripts/MyWorkflow.wls\"",
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             AutoDelete -> False,
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}}
+                            ]
+                           }
+                          },
+                          AutoDelete -> False,
+                          BaselinePosition -> {1, 1},
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                         ],
+                         True -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"],
+                               ImageSizeCache -> {10.032937898673117, {0., 10.032937898673117}}
+                              ],
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              ButtonFunction :> (Typeset`open$$ = False),
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"MyWorkflow\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  "\"wolframscript Scripts/MyWorkflow.wls\"",
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  DynamicModuleBox[
+                                   {Wolfram`PacletCICD`Private`x$$ = False},
+                                   TagBox[
+                                    GridBox[
+                                     {
+                                      {
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                       PaneSelectorBox[
+                                        {
+                                         False -> TemplateBox[
+                                          {
+                                           "\"\[LeftAssociation] \"",
+                                           StyleBox[
+                                            "\"MyWorkflow\"",
+                                            "SummaryItemAnnotation",
+                                            FontSlant -> Italic,
+                                            StripOnInput -> False
+                                           ],
+                                           "\" \[RightAssociation]\""
+                                          },
+                                          "RowDefault"
+                                         ],
+                                         True -> TagBox[
+                                          GridBox[
+                                           {
+                                            {
+                                             StyleBox[
+                                              "\"name\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"MyWorkflow\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"run\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"wolframscript Scripts/MyWorkflow.wls\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            }
+                                           },
+                                           AutoDelete -> False,
+                                           FrameStyle -> GrayLevel[0, 0.1],
+                                           GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                           GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                           GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                          ],
+                                          "Grid"
+                                         ]
+                                        },
+                                        Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                        ContentPadding -> False,
+                                        ImageSize -> Automatic
+                                       ]
+                                      }
+                                     },
+                                     AutoDelete -> False,
+                                     GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                     GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                    ],
+                                    "Grid"
+                                   ],
+                                   DynamicModuleValues :> { }
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             AutoDelete -> False,
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}}
+                            ]
+                           }
+                          },
+                          AutoDelete -> False,
+                          BaselinePosition -> {1, 1},
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                         ]
+                        },
+                        Dynamic[Typeset`open$$],
+                        ImageSize -> Automatic
+                       ]
+                      },
+                      "SummaryPanel"
+                     ],
+                     DynamicModuleValues :> { }
+                    ],
+                    "]"
+                   }
+                  ],
+                  Wolfram`PacletCICD`WorkflowStep[
+                   "MyWorkflow",
+                   Association[
+                    "name" -> "MyWorkflow",
+                    "run" -> "wolframscript Scripts/MyWorkflow.wls"
+                   ]
+                  ],
+                  Editable -> False,
+                  SelectWithContents -> True,
+                  Selectable -> False
+                 ]
+                }
+               ],
+               "}"
+              }
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[2]=",
+            CellID -> 252506477
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell[
+         "View the YAML string:",
+         "ExampleText",
+         CellID -> 361301941
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"job", "[", "\"YAML\"", "]"}]],
+            "Input",
+            CellLabel -> "In[3]:=",
+            CellID -> 555387
+           ],
+           Cell[
+            BoxData[
+             "\"name: MyWorkflow\\nruns-on: ubuntu-latest\\ncontainer: \\n  image: wolframresearch/wolframengine:latest\\n  options:  [--user root]\\nenv: \\n  WOLFRAM_SYSTEM_ID: Linux-x86-64\\n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\\nsteps: \\n- name: Checkout\\n  id: checkout-code-step\\n  uses: actions/checkout@v2\\n- name: MyWorkflow\\n  run: wolframscript Scripts/MyWorkflow.wls\""
+            ],
+            "Output",
+            CellLabel -> "Out[3]=",
+            CellID -> 580953324
            ]
           },
           Open
@@ -17674,7 +19198,7 @@ Notebook[
   "CreationDate" -> "02-17-2022 19:21:40",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 18, 14, 53, 9.865321`8.746686185600353},
+   {2022, 2, 19, 12, 38, 5.6323066`8.5032612635356},
    "Instant",
    "Gregorian",
    -5.
