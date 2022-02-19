@@ -235,10 +235,7 @@ setGHBuildOutput0[
         setOutput[ "PACLET_FILE", FileNameTake @ file ];
         setOutput[ "RELEASE_TAG", "v" <> vers ];
 
-        If[ TrueQ @ $simpleTextMode,
-            file,
-            result
-        ]
+        result
     ];
 
 setGHBuildOutput0[ ___ ] := $Failed;
