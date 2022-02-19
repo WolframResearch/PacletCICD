@@ -1076,15 +1076,6 @@ normalizeForYAML[ "jobs", name_, "needs" -> names: { __String } ] :=
 normalizeForYAML[ "jobs", name_, "needs" -> { } ] :=
     "needs" -> $noValue;
 
-(* normalizeForYAML[ "jobs", name_, "Container" -> container_ ] :=
-    normalizeForYAML[ "jobs", name, "container" -> container ]; *)
-
-(* normalizeForYAML[ "jobs", _, "container", "image"|"Image" -> str_String ] :=
-    "image" -> str;
-
-normalizeForYAML[ "jobs", name_, "container", "Options"|Options -> opts_ ] :=
-    normalizeForYAML[ "jobs", name, "container", "options" -> opts ]; *)
-
 normalizeForYAML[
     "jobs",
     name_,
@@ -1092,17 +1083,6 @@ normalizeForYAML[
     "options" -> opts: _String | { ___String }
 ] :=
     "options" -> Flatten @ { opts };
-
-(* $$envKey = Alternatives[
-    "Environment"       , Environment,
-    "ProcessEnvironment", ProcessEnvironment
-];
-
-normalizeForYAML[ "jobs", name_, $$envKey -> env_ ] :=
-    normalizeForYAML[ "jobs", name, "env" -> env ]; *)
-
-(* normalizeForYAML[ "jobs", _, "env", key_String -> val_String ] :=
-    key -> val; *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -1170,21 +1150,6 @@ normalizeForYAML[ step_WorkflowStep? workflowStepQ ] :=
 
 normalizeForYAML[ keys___, key_String -> as_Association ] :=
     key -> normalizeForYAML[ keys, key, as ];
-
-(* normalizeForYAML[ keys___, "Environment"|Environment -> env_ ] :=
-    normalizeForYAML[ keys, "env" -> env ]; *)
-
-(* normalizeForYAML[ keys___, key_Symbol -> value_ ] :=
-    normalizeForYAML[ keys, SymbolName @ key -> value ]; *)
-
-(* normalizeForYAML[ keys___, "TimeConstraint" -> t_ ] :=
-    normalizeForYAML[ keys, TimeConstraint -> t ];
-
-normalizeForYAML[ keys___, TimeConstraint -> t_? NumberQ ] :=
-    normalizeForYAML[ keys, TimeConstraint -> Quantity[ t, "Seconds" ] ];
-
-normalizeForYAML[ keys___, TimeConstraint -> q_Quantity ] :=
-    "timeout-minutes" -> QuantityMagnitude @ UnitConvert[ q, "Minutes" ]; *)
 
 normalizeForYAML[ keys___, key_String -> None ] :=
     key -> None;

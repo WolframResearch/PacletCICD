@@ -18,7 +18,7 @@ $thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version"        ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Debug*)
-Wolfram`PacletCICD`$Debug = True;
+Wolfram`PacletCICD`$Debug = False;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

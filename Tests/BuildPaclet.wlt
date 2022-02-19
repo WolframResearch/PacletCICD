@@ -73,7 +73,7 @@ VerificationTest[
 VerificationTest[
     FileNames[
         "*.paclet",
-        FileNameJoin @ { ExampleDirectory[ "FewIssues" ], "build" }
+        FileNameJoin @ { First @ ExampleDirectory[ "FewIssues" ], "build" }
     ],
     { },
     SameTest -> MatchQ,
@@ -90,7 +90,7 @@ VerificationTest[
 VerificationTest[
     FileNames[
         "*.paclet",
-        FileNameJoin @ { ExampleDirectory[ "FewIssues" ], "build" }
+        FileNameJoin @ { First @ ExampleDirectory[ "FewIssues" ], "build" }
     ],
     { _ },
     SameTest -> MatchQ,
