@@ -91,6 +91,14 @@ SetContextLoad[ WorkflowStepQ , "Workflows" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Console*)
+SetContextLoad[ ConsoleError  , "Console" ];
+SetContextLoad[ ConsoleLog    , "Console" ];
+SetContextLoad[ ConsoleNotice , "Console" ];
+SetContextLoad[ ConsoleWarning, "Console" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
 SetContextLoad[ CheckPaclet            , "CheckPaclet"         ];

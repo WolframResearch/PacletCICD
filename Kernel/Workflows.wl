@@ -48,7 +48,8 @@ Workflow::invprop =
 (*Options*)
 Workflow // Options = {
     TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic
+    ProcessEnvironment -> Automatic,
+    OperatingSystem    -> Automatic
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -270,7 +271,8 @@ WorkflowJob::invprop =
 (*Options*)
 WorkflowJob // Options = {
     TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic
+    ProcessEnvironment -> Automatic,
+    OperatingSystem    -> Automatic
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -282,7 +284,8 @@ WorkflowJob[
     as_Association,
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
-    catchTop @ Module[ { new },
+    catchTop @ withOS[ OptionValue @ OperatingSystem,
+    Module[ { new },
         new = postProcessYAML @ makeWorkflowJobData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
@@ -291,26 +294,31 @@ WorkflowJob[
                 System`Private`HoldSetValid @ WorkflowJob[ name, a ]
             ]
         ]
-    ];
+    ] ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Named*)
 WorkflowJob[ name_String, opts: OptionsPattern[ ] ] :=
-    catchTop @ If[ jobNameQ @ name,
-        WorkflowJob[ name, <| opts |> ],
-        throwMessageFailure[ WorkflowJob::invname, name ]
+    catchTop @ withOS[
+        OptionValue @ OperatingSystem,
+        If[ jobNameQ @ name,
+            WorkflowJob[ name, Association @ opts ],
+            throwMessageFailure[ WorkflowJob::invname, name ]
+        ]
     ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Custom*)
 WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
-    catchTop @ Module[ { new, id },
-        new = makeWorkflowJobData @ <| as, opts |>;
-        (* TODO: write a getWorkFlowID function *)
-        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
-        WorkflowJob[ id, new ]
+    catchTop @ withOS[
+        OptionValue @ OperatingSystem,
+        Module[ { new, id },
+            new = makeWorkflowJobData @ Association[ as, opts ];
+            id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+            WorkflowJob[ id, new ]
+        ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -321,30 +329,35 @@ WorkflowJob[
     as_Association,
     opts: OptionsPattern[ ]
 ] :=
-    catchTop @ Module[ { name, as1, as2, merged, data },
-        name   = wf[ "Name" ];
-        as1    = wf[ "Data" ];
-        as2    = makeWorkflowJobData[ name, <| as, opts |> ];
-        merged = merger @ { as1, as2 };
-        data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
-        WorkflowJob[ name, data ]
+    catchTop @ withOS[
+        OptionValue @ OperatingSystem,
+        Module[ { name, as1, as2, merged, data },
+            name   = Lookup[ as, "Name", Lookup[ as, "name", wf[ "Name" ] ] ];
+            as1    = wf[ "Data" ];
+            as2    = makeWorkflowJobData[ name, <| as, opts |> ];
+            merged = merger @ { as1, as2 };
+            data   = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
+            WorkflowJob[ name, data ]
+        ]
     ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*File*)
 WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
-    catchTop @ Module[ { name },
-        name = FileBaseName @ file;
-        WorkflowJob[
-            <|
-                "name"      -> name,
-                "runs-on"   -> "ubuntu-latest",
-                "container" -> $defaultJobContainer,
-                "env"       -> $defaultJobEnv,
-                "Steps"     -> { "Checkout", File @ file }
-            |>,
-            opts
+    catchTop @ withOS[ OptionValue @ OperatingSystem,
+        Module[ { name },
+            name = FileBaseName @ file;
+            WorkflowJob[
+                <|
+                    "name"      -> name,
+                    "runs-on"   -> $defaultRunner,
+                    "container" -> $defaultJobContainer,
+                    "env"       -> $defaultJobEnv,
+                    "Steps"     -> workflowFileSteps @ file
+                |>,
+                opts
+            ]
         ]
     ];
 
@@ -355,15 +368,18 @@ WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
 (* ::Subsubsection::Closed:: *)
 (*List of Steps*)
 WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
-    catchTop @ WorkflowJob[
-        <|
-            "name"      -> "UntitledJob",
-            "runs-on"   -> "ubuntu-latest",
-            "container" -> $defaultJobContainer,
-            "env"       -> $defaultJobEnv,
-            "Steps"     -> steps
-        |>,
-        opts
+    catchTop @ withOS[
+        OptionValue @ OperatingSystem,
+        WorkflowJob[
+            <|
+                "name"      -> "UntitledJob",
+                "runs-on"   -> $defaultRunner,
+                "container" -> $defaultJobContainer,
+                "env"       -> $defaultJobEnv,
+                "Steps"     -> steps
+            |>,
+            opts
+        ]
     ];
 
 WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
@@ -446,7 +462,21 @@ makeWorkflowJobData[ custom_Association ] :=
 makeWorkflowJobData // catchUndefined;
 
 (* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
+(* ::Subsection::Closed:: *)
+(*workflowFileSteps*)
+workflowFileSteps[ file_ ] := workflowFileSteps[ file, $defaultOS ];
+
+workflowFileSteps[ file_String, "Windows-x86-64"|"MacOSX-x86-64" ] := {
+    "Checkout",
+    "RestoreCachedWolframEngine",
+    "InstallWolframEngine",
+    File @ file
+};
+
+workflowFileSteps[ file_String, _ ] := { "Checkout", File @ file };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*merger*)
 merger[ as: { ___Association? AssociationQ } ] := Merge[ { as }, merger ];
 merger[ stuff_List ] := Last[ stuff, Missing[ ] ];
@@ -466,7 +496,8 @@ WorkflowStep::invprop =
 (*Options*)
 WorkflowStep // Options = {
     TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic
+    ProcessEnvironment -> Automatic,
+    OperatingSystem    -> Automatic
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -478,7 +509,7 @@ WorkflowStep[
     as_Association,
     opts: OptionsPattern[ ]
 ]? System`Private`HoldNotValidQ :=
-    catchTop @ Module[ { new },
+    catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { new },
         new = postProcessYAML @ makeWorkflowStepData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
@@ -487,27 +518,27 @@ WorkflowStep[
                 System`Private`HoldSetValid @ WorkflowStep[ name, a ]
             ]
         ]
-    ];
+    ]];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Named*)
 WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
-    catchTop @ If[ stepNameQ @ name,
+    catchTop @ withOS[ OptionValue @ OperatingSystem,If[ stepNameQ @ name,
         WorkflowStep[ name, <| opts |> ],
         throwMessageFailure[ WorkflowStep::invname, name ]
-    ];
+    ]];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Custom*)
 WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
-    catchTop @ Module[ { new, id },
+    catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { new, id },
         new = makeWorkflowStepData @ <| as, opts |>;
         (* TODO: write a getWorkFlowID function *)
         id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
         WorkflowStep[ id, new ]
-    ];
+    ]];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -517,31 +548,32 @@ WorkflowStep[
     as_Association,
     opts: OptionsPattern[ ]
 ] :=
-    catchTop @ Module[ { name, as1, as2, merged, data },
+    catchTop @ withOS[ OptionValue @ OperatingSystem,
+    Module[ { name, as1, as2, merged, data },
         name = wf[ "Name" ];
         as1 = wf[ "Data" ];
         as2 = makeWorkflowStepData[ name, <| as, opts |> ];
         merged = merger @ { as1, as2 };
         data = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
         WorkflowStep[ name, data ]
-    ];
+    ]];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*File*)
 WorkflowStep[ File[ file_String ], opts: OptionsPattern[ ] ] :=
-    catchTop @ Module[ { name, run },
+    catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { name, run },
         name = FileBaseName @ file;
-        run  = "wolframscript " <> file;
+        run  = makeRunString @ file;
         WorkflowStep[
             <|
                 "name" -> name,
                 "run"  -> run,
-                "env"  -> $defaultJobEnv
+                "env"  -> Join[ $defaultJobEnv, $wolframScriptRunEnv ]
             |>,
             opts
         ]
-    ];
+    ]];
 
 WorkflowStep[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
     WorkflowStep[ WorkflowStep[ File @ file, opts ], as, opts ];
@@ -573,7 +605,9 @@ $stepNames = {
     "UploadBuildArtifacts",
     "CreateRelease",
     "UploadRelease",
-    "DownloadCompilationArtifacts"
+    "DownloadCompilationArtifacts",
+    "RestoreCachedWolframEngine",
+    "InstallWolframEngine"
 };
 
 (* ::**********************************************************************:: *)
@@ -619,6 +653,34 @@ makeWorkflowStepData[ custom_Association ] :=
     Enclose @ ConfirmBy[ normalizeStep @ custom, AssociationQ ];
 
 makeWorkflowStepData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$wolframScriptRunEnv*)
+$wolframScriptRunEnv /; $defaultOS === "MacOSX-x86-64" := <|
+    "WOLFRAMENGINE_EXECUTABLES_DIRECTORY" -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS\"",
+    "WOLFRAMSCRIPT_KERNELPATH"            -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel\""
+|>;
+
+$wolframScriptRunEnv /; $defaultOS === "Windows-x86-64" := <|
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\WolframEngine'",
+    "WOLFRAMINIT" -> "\"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\""
+|>;
+
+$wolframScriptRunEnv /; True := <| |>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeRunString*)
+makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := "\
+export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
+wolframscript -debug -verbose -script " <> file;
+
+makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := "\
+$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
+wolfram -script " <> file;
+
+makeRunString[ file_String ] /; True := "wolframscript " <> file;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -1081,6 +1143,10 @@ $$rootProp = Alternatives[
     "permissions"
 ];
 
+normalizeForYAML[ "operating_system" -> _ ] := Nothing;
+normalizeForYAML[ "jobs", _, "operating_system" -> _ ] := Nothing;
+normalizeForYAML[ "jobs", _, "steps", _, "operating_system" -> _ ] := Nothing;
+
 normalizeForYAML[ key: Except[ $$rootProp ] -> val_ ] :=
     With[ { p = toCanonicalProp @ key },
         If[ MatchQ[ p, $$rootProp ],
@@ -1127,7 +1193,7 @@ normalizeForYAML[ "on", "WorkflowDispatch" -> wd_ ] :=
 normalizeForYAML[ "on", "Push" -> push_ ] :=
     normalizeForYAML[ "on", "push" -> push ];
 
-normalizeForYAML[ "on", "PullRequest" -> pr_ ] :=
+normalizeForYAML[ "on", "PullRequest"|"pullrequest" -> pr_ ] :=
     normalizeForYAML[ "on", "pull_request" -> pr ];
 
 normalizeForYAML[ "on", key_String -> True ] := key -> Null;
@@ -1183,7 +1249,7 @@ normalizeForYAML[
     "container",
     "options" -> opts: _String | { ___String }
 ] :=
-    "options" -> Flatten @ { opts };
+    "options" -> StringRiffle[ Flatten @ { opts } ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -1282,7 +1348,7 @@ normalizeJobs // catchUndefined;
 normalizeJob[ "check" | "checkpaclet" ] :=
     "Check" -> <|
         "name"            -> "Check",
-        "runs-on"         -> "ubuntu-latest",
+        "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $defaultTimeConstraint,
@@ -1295,7 +1361,7 @@ normalizeJob[ "check" | "checkpaclet" ] :=
 normalizeJob[ "build" | "buildpaclet" ] :=
     "Build" -> <|
         "name"            -> "Build",
-        "runs-on"         -> "ubuntu-latest",
+        "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $defaultTimeConstraint,
@@ -1309,7 +1375,7 @@ normalizeJob[ "build" | "buildpaclet" ] :=
 normalizeJob[ "release" | "releasepaclet" ] :=
     "Release" -> <|
         "name"            -> "Release",
-        "runs-on"         -> "ubuntu-latest",
+        "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $defaultTimeConstraint,
@@ -1324,7 +1390,7 @@ normalizeJob[ "release" | "releasepaclet" ] :=
 normalizeJob[ "test" | "testpaclet" ] :=
     "Test" -> <|
         "name"            -> "Test",
-        "runs-on"         -> "ubuntu-latest",
+        "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $defaultTimeConstraint,
@@ -1399,8 +1465,8 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
     "timeout-minutes" -> $defaultTimeConstraint,
     "steps" -> {
         normalizeStep[ "Checkout" ],
-        windowsCacheRestoreStep @ as,
-        windowsInstallWLStep @ as,
+        $windowsCacheRestoreStep,
+        $windowsInstallWLStep,
         windowsCompileStep @ as,
         windowsUploadCompiledStep @ as
     }
@@ -1413,8 +1479,8 @@ normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
     "timeout-minutes" -> $defaultTimeConstraint,
     "steps" -> {
         normalizeStep[ "Checkout" ],
-        macCacheRestoreStep @ as,
-        macInstallWLStep @ as,
+        $macCacheRestoreStep,
+        $macInstallWLStep,
         macCompileStep @ as,
         macUploadCompiledStep @ as
     }
@@ -1467,13 +1533,16 @@ buildCompiledPacletJob // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*windowsCacheRestoreStep*)
-windowsCacheRestoreStep[ _ ] := <|
-    "name" -> "Cache/restore Wolfram Engine install",
+(*$windowsCacheRestoreStep*)
+$windowsCacheRestoreStep := <|
+    "name" -> "RestoreCachedWolframEngine",
     "id"   -> "cache-restore-step",
     "uses" -> "actions/cache@v2",
     "env"  -> <|
-        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'"
+        "WOLFRAM_SYSTEM_ID"                    -> "Windows-x86-64",
+        "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\WolframEngine'",
+        "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A"
     |>,
     "with" -> <|
         "path" -> "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}",
@@ -1483,14 +1552,17 @@ windowsCacheRestoreStep[ _ ] := <|
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*windowsInstallWLStep*)
-windowsInstallWLStep[ _ ] := <|
-    "name" -> "Download and install Wolfram Engine",
+(*$windowsInstallWLStep*)
+$windowsInstallWLStep := <|
+    "name" -> "InstallWolframEngine",
     "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
     "env"  -> <|
-        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'",
-        "WOLFRAMENGINE_INSTALL_MSI_PATH"       -> "'${{ runner.temp }}\\WolframEngine-Install.msi'",
-        "WOLFRAMENGINE_INSTALL_LOG_PATH"       -> "'${{ runner.temp }}\\WolframEngine-Install.log'"
+        "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
+        "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+        "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "'${{ runner.temp }}\\WolframEngine'",
+        "WOLFRAMENGINE_INSTALL_MSI_PATH"         -> "'${{ runner.temp }}\\WolframEngine-Install.msi'",
+        "WOLFRAMENGINE_INSTALL_LOG_PATH"         -> "'${{ runner.temp }}\\WolframEngine-Install.log'"
     |>,
     "run" -> $windowsInstallWLString
 |>;
@@ -1514,7 +1586,8 @@ $MSIArguments = @(
 )
 echo 'Installing Wolfram Engine...'
 Start-Process \"msiexec.exe\" -ArgumentList $MSIArguments -Wait -NoNewWindow
-echo 'Installed Wolfram Engine.'";
+echo 'Installed Wolfram Engine.'
+Set-Alias -Name wolframscript -Value wolfram";
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -1522,7 +1595,7 @@ echo 'Installed Wolfram Engine.'";
 windowsCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
     "env" -> <|
-        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\${{ env.WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY }}'",
+        "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\WolframEngine'",
         "WOLFRAMINIT" -> "\"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\""
     |>,
     "run" -> "\
@@ -1548,9 +1621,9 @@ windowsUploadCompiledStep[ as_ ] := <|
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*macCacheRestoreStep*)
-macCacheRestoreStep[ as_ ] := <|
-    "name" -> "Cache/restore Wolfram Engine install",
+(*$macCacheRestoreStep*)
+$macCacheRestoreStep := <|
+    "name" -> "RestoreCachedWolframEngine",
     "id"   -> "cache-restore-step",
     "uses" -> "actions/cache@v2",
     "with" -> <|
@@ -1561,9 +1634,9 @@ macCacheRestoreStep[ as_ ] := <|
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*macInstallWLStep*)
-macInstallWLStep[ as_ ] := <|
-    "name" -> "Download and install Wolfram Engine",
+(*$macInstallWLStep*)
+$macInstallWLStep := <|
+    "name" -> "InstallWolframEngine",
     "if"   -> "steps.cache-restore-step.outputs.cache-hit != 'true'",
     "run"  -> $macInstallWLString
 |>;
@@ -1642,8 +1715,7 @@ compilationEnv[ "Windows-x86-64" ] := <|
     "WOLFRAM_LIBRARY_BUILD_OUTPUT"            -> "LibraryResources/",
     "WOLFRAM_SYSTEM_ID"                       -> "Windows-x86-64",
     "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL"  -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALLATION_SUBDIRECTORY" -> "WolframEngine"
+    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A"
 |>;
 
 compilationEnv[ "MacOSX-x86-64" ] := <|
@@ -1670,15 +1742,33 @@ $compilationTargets = { "Windows-x86-64", "MacOSX-x86-64", "Linux-x86-64" };
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$defaultJobContainer*)
-$defaultJobContainer = <|
-    "image"   -> "wolframresearch/wolframengine:latest",
-    "options" -> "--user root"
-|>;
+$defaultJobContainer :=
+    If[ $defaultOS === "Linux-x86-64",
+        <|
+            "image"   -> "wolframresearch/wolframengine:latest",
+            "options" -> "--user root"
+        |>,
+        $noValue
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$defaultJobEnv*)
-$defaultJobEnv = <|
+$defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := <|
+    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
+    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+|>;
+
+$defaultJobEnv /; $defaultOS === "Windows-x86-64" := <|
+    "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
+    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A"
+|>;
+
+$defaultJobEnv /; True := <|
     "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
     "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
@@ -1835,6 +1925,28 @@ normalizeStep[ ___, "downloadcompilationartifacts" ] := <|
     "uses" -> "actions/download-artifact@v2",
     "with" -> <| "path" -> "LibraryResources" |>
 |>;
+
+normalizeStep[ ___, "restorecachedwolframengine" ] :=
+    Switch[ $defaultOS,
+            "Windows-x86-64", $windowsCacheRestoreStep,
+            "MacOSX-x86-64" , $macCacheRestoreStep,
+            _,
+            throwError[
+                "The RestoreCachedWolframEngine step is not supported for `1`",
+                $defaultOS
+            ]
+    ];
+
+normalizeStep[ ___, "installwolframengine" ] :=
+    Switch[ $defaultOS,
+            "Windows-x86-64", $windowsInstallWLStep,
+            "MacOSX-x86-64" , $macInstallWLStep,
+            _,
+            throwError[
+                "The InstallWolframEngine step is not supported for `1`",
+                $defaultOS
+            ]
+    ];
 
 normalizeStep[ keys___, step_String ] :=
     With[ { lc = StringDelete[ ToLowerCase @ step, "-" | "_" ] },
@@ -2051,6 +2163,133 @@ stringJoin[ a___, { b___ }, c___ ] := stringJoin[ a, b, c ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Utilities*)
+$defaultOS     = "Linux-x86-64";
+$defaultRunner = "ubuntu-latest";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*withOS*)
+withOS // Attributes = { HoldRest };
+
+withOS[ os_, eval_ ] :=
+    Block[
+        {
+            $defaultOS     = toDefaultOS @ os,
+            $defaultRunner = toDefaultRunner @ os
+        },
+        eval
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toDefaultOS*)
+toDefaultOS[ Automatic                      ] := $defaultOS;
+toDefaultOS[ "Linux"|"Unix"|"Linux-x86-64"  ] := "Linux-x86-64";
+toDefaultOS[ "Windows"|"Windows-x86-64"     ] := "Windows-x86-64";
+toDefaultOS[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "MacOSX-x86-64";
+
+toDefaultOS[ s_String? StringQ ] :=
+    Module[ { startsWith },
+        startsWith = StringStartsQ[ s, #~~WordBoundary, IgnoreCase -> True ] &;
+        Which[ startsWith[ "Windows"        ], "Windows-x86-64",
+               startsWith[ "Ubuntu"|"Linux" ], "Linux-x86-64",
+               startsWith[ "Mac"|"MacOS"    ], "MacOSX-x86-64",
+               True,
+               throwError[
+                   "`1` is not a valid OperatingSystem specification",
+                   s
+               ]
+        ]
+    ];
+
+toDefaultOS[ other_ ] :=
+    throwError[ "`1` is not a valid OperatingSystem specification", other ];
+
+toDefaultOS // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toDefaultRunner*)
+toDefaultRunner[ Automatic                      ] := $defaultRunner;
+toDefaultRunner[ "Linux"|"Unix"|"Linux-x86-64"  ] := "ubuntu-latest";
+toDefaultRunner[ "Windows"|"Windows-x86-64"     ] := "windows-latest";
+toDefaultRunner[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "macos-latest";
+
+toDefaultRunner[ s_String? StringQ ] :=
+    Module[ { startsWith },
+        startsWith = StringStartsQ[ s, #~~WordBoundary, IgnoreCase -> True ] &;
+        Which[ startsWith[ "Windows"        ], windowsRunner @ s,
+               startsWith[ "Ubuntu"|"Linux" ], linuxRunner @ s,
+               startsWith[ "Mac"|"MacOS"    ], macRunner @ s,
+               True,
+               throwError[
+                   "`1` is not a valid runner specification",
+                   s
+               ]
+        ]
+    ];
+
+toDefaultRunner[ other_ ] :=
+    throwError[ "`1` is not a valid runner specification", other ];
+
+toDefaultRunner // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*windowsRunner*)
+windowsRunner[ spec_String ] :=
+    Module[ { runner },
+        runner = windowsRunner0 @@ StringSplit[ ToLowerCase @ spec, " " | "-" ];
+        If[ StringQ @ runner,
+            runner,
+            throwError[ "`1` is not a valid runner specification", spec ]
+        ]
+    ];
+
+windowsRunner // catchUndefined;
+
+windowsRunner0[ "windows" ] := "windows-latest";
+windowsRunner0[ "windows", "latest" ] := "windows-latest";
+windowsRunner0[ "windows", "server", a___ ] := windowsRunner0[ "windows", a ];
+windowsRunner0[ "windows", year_String ] := "windows-" <> year;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*linuxRunner*)
+linuxRunner[ spec_String ] :=
+    Module[ { runner },
+        runner = linuxRunner0 @@ StringSplit[ ToLowerCase @ spec, " " | "-" ];
+        If[ StringQ @ runner,
+            runner,
+            throwError[ "`1` is not a valid runner specification", spec ]
+        ]
+    ];
+
+linuxRunner // catchUndefined;
+
+linuxRunner0[ "linux"|"unix", a___ ] := linuxRunner0[ "ubuntu", a ];
+linuxRunner0[ "ubuntu" ] := "ubuntu-latest";
+linuxRunner0[ "ubuntu", "latest" ] := "ubuntu-latest";
+linuxRunner0[ "ubuntu", version_String ] := "ubuntu-" <> version;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*macRunner*)
+macRunner[ spec_String ] :=
+    Module[ { runner },
+        runner = macRunner0 @@ StringSplit[ ToLowerCase @ spec, " " | "-" ];
+        If[ StringQ @ runner,
+            runner,
+            throwError[ "`1` is not a valid runner specification", spec ]
+        ]
+    ];
+
+macRunner // catchUndefined;
+
+macRunner0[ "mac"|"macosx", a___ ] := macRunner0[ "macos", a ];
+macRunner0[ "macos" ] := "macos-latest";
+macRunner0[ "macos", "latest" ] := "macos-latest";
+macRunner0[ "macos", version_String ] := "macos-" <> version;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
