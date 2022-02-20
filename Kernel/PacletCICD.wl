@@ -48,6 +48,11 @@ Quiet[
     General::shdw
 ];
 
+If[ $VersionNumber < 13.1 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
+    PacletInstall[ "https://wolfr.am/11FhS453R" ];
+    PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
+];
+
 If[ $VersionNumber < 13.1,
     Wolfram`PacletCICD`CheckDependencies[
         Wolfram`PacletCICD`Private`$thisPaclet,
