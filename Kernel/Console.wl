@@ -159,7 +159,12 @@ ConsoleWarning // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ConsoleError*)
-ConsoleError // Options = { "ConsoleType" -> Automatic };
+ConsoleError::fatal = "Encountered a fatal error.";
+
+ConsoleError // Options = {
+    "ConsoleType" -> Automatic,
+    "Fatal"       -> False
+};
 
 ConsoleError[ expr_, opts: OptionsPattern[ ] ] :=
     catchTop @ ConsoleError[ Unevaluated @ expr, None, opts ];
@@ -168,12 +173,20 @@ ConsoleError[ expr_, file_, opts: OptionsPattern[ ] ] :=
     catchTop @ ConsoleError[ Unevaluated @ expr, file, None, opts ];
 
 ConsoleError[ expr_, file_, pos_, opts: OptionsPattern[ ] ] :=
-    catchTop @ ConsoleLog[
-        Unevaluated @ expr,
-        file,
-        pos,
-        "ConsoleType" -> OptionValue[ "ConsoleType" ],
-        "Level"       -> "Error"
+    catchTop @ Module[ { res },
+
+        res = ConsoleLog[
+            Unevaluated @ expr,
+            file,
+            pos,
+            "ConsoleType" -> OptionValue[ "ConsoleType" ],
+            "Level"       -> "Error"
+        ];
+
+        If[ TrueQ @ OptionValue[ "Fatal" ],
+            exitFailure[ ConsoleError::fatal, 1, res ],
+            res
+        ]
     ];
 
 ConsoleError // catchUndefined;
