@@ -30,6 +30,7 @@ Wolfram`PacletCICD`setContextLoad;
 Wolfram`PacletCICD`SubmitPaclet;
 Wolfram`PacletCICD`TestPaclet;
 Wolfram`PacletCICD`Workflow;
+Wolfram`PacletCICD`WorkflowEvaluate;
 Wolfram`PacletCICD`WorkflowExport;
 Wolfram`PacletCICD`WorkflowJob;
 Wolfram`PacletCICD`WorkflowJobQ;

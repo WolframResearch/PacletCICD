@@ -77,6 +77,9 @@ FormattingHelper[ step: WorkflowStep[ name_String, as_ ], fmt_ ] :=
         ]
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*actionLabel*)
 actionLabel[ KeyValuePattern[ "uses" -> uses_String ] ] :=
     Module[ { lbl, link },
         lbl = StringDelete[ uses, "@" ~~ __ ~~ EndOfString ];
@@ -85,12 +88,44 @@ actionLabel[ KeyValuePattern[ "uses" -> uses_String ] ] :=
     ];
 
 actionLabel[ KeyValuePattern[ "run" -> code_String ] ] :=
-    actionCodeLabel @ StringSplit[ code, "\r\n"|"\n" ];
+    If[ StringStartsQ[ code, "wolframscript -code " ],
+        actionCodeLabel @ StringTrim[
+            StringDelete[ code, StartOfString~~"wolframscript -code " ],
+            "'"
+        ],
+        actionCommandLabel @ StringSplit[ code, "\r\n"|"\n" ]
+    ];
 
 actionLabel[ ___ ] := Nothing;
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*actionCodeLabel*)
+actionCodeLabel[ code_String ] :=
+    If[ StringLength @ code < 40,
+        { BoxForm`SummaryItem @ {
+            "Code: ",
+            Style[
+                ToExpression[ code, InputForm, HoldForm ],
+                ShowStringCharacters -> True
+            ]
+        } },
+        { BoxForm`SummaryItem @ {
+            "Code: ",
+            Tooltip[
+                Style[RawBoxes @ RowBox @ {
+                    StringTake[ code, UpTo[ 40 ] ],
+                    " \[Ellipsis]"
+                }, ShowStringCharacters -> True ],
+                code
+            ]
+        } }
+    ];
 
-actionCodeLabel[ { code_String } ] :=
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*actionCommandLabel*)
+actionCommandLabel[ { code_String } ] :=
     If[ StringLength[ code ] < 40,
         { BoxForm`SummaryItem @ { "Command: ", code } },
         { BoxForm`SummaryItem @ {
@@ -99,7 +134,7 @@ actionCodeLabel[ { code_String } ] :=
         } }
     ];
 
-actionCodeLabel @ { code_String, rest__ } := {
+actionCommandLabel @ { code_String, rest__ } := {
     BoxForm`SummaryItem @ {
         "Command: ",
         Tooltip[
@@ -109,9 +144,11 @@ actionCodeLabel @ { code_String, rest__ } := {
     }
 };
 
-actionCodeLabel[ ___ ] := Nothing;
+actionCommandLabel[ ___ ] := Nothing;
 
-
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*actionIcon*)
 actionIcon[ KeyValuePattern[ "uses" -> uses_String ] ] :=
     Once @ actionIcon @ uses;
 
@@ -123,7 +160,7 @@ actionIcon[ uses_String ] := actionIcon[ uses ] = Enclose[
         avatar = ConfirmBy[ data[ "owner", "avatar_url" ], StringQ ];
         Show[ ConfirmBy[ Import @ avatar, ImageQ ], ImageSize -> 24 ]
     ],
-    $defaultIcon &
+    Show[ $ghIcon, ImageSize -> 24 ] &
 ];
 
 actionIcon[ KeyValuePattern[ "run" -> _String ] ] := $terminalIcon;
