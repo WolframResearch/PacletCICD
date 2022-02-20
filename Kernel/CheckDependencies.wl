@@ -7,7 +7,7 @@ CheckDependencies // ClearAll;
 
 Begin[ "`Private`" ];
 
-Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
+$ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -33,7 +33,7 @@ CheckDependencies::missing =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
-CheckDependencies[ pac_PacletObject, opts: OptionsPattern[ ] ] :=
+CheckDependencies[ pac_, opts: OptionsPattern[ ] ] :=
     catchTop @ Block[ { $dependencyRules },
         Module[ { checked },
             $dependencyRules = Internal`Bag[ ];
@@ -45,7 +45,7 @@ CheckDependencies[ pac_PacletObject, opts: OptionsPattern[ ] ] :=
         ]
     ];
 
-(* CheckDependencies // catchUndefined; *)
+CheckDependencies // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -160,16 +160,16 @@ checkDependencies[ pac_PacletObject ] :=
         checkDependencies[ pac, dependencies ]
     ];
 
-checkDependencies[ pac_PacletObject, _Missing ] :=
+checkDependencies[ pac_, _Missing ] :=
     Internal`StuffBag[ $dependencyRules, pac -> None ];
 
-checkDependencies[ pac_PacletObject, dependencies_List ] :=
+checkDependencies[ pac_, dependencies_List ] :=
     checkDependencies[ pac, # ] & /@ dependencies;
 
-checkDependencies[ pac_PacletObject, name_String ] :=
+checkDependencies[ pac_, name_String ] :=
     checkDependency[ pac, name, "*" ];
 
-checkDependencies[ pac_PacletObject, name_String -> ver_String ] :=
+checkDependencies[ pac_, name_String -> ver_String ] :=
     checkDependency[ pac, name, ver ];
 
 checkDependencies // catchUndefined;
@@ -177,19 +177,19 @@ checkDependencies // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkDependency*)
-checkDependency[ parent_PacletObject, name_String, spec_String ] :=
+checkDependency[ parent_, name_String, spec_String ] :=
     Module[ { installed },
         installed = pacletInstall[ name, spec ];
         checkDependency[ parent, installed, name, spec ]
     ];
 
-checkDependency[ parent_PacletObject, fail_? FailureQ, name_, spec_ ] :=
+checkDependency[ parent_, fail_? FailureQ, name_, spec_ ] :=
     Module[ { res },
         res = dependencyFailure[ parent, fail, name, spec ];
         Internal`StuffBag[ $dependencyRules, parent -> res ];
     ];
 
-checkDependency[ parent_PacletObject, pac_PacletObject, name_, spec_ ] :=
+checkDependency[ parent_, pac_PacletObject, name_, spec_ ] :=
     Module[ { ver, sel, res },
 
         ver = pac[ "Version" ];
@@ -225,7 +225,7 @@ selectVersionNumber =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*dependencySuccess*)
-dependencySuccess[ pac_PacletObject, spec_ ] := Enclose[
+dependencySuccess[ pac_, spec_ ] := Enclose[
     Module[ { info },
         info = ConfirmBy[ Association @ pac @ All, AssociationQ ];
         info[ "Requested" ] = toNiceVersionSpec @ spec;
@@ -244,12 +244,13 @@ dependencySuccess[ pac_PacletObject, spec_ ] := Enclose[
 (* ::Subsection::Closed:: *)
 (*dependencyFailure*)
 dependencyFailure[ parent_, pac_, name_, spec_ ] := Enclose[
-    Module[ { info },
+    Module[ { pName, info },
+        pName = Replace[ parent[ "Name" ], Except[ _String ] -> None ];
         info = <| "Name" -> name, "Requested" -> toNiceVersionSpec @ spec |>;
         info[ "Version" ] = If[ PacletObjectQ @ pac, pac[ "Version" ], None ];
         info[ "Location" ] = If[ PacletObjectQ @ pac, pac[ "Location" ], None ];
         info[ "MessageTemplate" ] = dependencyFailureTemplate @ spec;
-        info[ "MessageParameters" ] = { name, spec, parent[ "Name" ] };
+        info[ "MessageParameters" ] = { name, spec, pName };
 
         Failure[
             "CheckDependencies",

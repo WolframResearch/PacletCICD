@@ -42,6 +42,7 @@ TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
 
 testPaclet[ dir_? DirectoryQ ] :=
     Module[ { files, report },
+        PacletDirectoryLoad @ dir;
         files  = FileNames[ "*.wlt", dir, Infinity ];
         report = testContext @ TestReport @ files;
         annotateTestResult /@ report[ "TestResults" ];

@@ -174,20 +174,21 @@ joinFailure // catchUndefined;
 $$messageType = "error"|"warning"|"notice"|"debug";
 
 generalMessage[ tag: $$messageType, template_, as_Association ] :=
-    messageFailure[
+    StackInhibit @ messageFailure[
         MessageName[ PacletCICD, tag ],
         TemplateApply[ template, as ],
         as
     ];
 
 generalMessage[ tag: $$messageType, template_, a___ ] :=
-    messageFailure[
+    StackInhibit @ messageFailure[
         MessageName[ PacletCICD, tag ],
         TemplateApply[ template, { a } ],
         a
     ];
 
-generalMessage[ template_, a___ ] := generalMessage[ "notice", template, a ];
+generalMessage[ template_, a___ ] :=
+    StackInhibit @ generalMessage[ "notice", template, a ];
 
 generalMessage // catchUndefined;
 
@@ -195,7 +196,7 @@ generalMessage // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*throwGeneralMessage*)
 throwGeneralMessage[ tag: $$messageType, template_, a___ ] :=
-    Module[ { failure },
+    StackInhibit @ Module[ { failure },
         failure = generalMessage[ tag, template, a ];
         If[ TrueQ @ $catching,
             Throw[ failure, $top ],
@@ -204,14 +205,15 @@ throwGeneralMessage[ tag: $$messageType, template_, a___ ] :=
     ];
 
 throwGeneralMessage[ template_, a___ ] :=
-    throwGeneralMessage[ "error", template, a ];
+    StackInhibit @ throwGeneralMessage[ "error", template, a ];
 
 throwGeneralMessage // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*throwError*)
-throwError[ template_, a___ ] := throwGeneralMessage[ "error", template, a ];
+throwError[ template_, a___ ] :=
+    StackInhibit @ throwGeneralMessage[ "error", template, a ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

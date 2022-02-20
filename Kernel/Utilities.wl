@@ -18,12 +18,32 @@ $simpleTextMode := MatchQ[ dnc`$ConsoleType, "TTY"|"GitHub" ];
 (*withDNCSettings*)
 withDNCSettings // Attributes = { HoldRest };
 
-withDNCSettings[ { type_, tgt_ }, eval_ ] :=
+withDNCSettings[ { type_, tgt_ }, eval_ ] := (
+    Needs[ "DefinitionNotebookClient`" -> None ];
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
         eval
-    ];
+    ]
+);
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*withConsoleType*)
+withConsoleType // Attributes = { HoldRest };
+withConsoleType[ type_, eval_ ] := (
+    Needs[ "DefinitionNotebookClient`" -> None ];
+    Internal`InheritedBlock[ { dnc`$ConsoleType },
+        dnc`$ConsoleType = type;
+        eval
+    ]
+);
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*autoConsole*)
+autoConsole // Attributes = { HoldFirst };
+autoConsole[ eval_ ] := withConsoleType[ Automatic, eval ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
