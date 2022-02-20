@@ -80,14 +80,23 @@ SetContextLoad[ AnnotateTestIDs, "TestPaclet" ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Workflows*)
-SetContextLoad[ GitHubSecret  , "Workflows" ];
-SetContextLoad[ Workflow      , "Workflows" ];
-SetContextLoad[ WorkflowExport, "Workflows" ];
-SetContextLoad[ WorkflowJob   , "Workflows" ];
-SetContextLoad[ WorkflowStep  , "Workflows" ];
-SetContextLoad[ WorkflowQ     , "Workflows" ];
-SetContextLoad[ WorkflowJobQ  , "Workflows" ];
-SetContextLoad[ WorkflowStepQ , "Workflows" ];
+SetContextLoad[ GitHubSecret    , "Workflows" ];
+SetContextLoad[ Workflow        , "Workflows" ];
+SetContextLoad[ WorkflowEvaluate, "Workflows" ];
+SetContextLoad[ WorkflowExport  , "Workflows" ];
+SetContextLoad[ WorkflowJob     , "Workflows" ];
+SetContextLoad[ WorkflowJobQ    , "Workflows" ];
+SetContextLoad[ WorkflowQ       , "Workflows" ];
+SetContextLoad[ WorkflowStep    , "Workflows" ];
+SetContextLoad[ WorkflowStepQ   , "Workflows" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Console*)
+SetContextLoad[ ConsoleError  , "Console" ];
+SetContextLoad[ ConsoleLog    , "Console" ];
+SetContextLoad[ ConsoleNotice , "Console" ];
+SetContextLoad[ ConsoleWarning, "Console" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
