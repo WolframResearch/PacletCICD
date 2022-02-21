@@ -1,0 +1,338 @@
+Notebook[
+ {
+  Cell[
+   TextData[
+    {
+     "New in: ",
+     Cell["??", "HistoryData", CellTags -> "New"],
+     " | Modified in: ",
+     Cell[" ", "HistoryData", CellTags -> "Modified"],
+     " | Obsolete in: ",
+     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
+     " | Excised in: ",
+     Cell[" ", "HistoryData", CellTags -> "Excised"]
+    }
+   ],
+   "History",
+   CellID -> 837855486
+  ],
+  Cell[
+   "Created by: rhennigan on 02-21-2022 14:48:19",
+   "AuthorDate",
+   CellID -> 162480164
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Categorization",
+      "CategorizationSection",
+      CellID -> 185479684
+     ],
+     Cell[
+      "Guide",
+      "Categorization",
+      CellLabel -> "Entity Type",
+      CellID -> 97543335
+     ],
+     Cell[
+      "Wolfram/PacletCICD",
+      "Categorization",
+      CellLabel -> "Paclet Name",
+      CellID -> 140923947
+     ],
+     Cell[
+      "Wolfram`PacletCICD`",
+      "Categorization",
+      CellLabel -> "Context",
+      CellID -> 39735646
+     ],
+     Cell[
+      "Wolfram/PacletCICD/guide/CustomCICDWorkflows",
+      "Categorization",
+      CellLabel -> "URI",
+      CellID -> 58651964
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Keywords", "KeywordsSection", CellID -> 4843762],
+     Cell["XXXX", "Keywords", CellID -> 14752974]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Custom CI/CD Workflows",
+      "GuideTitle",
+      CellID -> 486586233
+     ],
+     Cell["XXXX", "GuideAbstract", CellID -> 74912579]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["", "GuideFunctionsSection", CellID -> 38250252],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "CheckPaclet",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CheckPaclet"
+          ]
+         ],
+         "InlineGuideFunction"
+        ],
+        " \[LongDash] ",
+        "check a Paclet for potential issues"
+       }
+      ],
+      "GuideText",
+      CellID -> 243238051
+     ],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "BuildPaclet",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+          ]
+         ],
+         "InlineGuideFunction"
+        ],
+        " \[LongDash] ",
+        "build a Paclet"
+       }
+      ],
+      "GuideText",
+      CellID -> 30181968
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Testing",
+         "GuideFunctionsSubsection",
+         CellID -> 61580765
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "TestPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/TestPaclet"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "run the test files for a given Paclet"
+          }
+         ],
+         "GuideText",
+         CellID -> 113437997
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "AnnotateTestIDs",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/AnnotateTestIDs"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "rewrite the TestID for all VerificationTest expressions in a test file to include source information"
+          }
+         ],
+         "GuideText",
+         CellID -> 855709449
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Console Output",
+         "GuideFunctionsSubsection",
+         CellID -> 102000112
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "ConsoleLog",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/ConsoleLog"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "print a message to the console formatted for the current environment"
+          }
+         ],
+         "GuideText",
+         CellID -> 312274386
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "ConsoleError",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/ConsoleError"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "ConsoleWarning",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/ConsoleWarning"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "ConsoleNotice",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/ConsoleNotice"
+             ]
+            ],
+            "InlineFormula"
+           ]
+          }
+         ],
+         "InlineGuideFunctionListing",
+         CellID -> 253771968
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Tech Notes",
+      "GuideTutorialsSection",
+      CellID -> 305427168
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "License Entitlements and Repository Secrets",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+       ]
+      ],
+      "GuideTutorial",
+      CellID -> 10713611
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Guides",
+      "GuideMoreAboutSection",
+      CellID -> 174912451
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Continuous Integration and Deployment",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/ContinuousIntegrationAndDeployment"
+       ]
+      ],
+      "GuideMoreAbout",
+      CellID -> 12117664
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflows",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/Workflows"
+       ]
+      ],
+      "GuideMoreAbout",
+      CellID -> 51271203
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   "Related Links",
+   "GuideRelatedLinksSection",
+   CellID -> 5139173
+  ]
+ },
+ WindowStatusArea -> Automatic,
+ TaggingRules -> <|
+  "InformationPopupMenuItemAdded" -> True,
+  "Author" -> "rhennigan",
+  "CreationDate" -> "02-21-2022 14:48:19",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 2, 21, 15, 1, 23.626062`8.125966322200151},
+   "Instant",
+   "Gregorian",
+   -5.
+  ],
+  "NotebookUUID" -> "e486dcb9-cea9-4b81-886e-e0d5194d5992"
+ |>,
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ StyleDefinitions -> FrontEnd`FileName[
+  {"Wolfram"},
+  "GuidePageStylesExt.nb",
+  CharacterEncoding -> "UTF-8"
+ ],
+ ExpressionUUID -> "e486dcb9-cea9-4b81-886e-e0d5194d5992"
+]

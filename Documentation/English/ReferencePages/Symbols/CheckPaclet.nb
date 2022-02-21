@@ -5947,7 +5947,7 @@ Notebook[
               Failure[
                "CheckPaclet::errors",
                Association[
-                "MessageTemplate" -> MessageName[Wolfram`PacletCICD`CheckPaclet, "errors"],
+                "MessageTemplate" -> MessageName[CheckPaclet, "errors"],
                 "MessageParameters" -> { },
                 "FailureCondition" -> "Error",
                 "Result" -> Dataset[
@@ -13185,7 +13185,7 @@ Notebook[
               Failure[
                "CheckPaclet::errors",
                Association[
-                "MessageTemplate" -> MessageName[Wolfram`PacletCICD`CheckPaclet, "errors"],
+                "MessageTemplate" -> MessageName[CheckPaclet, "errors"],
                 "MessageParameters" -> { },
                 "FailureCondition" -> {"Warning", "Error"},
                 "Result" -> Dataset[

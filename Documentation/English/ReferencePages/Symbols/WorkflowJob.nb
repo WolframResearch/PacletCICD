@@ -1364,7 +1364,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`WorkflowJob[
+              WorkflowJob[
                "Build",
                Association[
                 "name" -> "Build",
@@ -1733,7 +1733,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "checkout-code-step",
                    Association[
                     "name" -> "checkout-code-step",
@@ -2115,7 +2115,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "build-paclet-step",
                    Association[
                     "name" -> "build-paclet-step",
@@ -2490,7 +2490,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "upload-build-artifacts-step",
                    Association[
                     "name" -> "upload-build-artifacts-step",
@@ -3440,7 +3440,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`WorkflowJob[
+              WorkflowJob[
                "MyWorkflow",
                Association[
                 "name" -> "MyWorkflow",
@@ -3789,7 +3789,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "checkout-code-step",
                    Association[
                     "name" -> "checkout-code-step",
@@ -4221,7 +4221,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "MyWorkflow",
                    Association[
                     "name" -> "MyWorkflow",
@@ -5065,7 +5065,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowJob[
+                  WorkflowJob[
                    "Check",
                    Association[
                     "name" -> "Check",
@@ -5971,7 +5971,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowJob[
+                  WorkflowJob[
                    "Build",
                    Association[
                     "name" -> "Build",
@@ -7352,7 +7352,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowJob[
+                  WorkflowJob[
                    "Release",
                    Association[
                     "name" -> "Release",
@@ -8144,7 +8144,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowJob[
+                  WorkflowJob[
                    "Test",
                    Association[
                     "name" -> "Test",
@@ -10828,7 +10828,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`Workflow[
+              Workflow[
                "Release",
                Association[
                 "name" -> "Release",
@@ -11719,7 +11719,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Check",
                      Association[
                       "name" -> "Check",
@@ -12480,7 +12480,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Test",
                      Association[
                       "name" -> "Test",
@@ -13866,7 +13866,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Release",
                      Association[
                       "needs" -> {"Check", "Test"},
@@ -14720,7 +14720,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`WorkflowJob[
+              WorkflowJob[
                "Check",
                Association[
                 "name" -> "Check",
@@ -15075,7 +15075,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "checkout-code-step",
                    Association[
                     "name" -> "checkout-code-step",
@@ -15457,7 +15457,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "check-paclet-step",
                    Association[
                     "name" -> "check-paclet-step",
@@ -16421,7 +16421,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`WorkflowJob[
+                 WorkflowJob[
                   "Build",
                   Association[
                    "timeout-minutes" -> 5,
@@ -17309,7 +17309,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Check",
                      Association[
                       "timeout-minutes" -> 90.,
@@ -18175,7 +18175,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`WorkflowJob[
+                 WorkflowJob[
                   "Check",
                   Association[
                    "env" -> Association[
@@ -19098,7 +19098,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Check",
                      Association[
                       "env" -> Association[
@@ -19880,7 +19880,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`WorkflowJob[
+                 WorkflowJob[
                   "Linux",
                   Association[
                    "name" -> "Linux",
@@ -20844,7 +20844,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`WorkflowJob[
+                 WorkflowJob[
                   "Mac",
                   Association[
                    "name" -> "Mac",
@@ -21966,7 +21966,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`WorkflowJob[
+                 WorkflowJob[
                   "Windows",
                   Association[
                    "name" -> "Windows",
@@ -24340,7 +24340,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`Workflow[
+                 Workflow[
                   "MyWorkflow",
                   Association[
                    "name" -> "MyWorkflow",
@@ -24510,10 +24510,7 @@ Notebook[
                        Hue[0.6, 0.2, 0.8],
                        EdgeForm[{GrayLevel[0], Opacity[0.7]}],
                        {
-                        DiskBox[
-                         {0.000030000000000000004, -0.00001},
-                         0.0000002546
-                        ],
+                        DiskBox[{0.000030000000000000004, -0.00001}, 2.546*^-7],
                         InsetBox[
                          FrameBox[
                           "\"Linux\"",
@@ -24543,10 +24540,7 @@ Notebook[
                         ]
                        },
                        {
-                        DiskBox[
-                         {0.00001, -0.000030000000000000004},
-                         0.0000002546
-                        ],
+                        DiskBox[{0.00001, -0.000030000000000000004}, 2.546*^-7],
                         InsetBox[
                          FrameBox[
                           "\"Windows\"",
@@ -27606,7 +27600,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`Workflow[
+                 Workflow[
                   "MyWorkflow",
                   Association[
                    "name" -> "MyWorkflow",

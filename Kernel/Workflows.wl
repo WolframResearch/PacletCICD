@@ -1058,7 +1058,9 @@ $hasLicenseEntitlements :=
 entitlementWarning[ ] := entitlementWarning[ ] =
     If[ TrueQ @ suppressedEntitlementWarning[ ],
         Null,
-        messageFailure[ WorkflowExport::entitlement, $licenseWarningText ]
+        Block[ { $MessagePrePrint = Identity },
+            messageFailure[ WorkflowExport::entitlement, $licenseWarningText ]
+        ]
     ];
 
 suppressedEntitlementWarning[ ] :=
@@ -1107,7 +1109,8 @@ $disableGHSecretWarning :=
             " " <> hyperlinkButtonString[
                 "Don't show this message again \[RightGuillemet]",
                 GeneralUtilities`EnsureDirectory @ DirectoryName @ file;
-                Put[ ver, file ]
+                Put[ ver, file ];
+                NotebookDelete @ EvaluationCell[ ]
             ],
             ""
         ]
@@ -1164,56 +1167,56 @@ workflowFileName[ ___ ] := "workflow.yml";
 (*$namedWorkflows*)
 $namedWorkflows := <|
     "Release" -> <|
-        "Name" -> "Release",
+        "name" -> "Release",
         "On" -> <|
-            "Push"             -> <| "Branches" -> { "release/*" } |>,
-            "WorkflowDispatch" -> True
+            "push"              -> <| "branches" -> { "release/*" } |>,
+            "workflow_dispatch" -> True
         |>,
-        "Jobs" -> {
+        "jobs" -> {
             "Check",
             "Test",
-            { "Release", <| "Needs" -> { "Check", "Test" } |> }
+            { "Release", <| "needs" -> { "Check", "Test" } |> }
         }
     |>
     ,
     "Build" -> <|
-        "Name" -> "Build",
-        "On"   -> <|
-            "Push"             -> <| "Branches" -> $defaultBranch |>,
-            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
-            "WorkflowDispatch" -> True
+        "name" -> "Build",
+        "on"   -> <|
+            "push"              -> <| "branches" -> $defaultBranch |>,
+            "pull_request"      -> <| "branches" -> $defaultBranch |>,
+            "workflow_dispatch" -> True
         |>,
-        "Jobs" -> "Build"
+        "jobs" -> "Build"
     |>
     ,
     "Check" -> <|
-        "Name" -> "Check",
-        "On"   -> <|
-            "Push"             -> <| "Branches" -> $defaultBranch |>,
-            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
-            "WorkflowDispatch" -> True
+        "name" -> "Check",
+        "on"   -> <|
+            "push"              -> <| "branches" -> $defaultBranch |>,
+            "pull_request"      -> <| "branches" -> $defaultBranch |>,
+            "workflow_dispatch" -> True
         |>,
-        "Jobs" -> "Check"
+        "jobs" -> "Check"
     |>
     ,
     "Test" -> <|
-        "Name" -> "Test",
-        "On"   -> <|
-            "Push"             -> <| "Branches" -> $defaultBranch |>,
-            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
-            "WorkflowDispatch" -> True
+        "name" -> "Test",
+        "on"   -> <|
+            "push"              -> <| "branches" -> $defaultBranch |>,
+            "pull_request"      -> <| "branches" -> $defaultBranch |>,
+            "workflow_dispatch" -> True
         |>,
-        "Jobs" -> "Test"
+        "jobs" -> "Test"
     |>
     ,
     "Compile" -> <|
-        "Name" -> "Compile",
-        "On"   -> <|
-            "Push"             -> <| "Branches" -> $defaultBranch |>,
-            "PullRequest"      -> <| "Branches" -> $defaultBranch |>,
-            "WorkflowDispatch" -> True
+        "name" -> "Compile",
+        "on"   -> <|
+            "push"              -> <| "branches" -> $defaultBranch |>,
+            "pull_request"      -> <| "branches" -> $defaultBranch |>,
+            "workflow_dispatch" -> True
         |>,
-        "Jobs" -> "Compile"
+        "jobs" -> "Compile"
     |>
 |>;
 
@@ -2289,12 +2292,7 @@ checkMultilineString[ str_String ] :=
 toYAMLKey[ key_ ] := stringJoin[ $indent, yamlKeyString @ key, ": " ];
 toYAMLKey // catchUndefined;
 
-yamlKeyString[ key_String ] :=
-    StringDelete[
-        StringReplace[ key, WhitespaceCharacter -> "-" ],
-        Except[ LetterCharacter | DigitCharacter | "-" ]
-    ];
-
+yamlKeyString[ key_String ] := StringReplace[ key, WhitespaceCharacter -> "-" ];
 yamlKeyString[ other_ ] := yamlKeyString @ ToString @ other;
 
 (* ::**********************************************************************:: *)
