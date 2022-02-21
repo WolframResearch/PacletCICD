@@ -231,31 +231,33 @@ Notebook[
              ]
             ],
             "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowEvaluate",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowValue",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowValue"
+             ]
+            ],
+            "InlineFormula"
            ]
           }
          ],
          "InlineGuideFunctionListing",
          CellID -> 552882336
-        ],
-        Cell[
-         TextData[
-          {
-           Cell[
-            BoxData[
-             ButtonBox[
-              "DeployReleaseHandler",
-              BaseStyle -> "Link",
-              ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeployReleaseHandler"
-             ]
-            ],
-            "InlineGuideFunction"
-           ],
-           " \[LongDash] ",
-           "deploy an API to your cloud account to handle releases that require authentication"
-          }
-         ],
-         "GuideText",
-         CellID -> 214158616
         ]
        },
        Open
@@ -323,6 +325,36 @@ Notebook[
          ],
          "GuideText",
          CellID -> 125980623
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "DeployReleaseHandler",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeployReleaseHandler"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "deploy an API to your cloud account to handle releases that require authentication"
+          }
+         ],
+         "GuideText",
+         "FutureExample",
+         CellDingbat -> Cell[
+          BoxData[
+           TooltipBox[
+            Cell["rhennigan      ", "TentativeID"],
+            "2022-02-21"
+           ]
+          ],
+          "TentativeWrapper"
+         ],
+         CellID -> 214158616
         ]
        },
        Open
@@ -382,7 +414,7 @@ Notebook[
   "CreationDate" -> "02-03-2022 08:29:36",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 18, 14, 13, 9.3530529`8.723528355293876},
+   {2022, 2, 21, 15, 39, 18.4383421`9.018296808561256},
    "Instant",
    "Gregorian",
    -5.

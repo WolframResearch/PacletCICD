@@ -2981,7 +2981,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`Workflow[
+              Workflow[
                "Release",
                Association[
                 "name" -> "Release",
@@ -3873,7 +3873,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Check",
                      Association[
                       "name" -> "Check",
@@ -4634,7 +4634,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Test",
                      Association[
                       "name" -> "Test",
@@ -6020,7 +6020,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Release",
                      Association[
                       "needs" -> {"Check", "Test"},
@@ -9197,7 +9197,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`Workflow[
+                  Workflow[
                    "Release",
                    Association[
                     "name" -> "Release",
@@ -10463,7 +10463,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`Workflow[
+                  Workflow[
                    "Build",
                    Association[
                     "name" -> "Build",
@@ -11492,7 +11492,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`Workflow[
+                  Workflow[
                    "Check",
                    Association[
                     "name" -> "Check",
@@ -12512,7 +12512,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`Workflow[
+                  Workflow[
                    "Test",
                    Association[
                     "name" -> "Test",
@@ -16445,7 +16445,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`Workflow[
+                  Workflow[
                    "Compile",
                    Association[
                     "name" -> "Compile",
@@ -20078,7 +20078,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`Workflow[
+                 Workflow[
                   "MyReleaseWorkflow",
                   Association[
                    "name" -> "MyReleaseWorkflow",
@@ -23104,7 +23104,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`Workflow[
+              Workflow[
                "Release",
                Association[
                 "name" -> "Release",
@@ -23995,7 +23995,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Check",
                      Association[
                       "name" -> "Check",
@@ -24756,7 +24756,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Test",
                      Association[
                       "name" -> "Test",
@@ -26142,7 +26142,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`WorkflowJob[
+                    WorkflowJob[
                      "Release",
                      Association[
                       "needs" -> {"Check", "Test"},
@@ -26996,7 +26996,7 @@ Notebook[
                 "]"
                }
               ],
-              Wolfram`PacletCICD`WorkflowJob[
+              WorkflowJob[
                "Check",
                Association[
                 "name" -> "Check",
@@ -27351,7 +27351,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "checkout-code-step",
                    Association[
                     "name" -> "checkout-code-step",
@@ -27733,7 +27733,7 @@ Notebook[
                     "]"
                    }
                   ],
-                  Wolfram`PacletCICD`WorkflowStep[
+                  WorkflowStep[
                    "check-paclet-step",
                    Association[
                     "name" -> "check-paclet-step",
@@ -30411,7 +30411,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`Workflow[
+                 Workflow[
                   "Release",
                   Association[
                    "name" -> "Release",
@@ -31305,7 +31305,7 @@ Notebook[
                          "]"
                         }
                        ],
-                       Wolfram`PacletCICD`WorkflowJob[
+                       WorkflowJob[
                         "Check",
                         Association[
                          "name" -> "Check",
@@ -32066,7 +32066,7 @@ Notebook[
                          "]"
                         }
                        ],
-                       Wolfram`PacletCICD`WorkflowJob[
+                       WorkflowJob[
                         "Test",
                         Association[
                          "name" -> "Test",
@@ -33452,7 +33452,7 @@ Notebook[
                          "]"
                         }
                        ],
-                       Wolfram`PacletCICD`WorkflowJob[
+                       WorkflowJob[
                         "Release",
                         Association[
                          "needs" -> {"Check", "Test"},
@@ -34667,7 +34667,7 @@ Notebook[
                       "]"
                      }
                     ],
-                    Wolfram`PacletCICD`Workflow[
+                    Workflow[
                      "Check",
                      Association[
                       "name" -> "Check",
@@ -35862,7 +35862,7 @@ Notebook[
                    "]"
                   }
                  ],
-                 Wolfram`PacletCICD`Workflow[
+                 Workflow[
                   "Check",
                   Association[
                    "env" -> Association["MY_VAR" -> "hello"],
