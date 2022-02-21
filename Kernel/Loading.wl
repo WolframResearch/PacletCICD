@@ -102,14 +102,15 @@ SetContextLoad[ ConsoleWarning, "Console" ];
 (* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
-SetContextLoad[ CheckPaclet            , "CheckPaclet"         ];
 SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
+SetContextLoad[ CheckPaclet            , "CheckPaclet"         ];
 SetContextLoad[ CompileLibraryResources, "Compilation"         ];
 SetContextLoad[ DeployPaclet           , "DeployPaclet"        ];
+SetContextLoad[ FormattingHelper       , "Formatting"          ];
 SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
 SetContextLoad[ MessageFailure         , "MessageFailure"      ];
 SetContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
-SetContextLoad[ FormattingHelper       , "Formatting"          ];
+SetContextLoad[ WorkflowValue          , "WorkflowValue"       ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
