@@ -79,6 +79,105 @@ findDefinitionNotebook // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*GitHub Actions*)
+
+$gitHub := TrueQ @ Or[
+    DirectoryQ @ $gitHubWorkspace,
+    dnc`$ConsoleType === "GitHub"
+];
+
+$gitHubWorkspace := Environment[ "GITHUB_WORKSPACE" ];
+
+$gitHubEnvironment :=
+    Enclose @ Module[ { data, keys, desc, vals },
+        data = Confirm @ $gitHubEnvironmentData;
+        keys = data[[ All, 1 ]];
+        desc = data[[ All, 2 ]];
+        vals = Values @ GetEnvironment @ keys;
+        Association @ Apply[
+            #1 -> <| "Value" -> #2, "Description" -> #3 |> &,
+            Transpose @ { keys, vals, desc },
+            { 1 }
+        ]
+    ];
+
+$gitHubEnvironmentData := Enclose[
+    $gitHubEnvironmentData =
+        ConfirmMatch[
+            Get @ ConfirmBy[
+                FileNameJoin @ {
+                    $thisPaclet[ "AssetLocation", "Resources" ],
+                    "GitHubEnvironmentData.wl"
+                },
+                FileExistsQ
+            ],
+            { { _String, _String }.. }
+        ]
+];
+
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghRelativePath*)
+ghRelativePath[ file_ ] := Enclose[
+    Module[ { ws },
+        ws = Environment[ "GITHUB_WORKSPACE" ];
+        If[ StringQ @ ws,
+            ConfirmBy[ relativePath[ ws, file ], StringQ ],
+            ConfirmBy[ relativePath[ Directory[ ], file ], StringQ ]
+        ]
+    ],
+    throwError[ "Could not determine relative path for file `1`", file ] &
+];
+
+ghRelativePath // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*setOutput*)
+setOutput[ name_, value_ ] /; $gitHub :=
+    setOutput[ $gitHubEnv, name, value ];
+
+setOutput[ str_OutputStream, name_, value_ ] := (
+
+    dnc`ConsolePrint @ StringJoin[
+        "Setting GitHub environment variable ",
+        ToString @ name,
+        "=",
+        ToString @ value
+    ];
+
+    WriteLine[ str, ToString @ name <> "=" <> ToString @ value ]
+);
+
+setOutput[ _, name_, value_ ] := (
+    dnc`ConsolePrint @ StringJoin[
+        "Setting GitHub environment variable using fallback ",
+        ToString @ name,
+        "=",
+        ToString @ value
+    ];
+
+    dnc`ConsolePrint @ StringJoin[
+        "::set-output name=",
+        ToString @ name,
+        "::",
+        ToString @ value
+    ]
+);
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*$gitHubEnv*)
+$gitHubEnv := getGitHubEnv[ ];
+
+getGitHubEnv[ ] := getGitHubEnv @ Environment[ "GITHUB_ENV" ];
+getGitHubEnv[ e_String ] := getGitHubEnv @ First[ Streams @ e, OpenAppend @ e ];
+getGitHubEnv[ s_OutputStream ] := $gitHubEnv = s;
+getGitHubEnv[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*General File Utilities*)
 
 (* ::**********************************************************************:: *)

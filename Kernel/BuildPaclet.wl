@@ -241,22 +241,6 @@ setGHBuildOutput0[
 setGHBuildOutput0[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*ghRelativePath*)
-ghRelativePath[ file_ ] := Enclose[
-    Module[ { ws },
-        ws = Environment[ "GITHUB_WORKSPACE" ];
-        If[ StringQ @ ws,
-            ConfirmBy[ relativePath[ ws, file ], StringQ ],
-            ConfirmBy[ relativePath[ Directory[ ], file ], StringQ ]
-        ]
-    ],
-    throwError[ "Could not determine relative path for file `1`", file ] &
-];
-
-ghRelativePath // catchUndefined;
-
-(* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*checkPacArchiveExtension*)
 checkPacArchiveExtension[ archive_? FileExistsQ ] :=
@@ -270,50 +254,6 @@ checkPacArchiveExtension[ archive_? FileExistsQ ] :=
     ];
 
 checkPacArchiveExtension[ ___ ] := $Failed;
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsubsection::Closed:: *)
-(*setOutput*)
-setOutput[ name_, value_ ] /; dnc`$ConsoleType === "GitHub" :=
-    setOutput[ $gitHubEnv, name, value ];
-
-setOutput[ str_OutputStream, name_, value_ ] := (
-
-    dnc`ConsolePrint @ StringJoin[
-        "Setting GitHub environment variable ",
-        ToString @ name,
-        "=",
-        ToString @ value
-    ];
-
-    WriteLine[ str, ToString @ name <> "=" <> ToString @ value ]
-);
-
-setOutput[ _, name_, value_ ] := (
-    dnc`ConsolePrint @ StringJoin[
-        "Setting GitHub environment variable using fallback ",
-        ToString @ name,
-        "=",
-        ToString @ value
-    ];
-
-    dnc`ConsolePrint @ StringJoin[
-        "::set-output name=",
-        ToString @ name,
-        "::",
-        ToString @ value
-    ]
-);
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsubsection::Closed:: *)
-(*$gitHubEnv*)
-$gitHubEnv := getGitHubEnv[ ];
-
-getGitHubEnv[ ] := getGitHubEnv @ Environment[ "GITHUB_ENV" ];
-getGitHubEnv[ e_String ] := getGitHubEnv @ First[ Streams @ e, OpenAppend @ e ];
-getGitHubEnv[ s_OutputStream ] := $gitHubEnv = s;
-getGitHubEnv[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
