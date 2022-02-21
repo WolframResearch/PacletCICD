@@ -6,7 +6,7 @@ PacletObject[ <|
     "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
-    "Version"          -> "0.10.0",
+    "Version"          -> "0.10.1",
     "WolframVersion"   -> "13.0+",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
@@ -32,9 +32,14 @@ PacletObject[ <|
                 "Wolfram`PacletCICD`SubmitPaclet",
                 "Wolfram`PacletCICD`TestPaclet",
                 "Wolfram`PacletCICD`Workflow",
+                "Wolfram`PacletCICD`WorkflowEvaluate",
                 "Wolfram`PacletCICD`WorkflowExport",
                 "Wolfram`PacletCICD`WorkflowJob",
-                "Wolfram`PacletCICD`WorkflowStep"
+                "Wolfram`PacletCICD`WorkflowJobQ",
+                "Wolfram`PacletCICD`WorkflowQ",
+                "Wolfram`PacletCICD`WorkflowStep",
+                "Wolfram`PacletCICD`WorkflowStepQ",
+                "Wolfram`PacletCICD`WorkflowValue"
             }
         },
         {

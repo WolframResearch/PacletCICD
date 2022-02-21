@@ -4,7 +4,7 @@ Notebook[
    TextData[
     {
      "New in: ",
-     Cell["??", "HistoryData", CellTags -> "New"],
+     Cell["", "HistoryData", CellTags -> "New"],
      " | Modified in: ",
      Cell[" ", "HistoryData", CellTags -> "Modified"],
      " | Obsolete in: ",
@@ -111,10 +111,46 @@ Notebook[
        {
         Cell["   ", "ModInfo"],
         Cell[
-         BoxData[RowBox[{"WorkflowQ", "[", "]"}]],
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "WorkflowQ",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowQ"
+            ],
+            "[",
+            StyleBox["workflow", "TI"],
+            "]"
+           }
+          ]
+         ],
          "InlineFormula"
         ],
-        " \[LineSeparator]XXXX"
+        " \[LineSeparator]yields ",
+        Cell[
+         BoxData[ButtonBox["True", BaseStyle -> "Link"]],
+         "InlineFormula"
+        ],
+        " if ",
+        Cell[BoxData[StyleBox["workflow", "TI"]], "InlineFormula"],
+        " is a ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " and ",
+        Cell[
+         BoxData[ButtonBox["False", BaseStyle -> "Link"]],
+         "InlineFormula"
+        ],
+        " otherwise."
        }
       ],
       "Usage",
@@ -164,7 +200,57 @@ Notebook[
    CellGroupData[
     {
      Cell["See Also", "SeeAlsoSection", CellID -> 89592615],
-     Cell["XXXX", "SeeAlso", CellID -> 179729263]
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowEvaluate",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "SeeAlso",
+      CellID -> 226479943
+     ]
     },
     Open
    ]
@@ -177,38 +263,153 @@ Notebook[
       "MoreAboutSection",
       CellID -> 290859398
      ],
-     Cell["XXXX", "MoreAbout", CellID -> 113854848]
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflows",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/Workflows"
+       ]
+      ],
+      "MoreAbout",
+      CellID -> 143273651
+     ]
     },
     Open
    ]
   ],
   Cell[
-   BoxData[
-    InterpretationBox[
-     GridBox[
-      {
-       {
-        StyleBox["Examples", "PrimaryExamplesSection"],
-        ButtonBox[
-         RowBox[
+   CellGroupData[
+    {
+     Cell[
+      BoxData[
+       InterpretationBox[
+        GridBox[
+         {
           {
-           RowBox[{"More", " ", "Examples"}],
-           " ",
-           "\[RightTriangle]"
+           StyleBox["Examples", "PrimaryExamplesSection"],
+           ButtonBox[
+            RowBox[
+             {
+              RowBox[{"More", " ", "Examples"}],
+              " ",
+              "\[RightTriangle]"
+             }
+            ],
+            BaseStyle -> "ExtendedExamplesLink",
+            ButtonData :> "ExtendedExamples"
+           ]
           }
-         ],
-         BaseStyle -> "ExtendedExamplesLink",
-         ButtonData :> "ExtendedExamples"
-        ]
-       }
-      }
+         }
+        ],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "PrimaryExamplesSection",
+      CellID -> 58724908
      ],
-     $Line = 0;
-     Null
-    ]
-   ],
-   "PrimaryExamplesSection",
-   CellID -> 58724908
+     Cell[
+      TextData[
+       {
+        "Check if an expression is a valid ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        ":"
+       }
+      ],
+      "ExampleText",
+      CellID -> 30289952
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            "WorkflowQ",
+            "[",
+            RowBox[{"Workflow", "[", "\"Release\"", "]"}],
+            "]"
+           }
+          ]
+         ],
+         "Input",
+         CellLabel -> "In[1]:=",
+         CellID -> 794012872
+        ],
+        Cell[
+         BoxData["True"],
+         "Output",
+         CellLabel -> "Out[1]=",
+         CellID -> 28844086
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            "WorkflowQ",
+            "[",
+            RowBox[{"Workflow", "[", "\"InvalidName\"", "]"}],
+            "]"
+           }
+          ]
+         ],
+         "Input",
+         CellLabel -> "In[2]:=",
+         CellID -> 199512769
+        ],
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "Workflow",
+            "invname",
+            "\"InvalidName is not a known workflow name.\"",
+            2,
+            2,
+            14,
+            33992229959415934873,
+            "Local",
+            "Wolfram`PacletCICD`Workflow"
+           },
+           "MessageTemplate2"
+          ]
+         ],
+         "Message",
+         "MSG",
+         CellLabel -> "During evaluation of In[2]:=",
+         CellID -> 12347925
+        ],
+        Cell[
+         BoxData["False"],
+         "Output",
+         CellLabel -> "Out[2]=",
+         CellID -> 143671195
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
   ],
   Cell[
    CellGroupData[
@@ -341,10 +542,19 @@ Notebook[
    ]
   ]
  },
+ WindowStatusArea -> Automatic,
  TaggingRules -> <|
   "InformationPopupMenuItemAdded" -> True,
   "Author" -> "rhennigan",
-  "CreationDate" -> "02-21-2022 15:37:51"
+  "CreationDate" -> "02-21-2022 15:37:51",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 2, 21, 17, 55, 40.097501`9.355692186950042},
+   "Instant",
+   "Gregorian",
+   -5.
+  ],
+  "NotebookUUID" -> "a7043dff-229a-4480-9c23-c86481100d71"
  |>,
  CellContext -> "Global`",
  FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",

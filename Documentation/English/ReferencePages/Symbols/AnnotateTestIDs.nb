@@ -4,7 +4,7 @@ Notebook[
    TextData[
     {
      "New in: ",
-     Cell["??", "HistoryData", CellTags -> "New"],
+     Cell["", "HistoryData", CellTags -> "New"],
      " | Modified in: ",
      Cell[" ", "HistoryData", CellTags -> "Modified"],
      " | Obsolete in: ",
@@ -341,13 +341,12 @@ Notebook[
    ]
   ]
  },
- ScreenStyleEnvironment -> "FutureObject",
  TaggingRules -> <|
   "Author" -> "rhennigan",
   "CreationDate" -> "02-03-2022 13:11:06"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",
