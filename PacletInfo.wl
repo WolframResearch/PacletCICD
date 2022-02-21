@@ -48,7 +48,8 @@ PacletObject[ <|
                 { "License"  , "./LICENSE"   },
                 { "ReadMe"   , "./README.md" },
                 { "Images"   , "./Images"    },
-                { "Examples" , "./Examples"  }
+                { "Examples" , "./Examples"  },
+                { "Resources", "./Resources" }
             }
         }
     }

@@ -37,6 +37,7 @@ Wolfram`PacletCICD`WorkflowJobQ;
 Wolfram`PacletCICD`WorkflowQ;
 Wolfram`PacletCICD`WorkflowStep;
 Wolfram`PacletCICD`WorkflowStepQ;
+Wolfram`PacletCICD`WorkflowValue;
 
 Quiet[
     Block[ { $ContextPath },
