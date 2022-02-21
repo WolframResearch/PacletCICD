@@ -106,6 +106,7 @@ SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
 SetContextLoad[ CheckPaclet            , "CheckPaclet"         ];
 SetContextLoad[ CompileLibraryResources, "Compilation"         ];
 SetContextLoad[ DeployPaclet           , "DeployPaclet"        ];
+SetContextLoad[ FormatNotebooks        , "FormatNotebooks"     ];
 SetContextLoad[ FormattingHelper       , "Formatting"          ];
 SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
 SetContextLoad[ MessageFailure         , "MessageFailure"      ];
