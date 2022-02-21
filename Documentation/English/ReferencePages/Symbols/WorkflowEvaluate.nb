@@ -4,7 +4,7 @@ Notebook[
    TextData[
     {
      "New in: ",
-     Cell["??", "HistoryData", CellTags -> "New"],
+     Cell["", "HistoryData", CellTags -> "New"],
      " | Modified in: ",
      Cell[" ", "HistoryData", CellTags -> "Modified"],
      " | Obsolete in: ",
@@ -111,10 +111,67 @@ Notebook[
        {
         Cell["   ", "ModInfo"],
         Cell[
-         BoxData[RowBox[{"WorkflowEvaluate", "[", "]"}]],
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "WorkflowEvaluate",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+            ],
+            "[",
+            "\"\!\(\*StyleBox[\"command\", \"TI\"]\)\"",
+            "]"
+           }
+          ]
+         ],
          "InlineFormula"
         ],
-        " \[LineSeparator]XXXX"
+        " \[LineSeparator]represents a command that should be executed on the command line in a workflow.\n",
+        Cell["   ", "ModInfo"],
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "WorkflowEvaluate",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+            ],
+            "[",
+            StyleBox["expr", "TI"],
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "\[LineSeparator]represents a Wolfram Language expression that should be evaluated in a workflow.\n",
+        Cell["   ", "ModInfo"],
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "WorkflowEvaluate",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+            ],
+            "[",
+            RowBox[
+             {
+              StyleBox["code", "TI"],
+              ",",
+              "\"\!\(\*StyleBox[\"name\", \"TI\"]\)\""
+             }
+            ],
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "\[LineSeparator]gives a name to the evaluation."
        }
       ],
       "Usage",
@@ -164,7 +221,46 @@ Notebook[
    CellGroupData[
     {
      Cell["See Also", "SeeAlsoSection", CellID -> 672486809],
-     Cell["XXXX", "SeeAlso", CellID -> 3470008]
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "SeeAlso",
+      CellID -> 226479943
+     ]
     },
     Open
    ]
@@ -177,38 +273,2654 @@ Notebook[
       "MoreAboutSection",
       CellID -> 187300646
      ],
-     Cell["XXXX", "MoreAbout", CellID -> 156510581]
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflows",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/Workflows"
+       ]
+      ],
+      "MoreAbout",
+      CellID -> 143273651
+     ]
     },
     Open
    ]
   ],
   Cell[
-   BoxData[
-    InterpretationBox[
-     GridBox[
-      {
-       {
-        StyleBox["Examples", "PrimaryExamplesSection"],
-        ButtonBox[
-         RowBox[
+   CellGroupData[
+    {
+     Cell[
+      BoxData[
+       InterpretationBox[
+        GridBox[
+         {
           {
-           RowBox[{"More", " ", "Examples"}],
-           " ",
-           "\[RightTriangle]"
+           StyleBox["Examples", "PrimaryExamplesSection"],
+           ButtonBox[
+            RowBox[
+             {
+              RowBox[{"More", " ", "Examples"}],
+              " ",
+              "\[RightTriangle]"
+             }
+            ],
+            BaseStyle -> "ExtendedExamplesLink",
+            ButtonData :> "ExtendedExamples"
+           ]
           }
-         ],
-         BaseStyle -> "ExtendedExamplesLink",
-         ButtonData :> "ExtendedExamples"
-        ]
-       }
-      }
+         }
+        ],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "PrimaryExamplesSection",
+      CellID -> 455997561
      ],
-     $Line = 0;
-     Null
-    ]
-   ],
-   "PrimaryExamplesSection",
-   CellID -> 455997561
+     Cell[
+      TextData[
+       {
+        "Create a ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " that says hello:"
+       }
+      ],
+      "ExampleText",
+      CellID -> 405067813
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            "WorkflowStep",
+            "[",
+            RowBox[
+             {
+              "WorkflowEvaluate",
+              "[",
+              RowBox[{"\"echo hello\"", ",", "\"Hello\""}],
+              "]"
+             }
+            ],
+            "]"
+           }
+          ]
+         ],
+         "Input",
+         CellLabel -> "In[1]:=",
+         CellID -> 21536152
+        ],
+        Cell[
+         BoxData[
+          InterpretationBox[
+           RowBox[
+            {
+             TagBox["WorkflowStep", "SummaryHead"],
+             "[",
+             DynamicModuleBox[
+              {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+              TemplateBox[
+               {
+                PaneSelectorBox[
+                 {
+                  False -> GridBox[
+                   {
+                    {
+                     PaneBox[
+                      ButtonBox[
+                       DynamicBox[
+                        FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                       ],
+                       ButtonFunction :> (Typeset`open$$ = True),
+                       Appearance -> None,
+                       BaseStyle -> { },
+                       Evaluator -> Automatic,
+                       Method -> "Preemptive"
+                      ],
+                      Alignment -> {Center, Center},
+                      ImageSize -> Dynamic[
+                       {
+                        Automatic,
+                        Times[
+                         3.5,
+                         Times[
+                          CurrentValue["FontCapHeight"],
+                          AbsoluteCurrentValue[Magnification]^(-1)
+                         ]
+                        ]
+                       }
+                      ]
+                     ],
+                     GraphicsBox[
+                      {
+                       Thickness[0.05],
+                       {
+                        FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                        FilledCurveBox[
+                         {
+                          {
+                           {1, 4, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0}
+                          }
+                         },
+                         {
+                          {
+                           {16., 17.},
+                           {17.104, 17.},
+                           {18., 16.104},
+                           {18., 15.},
+                           {18., 5.},
+                           {18., 3.896},
+                           {17.104, 3.},
+                           {16., 3.},
+                           {4., 3.},
+                           {2.896, 3.},
+                           {2., 3.896},
+                           {2., 5.},
+                           {2., 15.},
+                           {2., 16.104},
+                           {2.896, 17.},
+                           {4., 17.},
+                           {16., 17.}
+                          }
+                         }
+                        ]
+                       },
+                       {
+                        FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                        FilledCurveBox[
+                         {
+                          {
+                           {0, 2, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0}
+                          }
+                         },
+                         {
+                          {
+                           {9., 9.3159},
+                           {4., 6.1269},
+                           {4., 8.2219},
+                           {7., 10.032},
+                           {7., 10.08},
+                           {4., 11.889},
+                           {4., 13.984},
+                           {9., 10.795}
+                          }
+                         }
+                        ],
+                        FilledCurveBox[
+                         {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                         {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                        ]
+                       }
+                      },
+                      AspectRatio -> Automatic,
+                      ImageSize -> Dynamic[
+                       {
+                        Automatic,
+                        Times[
+                         3*CurrentValue["FontCapHeight"],
+                         AbsoluteCurrentValue[Magnification]^(-1)
+                        ]
+                       }
+                      ],
+                      PlotRange -> {{1., 20.}, {1., 18.}}
+                     ],
+                     GridBox[
+                      {
+                       {
+                        RowBox[
+                         {
+                          TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                          "\[InvisibleSpace]",
+                          TagBox["\"Hello\"", "SummaryItem"]
+                         }
+                        ]
+                       },
+                       {
+                        RowBox[
+                         {
+                          TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                          "\[InvisibleSpace]",
+                          TagBox["\"echo hello\"", "SummaryItem"]
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                      BaseStyle -> {
+                       ShowStringCharacters -> False,
+                       NumberMarks -> False,
+                       PrintPrecision -> 3,
+                       ShowSyntaxStyles -> False
+                      }
+                     ]
+                    }
+                   },
+                   GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                   AutoDelete -> False,
+                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                   BaselinePosition -> {1, 1}
+                  ],
+                  True -> GridBox[
+                   {
+                    {
+                     PaneBox[
+                      ButtonBox[
+                       DynamicBox[
+                        FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                       ],
+                       ButtonFunction :> (Typeset`open$$ = False),
+                       Appearance -> None,
+                       BaseStyle -> { },
+                       Evaluator -> Automatic,
+                       Method -> "Preemptive"
+                      ],
+                      Alignment -> {Center, Center},
+                      ImageSize -> Dynamic[
+                       {
+                        Automatic,
+                        Times[
+                         3.5,
+                         Times[
+                          CurrentValue["FontCapHeight"],
+                          AbsoluteCurrentValue[Magnification]^(-1)
+                         ]
+                        ]
+                       }
+                      ]
+                     ],
+                     GraphicsBox[
+                      {
+                       Thickness[0.05],
+                       {
+                        FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                        FilledCurveBox[
+                         {
+                          {
+                           {1, 4, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0},
+                           {1, 3, 3},
+                           {0, 1, 0}
+                          }
+                         },
+                         {
+                          {
+                           {16., 17.},
+                           {17.104, 17.},
+                           {18., 16.104},
+                           {18., 15.},
+                           {18., 5.},
+                           {18., 3.896},
+                           {17.104, 3.},
+                           {16., 3.},
+                           {4., 3.},
+                           {2.896, 3.},
+                           {2., 3.896},
+                           {2., 5.},
+                           {2., 15.},
+                           {2., 16.104},
+                           {2.896, 17.},
+                           {4., 17.},
+                           {16., 17.}
+                          }
+                         }
+                        ]
+                       },
+                       {
+                        FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                        FilledCurveBox[
+                         {
+                          {
+                           {0, 2, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0},
+                           {0, 1, 0}
+                          }
+                         },
+                         {
+                          {
+                           {9., 9.3159},
+                           {4., 6.1269},
+                           {4., 8.2219},
+                           {7., 10.032},
+                           {7., 10.08},
+                           {4., 11.889},
+                           {4., 13.984},
+                           {9., 10.795}
+                          }
+                         }
+                        ],
+                        FilledCurveBox[
+                         {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                         {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                        ]
+                       }
+                      },
+                      AspectRatio -> Automatic,
+                      ImageSize -> Dynamic[
+                       {
+                        Automatic,
+                        Times[
+                         3*CurrentValue["FontCapHeight"],
+                         AbsoluteCurrentValue[Magnification]^(-1)
+                        ]
+                       }
+                      ],
+                      PlotRange -> {{1., 20.}, {1., 18.}}
+                     ],
+                     GridBox[
+                      {
+                       {
+                        RowBox[
+                         {
+                          TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                          "\[InvisibleSpace]",
+                          TagBox["\"Hello\"", "SummaryItem"]
+                         }
+                        ]
+                       },
+                       {
+                        RowBox[
+                         {
+                          TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                          "\[InvisibleSpace]",
+                          TagBox["\"echo hello\"", "SummaryItem"]
+                         }
+                        ]
+                       },
+                       {
+                        RowBox[
+                         {
+                          TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                          "\[InvisibleSpace]",
+                          TagBox[
+                           DynamicModuleBox[
+                            {Wolfram`PacletCICD`Private`x$132552$$ = False},
+                            TagBox[
+                             GridBox[
+                              {
+                               {
+                                OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$132552$$]],
+                                PaneSelectorBox[
+                                 {
+                                  False -> TemplateBox[
+                                   {
+                                    "\"\[LeftAssociation] \"",
+                                    StyleBox[
+                                     "\"Hello\"",
+                                     "SummaryItemAnnotation",
+                                     FontSlant -> Italic,
+                                     StripOnInput -> False
+                                    ],
+                                    "\" \[RightAssociation]\""
+                                   },
+                                   "RowDefault"
+                                  ],
+                                  True -> TagBox[
+                                   GridBox[
+                                    {
+                                     {
+                                      StyleBox[
+                                       "\"name\"",
+                                       "SummaryItemAnnotation",
+                                       StripOnInput -> False
+                                      ],
+                                      StyleBox["\"Hello\"", "SummaryItem", StripOnInput -> False]
+                                     },
+                                     {
+                                      StyleBox[
+                                       "\"run\"",
+                                       "SummaryItemAnnotation",
+                                       StripOnInput -> False
+                                      ],
+                                      StyleBox[
+                                       "\"echo hello\"",
+                                       "SummaryItem",
+                                       StripOnInput -> False
+                                      ]
+                                     },
+                                     {
+                                      StyleBox[
+                                       "\"env\"",
+                                       "SummaryItemAnnotation",
+                                       StripOnInput -> False
+                                      ],
+                                      DynamicModuleBox[
+                                       {Wolfram`PacletCICD`Private`x$$ = False},
+                                       TagBox[
+                                        GridBox[
+                                         {
+                                          {
+                                           OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                           PaneSelectorBox[
+                                            {
+                                             False -> "\"\[LeftAssociation]\[Ellipsis]\[RightAssociation]\"",
+                                             True -> TagBox[
+                                              GridBox[
+                                               {
+                                                {
+                                                 StyleBox[
+                                                  "\"WOLFRAM_SYSTEM_ID\"",
+                                                  "SummaryItemAnnotation",
+                                                  StripOnInput -> False
+                                                 ],
+                                                 StyleBox[
+                                                  "\"Linux-x86-64\"",
+                                                  "SummaryItem",
+                                                  StripOnInput -> False
+                                                 ]
+                                                },
+                                                {
+                                                 StyleBox[
+                                                  "\"WOLFRAMSCRIPT_ENTITLEMENTID\"",
+                                                  "SummaryItemAnnotation",
+                                                  StripOnInput -> False
+                                                 ],
+                                                 StyleBox[
+                                                  "\"${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\"",
+                                                  "SummaryItem",
+                                                  StripOnInput -> False
+                                                 ]
+                                                }
+                                               },
+                                               GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                               AutoDelete -> False,
+                                               GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                               GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                               FrameStyle -> GrayLevel[0, 0.1]
+                                              ],
+                                              "Grid"
+                                             ]
+                                            },
+                                            Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                            ImageSize -> Automatic,
+                                            ContentPadding -> False
+                                           ]
+                                          }
+                                         },
+                                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                         AutoDelete -> False,
+                                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                        ],
+                                        "Grid"
+                                       ],
+                                       DynamicModuleValues :> { }
+                                      ]
+                                     }
+                                    },
+                                    GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                    AutoDelete -> False,
+                                    GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                    FrameStyle -> GrayLevel[0, 0.1]
+                                   ],
+                                   "Grid"
+                                  ]
+                                 },
+                                 Dynamic[Wolfram`PacletCICD`Private`x$132552$$],
+                                 ImageSize -> Automatic,
+                                 ContentPadding -> False
+                                ]
+                               }
+                              },
+                              GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                              AutoDelete -> False,
+                              GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                             ],
+                             "Grid"
+                            ],
+                            DynamicModuleValues :> { }
+                           ],
+                           "SummaryItem"
+                          ]
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                      BaseStyle -> {
+                       ShowStringCharacters -> False,
+                       NumberMarks -> False,
+                       PrintPrecision -> 3,
+                       ShowSyntaxStyles -> False
+                      }
+                     ]
+                    }
+                   },
+                   GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                   AutoDelete -> False,
+                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                   BaselinePosition -> {1, 1}
+                  ]
+                 },
+                 Dynamic[Typeset`open$$],
+                 ImageSize -> Automatic
+                ]
+               },
+               "SummaryPanel"
+              ],
+              DynamicModuleValues :> { }
+             ],
+             "]"
+            }
+           ],
+           WorkflowStep[
+            "Hello",
+            Association[
+             "name" -> "Hello",
+             "run" -> "echo hello",
+             "env" -> Association[
+              "WOLFRAM_SYSTEM_ID" -> "Linux-x86-64",
+              "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+             ]
+            ]
+           ],
+           Editable -> False,
+           SelectWithContents -> True,
+           Selectable -> False
+          ]
+         ],
+         "Output",
+         CellLabel -> "Out[1]=",
+         CellID -> 100363914
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["\t", "ExampleDelimiter"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleDelimiter",
+         CellID -> 116242657
+        ],
+        Cell[
+         "Create a compilation job for Linux:",
+         "ExampleText",
+         CellID -> 735056993
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[
+             RowBox[
+              {
+               "WorkflowJob",
+               "[",
+               RowBox[
+                {
+                 RowBox[
+                  {
+                   "{",
+                   "\[IndentingNewLine]",
+                   RowBox[
+                    {
+                     "\"Checkout\"",
+                     ",",
+                     "\[IndentingNewLine]",
+                     RowBox[
+                      {
+                       "WorkflowEvaluate",
+                       "[",
+                       RowBox[
+                        {
+                         "\"apt-get -y update && apt-get -y install build-essential\"",
+                         ",",
+                         "\"InstallBuildTools\""
+                        }
+                       ],
+                       "]"
+                      }
+                     ],
+                     ",",
+                     "\[IndentingNewLine]",
+                     RowBox[{"File", "[", "\"Scripts/Compile.wls\"", "]"}]
+                    }
+                   ],
+                   "\[IndentingNewLine]",
+                   "}"
+                  }
+                 ],
+                 ",",
+                 RowBox[{"OperatingSystem", "\[Rule]", "\"Linux\""}]
+                }
+               ],
+               "]"
+              }
+             ]
+            ],
+            "Input",
+            CellLabel -> "In[1]:=",
+            CellID -> 364422240
+           ],
+           Cell[
+            BoxData[
+             InterpretationBox[
+              RowBox[
+               {
+                TagBox["WorkflowJob", "SummaryHead"],
+                "[",
+                DynamicModuleBox[
+                 {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                 TemplateBox[
+                  {
+                   PaneSelectorBox[
+                    {
+                     False -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = True),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         RasterBox[
+                          CompressedData[
+                           "\n1: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\n+n6BXKhyPjo+sLuPXszNYAYzeG/4f2bzlWs=\n              "
+                          ],
+                          {{0, 0}, {69.81818181818181, 72.}},
+                          {0, 255},
+                          ImageResolution -> {132, 132},
+                          ColorFunction -> RGBColor
+                         ],
+                         {
+                          ImageSize -> Dynamic[
+                           {
+                            Automatic,
+                            Times[
+                             3*CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           }
+                          ],
+                          PlotRange -> {{0, 69.81818181818181}, {0, 72.}}
+                         }
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"UntitledJob\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Steps: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["3", "SummaryItem"]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ],
+                     True -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = False),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         RasterBox[
+                          CompressedData[
+                           "\n1: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\n+n6BXKhyPjo+sLuPXszNYAYzeG/4f2bzlWs=\n              "
+                          ],
+                          {{0, 0}, {69.81818181818181, 72.}},
+                          {0, 255},
+                          ImageResolution -> {132, 132},
+                          ColorFunction -> RGBColor
+                         ],
+                         {
+                          ImageSize -> Dynamic[
+                           {
+                            Automatic,
+                            Times[
+                             3*CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           }
+                          ],
+                          PlotRange -> {{0, 69.81818181818181}, {0, 72.}}
+                         }
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"UntitledJob\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Steps: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["3", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              DynamicModuleBox[
+                               {Wolfram`PacletCICD`Private`x$132637$$ = False},
+                               TagBox[
+                                GridBox[
+                                 {
+                                  {
+                                   OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$132637$$]],
+                                   PaneSelectorBox[
+                                    {
+                                     False -> TemplateBox[
+                                      {
+                                       "\"\[LeftAssociation] \"",
+                                       StyleBox[
+                                        "\"UntitledJob\"",
+                                        "SummaryItemAnnotation",
+                                        FontSlant -> Italic,
+                                        StripOnInput -> False
+                                       ],
+                                       "\" \[RightAssociation]\""
+                                      },
+                                      "RowDefault"
+                                     ],
+                                     True -> TagBox[
+                                      GridBox[
+                                       {
+                                        {
+                                         StyleBox[
+                                          "\"name\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         StyleBox[
+                                          "\"UntitledJob\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"runs-on\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         StyleBox[
+                                          "\"ubuntu-latest\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"container\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"\[LeftAssociation]\[Ellipsis]\[RightAssociation]\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    StyleBox[
+                                                     "\"image\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"wolframresearch/wolframengine:latest\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   },
+                                                   {
+                                                    StyleBox[
+                                                     "\"options\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"--user root\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                  AutoDelete -> False,
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Grid"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"env\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"\[LeftAssociation]\[Ellipsis]\[RightAssociation]\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    StyleBox[
+                                                     "\"WOLFRAM_SYSTEM_ID\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"Linux-x86-64\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   },
+                                                   {
+                                                    StyleBox[
+                                                     "\"WOLFRAMSCRIPT_ENTITLEMENTID\"",
+                                                     "SummaryItemAnnotation",
+                                                     StripOnInput -> False
+                                                    ],
+                                                    StyleBox[
+                                                     "\"${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\"",
+                                                     "SummaryItem",
+                                                     StripOnInput -> False
+                                                    ]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                  AutoDelete -> False,
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Grid"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"steps\"",
+                                          "SummaryItemAnnotation",
+                                          StripOnInput -> False
+                                         ],
+                                         DynamicModuleBox[
+                                          {Wolfram`PacletCICD`Private`x$132644$$ = False},
+                                          TagBox[
+                                           GridBox[
+                                            {
+                                             {
+                                              OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$132644$$]],
+                                              PaneSelectorBox[
+                                               {
+                                                False -> "\"{\[Ellipsis]}\"",
+                                                True -> TagBox[
+                                                 GridBox[
+                                                  {
+                                                   {
+                                                    DynamicModuleBox[
+                                                     {Wolfram`PacletCICD`Private`x$$ = False},
+                                                     TagBox[
+                                                      GridBox[
+                                                       {
+                                                        {
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                                         PaneSelectorBox[
+                                                          {
+                                                           False -> TemplateBox[
+                                                            {
+                                                             "\"\[LeftAssociation] \"",
+                                                             StyleBox[
+                                                              "\"Checkout\"",
+                                                              "SummaryItemAnnotation",
+                                                              FontSlant -> Italic,
+                                                              StripOnInput -> False
+                                                             ],
+                                                             "\" \[RightAssociation]\""
+                                                            },
+                                                            "RowDefault"
+                                                           ],
+                                                           True -> TagBox[
+                                                            GridBox[
+                                                             {
+                                                              {
+                                                               StyleBox[
+                                                                "\"name\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"Checkout\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"id\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"checkout-code-step\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"uses\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"actions/checkout@v2\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              }
+                                                             },
+                                                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                             AutoDelete -> False,
+                                                             GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                             FrameStyle -> GrayLevel[0, 0.1]
+                                                            ],
+                                                            "Grid"
+                                                           ]
+                                                          },
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                                          ImageSize -> Automatic,
+                                                          ContentPadding -> False
+                                                         ]
+                                                        }
+                                                       },
+                                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                       AutoDelete -> False,
+                                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                                      ],
+                                                      "Grid"
+                                                     ],
+                                                     DynamicModuleValues :> { }
+                                                    ]
+                                                   },
+                                                   {
+                                                    DynamicModuleBox[
+                                                     {Wolfram`PacletCICD`Private`x$$ = False},
+                                                     TagBox[
+                                                      GridBox[
+                                                       {
+                                                        {
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                                         PaneSelectorBox[
+                                                          {
+                                                           False -> TemplateBox[
+                                                            {
+                                                             "\"\[LeftAssociation] \"",
+                                                             StyleBox[
+                                                              "\"InstallBuildTools\"",
+                                                              "SummaryItemAnnotation",
+                                                              FontSlant -> Italic,
+                                                              StripOnInput -> False
+                                                             ],
+                                                             "\" \[RightAssociation]\""
+                                                            },
+                                                            "RowDefault"
+                                                           ],
+                                                           True -> TagBox[
+                                                            GridBox[
+                                                             {
+                                                              {
+                                                               StyleBox[
+                                                                "\"name\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"InstallBuildTools\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"run\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"apt-get -y update && apt-get -y install build-essential\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              }
+                                                             },
+                                                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                             AutoDelete -> False,
+                                                             GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                             FrameStyle -> GrayLevel[0, 0.1]
+                                                            ],
+                                                            "Grid"
+                                                           ]
+                                                          },
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                                          ImageSize -> Automatic,
+                                                          ContentPadding -> False
+                                                         ]
+                                                        }
+                                                       },
+                                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                       AutoDelete -> False,
+                                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                                      ],
+                                                      "Grid"
+                                                     ],
+                                                     DynamicModuleValues :> { }
+                                                    ]
+                                                   },
+                                                   {
+                                                    DynamicModuleBox[
+                                                     {Wolfram`PacletCICD`Private`x$$ = False},
+                                                     TagBox[
+                                                      GridBox[
+                                                       {
+                                                        {
+                                                         OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                                         PaneSelectorBox[
+                                                          {
+                                                           False -> TemplateBox[
+                                                            {
+                                                             "\"\[LeftAssociation] \"",
+                                                             StyleBox[
+                                                              "\"Compile\"",
+                                                              "SummaryItemAnnotation",
+                                                              FontSlant -> Italic,
+                                                              StripOnInput -> False
+                                                             ],
+                                                             "\" \[RightAssociation]\""
+                                                            },
+                                                            "RowDefault"
+                                                           ],
+                                                           True -> TagBox[
+                                                            GridBox[
+                                                             {
+                                                              {
+                                                               StyleBox[
+                                                                "\"name\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"Compile\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              },
+                                                              {
+                                                               StyleBox[
+                                                                "\"run\"",
+                                                                "SummaryItemAnnotation",
+                                                                StripOnInput -> False
+                                                               ],
+                                                               StyleBox[
+                                                                "\"wolframscript Scripts/Compile.wls\"",
+                                                                "SummaryItem",
+                                                                StripOnInput -> False
+                                                               ]
+                                                              }
+                                                             },
+                                                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                                             AutoDelete -> False,
+                                                             GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                             FrameStyle -> GrayLevel[0, 0.1]
+                                                            ],
+                                                            "Grid"
+                                                           ]
+                                                          },
+                                                          Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                                          ImageSize -> Automatic,
+                                                          ContentPadding -> False
+                                                         ]
+                                                        }
+                                                       },
+                                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                       AutoDelete -> False,
+                                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                                      ],
+                                                      "Grid"
+                                                     ],
+                                                     DynamicModuleValues :> { }
+                                                    ]
+                                                   }
+                                                  },
+                                                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                                  DefaultBaseStyle -> "Column",
+                                                  GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                                  GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                                  FrameStyle -> GrayLevel[0, 0.1]
+                                                 ],
+                                                 "Column"
+                                                ]
+                                               },
+                                               Dynamic[Wolfram`PacletCICD`Private`x$132644$$],
+                                               ImageSize -> Automatic,
+                                               ContentPadding -> False
+                                              ]
+                                             }
+                                            },
+                                            GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                            AutoDelete -> False,
+                                            GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                           ],
+                                           "Grid"
+                                          ],
+                                          DynamicModuleValues :> { }
+                                         ]
+                                        }
+                                       },
+                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                       AutoDelete -> False,
+                                       GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                       FrameStyle -> GrayLevel[0, 0.1]
+                                      ],
+                                      "Grid"
+                                     ]
+                                    },
+                                    Dynamic[Wolfram`PacletCICD`Private`x$132637$$],
+                                    ImageSize -> Automatic,
+                                    ContentPadding -> False
+                                   ]
+                                  }
+                                 },
+                                 GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                 AutoDelete -> False,
+                                 GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                ],
+                                "Grid"
+                               ],
+                               DynamicModuleValues :> { }
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ]
+                    },
+                    Dynamic[Typeset`open$$],
+                    ImageSize -> Automatic
+                   ]
+                  },
+                  "SummaryPanel"
+                 ],
+                 DynamicModuleValues :> { }
+                ],
+                "]"
+               }
+              ],
+              WorkflowJob[
+               "UntitledJob",
+               Association[
+                "name" -> "UntitledJob",
+                "runs-on" -> "ubuntu-latest",
+                "container" -> Association[
+                 "image" -> "wolframresearch/wolframengine:latest",
+                 "options" -> "--user root"
+                ],
+                "env" -> Association[
+                 "WOLFRAM_SYSTEM_ID" -> "Linux-x86-64",
+                 "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+                ],
+                "steps" -> {
+                 Association[
+                  "name" -> "Checkout",
+                  "id" -> "checkout-code-step",
+                  "uses" -> "actions/checkout@v2"
+                 ],
+                 Association[
+                  "name" -> "InstallBuildTools",
+                  "run" -> "apt-get -y update && apt-get -y install build-essential"
+                 ],
+                 Association[
+                  "name" -> "Compile",
+                  "run" -> "wolframscript Scripts/Compile.wls"
+                 ]
+                }
+               ]
+              ],
+              Editable -> False,
+              SelectWithContents -> True,
+              Selectable -> False
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[1]=",
+            CellID -> 462674417
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell["See the steps:", "ExampleText", CellID -> 10683892],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"%", "[", "\"Steps\"", "]"}]],
+            "Input",
+            CellLabel -> "In[2]:=",
+            CellID -> 733809234
+           ],
+           Cell[
+            BoxData[
+             RowBox[
+              {
+               "{",
+               RowBox[
+                {
+                 InterpretationBox[
+                  RowBox[
+                   {
+                    TagBox["WorkflowStep", "SummaryHead"],
+                    "[",
+                    DynamicModuleBox[
+                     {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                     TemplateBox[
+                      {
+                       PaneSelectorBox[
+                        {
+                         False -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = True),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             RasterBox[
+                              CompressedData[
+                               "\n1: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\nX58XfzvqWtT4Pm4AztJEPPRCbewT/f2oXdkwG4kJ0IN6mGsX2LnIhJq0XvgT\nhb/furWzHXAGw4/9op4LjzfpF7+yK3aHB+pAoQd4IYr066x6q/2XwW+pavsC\ntTH4wPD+w4XIcPmBtwqs29q/Ezm5v1OTsXGFOJ74TyLxnw3fnKUm2H8MDzeS\n+NXcURYQvzoxfrdC/CbOS48s+sdhjF3k28jCv74ui5k+mSAcEr9HJjx+lTcs\nnI2axlx85n0JUp749wrIn51tsU53XyzUOCR/QuyqUx/J9fMI5kjgKuR1ePck\nxrU6Zc0SEf7E5U9Y6xDQR4S/kIu82BjdPdvLwSf6+VpPn2FJwx42PM5Inom6\nnfbz14xNAfxlQE1KTZTv+y5YN69+uORS3pjj1w9S802JUnPSZN9vUT8M/M0T\ntQa+g74F3HW5fpioiw7Qb+TvW33dqM0oTh78nJtTUKhNoZbqFvXbq3XiA7Q1\noUs/oJ85Oczh5TrCsz79PKNytZxPu5FRmw2sJsYg41Nv0NxRWmguOXPCp7P1\nOa/sIvKfxOzE+k3gJCTehVOnrc21bPnuPMY0nnFhbsVYRo5Dnib9kEMtm/53\nXp261lvDIb/9Uth9FyXxaWtaEa4ITcqZY8g9tNdS1XIWcpCAZ06Wzd+fNSz9\n497Qm5fMIWf75DV855eD/n8o5ovJ\n                "
+                              ],
+                              {{0, 0}, {48., 48.}},
+                              {0, 255},
+                              ColorFunction -> RGBColor
+                             ],
+                             {ImageSize -> 24, PlotRange -> {{0, 48.}, {0, 48.}}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"checkout-code-step\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Action: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TemplateBox[
+                                   {
+                                    "\"actions/checkout\"",
+                                    "https://github.com/actions/checkout"
+                                   },
+                                   "HyperlinkURL"
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ],
+                         True -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = False),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             RasterBox[
+                              CompressedData[
+                               "\n1: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\nX58XfzvqWtT4Pm4AztJEPPRCbewT/f2oXdkwG4kJ0IN6mGsX2LnIhJq0XvgT\nhb/furWzHXAGw4/9op4LjzfpF7+yK3aHB+pAoQd4IYr066x6q/2XwW+pavsC\ntTH4wPD+w4XIcPmBtwqs29q/Ezm5v1OTsXGFOJ74TyLxnw3fnKUm2H8MDzeS\n+NXcURYQvzoxfrdC/CbOS48s+sdhjF3k28jCv74ui5k+mSAcEr9HJjx+lTcs\nnI2axlx85n0JUp749wrIn51tsU53XyzUOCR/QuyqUx/J9fMI5kjgKuR1ePck\nxrU6Zc0SEf7E5U9Y6xDQR4S/kIu82BjdPdvLwSf6+VpPn2FJwx42PM5Inom6\nnfbz14xNAfxlQE1KTZTv+y5YN69+uORS3pjj1w9S802JUnPSZN9vUT8M/M0T\ntQa+g74F3HW5fpioiw7Qb+TvW33dqM0oTh78nJtTUKhNoZbqFvXbq3XiA7Q1\noUs/oJ85Oczh5TrCsz79PKNytZxPu5FRmw2sJsYg41Nv0NxRWmguOXPCp7P1\nOa/sIvKfxOzE+k3gJCTehVOnrc21bPnuPMY0nnFhbsVYRo5Dnib9kEMtm/53\nXp261lvDIb/9Uth9FyXxaWtaEa4ITcqZY8g9tNdS1XIWcpCAZ06Wzd+fNSz9\n497Qm5fMIWf75DV855eD/n8o5ovJ\n                "
+                              ],
+                              {{0, 0}, {48., 48.}},
+                              {0, 255},
+                              ColorFunction -> RGBColor
+                             ],
+                             {ImageSize -> 24, PlotRange -> {{0, 48.}, {0, 48.}}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"checkout-code-step\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Action: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TemplateBox[
+                                   {
+                                    "\"actions/checkout\"",
+                                    "https://github.com/actions/checkout"
+                                   },
+                                   "HyperlinkURL"
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  DynamicModuleBox[
+                                   {Wolfram`PacletCICD`Private`x$$ = False},
+                                   TagBox[
+                                    GridBox[
+                                     {
+                                      {
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                       PaneSelectorBox[
+                                        {
+                                         False -> TemplateBox[
+                                          {
+                                           "\"\[LeftAssociation] \"",
+                                           StyleBox[
+                                            "\"checkout-code-step\"",
+                                            "SummaryItemAnnotation",
+                                            FontSlant -> Italic,
+                                            StripOnInput -> False
+                                           ],
+                                           "\" \[RightAssociation]\""
+                                          },
+                                          "RowDefault"
+                                         ],
+                                         True -> TagBox[
+                                          GridBox[
+                                           {
+                                            {
+                                             StyleBox[
+                                              "\"name\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"checkout-code-step\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"id\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"checkout-code-step\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"uses\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"actions/checkout@v2\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            }
+                                           },
+                                           GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                           AutoDelete -> False,
+                                           GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                           GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                           FrameStyle -> GrayLevel[0, 0.1]
+                                          ],
+                                          "Grid"
+                                         ]
+                                        },
+                                        Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                        ImageSize -> Automatic,
+                                        ContentPadding -> False
+                                       ]
+                                      }
+                                     },
+                                     GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                     AutoDelete -> False,
+                                     GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                    ],
+                                    "Grid"
+                                   ],
+                                   DynamicModuleValues :> { }
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ]
+                        },
+                        Dynamic[Typeset`open$$],
+                        ImageSize -> Automatic
+                       ]
+                      },
+                      "SummaryPanel"
+                     ],
+                     DynamicModuleValues :> { }
+                    ],
+                    "]"
+                   }
+                  ],
+                  WorkflowStep[
+                   "checkout-code-step",
+                   Association[
+                    "name" -> "checkout-code-step",
+                    "id" -> "checkout-code-step",
+                    "uses" -> "actions/checkout@v2"
+                   ]
+                  ],
+                  Editable -> False,
+                  SelectWithContents -> True,
+                  Selectable -> False
+                 ],
+                 ",",
+                 InterpretationBox[
+                  RowBox[
+                   {
+                    TagBox["WorkflowStep", "SummaryHead"],
+                    "[",
+                    DynamicModuleBox[
+                     {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                     TemplateBox[
+                      {
+                       PaneSelectorBox[
+                        {
+                         False -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = True),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"InstallBuildTools\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TagBox[
+                                   TooltipBox[
+                                    "\"apt-get -y update && apt-get -y install  \[Ellipsis]\"",
+                                    "\"apt-get -y update && apt-get -y install build-essential\"",
+                                    LabelStyle -> "TextStyling"
+                                   ],
+                                   Function[
+                                    Annotation[
+                                     #1,
+                                     "apt-get -y update && apt-get -y install build-essential",
+                                     "Tooltip"
+                                    ]
+                                   ]
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ],
+                         True -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = False),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"InstallBuildTools\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  TagBox[
+                                   TooltipBox[
+                                    "\"apt-get -y update && apt-get -y install  \[Ellipsis]\"",
+                                    "\"apt-get -y update && apt-get -y install build-essential\"",
+                                    LabelStyle -> "TextStyling"
+                                   ],
+                                   Function[
+                                    Annotation[
+                                     #1,
+                                     "apt-get -y update && apt-get -y install build-essential",
+                                     "Tooltip"
+                                    ]
+                                   ]
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  DynamicModuleBox[
+                                   {Wolfram`PacletCICD`Private`x$$ = False},
+                                   TagBox[
+                                    GridBox[
+                                     {
+                                      {
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                       PaneSelectorBox[
+                                        {
+                                         False -> TemplateBox[
+                                          {
+                                           "\"\[LeftAssociation] \"",
+                                           StyleBox[
+                                            "\"InstallBuildTools\"",
+                                            "SummaryItemAnnotation",
+                                            FontSlant -> Italic,
+                                            StripOnInput -> False
+                                           ],
+                                           "\" \[RightAssociation]\""
+                                          },
+                                          "RowDefault"
+                                         ],
+                                         True -> TagBox[
+                                          GridBox[
+                                           {
+                                            {
+                                             StyleBox[
+                                              "\"name\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"InstallBuildTools\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"run\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"apt-get -y update && apt-get -y install build-essential\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            }
+                                           },
+                                           GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                           AutoDelete -> False,
+                                           GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                           GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                           FrameStyle -> GrayLevel[0, 0.1]
+                                          ],
+                                          "Grid"
+                                         ]
+                                        },
+                                        Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                        ImageSize -> Automatic,
+                                        ContentPadding -> False
+                                       ]
+                                      }
+                                     },
+                                     GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                     AutoDelete -> False,
+                                     GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                    ],
+                                    "Grid"
+                                   ],
+                                   DynamicModuleValues :> { }
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ]
+                        },
+                        Dynamic[Typeset`open$$],
+                        ImageSize -> Automatic
+                       ]
+                      },
+                      "SummaryPanel"
+                     ],
+                     DynamicModuleValues :> { }
+                    ],
+                    "]"
+                   }
+                  ],
+                  WorkflowStep[
+                   "InstallBuildTools",
+                   Association[
+                    "name" -> "InstallBuildTools",
+                    "run" -> "apt-get -y update && apt-get -y install build-essential"
+                   ]
+                  ],
+                  Editable -> False,
+                  SelectWithContents -> True,
+                  Selectable -> False
+                 ],
+                 ",",
+                 InterpretationBox[
+                  RowBox[
+                   {
+                    TagBox["WorkflowStep", "SummaryHead"],
+                    "[",
+                    DynamicModuleBox[
+                     {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                     TemplateBox[
+                      {
+                       PaneSelectorBox[
+                        {
+                         False -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = True),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"Compile\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  "\"wolframscript Scripts/Compile.wls\"",
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ],
+                         True -> GridBox[
+                          {
+                           {
+                            PaneBox[
+                             ButtonBox[
+                              DynamicBox[
+                               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                              ],
+                              ButtonFunction :> (Typeset`open$$ = False),
+                              Appearance -> None,
+                              BaseStyle -> { },
+                              Evaluator -> Automatic,
+                              Method -> "Preemptive"
+                             ],
+                             Alignment -> {Center, Center},
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3.5,
+                                Times[
+                                 CurrentValue["FontCapHeight"],
+                                 AbsoluteCurrentValue[Magnification]^(-1)
+                                ]
+                               ]
+                              }
+                             ]
+                            ],
+                            GraphicsBox[
+                             {
+                              Thickness[0.05],
+                              {
+                               FaceForm[{RGBColor[0.749, 0.749, 0.749], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {1, 4, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0},
+                                  {1, 3, 3},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {16., 17.},
+                                  {17.104, 17.},
+                                  {18., 16.104},
+                                  {18., 15.},
+                                  {18., 5.},
+                                  {18., 3.896},
+                                  {17.104, 3.},
+                                  {16., 3.},
+                                  {4., 3.},
+                                  {2.896, 3.},
+                                  {2., 3.896},
+                                  {2., 5.},
+                                  {2., 15.},
+                                  {2., 16.104},
+                                  {2.896, 17.},
+                                  {4., 17.},
+                                  {16., 17.}
+                                 }
+                                }
+                               ]
+                              },
+                              {
+                               FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                               FilledCurveBox[
+                                {
+                                 {
+                                  {0, 2, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0},
+                                  {0, 1, 0}
+                                 }
+                                },
+                                {
+                                 {
+                                  {9., 9.3159},
+                                  {4., 6.1269},
+                                  {4., 8.2219},
+                                  {7., 10.032},
+                                  {7., 10.08},
+                                  {4., 11.889},
+                                  {4., 13.984},
+                                  {9., 10.795}
+                                 }
+                                }
+                               ],
+                               FilledCurveBox[
+                                {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                                {{{16., 5.}, {10., 5.}, {10., 6.}, {16., 6.}}}
+                               ]
+                              }
+                             },
+                             AspectRatio -> Automatic,
+                             ImageSize -> Dynamic[
+                              {
+                               Automatic,
+                               Times[
+                                3*CurrentValue["FontCapHeight"],
+                                AbsoluteCurrentValue[Magnification]^(-1)
+                               ]
+                              }
+                             ],
+                             PlotRange -> {{1., 20.}, {1., 18.}}
+                            ],
+                            GridBox[
+                             {
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Name: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox["\"Compile\"", "SummaryItem"]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Command: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  "\"wolframscript Scripts/Compile.wls\"",
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              },
+                              {
+                               RowBox[
+                                {
+                                 TagBox["\"Data: \"", "SummaryItemAnnotation"],
+                                 "\[InvisibleSpace]",
+                                 TagBox[
+                                  DynamicModuleBox[
+                                   {Wolfram`PacletCICD`Private`x$$ = False},
+                                   TagBox[
+                                    GridBox[
+                                     {
+                                      {
+                                       OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                       PaneSelectorBox[
+                                        {
+                                         False -> TemplateBox[
+                                          {
+                                           "\"\[LeftAssociation] \"",
+                                           StyleBox[
+                                            "\"Compile\"",
+                                            "SummaryItemAnnotation",
+                                            FontSlant -> Italic,
+                                            StripOnInput -> False
+                                           ],
+                                           "\" \[RightAssociation]\""
+                                          },
+                                          "RowDefault"
+                                         ],
+                                         True -> TagBox[
+                                          GridBox[
+                                           {
+                                            {
+                                             StyleBox[
+                                              "\"name\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"Compile\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            },
+                                            {
+                                             StyleBox[
+                                              "\"run\"",
+                                              "SummaryItemAnnotation",
+                                              StripOnInput -> False
+                                             ],
+                                             StyleBox[
+                                              "\"wolframscript Scripts/Compile.wls\"",
+                                              "SummaryItem",
+                                              StripOnInput -> False
+                                             ]
+                                            }
+                                           },
+                                           GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+                                           AutoDelete -> False,
+                                           GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                           GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                           FrameStyle -> GrayLevel[0, 0.1]
+                                          ],
+                                          "Grid"
+                                         ]
+                                        },
+                                        Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                        ImageSize -> Automatic,
+                                        ContentPadding -> False
+                                       ]
+                                      }
+                                     },
+                                     GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                     AutoDelete -> False,
+                                     GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                    ],
+                                    "Grid"
+                                   ],
+                                   DynamicModuleValues :> { }
+                                  ],
+                                  "SummaryItem"
+                                 ]
+                                }
+                               ]
+                              }
+                             },
+                             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                             AutoDelete -> False,
+                             GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                             BaseStyle -> {
+                              ShowStringCharacters -> False,
+                              NumberMarks -> False,
+                              PrintPrecision -> 3,
+                              ShowSyntaxStyles -> False
+                             }
+                            ]
+                           }
+                          },
+                          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                          AutoDelete -> False,
+                          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                          BaselinePosition -> {1, 1}
+                         ]
+                        },
+                        Dynamic[Typeset`open$$],
+                        ImageSize -> Automatic
+                       ]
+                      },
+                      "SummaryPanel"
+                     ],
+                     DynamicModuleValues :> { }
+                    ],
+                    "]"
+                   }
+                  ],
+                  WorkflowStep[
+                   "Compile",
+                   Association[
+                    "name" -> "Compile",
+                    "run" -> "wolframscript Scripts/Compile.wls"
+                   ]
+                  ],
+                  Editable -> False,
+                  SelectWithContents -> True,
+                  Selectable -> False
+                 ]
+                }
+               ],
+               "}"
+              }
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[2]=",
+            CellID -> 377576385
+           ]
+          },
+          Open
+         ]
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
   ],
   Cell[
    CellGroupData[
@@ -341,10 +3053,19 @@ Notebook[
    ]
   ]
  },
+ WindowStatusArea -> Automatic,
  TaggingRules -> <|
   "InformationPopupMenuItemAdded" -> True,
   "Author" -> "rhennigan",
-  "CreationDate" -> "02-21-2022 15:38:42"
+  "CreationDate" -> "02-21-2022 15:38:42",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 2, 21, 17, 55, 39.605504`9.35033042706348},
+   "Instant",
+   "Gregorian",
+   -5.
+  ],
+  "NotebookUUID" -> "7f896837-a543-42c2-aadd-b18117a3ccef"
  |>,
  CellContext -> "Global`",
  FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",

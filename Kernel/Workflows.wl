@@ -1286,6 +1286,7 @@ normalizeForYAML[ k___, key_ -> val_ ] :=
 (* ::Subsubsection::Closed:: *)
 (*toCanonicalProp*)
 toCanonicalProp[ k___, "Environment"|"ProcessEnvironment" ] := "env";
+toCanonicalProp[ k___, "environment"|"processenvironment" ] := "env";
 toCanonicalProp[ "jobs", job_String ] := job;
 toCanonicalProp[ k___, "with", var_String ] := var;
 toCanonicalProp[ k___, "env", var_String ] := var;
