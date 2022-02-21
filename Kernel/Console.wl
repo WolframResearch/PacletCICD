@@ -9,6 +9,7 @@ Begin[ "`Private`" ];
 
 $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 $ContextAliases[ "dcc`" ] = "DefinitionNotebookClient`Console`PackagePrivate`";
+$ContextAliases[ "ci`"  ] = "CodeInspector`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -35,6 +36,44 @@ ConsoleLog[ e_, f_, { l1_Integer, l2_Integer }, opts: OptionsPattern[ ] ] :=
         f,
         { { l1, 1 }, { l2, -1 } },
         opts
+    ];
+
+ConsoleLog[ ins_ci`InspectionObject, opts: OptionsPattern[ ] ] :=
+    catchTop @ Enclose @ Module[ { msg0, more, msg, level },
+        msg   = ConfirmBy[ ins[ "Description" ], StringQ ];
+        more  = ConfirmMatch[ ins[ "AdditionalDescriptions" ], { ___String } ];
+        msg   = StringRiffle[ Flatten @ { msg, more }, " " ];
+        level = ConfirmBy[ ins[ "Severity" ], StringQ ];
+
+        ConsoleLog[
+            StringReplace[ msg, "``" -> "`" ],
+            ins,
+            opts,
+            "Level" -> level
+        ]
+    ];
+
+ConsoleLog[ expr_, ins_ci`InspectionObject, opts: OptionsPattern[ ] ] :=
+    catchTop @ ConsoleLog[ Unevaluated @ expr, ins, None, opts ];
+
+ConsoleLog[ expr_, ins_ci`InspectionObject, None, opts: OptionsPattern[ ] ] :=
+    catchTop @ Module[ { type, level, indent, output },
+
+        type   = OptionValue[ "ConsoleType" ];
+        level  = OptionValue[ "Level" ];
+        indent = consoleIndentSize @ OptionValue[ "IndentSize" ];
+        output = consoleOutputRule @ OptionValue[ "Output" ];
+
+        withConsoleSettings[
+            { level, type },
+            dnc`ConsolePrint[
+                Defer @ expr,
+                output,
+                "IndentSize"        -> indent,
+                "Level"             -> level,
+                "SourceInformation" -> ins
+            ]
+        ]
     ];
 
 ConsoleLog[ expr_, file_, pos_, opts: OptionsPattern[ ] ] :=

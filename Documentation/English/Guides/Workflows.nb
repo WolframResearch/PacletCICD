@@ -70,7 +70,59 @@ Notebook[
    CellGroupData[
     {
      Cell["Workflows", "GuideTitle", CellID -> 178925003],
-     Cell["XXXX", "GuideAbstract", CellID -> 190340457]
+     Cell[
+      TextData[
+       {
+        "A ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " consists of some metadata and one or more ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " objects. Each ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " similarly contains its own metadata and one or more ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " objects. Jobs can be configured to run on different operating systems, sequentially, or in parallel. Steps can be configured to run arbitrary Wolfram Language code, scripts, or commands passed directly to the command line in the current job environment."
+       }
+      ],
+      "GuideAbstract",
+      CellID -> 190340457
+     ]
     },
     Open
    ]
@@ -80,89 +132,224 @@ Notebook[
     {
      Cell["", "GuideFunctionsSection", CellID -> 452930400],
      Cell[
-      TextData[
+      CellGroupData[
        {
         Cell[
-         BoxData[
-          ButtonBox[
-           "Workflow",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
-          ]
-         ],
-         "InlineGuideFunction"
+         "Creating Workflows",
+         "GuideFunctionsSubsection",
+         CellID -> 926418801
         ],
-        " \[LongDash] ",
-        "an object representing a CI/CD workflow"
-       }
-      ],
-      "GuideText",
-      CellID -> 84834573
-     ],
-     Cell[
-      TextData[
-       {
         Cell[
-         BoxData[
-          ButtonBox[
-           "WorkflowJob",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
-          ]
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "Workflow",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "an object representing a CI/CD workflow"
+          }
          ],
-         "InlineGuideFunction"
+         "GuideText",
+         CellID -> 84834573
         ],
-        " \[LongDash] ",
-        "a job in a ",
         Cell[
-         BoxData[
-          ButtonBox[
-           "Workflow",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
-          ]
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowJob",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "a job in a ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "Workflow",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+             ]
+            ],
+            "InlineFormula"
+           ]
+          }
          ],
-         "InlineFormula"
+         "GuideText",
+         CellID -> 590574918
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowStep",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "a step in a ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowJob",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+             ]
+            ],
+            "InlineFormula"
+           ]
+          }
+         ],
+         "GuideText",
+         CellID -> 55138469
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowQ",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowQ"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowJobQ",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJobQ"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " \[EmptyVerySmallSquare] ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowStepQ",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStepQ"
+             ]
+            ],
+            "InlineFormula"
+           ]
+          }
+         ],
+         "InlineGuideFunctionListing",
+         CellID -> 89285432
         ]
-       }
-      ],
-      "GuideText",
-      CellID -> 590574918
-     ],
-     Cell[
-      TextData[
-       {
-        Cell[
-         BoxData[
-          ButtonBox[
-           "WorkflowStep",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
-          ]
-         ],
-         "InlineGuideFunction"
-        ],
-        " \[LongDash] ",
-        "a step in a ",
-        Cell[
-         BoxData[
-          ButtonBox[
-           "WorkflowJob",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
-          ]
-         ],
-         "InlineFormula"
-        ]
-       }
-      ],
-      "GuideText",
-      CellID -> 55138469
+       },
+       Open
+      ]
      ],
      Cell[
       CellGroupData[
        {
-        Cell["\t", "GuideDelimiter", CellID -> 164000759],
+        Cell["\t", "GuideDelimiter", CellID -> 94452531],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowEvaluate",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowEvaluate"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "represents a command to be executed in a workflow"
+          }
+         ],
+         "GuideText",
+         CellID -> 379105585
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "WorkflowValue",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowValue"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "a settable value in a workflow that can be accessed by other jobs"
+          }
+         ],
+         "GuideText",
+         CellID -> 274234871
+        ],
+        Cell[
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "GitHubSecret",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/GitHubSecret"
+             ]
+            ],
+            "InlineGuideFunction"
+           ],
+           " \[LongDash] ",
+           "a symbolic representation of a ",
+           ButtonBox[
+            "GitHub secret",
+            BaseStyle -> "Hyperlink",
+            ButtonData -> {
+             URL[
+              "https://docs.github.com/en/actions/security-guides/encrypted-secrets"
+             ],
+             None
+            }
+           ],
+           " that can be used in workflows"
+          }
+         ],
+         "GuideText",
+         CellID -> 245810596
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Exporting Workflows",
+         "GuideFunctionsSubsection",
+         CellID -> 262919287
+        ],
         Cell[
          TextData[
           {
@@ -294,7 +481,7 @@ Notebook[
   "CreationDate" -> "02-18-2022 14:01:28",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 18, 14, 23, 9.6238677`8.735924608707595},
+   {2022, 2, 21, 15, 9, 17.9564794`9.006796134419945},
    "Instant",
    "Gregorian",
    -5.

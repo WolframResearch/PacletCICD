@@ -314,3 +314,23 @@ VerificationTest[
     True,
     TestID -> "Workflow-Named-Compile@@Tests/Workflows.wlt:312,1-316,2"
 ]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Regression Tests*)
+VerificationTest[
+    Workflow[
+        "Check",
+        <|
+            "On" -> <| "PullRequest" -> <| "Branches" -> "test" |> |>
+        |>
+    ][
+        "Data"
+    ][
+        "on",
+        "pull_request",
+        "branches"
+    ],
+    { "test" },
+    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:321,1-336,2"
+]
