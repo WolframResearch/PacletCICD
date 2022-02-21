@@ -700,6 +700,7 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
+                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
