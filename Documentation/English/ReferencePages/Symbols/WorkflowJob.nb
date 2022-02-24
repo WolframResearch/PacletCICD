@@ -117,7 +117,7 @@ Notebook[
             ButtonBox[
              "WorkflowJob",
              BaseStyle -> "Link",
-             ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
             ],
             "[",
             "\"\!\(\*StyleBox[\"name\", \"TI\"]\)\"",
@@ -133,7 +133,7 @@ Notebook[
           ButtonBox[
            "Workflow",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:PacletCICD/ref/Workflow"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
           ]
          ],
          "InlineFormula"
@@ -242,7 +242,7 @@ Notebook[
             ButtonBox[
              "WorkflowJob",
              BaseStyle -> "Link",
-             ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
             ],
             "[",
             RowBox[
@@ -28667,7 +28667,7 @@ Notebook[
   "NotebookUUID" -> "c4c46358-5c21-4380-a9cd-0d64a5869921"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

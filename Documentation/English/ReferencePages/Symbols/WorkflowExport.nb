@@ -489,7 +489,7 @@ Notebook[
          CellID -> 107573276
         ],
         Cell[
-         "Get an example Paclet directory:",
+         "Get an example paclet directory:",
          "ExampleText",
          CellID -> 68104082
         ],
@@ -610,7 +610,7 @@ Notebook[
          ]
         ],
         Cell[
-         "Push the changes to a GitHub repository and the Paclet will automatically be checked for errors:",
+         "Push the changes to a GitHub repository and the paclet will automatically be checked for errors:",
          "ExampleText",
          CellID -> 248036247
         ],
@@ -1688,7 +1688,7 @@ Notebook[
   "NotebookUUID" -> "f30a751a-3c39-4fff-85f3-1af3eafc8a57"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

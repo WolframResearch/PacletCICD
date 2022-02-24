@@ -117,7 +117,7 @@ Notebook[
             ButtonBox[
              "WorkflowStep",
              BaseStyle -> "Link",
-             ButtonData -> "paclet:PacletCICD/ref/WorkflowStep"
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
             ],
             "[",
             "\"\!\(\*StyleBox[\"name\", \"TI\"]\)\"",
@@ -127,13 +127,13 @@ Notebook[
          ],
          "InlineFormula"
         ],
-        " \[LineSeparator]represents a step with the given name in a ",
+        "\[LineSeparator]represents a step with the given name in a ",
         Cell[
          BoxData[
           ButtonBox[
            "WorkflowJob",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:PacletCICD/ref/WorkflowJob"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
           ]
          ],
          "InlineFormula"
@@ -144,24 +144,13 @@ Notebook[
          BoxData[
           RowBox[
            {
-            RowBox[
-             {
-              RowBox[
-               {
-                ButtonBox[
-                 "WorkflowStep",
-                 BaseStyle -> "Link",
-                 ButtonData -> "paclet:PacletCICD/ref/WorkflowStep"
-                ],
-                "[",
-                RowBox[
-                 {"\[LeftAssociation]", StyleBox["\[Ellipsis]", "TR"]}
-                ]
-               }
-              ],
-              "|>"
-             }
+            ButtonBox[
+             "WorkflowStep",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
             ],
+            "[",
+            RowBox[{"<|", StyleBox["\[Ellipsis]", "TR"], "|>"}],
             "]"
            }
           ]
@@ -174,28 +163,17 @@ Notebook[
          BoxData[
           RowBox[
            {
+            ButtonBox[
+             "WorkflowStep",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+            ],
+            "[",
             RowBox[
              {
-              RowBox[
-               {
-                ButtonBox[
-                 "WorkflowStep",
-                 BaseStyle -> "Link",
-                 ButtonData -> "paclet:PacletCICD/ref/WorkflowStep"
-                ],
-                "[",
-                RowBox[
-                 {
-                  StyleBox["workflow", "TI"],
-                  ",",
-                  RowBox[
-                   {"\[LeftAssociation]", StyleBox["\[Ellipsis]", "TR"]}
-                  ]
-                 }
-                ]
-               }
-              ],
-              "|>"
+              StyleBox["workflow", "TI"],
+              ",",
+              RowBox[{"<|", StyleBox["\[Ellipsis]", "TR"], "|>"}]
              }
             ],
             "]"
@@ -15112,7 +15090,7 @@ Notebook[
   "NotebookUUID" -> "7c442990-8f37-45d0-baf0-2f83d89abd33"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",
