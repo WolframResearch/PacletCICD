@@ -203,7 +203,7 @@ Notebook[
                       "[",
                       RowBox[
                        {
-                        "<|",
+                        "\[LeftAssociation]",
                         "\[IndentingNewLine]",
                         RowBox[
                          {
@@ -233,7 +233,7 @@ Notebook[
                          }
                         ],
                         "\[IndentingNewLine]",
-                        "|>"
+                        "\[RightAssociation]"
                        }
                       ],
                       "]"
@@ -649,7 +649,7 @@ Notebook[
                                       },
                                       {{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}},
                                       CompressedData[
-                                       "\n1:eJxTTMoPSmJiYGDYBsTMQMzIwszIDEUMjAxw9qjIgDtgkIgAAMeOBqk=\n                    "
+                                       "\n1:eJxTTMoPSmJiYGDYBsTMQMzIwszIDEUMjAxw9qjIgDtgkIgAAMeOBqk=\n                   \n                     "
                                       ]
                                      },
                                      {
@@ -1266,7 +1266,7 @@ Notebook[
                                       },
                                       {{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}},
                                       CompressedData[
-                                       "\n1:eJxTTMoPSmJiYGDYBsTMQMzIwszIDEUMjAxw9qjIgDtgkIgAAMeOBqk=\n                    "
+                                       "\n1:eJxTTMoPSmJiYGDYBsTMQMzIwszIDEUMjAxw9qjIgDtgkIgAAMeOBqk=\n                   \n                     "
                                       ]
                                      },
                                      {
@@ -2562,7 +2562,7 @@ Notebook[
   ],
   "NotebookUUID" -> "89b379d3-5f1e-4774-8433-63637be8bbb6"
  |>,
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> Notebook[
   {
    Cell[
@@ -2577,8 +2577,7 @@ Notebook[
    Cell[StyleData["Notebook"], PageWidth -> 1000]
   },
   Visible -> False,
-  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
   StyleDefinitions -> "PrivateStylesheetFormatting.nb"
- ],
- ExpressionUUID -> "89b379d3-5f1e-4774-8433-63637be8bbb6"
+ ]
 ]

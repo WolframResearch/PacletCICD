@@ -1629,14 +1629,14 @@ Notebook[
                    ],
                    StandardForm
                   ],
-                  ImageSizeCache -> {1053., {32.8544921875, 38.1455078125}},
+                  ImageSizeCache -> {0., {0., 0.}},
                   TrackedSymbols :> {
                    TypeSystem`NestedGrid`PackagePrivate`$state$$,
                    TypeSystem`NestedGrid`PackagePrivate`$grid$$
                   }
                  ],
                  TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
-                 ImageSizeCache -> {1053., {32.8544921875, 38.1455078125}}
+                 ImageSizeCache -> {0., {0., 0.}}
                 ],
                 BaseStyle -> {LineBreakWithin -> False},
                 DynamicModuleValues :> { },
@@ -7176,14 +7176,14 @@ Notebook[
                    ],
                    StandardForm
                   ],
-                  ImageSizeCache -> {1046., {100.3544921875, 105.6455078125}},
+                  ImageSizeCache -> {0., {0., 0.}},
                   TrackedSymbols :> {
                    TypeSystem`NestedGrid`PackagePrivate`$state$$,
                    TypeSystem`NestedGrid`PackagePrivate`$grid$$
                   }
                  ],
                  TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
-                 ImageSizeCache -> {1046., {100.3544921875, 105.6455078125}}
+                 ImageSizeCache -> {0., {0., 0.}}
                 ],
                 BaseStyle -> {LineBreakWithin -> False},
                 DynamicModuleValues :> { },
@@ -9862,14 +9862,14 @@ Notebook[
                    ],
                    StandardForm
                   ],
-                  ImageSizeCache -> {1046., {73.3544921875, 78.6455078125}},
+                  ImageSizeCache -> {0., {0., 0.}},
                   TrackedSymbols :> {
                    TypeSystem`NestedGrid`PackagePrivate`$state$$,
                    TypeSystem`NestedGrid`PackagePrivate`$grid$$
                   }
                  ],
                  TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
-                 ImageSizeCache -> {1046., {73.3544921875, 78.6455078125}}
+                 ImageSizeCache -> {0., {0., 0.}}
                 ],
                 BaseStyle -> {LineBreakWithin -> False},
                 DynamicModuleValues :> { },
@@ -9947,7 +9947,7 @@ Notebook[
                  RowBox[
                   {
                    "\"FailureCondition\"",
-                   "->",
+                   "\[Rule]",
                    RowBox[
                     {"{", RowBox[{"\"Warning\"", ",", "\"Error\""}], "}"}
                    ]
@@ -13277,7 +13277,7 @@ Notebook[
                  RowBox[
                   {
                    "\"FailureCondition\"",
-                   "->",
+                   "\[Rule]",
                    RowBox[
                     {
                      "{",
@@ -13287,7 +13287,7 @@ Notebook[
                         {
                          "{",
                          RowBox[
-                          {"\"Warning\"", ",", RowBox[{"MaxItems", "->", "3"}]}
+                          {"\"Warning\"", ",", RowBox[{"MaxItems", "\[Rule]", "3"}]}
                          ],
                          "}"
                         }
@@ -15907,14 +15907,14 @@ Notebook[
                    ],
                    StandardForm
                   ],
-                  ImageSizeCache -> {1046., {73.3544921875, 78.6455078125}},
+                  ImageSizeCache -> {0., {0., 0.}},
                   TrackedSymbols :> {
                    TypeSystem`NestedGrid`PackagePrivate`$state$$,
                    TypeSystem`NestedGrid`PackagePrivate`$grid$$
                   }
                  ],
                  TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
-                 ImageSizeCache -> {1046., {73.3544921875, 78.6455078125}}
+                 ImageSizeCache -> {0., {0., 0.}}
                 ],
                 BaseStyle -> {LineBreakWithin -> False},
                 DynamicModuleValues :> { },
@@ -16073,7 +16073,7 @@ Notebook[
                 {
                  RowBox[{"ExampleDirectory", "[", "\"FewIssues\"", "]"}],
                  ",",
-                 RowBox[{"\"ConsoleType\"", "->", "\"GitHub\""}]
+                 RowBox[{"\"ConsoleType\"", "\[Rule]", "\"GitHub\""}]
                 }
                ],
                "]"
@@ -16306,6 +16306,5 @@ Notebook[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",
   CharacterEncoding -> "UTF-8"
- ],
- ExpressionUUID -> "b10d4191-461c-4f6d-b430-483a4b67fa21"
+ ]
 ]

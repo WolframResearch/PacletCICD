@@ -8366,6 +8366,33 @@ Notebook[
             CellID -> 154577539
            ],
            Cell[
+            "Continuous Delivery",
+            "Item",
+            CellEventActions -> {
+             Inherited,
+             {"KeyDown", "\t"} :> Replace[
+              SelectionMove[SelectedNotebook[], After, Cell];
+              NotebookFind[
+               SelectedNotebook[],
+               "TabNext",
+               Next,
+               CellTags,
+               AutoScroll -> True,
+               WrapAround -> True
+              ],
+              _NotebookSelection :> SelectionMove[
+               SelectedNotebook[],
+               All,
+               CellContents,
+               AutoScroll -> True
+              ]
+             ],
+             PassEventsDown -> False,
+             PassEventsUp -> False
+            },
+            CellID -> 678604532
+           ],
+           Cell[
             "CI/CD",
             "Item",
             CellEventActions -> {
@@ -8421,8 +8448,11 @@ Notebook[
            ],
            Cell["Paclet", "Item", CellID -> 20032733],
            Cell["Workflow", "Item", CellID -> 11977519],
+           Cell["Pipeline", "Item", CellID -> 309702197],
            Cell["Build", "Item", CellID -> 476638544],
-           Cell["Actions", "Item", CellID -> 160454701]
+           Cell["Actions", "Item", CellID -> 160454701],
+           Cell["Test", "Item", CellID -> 159853046],
+           Cell["Unit Test", "Item", CellID -> 155211626]
           },
           Open
          ]
@@ -8888,6 +8918,11 @@ Notebook[
             CellID -> 694609509
            ],
            Cell[
+            "PacletizeResourceFunction",
+            "Item",
+            CellID -> 729961030
+           ],
+           Cell[
             "Wolfram/GitLink",
             "Item",
             CellEventActions -> {
@@ -8913,7 +8948,8 @@ Notebook[
              PassEventsUp -> False
             },
             CellID -> 841203840
-           ]
+           ],
+           Cell["Wolfram/Mockingbird", "Item", CellID -> 136968564]
           },
           Open
          ]
@@ -10040,7 +10076,7 @@ Notebook[
   "SubmissionReviewData" -> {"Review" -> False},
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 24, 12, 6, 10.5551319`8.776038626632477},
+   {2022, 2, 24, 13, 55, 13.9588103`8.897423358940308},
    "Instant",
    "Gregorian",
    -5.
