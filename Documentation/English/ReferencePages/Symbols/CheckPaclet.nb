@@ -173,7 +173,7 @@ Notebook[
       CellID -> 439895060
      ],
      Cell[
-      "CheckPaclet requires a PacletResource definition notebook in order to check a Paclet.",
+      "CheckPaclet requires a PacletResource definition notebook in order to check a paclet.",
       "Notes",
       CellID -> 252856239
      ],
@@ -220,7 +220,7 @@ Notebook[
           ButtonBox[
            "CheckPaclet",
            BaseStyle -> "Link",
-           ButtonData -> "paclet:MyPublisher/MyPaclet/ref/CheckPaclet"
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CheckPaclet"
           ]
          ],
          "InlineFormula"
@@ -409,7 +409,7 @@ Notebook[
          CellID -> 107573276
         ],
         Cell[
-         "Get an example Paclet directory:",
+         "Get an example paclet directory:",
          "ExampleText",
          CellID -> 674733599
         ],
@@ -16301,7 +16301,7 @@ Notebook[
   "NotebookUUID" -> "b10d4191-461c-4f6d-b430-483a4b67fa21"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

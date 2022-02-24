@@ -178,7 +178,7 @@ Notebook[
          BoxData["\"\!\(\*StyleBox[\"name\", \"TI\"]\)\""],
          "InlineFormula"
         ],
-        " and descriptions of the corresponding Paclet are:"
+        " and descriptions of the corresponding paclet are:"
        }
       ],
       "Notes",
@@ -393,7 +393,7 @@ Notebook[
          CellID -> 107573276
         ],
         Cell[
-         "Get an example Paclet directory:",
+         "Get an example paclet directory:",
          "ExampleText",
          CellID -> 180004050
         ],
@@ -847,7 +847,7 @@ Notebook[
          CellID -> 34786160
         ],
         Cell[
-         "Check an example Paclet for issues:",
+         "Check an example paclet for issues:",
          "ExampleText",
          CellID -> 678623753
         ],
@@ -7380,7 +7380,7 @@ Notebook[
             CellID -> 201465542
            ],
            Cell[
-            "Build an example Paclet:",
+            "Build an example paclet:",
             "ExampleText",
             CellID -> 161481621
            ],
@@ -9558,7 +9558,22 @@ Notebook[
          CellID -> 112156546
         ],
         Cell[
-         "Evaluating ExampleDirectory again will recreate it in its original state:",
+         TextData[
+          {
+           "Evaluating ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "ExampleDirectory",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/ExampleDirectory"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " again will recreate it in its original state:"
+          }
+         ],
          "ExampleText",
          CellID -> 76913945
         ],
@@ -9677,7 +9692,7 @@ Notebook[
   "NotebookUUID" -> "6a68053b-2d26-47da-b433-1acf8f941695"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

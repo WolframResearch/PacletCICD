@@ -11,7 +11,7 @@ Notebook[
       CellID -> 525589890
      ],
      Cell[
-      "Continuous integration and deployment for Wolfram Language Paclets",
+      "Continuous integration and deployment for Wolfram Language paclets",
       "Text",
       Deletable -> False,
       CellTags -> {"Description", "TemplateCell"},
@@ -53,7 +53,6 @@ Notebook[
             BoxData[RowBox[{"NotebookDirectory", "[", "]"}]],
             "LocalDirectoryInput",
             Deletable -> False,
-            CellLabel -> "In[17]:=",
             CellID -> 21400905
            ]
           },
@@ -6033,7 +6032,7 @@ Notebook[
            Cell[
             TextData[
              {
-              "PacletCICD is a collection of utilities to help set up automated workflows for continuous integration and continuous deployment of Wolfram Language Paclets. This Paclet contains the underlying code that powers the ",
+              "PacletCICD is a collection of utilities to help set up automated workflows for continuous integration and continuous deployment of Wolfram Language paclets. This paclet contains the underlying code that powers the ",
               ButtonBox[
                "check-paclet",
                BaseStyle -> "Hyperlink",
@@ -6550,7 +6549,7 @@ Notebook[
             CellID -> 163911850
            ],
            Cell[
-            "These actions can also be automatically configured for your Paclet by using WorkflowExport:",
+            "These actions can also be automatically configured for your paclet by using WorkflowExport:",
             "Text",
             CellID -> 106694136
            ],
@@ -6612,7 +6611,7 @@ Notebook[
                CellID -> 401086003
               ],
               Cell[
-               "Automatically check Paclets for potential issues in a GitHub CI/CD workflow:",
+               "Automatically check paclets for potential issues in a GitHub CI/CD workflow:",
                "Text",
                CellID -> 283752672
               ],
@@ -6769,7 +6768,7 @@ Notebook[
                CellID -> 127527805
               ],
               Cell[
-               "Create a release workflow in the form of a GitHub Actions YAML file for a Paclet:",
+               "Create a release workflow in the form of a GitHub Actions YAML file for a paclet:",
                "Text",
                CellID -> 752821159
               ],
@@ -7682,7 +7681,7 @@ Notebook[
            Cell[
             TextData[
              {
-              "Alternatively, manually install a .paclet file from the PacletCICD ",
+              "Alternatively, manually install a paclet file from the PacletCICD ",
               ButtonBox[
                "releases page",
                BaseStyle -> "Hyperlink",
@@ -8077,7 +8076,7 @@ Notebook[
              {
               "This project is licensed under the terms of the MIT license. See the ",
               ButtonBox[
-               "LICENSE file in the root directory of this Paclet",
+               "LICENSE file in the root directory of this paclet",
                BaseStyle -> "Hyperlink",
                ButtonData -> {
                 URL[
@@ -10041,7 +10040,7 @@ Notebook[
   "SubmissionReviewData" -> {"Review" -> False},
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 24, 10, 53, 38.2465331`9.33516695967593},
+   {2022, 2, 24, 12, 6, 10.5551319`8.776038626632477},
    "Instant",
    "Gregorian",
    -5.
@@ -10053,11 +10052,12 @@ Notebook[
     "2" -> Closed,
     "0" -> Closed,
     "1" -> Closed,
-    "3" -> Closed
+    "3" -> Closed,
+    "4" -> Closed
    },
    "NotesSection" -> Closed,
    "PrimaryExamplesSection" -> Open,
-   "ExampleSubsection" -> {"0" -> Closed, "1" -> Closed}
+   "ExampleSubsection" -> {"0" -> Closed, "1" -> Closed, "2" -> Closed}
   }
  },
  CreateCellID -> True,

@@ -185,7 +185,7 @@ Notebook[
          ],
          "InlineFormula"
         ],
-        " requires a PacletResource definition notebook in order to build a Paclet."
+        " requires a PacletResource definition notebook in order to build a paclet."
        }
       ],
       "Notes",
@@ -431,7 +431,7 @@ Notebook[
          CellID -> 107573276
         ],
         Cell[
-         "Get an example Paclet directory:",
+         "Get an example paclet directory:",
          "ExampleText",
          CellID -> 68104082
         ],
@@ -477,7 +477,7 @@ Notebook[
          ]
         ],
         Cell[
-         "Build the Paclet:",
+         "Build the paclet:",
          "ExampleText",
          CellID -> 51045277
         ],
@@ -2583,7 +2583,7 @@ Notebook[
          CellID -> 592703469
         ],
         Cell[
-         "Check the Paclet for potential issues before building:",
+         "Check the paclet for potential issues before building:",
          "ExampleText",
          CellID -> 388292758
         ],
@@ -16386,7 +16386,22 @@ Notebook[
          CellID -> 28765612
         ],
         Cell[
-         "With no arguments, BuildPaclet will look in the current working directory:",
+         TextData[
+          {
+           "With no arguments, ",
+           Cell[
+            BoxData[
+             ButtonBox[
+              "BuildPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " will look in the current working directory:"
+          }
+         ],
          "ExampleText",
          CellID -> 346693520
         ],
@@ -24921,7 +24936,21 @@ Notebook[
          ]
         ],
         Cell[
-         "BuildPaclet can utilize additional definition notebook information such as file exclusions. Open the following definition notebook:",
+         TextData[
+          {
+           Cell[
+            BoxData[
+             ButtonBox[
+              "BuildPaclet",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/BuildPaclet"
+             ]
+            ],
+            "InlineFormula"
+           ],
+           " can utilize additional definition notebook information such as file exclusions. Open the following definition notebook:"
+          }
+         ],
          "ExampleText",
          CellID -> 259203909
         ],
@@ -25037,7 +25066,7 @@ Notebook[
          CellID -> 92556769
         ],
         Cell[
-         "Build the Paclet and check the files manifest:",
+         "Build the paclet and check the files manifest:",
          "ExampleText",
          CellID -> 450491735
         ],
@@ -27320,7 +27349,7 @@ Notebook[
   "NotebookUUID" -> "7627171e-0548-4013-86af-0d6da0a54652"
  |>,
  CellContext -> "Global`",
- FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

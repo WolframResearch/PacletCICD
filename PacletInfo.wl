@@ -1,12 +1,12 @@
 PacletObject[ <|
     "Name"             -> "Wolfram/PacletCICD",
-    "Description"      -> "Continuous integration and deployment for Wolfram Language Paclets",
+    "Description"      -> "Continuous integration and deployment for Wolfram Language paclets",
     "Creator"          -> "Richard Hennigan <richardh@wolfram.com>",
     "URL"              -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
     "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
-    "Version"          -> "0.10.2",
+    "Version"          -> "0.10.3",
     "WolframVersion"   -> "13.0+",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
