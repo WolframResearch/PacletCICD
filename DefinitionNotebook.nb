@@ -8366,6 +8366,33 @@ Notebook[
             CellID -> 154577539
            ],
            Cell[
+            "Continuous Delivery",
+            "Item",
+            CellEventActions -> {
+             Inherited,
+             {"KeyDown", "\t"} :> Replace[
+              SelectionMove[SelectedNotebook[], After, Cell];
+              NotebookFind[
+               SelectedNotebook[],
+               "TabNext",
+               Next,
+               CellTags,
+               AutoScroll -> True,
+               WrapAround -> True
+              ],
+              _NotebookSelection :> SelectionMove[
+               SelectedNotebook[],
+               All,
+               CellContents,
+               AutoScroll -> True
+              ]
+             ],
+             PassEventsDown -> False,
+             PassEventsUp -> False
+            },
+            CellID -> 678604532
+           ],
+           Cell[
             "CI/CD",
             "Item",
             CellEventActions -> {
@@ -8421,8 +8448,11 @@ Notebook[
            ],
            Cell["Paclet", "Item", CellID -> 20032733],
            Cell["Workflow", "Item", CellID -> 11977519],
+           Cell["Pipeline", "Item", CellID -> 309702197],
            Cell["Build", "Item", CellID -> 476638544],
-           Cell["Actions", "Item", CellID -> 160454701]
+           Cell["Actions", "Item", CellID -> 160454701],
+           Cell["Test", "Item", CellID -> 159853046],
+           Cell["Unit Test", "Item", CellID -> 155211626]
           },
           Open
          ]
@@ -8888,6 +8918,11 @@ Notebook[
             CellID -> 694609509
            ],
            Cell[
+            "PacletizeResourceFunction",
+            "Item",
+            CellID -> 729961030
+           ],
+           Cell[
             "Wolfram/GitLink",
             "Item",
             CellEventActions -> {
@@ -8913,7 +8948,8 @@ Notebook[
              PassEventsUp -> False
             },
             CellID -> 841203840
-           ]
+           ],
+           Cell["Wolfram/Mockingbird", "Item", CellID -> 136968564]
           },
           Open
          ]
@@ -10040,7 +10076,7 @@ Notebook[
   "SubmissionReviewData" -> {"Review" -> False},
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 24, 12, 6, 10.5551319`8.776038626632477},
+   {2022, 2, 24, 13, 0, 6.2991539`8.551857191893063},
    "Instant",
    "Gregorian",
    -5.
@@ -10058,6 +10094,10 @@ Notebook[
    "NotesSection" -> Closed,
    "PrimaryExamplesSection" -> Open,
    "ExampleSubsection" -> {"0" -> Closed, "1" -> Closed, "2" -> Closed}
+  },
+  "PacletBuildData" -> {
+   "LastBuiltArchive" -> "H:\\Documents\\PacletCICD\\build\\Wolfram__PacletCICD-0.10.3",
+   "FileHashes" -> ByteArray["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"]
   }
  },
  CreateCellID -> True,
