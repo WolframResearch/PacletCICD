@@ -8138,14 +8138,14 @@ Notebook[
                    ],
                    StandardForm
                   ],
-                  ImageSizeCache -> {1046., {100.3544921875, 105.6455078125}},
+                  ImageSizeCache -> {0., {0., 0.}},
                   TrackedSymbols :> {
                    TypeSystem`NestedGrid`PackagePrivate`$state$$,
                    TypeSystem`NestedGrid`PackagePrivate`$grid$$
                   }
                  ],
                  TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
-                 ImageSizeCache -> {1046., {100.3544921875, 105.6455078125}}
+                 ImageSizeCache -> {0., {0., 0.}}
                 ],
                 BaseStyle -> {LineBreakWithin -> False},
                 DynamicModuleValues :> { },
@@ -13003,7 +13003,7 @@ Notebook[
                  RowBox[
                   {
                    "\"FailureCondition\"",
-                   "->",
+                   "\[Rule]",
                    RowBox[
                     {"{", RowBox[{"\"Warning\"", ",", "\"Error\""}], "}"}
                    ]
@@ -22892,7 +22892,7 @@ Notebook[
            {
             "Needs",
             "[",
-            RowBox[{"\"PacletTools`\"", "->", "\"pt`\""}],
+            RowBox[{"\"PacletTools`\"", "\[Rule]", "\"pt`\""}],
             "]"
            }
           ]
@@ -27354,6 +27354,5 @@ Notebook[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",
   CharacterEncoding -> "UTF-8"
- ],
- ExpressionUUID -> "7627171e-0548-4013-86af-0d6da0a54652"
+ ]
 ]
