@@ -2,7 +2,9 @@ name: Check Paclet
 
 on:
   pull_request:
-    branches: ["main", "release/*"]
+    branches: ["main"]
+  push:
+    branches: ["main"]
   workflow_dispatch:
 
 env:
