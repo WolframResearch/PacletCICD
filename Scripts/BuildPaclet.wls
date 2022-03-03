@@ -12,7 +12,7 @@ Needs[ "Wolfram`PacletCICD`" ];
 Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
 
 result = Wolfram`PacletCICD`BuildPaclet[
-    File @ FileNameJoin @ { $pacDir, "DefinitionNotebook.nb" },
+    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
     "Check"  -> False,
     "Target" -> "Submit"
 ];

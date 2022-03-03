@@ -10,7 +10,7 @@ PacletDirectoryLoad @ $pacDir;
 Needs[ "Wolfram`PacletCICD`" ];
 
 result = Wolfram`PacletCICD`CheckPaclet[
-    File @ FileNameJoin @ { $pacDir, "DefinitionNotebook.nb" },
+    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
     "Target" -> "Submit"
 ];
 
