@@ -355,7 +355,7 @@ Notebook[
        "TentativeWrapper"
       ],
       InitializationCell -> True,
-      CellLabel -> "In[2]:=",
+      CellLabel -> "In[1]:=",
       CellID -> 997816569
      ],
      Cell[
@@ -416,7 +416,7 @@ Notebook[
                "[",
                TemplateBox[
                 {
-                 "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
+                 "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
                 },
                 "FileArgument"
                ],
@@ -426,7 +426,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 181884858
+            CellID -> 222664317
            ]
           },
           Open
@@ -488,7 +488,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 342503682
+            CellID -> 648534953
            ]
           },
           Open
@@ -539,7 +539,7 @@ Notebook[
                    "[",
                    TemplateBox[
                     {
-                     "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/AdvancedSample\""
+                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/AdvancedSample\""
                     },
                     "FileArgument"
                    ],
@@ -553,7 +553,7 @@ Notebook[
                    "[",
                    TemplateBox[
                     {
-                     "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/CompiledLibrary\""
+                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/CompiledLibrary\""
                     },
                     "FileArgument"
                    ],
@@ -567,7 +567,7 @@ Notebook[
                    "[",
                    TemplateBox[
                     {
-                     "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues\""
+                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues\""
                     },
                     "FileArgument"
                    ],
@@ -581,7 +581,7 @@ Notebook[
                    "[",
                    TemplateBox[
                     {
-                     "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues\""
+                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues\""
                     },
                     "FileArgument"
                    ],
@@ -595,7 +595,7 @@ Notebook[
                    "[",
                    TemplateBox[
                     {
-                     "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
+                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
                     },
                     "FileArgument"
                    ],
@@ -610,7 +610,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 338153159
+            CellID -> 2305719
            ]
           },
           Open
@@ -677,7 +677,7 @@ Notebook[
                "[",
                TemplateBox[
                 {
-                 "\"/home/user/.Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
+                 "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\""
                 },
                 "FileArgument"
                ],
@@ -687,7 +687,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 254745643
+            CellID -> 241189953
            ]
           },
           Open
@@ -740,27 +740,29 @@ Notebook[
              TagBox[
               GridBox[
                {
-                {"\"DefinitionNotebook.nb\""},
                 {"\"Documentation\""},
-                {"\"Documentation/English\""},
-                {"\"Documentation/English/ReferencePages\""},
-                {"\"Documentation/English/ReferencePages/Symbols\""},
+                {"\"Documentation\\\\English\""},
+                {"\"Documentation\\\\English\\\\ReferencePages\""},
                 {
-                 "\"Documentation/English/ReferencePages/Symbols/AddOne.nb\""
+                 "\"Documentation\\\\English\\\\ReferencePages\\\\Symbols\""
                 },
                 {
-                 "\"Documentation/English/ReferencePages/Symbols/AddTwo.nb\""
+                 "\"Documentation\\\\English\\\\ReferencePages\\\\Symbols\\\\AddOne.nb\""
+                },
+                {
+                 "\"Documentation\\\\English\\\\ReferencePages\\\\Symbols\\\\AddTwo.nb\""
                 },
                 {"\"Kernel\""},
-                {"\"Kernel/AddOne.wl\""},
-                {"\"Kernel/AddTwo.wl\""},
-                {"\"Kernel/SamplePaclet.wl\""},
+                {"\"Kernel\\\\AddOne.wl\""},
+                {"\"Kernel\\\\AddTwo.wl\""},
+                {"\"Kernel\\\\SamplePaclet.wl\""},
                 {"\"LICENSE\""},
                 {"\"PacletInfo.wl\""},
                 {"\"README.md\""},
+                {"\"ResourceDefinition.nb\""},
                 {"\"Tests\""},
-                {"\"Tests/AddOne.wlt\""},
-                {"\"Tests/AddTwo.wlt\""}
+                {"\"Tests\\\\AddOne.wlt\""},
+                {"\"Tests\\\\AddTwo.wlt\""}
                },
                DefaultBaseStyle -> "Column",
                GridBoxAlignment -> {"Columns" -> {{Left}}},
@@ -771,7 +773,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[2]=",
-            CellID -> 90564734
+            CellID -> 646023725
            ]
           },
           Open
@@ -886,7 +888,13 @@ Notebook[
                        {
                         Thickness[0.055556],
                         {
-                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
+                         FaceForm[
+                          RGBColor[
+                           0.490196,
+                           0.490196,
+                           0.490196
+                          ]
+                         ],
                          FilledCurveBox[
                           {
                            {
@@ -966,7 +974,11 @@ Notebook[
                      ],
                      Annotation[#1, "Suggestion", "Tooltip"] & 
                     ],
-                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                    Background -> RGBColor[
+                     0.913725,
+                     0.913725,
+                     0.913725
+                    ],
                     FrameMargins -> {{1, 1}, {0, 0}},
                     FrameStyle -> None,
                     RoundingRadius -> 8,
@@ -1003,7 +1015,13 @@ Notebook[
                           ]
                          ]
                         },
-                        FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                        FaceForm[
+                         RGBColor[
+                          0.490196,
+                          0.490196,
+                          0.490196
+                         ]
+                        ]
                        ],
                        StyleBox[
                         {
@@ -1066,7 +1084,11 @@ Notebook[
                     ],
                     "Suggestion"
                    ],
-                   Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                   Background -> RGBColor[
+                    0.913725,
+                    0.913725,
+                    0.913725
+                   ],
                    RoundingRadius -> 8,
                    FrameStyle -> None,
                    FrameMargins -> {{1, 1}, {0, 0}}
@@ -1102,7 +1124,7 @@ Notebook[
                    ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                    DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                     File[
-                     "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues/DefinitionNotebook.nb"
+                     "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues/ResourceDefinition.nb"
                     ],
                     Association[
                      "CellID" -> 120063846,
@@ -1150,7 +1172,13 @@ Notebook[
                         ]
                        ]
                       },
-                      FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                      FaceForm[
+                       RGBColor[
+                        0.490196,
+                        0.490196,
+                        0.490196
+                       ]
+                      ]
                      ],
                      StyleBox[
                       {
@@ -1213,7 +1241,11 @@ Notebook[
                   ],
                   "Suggestion"
                  ],
-                 Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                 Background -> RGBColor[
+                  0.913725,
+                  0.913725,
+                  0.913725
+                 ],
                  RoundingRadius -> 8,
                  FrameStyle -> None,
                  FrameMargins -> {{1, 1}, {0, 0}}
@@ -1238,7 +1270,7 @@ Notebook[
                   DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                   DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                    File[
-                    "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues/DefinitionNotebook.nb"
+                    "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/FewIssues/ResourceDefinition.nb"
                    ],
                    Association[
                     "CellID" -> 120063846,
@@ -1259,7 +1291,7 @@ Notebook[
             ],
             "Print",
             CellLabel -> "During evaluation of In[1]:=",
-            CellID -> 487975907
+            CellID -> 285434657
            ],
            Cell[
             BoxData[
@@ -1376,7 +1408,7 @@ Notebook[
                  TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1,
                  TypeSystem`NestedGrid`PackagePrivate`$grid$$ = DynamicModule[
                   {
-                   TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = Deploy[
+                   TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
                     Style[
                      Grid[
                       {
@@ -1390,7 +1422,11 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
                               ]
                              ],
                              "LinkHand"
@@ -1427,7 +1463,11 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
                               ]
                              ],
                              "LinkHand"
@@ -1464,7 +1504,11 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
                               ]
                              ],
                              "LinkHand"
@@ -1501,7 +1545,11 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
                               ]
                              ],
                              "LinkHand"
@@ -1892,13 +1940,13 @@ Notebook[
                      ShowAutoStyles -> False
                     ]
                    ],
-                   TypeSystem`NestedGrid`PackagePrivate`initialQ$ = True
+                   TypeSystem`NestedGrid`PackagePrivate`initialQ = True
                   },
                   Dynamic[
                    TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
                     TypeSystem`NestedGrid`PackagePrivate`$path$$,
                     If[
-                     Not[TypeSystem`NestedGrid`PackagePrivate`initialQ$],
+                     Not[TypeSystem`NestedGrid`PackagePrivate`initialQ],
                      Module[
                       {
                        TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed,
@@ -1908,7 +1956,7 @@ Notebook[
                       },
                       TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = If[
                        FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpData$],
-                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$,
+                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid,
                        TypeSystem`NestedGrid`PackagePrivate`renderGrid[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                         TypeSystem`NestedGrid`PackagePrivate`tmpData$
                        ]
@@ -1917,22 +1965,20 @@ Notebook[
                        Not[
                         FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]
                        ],
-                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
+                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
                       ];
                       Null
                      ]
                     ];
-                    TypeSystem`NestedGrid`PackagePrivate`initialQ$ = False;
+                    TypeSystem`NestedGrid`PackagePrivate`initialQ = False;
                     TypeSystem`NestedGrid`PackagePrivate`$vPos$$;
                     TypeSystem`NestedGrid`PackagePrivate`$hPos$$;
                     If[
-                     FailureQ[
-                      TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
-                     ],
+                     FailureQ[TypeSystem`NestedGrid`PackagePrivate`renderedGrid],
                      TypeSystem`SparseGrid[
                       TypeSystem`H["(data no longer present)"]
                      ],
-                     TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
+                     TypeSystem`NestedGrid`PackagePrivate`renderedGrid
                     ]
                    ],
                    TrackedSymbols :> {
@@ -2057,7 +2103,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[1]=",
-            CellID -> 114420340
+            CellID -> 390049908
            ]
           },
           Open
@@ -2307,7 +2353,7 @@ Notebook[
                           "\"(\"",
                           "\"CodeInspectionIssues\"",
                           "\":\"",
-                          "56464346",
+                          "57873694",
                           "\")\""
                          },
                          "RowDefault"
@@ -2321,15 +2367,15 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
-                        "CellID" -> 56464346,
+                        "CellID" -> 57873694,
                         "Level" -> "Error",
                         "Tag" -> "CodeInspectionIssues",
                         "Parameters" -> Association[
                          "Issues" -> "1 fatal error",
-                         "Key" -> Key[{6308105214813299588, "Submit", "Open Palette"}],
+                         "Key" -> Key[{6308105214813299588, "Submit", None}],
                          "Type" -> File,
                          "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
                          "PriorityTag" -> "NotPublisherContext",
@@ -2492,7 +2538,7 @@ Notebook[
                     Button[
                      MouseAppearance[
                       Style[
-                       Row[{"(", "CodeInspectionIssues", ":", 56464346, ")"}],
+                       Row[{"(", "CodeInspectionIssues", ":", 57873694, ")"}],
                        "Hyperlink",
                        FontSize -> 0.85*Inherited
                       ],
@@ -2501,15 +2547,15 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
-                       "CellID" -> 56464346,
+                       "CellID" -> 57873694,
                        "Level" -> "Error",
                        "Tag" -> "CodeInspectionIssues",
                        "Parameters" -> Association[
                         "Issues" -> "1 fatal error",
-                        "Key" -> Key[{6308105214813299588, "Submit", "Open Palette"}],
+                        "Key" -> Key[{6308105214813299588, "Submit", None}],
                         "Type" -> File,
                         "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
                         "PriorityTag" -> "NotPublisherContext",
@@ -2566,7 +2612,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 586982170
+               CellID -> 67868399
               ],
               Cell[
                BoxData[
@@ -2787,7 +2833,7 @@ Notebook[
                           "\"(\"",
                           "\"CodeInspectionIssues\"",
                           "\":\"",
-                          "44435057",
+                          "76478523",
                           "\")\""
                          },
                          "RowDefault"
@@ -2801,15 +2847,15 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
-                        "CellID" -> 44435057,
+                        "CellID" -> 76478523,
                         "Level" -> "Warning",
                         "Tag" -> "CodeInspectionIssues",
                         "Parameters" -> Association[
                          "Issues" -> "1 error",
-                         "Key" -> Key[{7590840479290891073, "Submit", "Open Palette"}],
+                         "Key" -> Key[{7590840479290891073, "Submit", None}],
                          "Type" -> File
                         ]
                        ]
@@ -2930,7 +2976,7 @@ Notebook[
                     Button[
                      MouseAppearance[
                       Style[
-                       Row[{"(", "CodeInspectionIssues", ":", 44435057, ")"}],
+                       Row[{"(", "CodeInspectionIssues", ":", 76478523, ")"}],
                        "Hyperlink",
                        FontSize -> 0.85*Inherited
                       ],
@@ -2939,15 +2985,15 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
-                       "CellID" -> 44435057,
+                       "CellID" -> 76478523,
                        "Level" -> "Warning",
                        "Tag" -> "CodeInspectionIssues",
                        "Parameters" -> Association[
                         "Issues" -> "1 error",
-                        "Key" -> Key[{7590840479290891073, "Submit", "Open Palette"}],
+                        "Key" -> Key[{7590840479290891073, "Submit", None}],
                         "Type" -> File
                        ]
                       ]
@@ -2964,7 +3010,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 20357890
+               CellID -> 264973953
               ],
               Cell[
                BoxData[
@@ -3185,7 +3231,7 @@ Notebook[
                           "\"(\"",
                           "\"CodeInspectionIssues\"",
                           "\":\"",
-                          "773351116",
+                          "351143504",
                           "\")\""
                          },
                          "RowDefault"
@@ -3199,15 +3245,15 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
-                        "CellID" -> 773351116,
+                        "CellID" -> 351143504,
                         "Level" -> "Warning",
                         "Tag" -> "CodeInspectionIssues",
                         "Parameters" -> Association[
                          "Issues" -> "1 error and 1 warning",
-                         "Key" -> Key[{3889468743964391510, "Submit", "Open Palette"}],
+                         "Key" -> Key[{3889468743964391510, "Submit", None}],
                          "Type" -> File
                         ]
                        ]
@@ -3328,7 +3374,7 @@ Notebook[
                     Button[
                      MouseAppearance[
                       Style[
-                       Row[{"(", "CodeInspectionIssues", ":", 773351116, ")"}],
+                       Row[{"(", "CodeInspectionIssues", ":", 351143504, ")"}],
                        "Hyperlink",
                        FontSize -> 0.85*Inherited
                       ],
@@ -3337,15 +3383,15 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
-                       "CellID" -> 773351116,
+                       "CellID" -> 351143504,
                        "Level" -> "Warning",
                        "Tag" -> "CodeInspectionIssues",
                        "Parameters" -> Association[
                         "Issues" -> "1 error and 1 warning",
-                        "Key" -> Key[{3889468743964391510, "Submit", "Open Palette"}],
+                        "Key" -> Key[{3889468743964391510, "Submit", None}],
                         "Type" -> File
                        ]
                       ]
@@ -3362,7 +3408,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 173894757
+               CellID -> 25113344
               ],
               Cell[
                BoxData[
@@ -3583,7 +3629,7 @@ Notebook[
                           "\"(\"",
                           "\"DocumentationWrongPacletName\"",
                           "\":\"",
-                          "734844323",
+                          "268995717",
                           "\")\""
                          },
                          "RowDefault"
@@ -3597,14 +3643,14 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
-                        "CellID" -> 734844323,
+                        "CellID" -> 268995717,
                         "Level" -> "Warning",
                         "Tag" -> "DocumentationWrongPacletName",
                         "Parameters" -> Association[
-                         "CellID" -> 734844323,
+                         "CellID" -> 268995717,
                          "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb",
                          "Excluded" -> False,
                          "DocumentationNotebook" -> True,
@@ -3738,7 +3784,7 @@ Notebook[
                      MouseAppearance[
                       Style[
                        Row[
-                        {"(", "DocumentationWrongPacletName", ":", 734844323, ")"}
+                        {"(", "DocumentationWrongPacletName", ":", 268995717, ")"}
                        ],
                        "Hyperlink",
                        FontSize -> 0.85*Inherited
@@ -3748,14 +3794,14 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
-                       "CellID" -> 734844323,
+                       "CellID" -> 268995717,
                        "Level" -> "Warning",
                        "Tag" -> "DocumentationWrongPacletName",
                        "Parameters" -> Association[
-                        "CellID" -> 734844323,
+                        "CellID" -> 268995717,
                         "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb",
                         "Excluded" -> False,
                         "DocumentationNotebook" -> True,
@@ -3784,7 +3830,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 221735214
+               CellID -> 455982565
               ],
               Cell[
                BoxData[
@@ -4019,7 +4065,7 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
                         "CellID" -> 312969925,
@@ -4159,7 +4205,7 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
                        "CellID" -> 312969925,
@@ -4186,7 +4232,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 604426868
+               CellID -> 353460128
               ],
               Cell[
                BoxData[
@@ -4205,7 +4251,13 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
+                            FaceForm[
+                             RGBColor[
+                              0.490196,
+                              0.490196,
+                              0.490196
+                             ]
+                            ],
                             FilledCurveBox[
                              {
                               {
@@ -4285,7 +4337,11 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                       Background -> RGBColor[
+                        0.913725,
+                        0.913725,
+                        0.913725
+                       ],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -4322,7 +4378,13 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                           FaceForm[
+                            RGBColor[
+                             0.490196,
+                             0.490196,
+                             0.490196
+                            ]
+                           ]
                           ],
                           StyleBox[
                            {
@@ -4385,7 +4447,11 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                      Background -> RGBColor[
+                       0.913725,
+                       0.913725,
+                       0.913725
+                      ],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4421,7 +4487,7 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
                         "CellID" -> 319073343,
@@ -4469,7 +4535,13 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                         FaceForm[
+                          RGBColor[
+                           0.490196,
+                           0.490196,
+                           0.490196
+                          ]
+                         ]
                         ],
                         StyleBox[
                          {
@@ -4532,7 +4604,11 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                    Background -> RGBColor[
+                     0.913725,
+                     0.913725,
+                     0.913725
+                    ],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -4555,7 +4631,7 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
                        "CellID" -> 319073343,
@@ -4576,7 +4652,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 7192488
+               CellID -> 119408359
               ],
               Cell[
                BoxData[
@@ -4595,7 +4671,13 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
+                            FaceForm[
+                             RGBColor[
+                              0.490196,
+                              0.490196,
+                              0.490196
+                             ]
+                            ],
                             FilledCurveBox[
                              {
                               {
@@ -4675,7 +4757,11 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                       Background -> RGBColor[
+                        0.913725,
+                        0.913725,
+                        0.913725
+                       ],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -4712,7 +4798,13 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                           FaceForm[
+                            RGBColor[
+                             0.490196,
+                             0.490196,
+                             0.490196
+                            ]
+                           ]
                           ],
                           StyleBox[
                            {
@@ -4775,7 +4867,11 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                      Background -> RGBColor[
+                       0.913725,
+                       0.913725,
+                       0.913725
+                      ],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4811,7 +4907,7 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
                         "CellID" -> 55333842,
@@ -4859,7 +4955,13 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                         FaceForm[
+                          RGBColor[
+                           0.490196,
+                           0.490196,
+                           0.490196
+                          ]
+                         ]
                         ],
                         StyleBox[
                          {
@@ -4922,7 +5024,11 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                    Background -> RGBColor[
+                     0.913725,
+                     0.913725,
+                     0.913725
+                    ],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -4945,7 +5051,7 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
                        "CellID" -> 55333842,
@@ -4966,7 +5072,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 494828376
+               CellID -> 230652237
               ],
               Cell[
                BoxData[
@@ -4985,7 +5091,13 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
+                            FaceForm[
+                             RGBColor[
+                              0.490196,
+                              0.490196,
+                              0.490196
+                             ]
+                            ],
                             FilledCurveBox[
                              {
                               {
@@ -5065,7 +5177,11 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                       Background -> RGBColor[
+                        0.913725,
+                        0.913725,
+                        0.913725
+                       ],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -5102,7 +5218,13 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                           FaceForm[
+                            RGBColor[
+                             0.490196,
+                             0.490196,
+                             0.490196
+                            ]
+                           ]
                           ],
                           StyleBox[
                            {
@@ -5165,7 +5287,11 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                      Background -> RGBColor[
+                       0.913725,
+                       0.913725,
+                       0.913725
+                      ],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -5195,7 +5321,7 @@ Notebook[
                       ButtonFunction :> (DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                       DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                        File[
-                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                        "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                        ],
                        Association[
                         "CellID" -> 437199519,
@@ -5243,7 +5369,13 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
+                         FaceForm[
+                          RGBColor[
+                           0.490196,
+                           0.490196,
+                           0.490196
+                          ]
+                         ]
                         ],
                         StyleBox[
                          {
@@ -5306,7 +5438,11 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
+                    Background -> RGBColor[
+                     0.913725,
+                     0.913725,
+                     0.913725
+                    ],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -5329,7 +5465,7 @@ Notebook[
                      DefinitionNotebookClient`LoadDefinitionNotebook["Paclet"];
                      DefinitionNotebookClient`Console`PackagePrivate`openNotebookAndDisplayHint[
                       File[
-                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/DefinitionNotebook.nb"
+                       "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/MoreIssues/ResourceDefinition.nb"
                       ],
                       Association[
                        "CellID" -> 437199519,
@@ -5350,7 +5486,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 228484362
+               CellID -> 103132036
               ],
               Cell[
                BoxData[
@@ -5674,7 +5810,7 @@ Notebook[
                ],
                "Print",
                CellLabel -> "During evaluation of In[2]:=",
-               CellID -> 277022302
+               CellID -> 21671503
               ]
              },
              Open
@@ -5689,8 +5825,8 @@ Notebook[
                "\"Errors encountered while checking paclet.\"",
                2,
                2,
-               3,
-               33992127183847450859,
+               8,
+               33997430240731871973,
                "Local",
                "Wolfram`PacletCICD`CheckPaclet"
               },
@@ -5700,7 +5836,7 @@ Notebook[
             "Message",
             "MSG",
             CellLabel -> "During evaluation of In[2]:=",
-            CellID -> 201722274
+            CellID -> 354715595
            ],
            Cell[
             BoxData[
@@ -5925,25 +6061,25 @@ Notebook[
                                       "Level" -> "Warning",
                                       "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
                                       "Tag" -> "DocumentationWrongPacletName",
-                                      "CellID" -> 734844323
+                                      "CellID" -> 268995717
                                      ],
                                      Association[
                                       "Level" -> "Error",
                                       "Message" -> "CodeInspect found 1 fatal error",
                                       "Tag" -> "CodeInspectionIssues",
-                                      "CellID" -> 56464346
+                                      "CellID" -> 57873694
                                      ],
                                      Association[
                                       "Level" -> "Warning",
                                       "Message" -> "CodeInspect found 1 error",
                                       "Tag" -> "CodeInspectionIssues",
-                                      "CellID" -> 44435057
+                                      "CellID" -> 76478523
                                      ],
                                      Association[
                                       "Level" -> "Warning",
                                       "Message" -> "CodeInspect found 1 error and 1 warning",
                                       "Tag" -> "CodeInspectionIssues",
-                                      "CellID" -> 773351116
+                                      "CellID" -> 351143504
                                      ],
                                      Association[
                                       "Level" -> "Suggestion",
@@ -6092,7 +6228,7 @@ Notebook[
                                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1,
                                    TypeSystem`NestedGrid`PackagePrivate`$grid$$ = DynamicModule[
                                     {
-                                     TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = Deploy[
+                                     TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
                                       Style[
                                        Grid[
                                         {
@@ -6106,7 +6242,11 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                 FontColor -> RGBColor[
+                                                  0.27451,
+                                                  0.537255,
+                                                  0.792157
+                                                 ]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6143,7 +6283,11 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                 FontColor -> RGBColor[
+                                                  0.27451,
+                                                  0.537255,
+                                                  0.792157
+                                                 ]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6180,7 +6324,11 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                 FontColor -> RGBColor[
+                                                  0.27451,
+                                                  0.537255,
+                                                  0.792157
+                                                 ]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6217,7 +6365,11 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                 FontColor -> RGBColor[
+                                                  0.27451,
+                                                  0.537255,
+                                                  0.792157
+                                                 ]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6298,7 +6450,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             RawBoxes["734844323"],
+                                             RawBoxes["268995717"],
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {1, Key["CellID"]},
                                               "Item",
@@ -6364,7 +6516,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             RawBoxes["56464346"],
+                                             RawBoxes["57873694"],
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {2, Key["CellID"]},
                                               "Item",
@@ -6430,7 +6582,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             RawBoxes["44435057"],
+                                             RawBoxes["76478523"],
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {3, Key["CellID"]},
                                               "Item",
@@ -6496,7 +6648,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             RawBoxes["773351116"],
+                                             RawBoxes["351143504"],
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {4, Key["CellID"]},
                                               "Item",
@@ -7070,13 +7222,13 @@ Notebook[
                                        ShowAutoStyles -> False
                                       ]
                                      ],
-                                     TypeSystem`NestedGrid`PackagePrivate`initialQ$ = True
+                                     TypeSystem`NestedGrid`PackagePrivate`initialQ = True
                                     },
                                     Dynamic[
                                      TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
                                       TypeSystem`NestedGrid`PackagePrivate`$path$$,
                                       If[
-                                       Not[TypeSystem`NestedGrid`PackagePrivate`initialQ$],
+                                       Not[TypeSystem`NestedGrid`PackagePrivate`initialQ],
                                        Module[
                                         {
                                          TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed,
@@ -7086,7 +7238,7 @@ Notebook[
                                         },
                                         TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = If[
                                          FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpData$],
-                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid$,
+                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid,
                                          TypeSystem`NestedGrid`PackagePrivate`renderGrid[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                           TypeSystem`NestedGrid`PackagePrivate`tmpData$
                                          ]
@@ -7095,22 +7247,20 @@ Notebook[
                                          Not[
                                           FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]
                                          ],
-                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
+                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
                                         ];
                                         Null
                                        ]
                                       ];
-                                      TypeSystem`NestedGrid`PackagePrivate`initialQ$ = False;
+                                      TypeSystem`NestedGrid`PackagePrivate`initialQ = False;
                                       TypeSystem`NestedGrid`PackagePrivate`$vPos$$;
                                       TypeSystem`NestedGrid`PackagePrivate`$hPos$$;
                                       If[
-                                       FailureQ[
-                                        TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
-                                       ],
+                                       FailureQ[TypeSystem`NestedGrid`PackagePrivate`renderedGrid],
                                        TypeSystem`SparseGrid[
                                         TypeSystem`H["(data no longer present)"]
                                        ],
-                                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
+                                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid
                                       ]
                                      ],
                                      TrackedSymbols :> {
@@ -7271,7 +7421,7 @@ Notebook[
               Failure[
                "CheckPaclet::errors",
                Association[
-                "MessageTemplate" -> MessageName[CheckPaclet, "errors"],
+                "MessageTemplate" -> MessageName[Wolfram`PacletCICD`CheckPaclet, "errors"],
                 "MessageParameters" -> { },
                 "FailureCondition" -> "Error",
                 "Result" -> Dataset[
@@ -7280,25 +7430,25 @@ Notebook[
                    "Level" -> "Warning",
                    "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
-                   "CellID" -> 734844323
+                   "CellID" -> 268995717
                   ],
                   Association[
                    "Level" -> "Error",
                    "Message" -> "CodeInspect found 1 fatal error",
                    "Tag" -> "CodeInspectionIssues",
-                   "CellID" -> 56464346
+                   "CellID" -> 57873694
                   ],
                   Association[
                    "Level" -> "Warning",
                    "Message" -> "CodeInspect found 1 error",
                    "Tag" -> "CodeInspectionIssues",
-                   "CellID" -> 44435057
+                   "CellID" -> 76478523
                   ],
                   Association[
                    "Level" -> "Warning",
                    "Message" -> "CodeInspect found 1 error and 1 warning",
                    "Tag" -> "CodeInspectionIssues",
-                   "CellID" -> 773351116
+                   "CellID" -> 351143504
                   ],
                   Association[
                    "Level" -> "Suggestion",
@@ -7359,7 +7509,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[2]=",
-            CellID -> 385104742
+            CellID -> 366808710
            ]
           },
           Open
@@ -7446,7 +7596,14 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                             Directive[
+                              RGBColor[
+                               0.360784,
+                               0.596078,
+                               0.380392
+                              ],
+                              25
+                             ],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -7481,7 +7638,7 @@ Notebook[
                                 "\[InvisibleSpace]",
                                 TagBox[
                                  TemplateBox[
-                                  {"8.933215`", "\"s\"", "seconds", "\"Seconds\""},
+                                  {"3.9313669`", "\"s\"", "seconds", "\"Seconds\""},
                                   "Quantity",
                                   SyntaxForm -> Mod
                                  ],
@@ -7540,7 +7697,14 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                             Directive[
+                              RGBColor[
+                               0.360784,
+                               0.596078,
+                               0.380392
+                              ],
+                              25
+                             ],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -7575,7 +7739,7 @@ Notebook[
                                 "\[InvisibleSpace]",
                                 TagBox[
                                  TemplateBox[
-                                  {"8.933215`", "\"s\"", "seconds", "\"Seconds\""},
+                                  {"3.9313669`", "\"s\"", "seconds", "\"Seconds\""},
                                   "Quantity",
                                   SyntaxForm -> Mod
                                  ],
@@ -7616,13 +7780,13 @@ Notebook[
                                          "File" -> File[
                                           "Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb"
                                          ],
-                                         "Hash" -> "c1249dddc66fb993fd124c9ea0426786bfc50eb7f6ebf36e422bcac5c489ecdc"
+                                         "Hash" -> "2bf19cdabdf600856cd346bac14043a4f7855e8853fca639ba770187f544a090"
                                         ],
                                         Association[
                                          "File" -> File[
                                           "Documentation\\English\\ReferencePages\\Symbols\\AddTwo.nb"
                                          ],
-                                         "Hash" -> "4ba91972f9c897e94b1b76edc36929d4daaf3fe34743ae6d9a4903306276b8f3"
+                                         "Hash" -> "4e58a801d0ee0b496b0b2924ddf91ae797426099631dc321e2708a3269a2dc68"
                                         ],
                                         Association[
                                          "File" -> File["LICENSE"],
@@ -7633,7 +7797,7 @@ Notebook[
                                       "AllowEmbedding" -> True,
                                       "InitialShape" -> TypeSystem`PackageScope`HeaderShape[
                                        Association[
-                                        {All, All, TypeSystem`PackageScope`KeyDummy[0]} -> 1,
+                                        {All, All, TypeSystem`PackageScope`KeyDummy[9]} -> 1,
                                         {All, All, "File"} -> 1,
                                         {All, All, "Hash"} -> 1
                                        ],
@@ -7682,7 +7846,7 @@ Notebook[
                                       "ColumnTarget" -> 10,
                                       "Shape" -> TypeSystem`PackageScope`HeaderShape[
                                        Association[
-                                        {All, All, TypeSystem`PackageScope`KeyDummy[0]} -> 1,
+                                        {All, All, TypeSystem`PackageScope`KeyDummy[9]} -> 1,
                                         {All, All, "File"} -> 1,
                                         {All, All, "Hash"} -> 1
                                        ],
@@ -7742,7 +7906,7 @@ Notebook[
                                      TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1,
                                      TypeSystem`NestedGrid`PackagePrivate`$grid$$ = DynamicModule[
                                       {
-                                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = Deploy[
+                                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
                                         Style[
                                          Grid[
                                           {
@@ -7794,7 +7958,11 @@ Notebook[
                                                   "File",
                                                   Style[
                                                    "File",
-                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                   FontColor -> RGBColor[
+                                                    0.27451,
+                                                    0.537255,
+                                                    0.792157
+                                                   ]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -7831,7 +7999,11 @@ Notebook[
                                                   "Hash",
                                                   Style[
                                                    "Hash",
-                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                   FontColor -> RGBColor[
+                                                    0.27451,
+                                                    0.537255,
+                                                    0.792157
+                                                   ]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -7870,7 +8042,11 @@ Notebook[
                                                   "Files",
                                                   Style[
                                                    "Files",
-                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
+                                                   FontColor -> RGBColor[
+                                                    0.27451,
+                                                    0.537255,
+                                                    0.792157
+                                                   ]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -8024,7 +8200,7 @@ Notebook[
                                             Item[
                                              Pane[
                                               Annotation[
-                                               "c1249dddc66fb993fd124c9ea0426786bfc50eb7f6ebf36e422bcac5c489ecdc",
+                                               "2bf19cdabdf600856cd346bac14043a4f7855e8853fca639ba770187f544a090",
                                                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                                 {Key["Files"], 4, Key["Hash"]},
                                                 "Item",
@@ -8061,7 +8237,7 @@ Notebook[
                                             Item[
                                              Pane[
                                               Annotation[
-                                               "4ba91972f9c897e94b1b76edc36929d4daaf3fe34743ae6d9a4903306276b8f3",
+                                               "4e58a801d0ee0b496b0b2924ddf91ae797426099631dc321e2708a3269a2dc68",
                                                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                                 {Key["Files"], 5, Key["Hash"]},
                                                 "Item",
@@ -8406,13 +8582,13 @@ Notebook[
                                          ShowAutoStyles -> False
                                         ]
                                        ],
-                                       TypeSystem`NestedGrid`PackagePrivate`initialQ$ = True
+                                       TypeSystem`NestedGrid`PackagePrivate`initialQ = True
                                       },
                                       Dynamic[
                                        TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
                                         TypeSystem`NestedGrid`PackagePrivate`$path$$,
                                         If[
-                                         Not[TypeSystem`NestedGrid`PackagePrivate`initialQ$],
+                                         Not[TypeSystem`NestedGrid`PackagePrivate`initialQ],
                                          Module[
                                           {
                                            TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed,
@@ -8422,7 +8598,7 @@ Notebook[
                                           },
                                           TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = If[
                                            FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpData$],
-                                           TypeSystem`NestedGrid`PackagePrivate`renderedGrid$,
+                                           TypeSystem`NestedGrid`PackagePrivate`renderedGrid,
                                            TypeSystem`NestedGrid`PackagePrivate`renderGrid[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                             TypeSystem`NestedGrid`PackagePrivate`tmpData$
                                            ]
@@ -8431,22 +8607,20 @@ Notebook[
                                            Not[
                                             FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]
                                            ],
-                                           TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
+                                           TypeSystem`NestedGrid`PackagePrivate`renderedGrid = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
                                           ];
                                           Null
                                          ]
                                         ];
-                                        TypeSystem`NestedGrid`PackagePrivate`initialQ$ = False;
+                                        TypeSystem`NestedGrid`PackagePrivate`initialQ = False;
                                         TypeSystem`NestedGrid`PackagePrivate`$vPos$$;
                                         TypeSystem`NestedGrid`PackagePrivate`$hPos$$;
                                         If[
-                                         FailureQ[
-                                          TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
-                                         ],
+                                         FailureQ[TypeSystem`NestedGrid`PackagePrivate`renderedGrid],
                                          TypeSystem`SparseGrid[
                                           TypeSystem`H["(data no longer present)"]
                                          ],
-                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
+                                         TypeSystem`NestedGrid`PackagePrivate`renderedGrid
                                         ]
                                        ],
                                        TrackedSymbols :> {
@@ -8628,7 +8802,14 @@ Notebook[
                                               FrameBox[
                                                StyleBox[
                                                 "\"\[Checkmark]\"",
-                                                Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                Directive[
+                                                 RGBColor[
+                                                  0.360784,
+                                                  0.596078,
+                                                  0.380392
+                                                 ],
+                                                 25
+                                                ],
                                                 StripOnInput -> False
                                                ],
                                                ContentPadding -> False,
@@ -8663,7 +8844,7 @@ Notebook[
                                                    "\[InvisibleSpace]",
                                                    TagBox[
                                                     TemplateBox[
-                                                     {"6.3026284`", "\"s\"", "seconds", "\"Seconds\""},
+                                                     {"1.18504`", "\"s\"", "seconds", "\"Seconds\""},
                                                      "Quantity",
                                                      SyntaxForm -> Mod
                                                     ],
@@ -8722,7 +8903,14 @@ Notebook[
                                               FrameBox[
                                                StyleBox[
                                                 "\"\[Checkmark]\"",
-                                                Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                Directive[
+                                                 RGBColor[
+                                                  0.360784,
+                                                  0.596078,
+                                                  0.380392
+                                                 ],
+                                                 25
+                                                ],
                                                 StripOnInput -> False
                                                ],
                                                ContentPadding -> False,
@@ -8757,7 +8945,7 @@ Notebook[
                                                    "\[InvisibleSpace]",
                                                    TagBox[
                                                     TemplateBox[
-                                                     {"6.3026284`", "\"s\"", "seconds", "\"Seconds\""},
+                                                     {"1.18504`", "\"s\"", "seconds", "\"Seconds\""},
                                                      "Quantity",
                                                      SyntaxForm -> Mod
                                                     ],
@@ -8784,7 +8972,7 @@ Notebook[
                                                       RowBox[
                                                        {
                                                         TemplateBox[
-                                                         {"5.7390843`", "\"s\"", "seconds", "\"Seconds\""},
+                                                         {"0.6687124`", "\"s\"", "seconds", "\"Seconds\""},
                                                          "Quantity",
                                                          SyntaxForm -> Mod
                                                         ],
@@ -8835,7 +9023,14 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                                       Directive[
+                                                                        RGBColor[
+                                                                         0.360784,
+                                                                         0.596078,
+                                                                         0.380392
+                                                                        ],
+                                                                        25
+                                                                       ],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -8855,7 +9050,7 @@ Notebook[
                                                                           "\[InvisibleSpace]",
                                                                           TagBox[
                                                                            TemplateBox[
-                                                                            {"5.7390843`", "\"s\"", "seconds", "\"Seconds\""},
+                                                                            {"0.6687124`", "\"s\"", "seconds", "\"Seconds\""},
                                                                             "Quantity",
                                                                             SyntaxForm -> Mod
                                                                            ],
@@ -8901,7 +9096,14 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                                       Directive[
+                                                                        RGBColor[
+                                                                         0.360784,
+                                                                         0.596078,
+                                                                         0.380392
+                                                                        ],
+                                                                        25
+                                                                       ],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -8921,7 +9123,7 @@ Notebook[
                                                                           "\[InvisibleSpace]",
                                                                           TagBox[
                                                                            TemplateBox[
-                                                                            {"5.7390843`", "\"s\"", "seconds", "\"Seconds\""},
+                                                                            {"0.6687124`", "\"s\"", "seconds", "\"Seconds\""},
                                                                             "Quantity",
                                                                             SyntaxForm -> Mod
                                                                            ],
@@ -8975,7 +9177,7 @@ Notebook[
                                                            ],
                                                            Success[
                                                             "BuildDocumentationNotebook",
-                                                            Association["Time" -> Quantity[5.7390843, "Seconds"]]
+                                                            Association["Time" -> Quantity[0.6687124, "Seconds"]]
                                                            ],
                                                            Selectable -> False,
                                                            Editable -> False,
@@ -9005,7 +9207,14 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                                       Directive[
+                                                                        RGBColor[
+                                                                         0.360784,
+                                                                         0.596078,
+                                                                         0.380392
+                                                                        ],
+                                                                        25
+                                                                       ],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -9025,7 +9234,7 @@ Notebook[
                                                                           "\[InvisibleSpace]",
                                                                           TagBox[
                                                                            TemplateBox[
-                                                                            {"0.4924724`", "\"s\"", "seconds", "\"Seconds\""},
+                                                                            {"0.4864321`", "\"s\"", "seconds", "\"Seconds\""},
                                                                             "Quantity",
                                                                             SyntaxForm -> Mod
                                                                            ],
@@ -9071,7 +9280,14 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
+                                                                       Directive[
+                                                                        RGBColor[
+                                                                         0.360784,
+                                                                         0.596078,
+                                                                         0.380392
+                                                                        ],
+                                                                        25
+                                                                       ],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -9091,7 +9307,7 @@ Notebook[
                                                                           "\[InvisibleSpace]",
                                                                           TagBox[
                                                                            TemplateBox[
-                                                                            {"0.4924724`", "\"s\"", "seconds", "\"Seconds\""},
+                                                                            {"0.4864321`", "\"s\"", "seconds", "\"Seconds\""},
                                                                             "Quantity",
                                                                             SyntaxForm -> Mod
                                                                            ],
@@ -9145,7 +9361,7 @@ Notebook[
                                                            ],
                                                            Success[
                                                             "BuildDocumentationNotebook",
-                                                            Association["Time" -> Quantity[0.4924724, "Seconds"]]
+                                                            Association["Time" -> Quantity[0.4864321, "Seconds"]]
                                                            ],
                                                            Selectable -> False,
                                                            Editable -> False,
@@ -9291,19 +9507,19 @@ Notebook[
                                     Success[
                                      "DocumentationBuild",
                                      Association[
-                                      "TotalTime" -> Quantity[6.3026284, "Seconds"],
+                                      "TotalTime" -> Quantity[1.18504, "Seconds"],
                                       "MaximumFileTime" -> {
-                                       Quantity[5.7390843, "Seconds"],
+                                       Quantity[0.6687124, "Seconds"],
                                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb"
                                       },
                                       "ProcessedFiles" -> Association[
                                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb" -> Success[
                                         "BuildDocumentationNotebook",
-                                        Association["Time" -> Quantity[5.7390843, "Seconds"]]
+                                        Association["Time" -> Quantity[0.6687124, "Seconds"]]
                                        ],
                                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddTwo.nb" -> Success[
                                         "BuildDocumentationNotebook",
-                                        Association["Time" -> Quantity[0.4924724, "Seconds"]]
+                                        Association["Time" -> Quantity[0.4864321, "Seconds"]]
                                        ]
                                       ],
                                       "FailedFilesCount" -> 0,
@@ -9341,7 +9557,7 @@ Notebook[
                                    "[",
                                    TemplateBox[
                                     {
-                                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample/DefinitionNotebook.nb\""
+                                     "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample/ResourceDefinition.nb\""
                                     },
                                     "FileArgument"
                                    ],
@@ -9415,7 +9631,7 @@ Notebook[
                   "PacletBuild",
                   Association[
                    "PacletArchive" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\build\\MyPublisher__SamplePaclet-1.0.0",
-                   "TotalTime" -> Quantity[8.933215, "Seconds"],
+                   "TotalTime" -> Quantity[3.9313669, "Seconds"],
                    "PacletManifest" -> Dataset[
                     Association[
                      "Files" -> {
@@ -9435,13 +9651,13 @@ Notebook[
                        "File" -> File[
                         "Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb"
                        ],
-                       "Hash" -> "c1249dddc66fb993fd124c9ea0426786bfc50eb7f6ebf36e422bcac5c489ecdc"
+                       "Hash" -> "2bf19cdabdf600856cd346bac14043a4f7855e8853fca639ba770187f544a090"
                       ],
                       Association[
                        "File" -> File[
                         "Documentation\\English\\ReferencePages\\Symbols\\AddTwo.nb"
                        ],
-                       "Hash" -> "4ba91972f9c897e94b1b76edc36929d4daaf3fe34743ae6d9a4903306276b8f3"
+                       "Hash" -> "4e58a801d0ee0b496b0b2924ddf91ae797426099631dc321e2708a3269a2dc68"
                       ],
                       Association[
                        "File" -> File["LICENSE"],
@@ -9466,19 +9682,19 @@ Notebook[
                     Success[
                      "DocumentationBuild",
                      Association[
-                      "TotalTime" -> Quantity[6.3026284, "Seconds"],
+                      "TotalTime" -> Quantity[1.18504, "Seconds"],
                       "MaximumFileTime" -> {
-                       Quantity[5.7390843, "Seconds"],
+                       Quantity[0.6687124, "Seconds"],
                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb"
                       },
                       "ProcessedFiles" -> Association[
                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddOne.nb" -> Success[
                         "BuildDocumentationNotebook",
-                        Association["Time" -> Quantity[5.7390843, "Seconds"]]
+                        Association["Time" -> Quantity[0.6687124, "Seconds"]]
                        ],
                        "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\Sample\\Documentation\\English\\ReferencePages\\Symbols\\AddTwo.nb" -> Success[
                         "BuildDocumentationNotebook",
-                        Association["Time" -> Quantity[0.4924724, "Seconds"]]
+                        Association["Time" -> Quantity[0.4864321, "Seconds"]]
                        ]
                       ],
                       "FailedFilesCount" -> 0,
@@ -9491,7 +9707,7 @@ Notebook[
                     ]
                    },
                    "Source" -> File[
-                    "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample/DefinitionNotebook.nb"
+                    "C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample/ResourceDefinition.nb"
                    ],
                    "CheckResult" -> Missing["NotAvailable"]
                   ]
@@ -9503,7 +9719,7 @@ Notebook[
                ],
                "Output",
                CellLabel -> "Out[1]=",
-               CellID -> 79196926
+               CellID -> 189539355
               ]
              },
              Open
@@ -9608,8 +9824,6 @@ Notebook[
                "{",
                RowBox[
                 {
-                 "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\DefinitionNotebook.nb\"",
-                 ",",
                  "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\Documentation\"",
                  ",",
                  "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\Kernel\"",
@@ -9620,6 +9834,8 @@ Notebook[
                  ",",
                  "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\README.md\"",
                  ",",
+                 "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\ResourceDefinition.nb\"",
+                 ",",
                  "\"C:/Users/rhennigan/AppData/Roaming/Mathematica/ApplicationData/Wolfram/PacletCICD/Examples/Sample\\\\Tests\""
                 }
                ],
@@ -9629,7 +9845,7 @@ Notebook[
             ],
             "Output",
             CellLabel -> "Out[2]=",
-            CellID -> 79583797
+            CellID -> 193373620
            ]
           },
           Open

@@ -63,7 +63,7 @@ defNBQ0[ ___ ] := False;
 findDefinitionNotebook[ dir_? DirectoryQ ] :=
     findDefinitionNotebook[
         dir,
-        fileNameJoin @ { ExpandFileName @ dir, "DefinitionNotebook.nb" }
+        fileNameJoin @ { ExpandFileName @ dir, "ResourceDefinition.nb" }
     ];
 
 findDefinitionNotebook[ pac_PacletObject ] :=

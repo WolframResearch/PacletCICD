@@ -109,12 +109,12 @@ VerificationTest[
 VerificationTest[
     FileNameTake /@ FileNames[ All, ExampleDirectory[ "FewIssues" ] ],
     {
-        "DefinitionNotebook.nb",
         "Documentation",
         "Kernel",
         "LICENSE",
         "PacletInfo.wl",
-        "README.md"
+        "README.md",
+        "ResourceDefinition.nb"
     },
     TestID -> "ExampleDirectory-FewIssues-Files@@Tests/ExampleDirectory.wlt:109,1-120,2"
 ]
@@ -122,12 +122,12 @@ VerificationTest[
 VerificationTest[
     FileNameTake /@ FileNames[ All, ExampleDirectory[ "MoreIssues" ] ],
     {
-        "DefinitionNotebook.nb",
         "Documentation",
         "Kernel",
         "LICENSE",
         "PacletInfo.wl",
-        "README.md"
+        "README.md",
+        "ResourceDefinition.nb"
     },
     TestID -> "ExampleDirectory-MoreIssues-Files@@Tests/ExampleDirectory.wlt:122,1-133,2"
 ]
@@ -135,12 +135,12 @@ VerificationTest[
 VerificationTest[
     FileNameTake /@ FileNames[ All, ExampleDirectory[ "Sample" ] ],
     {
-        "DefinitionNotebook.nb",
         "Documentation",
         "Kernel",
         "LICENSE",
         "PacletInfo.wl",
         "README.md",
+        "ResourceDefinition.nb",
         "Tests"
     },
     TestID -> "ExampleDirectory-Sample-Files@@Tests/ExampleDirectory.wlt:135,1-147,2"
@@ -149,12 +149,12 @@ VerificationTest[
 VerificationTest[
     FileNameTake /@ FileNames[ All, ExampleDirectory[ "AdvancedSample" ] ],
     {
-        "DefinitionNotebook.nb",
         "Documentation",
         "Kernel",
         "LICENSE",
         "PacletInfo.wl",
         "README.md",
+        "ResourceDefinition.nb",
         "Scripts",
         "Source",
         "Tests"

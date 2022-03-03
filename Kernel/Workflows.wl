@@ -2179,7 +2179,7 @@ toLowerCase[ other_ ] := other;
 (*TODO: check against schema *)
 
 $defaultActionTarget = "Submit";
-$defNotebookLocation = "./DefinitionNotebook.nb";
+$defNotebookLocation = "./ResourceDefinition.nb";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
