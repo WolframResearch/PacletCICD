@@ -113,7 +113,7 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ];
+    ccPromptFix @ checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

@@ -499,6 +499,34 @@ longestCommonPrefix0 ~catchUndefined~ UpValues;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Hacks*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ccPromptFix*)
+ccPromptFix // Attributes = { HoldFirst };
+
+ccPromptFix[ eval_ ] := ccPromptFix[ eval, $EvaluationEnvironment ];
+
+ccPromptFix[ eval_, "Script" | "Subkernel" | "BatchJob" ] := (
+    CloudObject;
+    Internal`InheritedBlock[ { CloudObject`Private`hiddenOptions },
+
+        DownValues[ CloudObject`Private`hiddenOptions ] =
+            Replace[
+                DownValues @ CloudObject`Private`hiddenOptions,
+                HoldPattern[ "Prompt" -> Automatic ] :> ("Prompt" -> False),
+                { 3 }
+            ];
+
+        eval
+    ]
+);
+
+ccPromptFix[ eval_, _ ] := eval;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*Package Footer*)
 End[ ];
 EndPackage[ ];
