@@ -10,7 +10,6 @@ PacletDirectoryLoad @ $pacDir;
 Needs[ "Wolfram`PacletCICD`" ];
 Needs[ "ResourceSystemClient`" -> None ];
 $ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
-Print[ "$ResourceSystemBase: ", $ResourceSystemBase ];
 
 result = Wolfram`PacletCICD`CheckPaclet[
     File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
