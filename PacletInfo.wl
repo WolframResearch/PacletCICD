@@ -11,7 +11,8 @@ PacletObject[ <|
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
         "DefinitionNotebookClient" -> ">=1.6.0",
-        "PacletResource"           -> ">=0.8.0"
+        "PacletResource"           -> ">=0.8.0",
+        "ResourceSystemClient"     -> ">=1.24.0"
     },
     "Extensions"       -> {
         {

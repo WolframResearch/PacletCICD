@@ -18,9 +18,9 @@ result = Wolfram`PacletCICD`BuildPaclet[
 ];
 
 If[ MatchQ[ result, _Wolfram`PacletCICD`BuildPaclet ],
-    print[ "::error::Wolfram`PacletCICD`BuildPaclet not defined" ];
+    Print[ "::error::Wolfram`PacletCICD`BuildPaclet not defined" ];
     Exit[ 1 ],
-    print @ result
+    Print @ result
 ];
 
 (* :!CodeAnalysis::EndBlock:: *)

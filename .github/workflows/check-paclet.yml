@@ -24,9 +24,6 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
-
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
 
@@ -40,9 +37,6 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
 
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
