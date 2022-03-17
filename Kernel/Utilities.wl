@@ -525,6 +525,8 @@ ccPromptFix[ eval_, "Script" | "Subkernel" | "BatchJob" ] := (
 
 ccPromptFix[ eval_, _ ] := eval;
 
+ccPromptFix // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Footer*)
