@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: ["main"]
   push:
-    branches: ["main", "feature/resource-publisher-tokens"]
+    branches: ["main"]
   workflow_dispatch:
 
 env:
