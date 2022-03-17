@@ -41,10 +41,13 @@ TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
 
 
 testPaclet[ dir_? DirectoryQ ] :=
-    Module[ { files, report },
+    Module[ { files, suite, results, report },
         PacletDirectoryLoad @ dir;
-        files  = FileNames[ "*.wlt", dir, Infinity ];
-        report = testContext @ TestReport @ files;
+        files  = FileNames[ "*.mt"|"*.wlt"|"*.mt0", dir, Infinity ];
+        Needs[ "MUnit`" -> None ];
+        suite = testContext @ MUnit`TestSuiteReport[ dir, "KernelCount" -> 0 ];
+        results = Values @ suite[ "Results" ];
+        report = TestReport @ results;
         annotateTestResult /@ report[ "TestResults" ];
         If[ TrueQ @ report[ "AllTestsSucceeded" ],
             report,
