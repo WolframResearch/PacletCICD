@@ -506,9 +506,12 @@ longestCommonPrefix0 ~catchUndefined~ UpValues;
 (*ccPromptFix*)
 ccPromptFix // Attributes = { HoldFirst };
 
+ccPromptFix[ eval_ ] /; StringQ @ Environment[ "GITHUB_WORKFLOW" ] :=
+    ccPromptFix[ eval, "Script" ];
+
 ccPromptFix[ eval_ ] := ccPromptFix[ eval, $EvaluationEnvironment ];
 
-ccPromptFix[ eval_, "Script" | "Subkernel" | "BatchJob" ] := (
+ccPromptFix[ eval_, "Script"|"Subkernel"|"BatchJob" ] := (
     CloudObject;
     Internal`InheritedBlock[ { CloudObject`Private`hiddenOptions },
 
