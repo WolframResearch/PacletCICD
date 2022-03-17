@@ -53,7 +53,7 @@ Quiet[
 If[ $VersionNumber < 13.1 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
     PacletInstall[ "https://wolfr.am/11FhS453R" ];
     PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
-    PacletInstall[ "https://wolfr.am/132ficZx4" ];
+    PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
 ];
 
 If[ $VersionNumber < 13.1,
