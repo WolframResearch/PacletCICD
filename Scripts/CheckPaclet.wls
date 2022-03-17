@@ -11,12 +11,6 @@ Needs[ "Wolfram`PacletCICD`" ];
 Needs[ "ResourceSystemClient`" -> None ];
 $ResourceSystemBase = "https://www.wolframcloud.com/obj/rhennigan/api/1.0";
 
-
-Wolfram`PacletCICD`Private`ccPromptFix @ Print[
-    "DefaultPublisher: ",
-    ResourceSystemClient`ResourceSystemExecute[ "DefaultPublisher", { } ]
-];
-
 result = Wolfram`PacletCICD`CheckPaclet[
     File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
     "Target" -> "Submit"
