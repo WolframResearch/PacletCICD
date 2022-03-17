@@ -11,14 +11,12 @@ Needs[ "Wolfram`PacletCICD`" ];
 Needs[ "ResourceSystemClient`" -> None ];
 $ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
 
-result = Wolfram`PacletCICD`BuildPaclet[
-    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
-    "Check"  -> False,
-    "Target" -> "Submit"
+result = Wolfram`PacletCICD`SubmitPaclet[
+    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" }
 ];
 
-If[ MatchQ[ result, _Wolfram`PacletCICD`BuildPaclet ],
-    Print[ "::error::Wolfram`PacletCICD`BuildPaclet not defined" ];
+If[ MatchQ[ result, _Wolfram`PacletCICD`SubmitPaclet ],
+    Print[ "::error::Wolfram`PacletCICD`SubmitPaclet not defined" ];
     Exit[ 1 ],
     Print @ result
 ];

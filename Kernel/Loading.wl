@@ -3,7 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`Internal`", { "Wolfram`PacletCICD`" } ];
 
-ClearAll[ SetContextLoad, LoadSubPackages, $SubPackageSymbols ];
+ClearAll[ SetContextLoad, LoadSubPackage, LoadSubPackages, $SubPackageSymbols ];
 
 Begin[ "`Private`" ];
 
@@ -12,6 +12,26 @@ Begin[ "`Private`" ];
 (*$SubPackageSymbols*)
 $SubPackageSymbols := Association @ Internal`BagPart[ $subPackageSymbols, All ];
 $subPackageSymbols = Internal`Bag[ ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*LoadSubPackage*)
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+LoadSubPackage[ ctx_String, label_ ] :=
+    Block[ { $ContextPath },
+        If[ TrueQ @ $Debug,
+            Print[ "Loading: "    , label,
+                   "\n\tContext: ", ctx,
+                   "\n\tFile:    ", FindFile @ ctx
+            ]
+        ];
+        LoadSubPackage[ ctx, _ ] = Quiet[ Get @ ctx, General::shdw ];
+    ];
+
+LoadSubPackage[ ctx_String ] := LoadSubPackage[ ctx, "" ];
+(* :!CodeAnalysis::EndBlock:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -27,8 +47,6 @@ SetContextLoad::context = "Warning: suspicious context in `1`.";
 SetContextLoad[ sym_Symbol, name_String ] /; StringFreeQ[ name, "`" ] :=
     SetContextLoad[ sym, "Wolfram`PacletCICD`" <> name <> "`" ];
 
-(* :!CodeAnalysis::BeginBlock:: *)
-(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 SetContextLoad[ sym_Symbol, context_String ] :=
     With[ { full = Context @ sym <> SymbolName @ Unevaluated @ sym },
         If[ $Debug && Context @ sym =!= "Wolfram`PacletCICD`",
@@ -36,19 +54,8 @@ SetContextLoad[ sym_Symbol, context_String ] :=
         ];
         Internal`StuffBag[ $subPackageSymbols, full :> sym ];
         sym // ClearAll;
-        sym := Block[ { $ContextPath },
-                   sym // ClearAll;
-                   If[ TrueQ @ $Debug,
-                       Print[ "Loading: ",     full,
-                              "\n\tContext: ", context,
-                              "\n\tFile:    ", FindFile @ context
-                       ]
-                   ];
-                   Quiet[ Get @ context, General::shdw ];
-                   sym
-               ]
+        sym := (ClearAll @ sym; LoadSubPackage[ context, full ]; sym)
     ];
-(* :!CodeAnalysis::EndBlock:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

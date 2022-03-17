@@ -9,7 +9,8 @@ PacletDirectoryLoad @ $pacDir;
 
 Needs[ "Wolfram`PacletCICD`" ];
 Needs[ "ResourceSystemClient`" -> None ];
-$ResourceSystemBase = "https://www.wolframcloud.com/obj/rhennigan/api/1.0";
+$ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
+Print[ "$ResourceSystemBase: ", $ResourceSystemBase ];
 
 result = Wolfram`PacletCICD`CheckPaclet[
     File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },

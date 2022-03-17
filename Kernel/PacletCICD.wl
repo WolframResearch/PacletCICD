@@ -24,6 +24,7 @@ Wolfram`PacletCICD`FormattingHelper;
 Wolfram`PacletCICD`FromAST;
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`GitHubSecret;
+Wolfram`PacletCICD`LoadSubPackage;
 Wolfram`PacletCICD`MessageFailure;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`ResetExampleDirectory;
