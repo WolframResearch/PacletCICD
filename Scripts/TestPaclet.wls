@@ -8,6 +8,10 @@ $pacDir = DirectoryName[ $InputFileName, 2 ];
 PacletDirectoryLoad @ $pacDir;
 
 Needs[ "Wolfram`PacletCICD`" ];
+Needs[ "ResourceSystemClient`" -> None ];
+
+Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
+Print[ "RESOURCE_PUBLISHER_TOKEN=", ResourceSystemClient`$PublisherToken ];
 
 result = Wolfram`PacletCICD`TestPaclet[ FileNameJoin @ { $pacDir, "Tests" } ];
 
