@@ -4233,55 +4233,6 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"InstallDependencies.wls\"",
-                    File[
-                     FileNameJoin[
-                      {NotebookDirectory[], "Scripts/InstallDependencies.wls"}
-                     ]
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 File[
-                  FileNameJoin[
-                   {NotebookDirectory[], "Scripts/InstallDependencies.wls"}
-                  ]
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 41457368
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
                     "\"TestPaclet.wls\"",
                     File[
                      FileNameJoin[
@@ -10584,7 +10535,7 @@ Notebook[
   },
   "SubmissionReviewData" -> {"Review" -> False},
   "ToolsOpen" -> False,
-  "UpdatedTimestamp" -> 3856449794.7157095,
+  "UpdatedTimestamp" -> 3856449795.,
   "TemplateVersion" -> "1.5.58",
   "StatusMessage" -> "",
   "PacletBuildData" -> {"FileHashes" -> {}},
