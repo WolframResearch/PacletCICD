@@ -11,8 +11,8 @@ Needs[ "Wolfram`PacletCICD`" ];
 Needs[ "ResourceSystemClient`" -> None ];
 $ResourceSystemBase = "https://www.wolframcloud.com/obj/rhennigan/api/1.0";
 
-Print[ "GITHUB_ENV=", Environment[ "GITHUB_ENV" ] ];
-Print[ "RESOURCE_PUBLISHER_TOKEN=", ResourceSystemClient`$PublisherToken ];
+Print[ "CloudUserID: ", $CloudUserID ];
+Print[ "DefaultPublisher: ", ResourceSystemClient`ResourceSystemExecute[ "DefaultPublisher", { } ] ];
 
 result = Wolfram`PacletCICD`CheckPaclet[
     File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
