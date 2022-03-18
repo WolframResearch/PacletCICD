@@ -120,14 +120,22 @@ submitPaclet[ file_File, opts___ ] :=
         ]
     ];
 
-submitPaclet[ nbo_NotebookObject, opts___ ] :=
-    Enclose @ Module[ { built, submitted },
+submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
+    Module[ { built, submitted },
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
         submitted = scrapeAndSubmit @ nbo;
         Print[ "submitted: ", submitted ];
-        submitted
-    ];
+        Confirm @ submitted
+    ],
+    exitFailure[
+        "SubmitPacletFailure",
+        <|
+            "MessageTemplate" -> "Failed to submit paclet.",
+            "Result" -> #
+        |>
+    ] &
+];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
