@@ -9,6 +9,7 @@ Begin[ "`Private`" ];
 
 Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
 Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
+Needs[ "ResourceSystemClient`"              -> "rsc`"  ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -31,13 +32,17 @@ SubmitPaclet::PublisherID =
 SubmitPaclet::ResourceSystemBase =
 "Invalid setting for ResourceSystemBase: `1`";
 
+SubmitPaclet::PublisherToken =
+"Invalid setting for PublisherToken: `1`";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 SubmitPaclet // Options = {
-    "ConsoleType"      -> Automatic,
     "ExitOnFail"       -> Automatic,
+    ConsoleType        -> Automatic,
     PublisherID        -> Automatic,
+    PublisherToken     -> Automatic,
     ResourceSystemBase -> Automatic
 };
 
@@ -57,13 +62,17 @@ SubmitPaclet[ dir_File? DirectoryQ, opts: $$spOpts ] :=
 
 SubmitPaclet[ file_File? defNBQ, opts: $$spOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
-        { OptionValue[ "ConsoleType" ], "Submit" },
+        { OptionValue @ ConsoleType, "Submit" },
         Block[
             {
                 $PublisherID        = toPublisherID @ OptionValue @ PublisherID,
-                $ResourceSystemBase = toRSB @ OptionValue @ ResourceSystemBase
+                $ResourceSystemBase = toRSB @ OptionValue @ ResourceSystemBase,
+                rsc`$PublisherToken = toPToken @ OptionValue @ PublisherToken
             },
-            ccPromptFix @ submitPaclet[ file, opts ]
+            If[ rsc`$PublisherToken === None,
+                ccPromptFix @ submitPaclet[ file, opts ],
+                disableCloudConnect @ submitPaclet[ file, opts ]
+            ]
         ]
     ];
 
@@ -101,7 +110,7 @@ e: SubmitPaclet[ ___ ] :=
 (* ::Subsection::Closed:: *)
 (*submitPaclet*)
 submitPaclet[ file_File, opts___ ] :=
-    Module[ { cOpts, nbo },
+    withTokenPublisher @ Module[ { cOpts, nbo },
         cOpts = filterOptions[ $$cpOpts, "Target" -> "Submit", opts ];
         CheckPaclet[ file, cOpts ];
         nbo = First[ Notebooks @ ExpandFileName @ file, $Failed ];
@@ -115,8 +124,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] :=
     Enclose @ Module[ { built, submitted },
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
-        Print[ "built: ", built ];
-        submitted = dnc`SubmitRepository[ "Paclet", nbo ];
+        submitted = scrapeAndSubmit @ nbo;
         Print[ "submitted: ", submitted ];
         submitted
     ];
@@ -152,6 +160,71 @@ toRSB[ rsb_String ] := rsb;
 toRSB[ Automatic  ] := $ResourceSystemBase;
 toRSB[ other_     ] := exitFailure[ SubmitPaclet::ResourceSystemBase, other ];
 toRSB // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toPToken*)
+toPToken[ Automatic    ] := rsc`$PublisherToken;
+toPToken[ None         ] := None;
+toPToken[ str_String   ] := StringToByteArray @ str;
+toPToken[ ba_ByteArray ] := ba;
+toPToken[ other_       ] := exitFailure[ SubmitPaclet::PublisherToken, other ];
+toPToken // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*scrapeAndSubmit*)
+scrapeAndSubmit[ nbo_NotebookObject ] :=
+    Enclose @ Module[ { dir, pac, ver, ro },
+        dir = ConfirmBy[ prdn`ScrapePacletDirectory @ nbo, DirectoryQ ];
+        pac = ConfirmBy[ PacletObject @ Flatten @ File @ dir, PacletObjectQ ];
+        ver = ConfirmBy[ pac[ "Version" ], StringQ ];
+
+        ro = ConfirmMatch[
+            dnc`ScrapeResource[
+                "Paclet",
+                nbo,
+                Interactive -> False,
+                "ClickedButton" -> "Submit"
+            ],
+            _ResourceObject
+        ];
+
+        ResourceSubmit[ ro, "Version" -> ver ]
+    ];
+
+scrapeAndSubmit // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*withTokenPublisher*)
+withTokenPublisher // Attributes = { HoldFirst };
+
+withTokenPublisher[ eval_ ] :=
+    withTokenPublisher[ eval, $PublisherID, rsc`$PublisherToken ];
+
+withTokenPublisher[ eval_, _String, _    ] := eval;
+withTokenPublisher[ eval_, _      , None ] := eval;
+
+withTokenPublisher[ eval_, _, _String|_ByteArray ] := Enclose[
+    Module[ { info, publisher },
+        info = ConfirmBy[ getTokenInfo[ ], AssociationQ ];
+        publisher = ConfirmBy[ info[ "PublisherID" ], StringQ ];
+        Block[ { $PublisherID = publisher }, eval ]
+    ],
+    eval &
+];
+
+withTokenPublisher // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getTokenInfo*)
+getTokenInfo[ ] :=
+    rsc`ResourceSystemExecute[
+        "CheckPublisherToken",
+        { "Request" -> "Information" }
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

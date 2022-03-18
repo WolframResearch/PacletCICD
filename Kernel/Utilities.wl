@@ -511,7 +511,7 @@ ccPromptFix[ eval_ ] /; StringQ @ Environment[ "GITHUB_WORKFLOW" ] :=
 
 ccPromptFix[ eval_ ] := ccPromptFix[ eval, $EvaluationEnvironment ];
 
-ccPromptFix[ eval_, "Script"|"Subkernel"|"BatchJob" ] := (
+ccPromptFix[ eval_, True|"Script"|"Subkernel"|"BatchJob" ] := (
     CloudObject;
     Internal`InheritedBlock[ { CloudObject`Private`hiddenOptions },
 
@@ -529,6 +529,13 @@ ccPromptFix[ eval_, "Script"|"Subkernel"|"BatchJob" ] := (
 ccPromptFix[ eval_, _ ] := eval;
 
 ccPromptFix // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*disableCloudConnect*)
+disableCloudConnect // Attributes = { HoldFirst };
+disableCloudConnect[ eval_ ] := ccPromptFix[ eval, True ];
+disableCloudConnect // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
