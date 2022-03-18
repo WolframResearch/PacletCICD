@@ -75,11 +75,16 @@ Notebook[
                BoxData[
                 ButtonBox[
                  "\"Refresh\"",
-                 ButtonFunction :> Block[
-                  {$ContextPath},
-                  Needs["PacletResource`DefinitionNotebook`"];
-                  PacletResource`DefinitionNotebook`RefreshNotebookPacletFiles[
+                 ButtonFunction :> DefinitionNotebookClient`RedirectOutputsToConsole[
+                  Block[
+                   {$ContextPath},
+                   Quiet[
+                    Needs["PacletResource`DefinitionNotebook`"],
+                    MessageName[General, "shdw"]
+                   ];
+                   PacletResource`DefinitionNotebook`RefreshNotebookPacletFiles[
 
+                   ]
                   ]
                  ],
                  Appearance :> FEPrivate`FrontEndResource[
@@ -97,7 +102,7 @@ Notebook[
              {None, None}
             },
             CellTags -> {"Manifest", "PacletFiles", "TemplateCellGroup"},
-            CellID -> 355131546
+            CellID -> 324117918
            ],
            Cell[
             CellGroupData[
@@ -4228,55 +4233,6 @@ Notebook[
                  TagBox[
                   TemplateBox[
                    {
-                    "\"InstallDependencies.wls\"",
-                    File[
-                     FileNameJoin[
-                      {NotebookDirectory[], "Scripts/InstallDependencies.wls"}
-                     ]
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 File[
-                  FileNameJoin[
-                   {NotebookDirectory[], "Scripts/InstallDependencies.wls"}
-                  ]
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 41457368
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
                     "\"TestPaclet.wls\"",
                     File[
                      FileNameJoin[
@@ -5112,7 +5068,6 @@ Notebook[
             Deletable -> False,
             TaggingRules -> {"TemplateGroupName" -> "HeroImage"},
             CellTags -> {"Headline Image", "HeroImage", "TemplateCellGroup"},
-            CellLabel -> "In[94]:=",
             CellID -> 676431590
            ],
            Cell[
@@ -8259,6 +8214,331 @@ Notebook[
            Cell[
             TextData[
              {
+              "License",
+              Cell[
+               BoxData[
+                PaneSelectorBox[
+                 {
+                  True -> TemplateBox[
+                   {
+                    "LicensingInformation",
+                    Cell[
+                     BoxData[
+                      FrameBox[
+                       Cell[
+                        TextData[
+                         {
+                          "Choose a license to specify the terms and conditions regarding how your paclet can be used, modified, and distributed. If submitting to the Wolfram Resource System, this also includes the terms outlined by the ",
+                          Cell[
+                           BoxData[
+                            TagBox[
+                             ButtonBox[
+                              StyleBox[
+                               "\"publisher agreement\"",
+                               "Text",
+                               ShowStringCharacters -> False
+                              ],
+                              BaseStyle -> "Hyperlink",
+                              ButtonData -> {
+                               URL[
+                                "https://resources.wolframcloud.com/publisher/publisher-agreement"
+                               ],
+                               None
+                              },
+                              ButtonNote -> "https://resources.wolframcloud.com/publisher/publisher-agreement"
+                             ],
+                             MouseAppearanceTag["LinkHand"]
+                            ]
+                           ]
+                          ],
+                          ".\n\nSee the ",
+                          Cell[
+                           BoxData[
+                            TagBox[
+                             ButtonBox[
+                              StyleBox[
+                               "\"style guidelines\"",
+                               "Text",
+                               ShowStringCharacters -> False
+                              ],
+                              BaseStyle -> "Hyperlink",
+                              ButtonFunction :> Symbol["DefinitionNotebookClient`ViewStyleGuidelines"][
+                               "Tag" -> "ChoosingALicense"
+                              ],
+                              Evaluator -> Automatic,
+                              Method -> "Queued"
+                             ],
+                             MouseAppearanceTag["LinkHand"]
+                            ]
+                           ]
+                          ],
+                          " for additional information about choosing licenses."
+                         }
+                        ],
+                        "MoreInfoText"
+                       ],
+                       Background -> GrayLevel[0.95],
+                       FrameMargins -> 20,
+                       FrameStyle -> GrayLevel[0.9],
+                       RoundingRadius -> 5,
+                       ImageSize -> {Scaled[0.65], Automatic}
+                      ]
+                     ],
+                     "MoreInfoText",
+                     Deletable -> True,
+                     CellTags -> {"SectionMoreInfoLicensingInformation"},
+                     CellMargins -> {{66, 66}, {15, 15}}
+                    ]
+                   },
+                   "MoreInfoOpenerButtonTemplate"
+                  ]
+                 },
+                 Dynamic[
+                  CurrentValue[
+                   EvaluationNotebook[],
+                   {TaggingRules, "ResourceCreateNotebook"}
+                  ]
+                 ],
+                 ImageSize -> Automatic
+                ]
+               ]
+              ]
+             }
+            ],
+            "Subsection",
+            Editable -> False,
+            Deletable -> False,
+            TaggingRules -> {"TemplateGroupName" -> "LicensingInformation"},
+            DefaultNewCellStyle -> "Text",
+            CellTags -> {"License", "LicensingInformation", "TemplateCellGroup"},
+            CellID -> 279656547
+           ],
+           Cell[
+            BoxData[
+             TagBox[
+              GridBox[
+               {
+                {
+                 TagBox[
+                  GridBox[
+                   {
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        RadioButtonBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "RadioButtonValue"}
+                          ]
+                         ],
+                         {"MIT"}
+                        ],
+                        "\" \"",
+                        TemplateBox[
+                         {
+                          "\"MIT License\"",
+                          "\"\[ThinSpace]\"",
+                          TemplateBox[
+                           {
+                            "\"\[RightGuillemet]\"",
+                            "https://resources.wolframcloud.com/PacletRepository/licenses/MIT"
+                           },
+                           "HyperlinkURL"
+                          ]
+                         },
+                         "RowDefault"
+                        ]
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        RadioButtonBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "RadioButtonValue"}
+                          ]
+                         ],
+                         {"Apache-2.0"}
+                        ],
+                        "\" \"",
+                        TemplateBox[
+                         {
+                          "\"Apache License 2.0\"",
+                          "\"\[ThinSpace]\"",
+                          TemplateBox[
+                           {
+                            "\"\[RightGuillemet]\"",
+                            "https://resources.wolframcloud.com/PacletRepository/licenses/Apache-2.0"
+                           },
+                           "HyperlinkURL"
+                          ]
+                         },
+                         "RowDefault"
+                        ]
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        RadioButtonBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "RadioButtonValue"}
+                          ]
+                         ],
+                         {"CC0-1.0"}
+                        ],
+                        "\" \"",
+                        TemplateBox[
+                         {
+                          "\"Creative Commons Zero v1.0 Universal\"",
+                          "\"\[ThinSpace]\"",
+                          TemplateBox[
+                           {
+                            "\"\[RightGuillemet]\"",
+                            "https://resources.wolframcloud.com/PacletRepository/licenses/CC0-1.0"
+                           },
+                           "HyperlinkURL"
+                          ]
+                         },
+                         "RowDefault"
+                        ]
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        RadioButtonBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "RadioButtonValue"}
+                          ]
+                         ],
+                         {"None"}
+                        ],
+                        "\" \"",
+                        TemplateBox[
+                         {
+                          "\"None\"",
+                          "\"A license is not required for personal deployments\""
+                         },
+                         "PrettyTooltipTemplate"
+                        ]
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        RadioButtonBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "RadioButtonValue"}
+                          ]
+                         ],
+                         {"Other"}
+                        ],
+                        "\" \"",
+                        InputFieldBox[
+                         Dynamic[
+                          CurrentValue[
+                           EvaluationCell[],
+                           {TaggingRules, "SpecifiedLicenseID"},
+                           ""
+                          ],
+                          Function[
+                           CurrentValue[
+                            EvaluationCell[],
+                            {TaggingRules, "RadioButtonValue"}
+                           ] = "Other";
+                           CurrentValue[
+                            EvaluationCell[],
+                            {TaggingRules, "SpecifiedLicenseID"}
+                           ] = Replace[#1, "" -> Null];
+                           Null
+                          ]
+                         ],
+                         String,
+                         FieldHint -> "Other License Name or ID",
+                         FieldHintStyle -> {FontSize -> 12},
+                         ContinuousAction -> True
+                        ]
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    }
+                   },
+                   DefaultBaseStyle -> "Column",
+                   GridBoxAlignment -> {"Columns" -> {{Left}}},
+                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                  ],
+                  "Column"
+                 ]
+                }
+               },
+               AutoDelete -> False,
+               BaseStyle -> {"ControlStyle"},
+               GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+               GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+               GridBoxSpacings -> {"Columns" -> {{2}}}
+              ],
+              "Grid"
+             ]
+            ],
+            "Output",
+            Editable -> False,
+            Deletable -> False,
+            TaggingRules -> {
+             "CheckboxData" -> "OEM6eJylVE1PGzEQBfLBV4QAtVKPq6jXJLTqqSfCBkokCihOe+jN7M4SC6+99djA9tRrf1Nv/Sn9JR3vJpvQElUtl5V3bL958+Z5+lsd1mA2l8CaF85mznbYejiB6AbiZAXrZwIp0hhaSDFplP/JGtZHTkKyirWRvktqZZhtvx+OgzMRgUJgtZ9fv9HBzdM8AyOFumFrP76zw4m1Gb7t9QygdiYC7N5pmRieRlK7uBvptHfJIwl2BJlGYbXJe7KExB7hsxp9lhHY72c8msCMQ/C6e7CEx7sn8SjTdDz81ny9jNXL0AC34haCUKepVhh8AqOD21fdg+CDorhBLpfwHDyJZxgedCgLNbRcLDDcGPG7I30PSLHtMaSZ5BYo4I8UrJvtc62gzd60+8EUMBAYKG0DA5+dMBAHiTYBsUWtuAxiyKTOU1AW2+z5pQFr87HW0opshs/qHrNi0cCtoSLHnQiQMUXXB7niqYhIuVbojCGoj1w6IB/uHN/SilTUKgQpZyyxNebX10Jdezxk+yyDSCQC4qkDhgO24os9cSrydwl5n5qQaafi4/uMREUfXcMaA2/r/0u7O+Kx0EfOWq2Km6xxYSdgnor7SDleJeq05JFvYp1JbcPVmaCM3uu5k3L6bTJrCGu2i5uFzqdCWfai4Fe9k3OeQkC9LPDLwzvzw344+GSLT58k1bQlvkDYqmK7IcWEctphv5Ab62NTqdFhG5dGk11szp6VmYndUJGJ0kIJGjwXWXFt9nTm2Y5jYfkVrRonXCLMaxoAef+xnQdS/k7/UWnJdZVRSdcl8k/RB5BwJ8uGlnpXe3tDOmt8IZXtFi1Ytc0PWi1dqtCvd4bKgiFL2kIMttlXOXNXCH4gT7P9QXGPUfmR/SvDB1PzHwi2RtOxM6apxJrlpOmwevHbWrA9/gKDZjDH",
+             "RadioButtonValue" -> "MIT",
+             "SpecifiedLicenseID" -> Null
+            },
+            CellTags -> {"LicensingInformation-RadioButtons", "RadioButtonsCell"},
+            CellID -> 42282576
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            TextData[
+             {
               "Keywords",
               Cell[
                BoxData[
@@ -8476,343 +8756,387 @@ Notebook[
               GridBox[
                {
                 {
-                 StyleBox[
-                  TemplateBox[
+                 TagBox[
+                  GridBox[
                    {
-                    CheckboxBox[
-                     "Cloud & Deployment",
-                     {False, "Cloud & Deployment"}
-                    ],
-                    "\" \"",
-                    "\"Cloud & Deployment\""
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         "Cloud & Deployment",
+                         {False, "Cloud & Deployment"}
+                        ],
+                        "\" \"",
+                        "\"Cloud & Deployment\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Data Manipulation & Analysis"}],
+                        "\" \"",
+                        "\"Data Manipulation & Analysis\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         "External Interfaces & Connections",
+                         {False, "External Interfaces & Connections"}
+                        ],
+                        "\" \"",
+                        "\"External Interfaces & Connections\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Geographic Data & Computation"}
+                        ],
+                        "\" \"",
+                        "\"Geographic Data & Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Graphs & Networks"}],
+                        "\" \"",
+                        "\"Graphs & Networks\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Images"}],
+                        "\" \"",
+                        "\"Images\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Machine Learning"}],
+                        "\" \"",
+                        "\"Machine Learning\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Scientific and Medical Data & Computation"}
+                        ],
+                        "\" \"",
+                        "\"Scientific and Medical Data & Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Sound & Video"}],
+                        "\" \"",
+                        "\"Sound & Video\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Symbolic & Numeric Computation"}
+                        ],
+                        "\" \"",
+                        "\"Symbolic & Numeric Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Time-Related Computation"}],
+                        "\" \"",
+                        "\"Time-Related Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Visualization & Graphics"}],
+                        "\" \"",
+                        "\"Visualization & Graphics\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    }
                    },
-                   "RowDefault"
+                   DefaultBaseStyle -> "Column",
+                   GridBoxAlignment -> {"Columns" -> {{Left}}},
+                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                   ],
-                  StripOnInput -> False,
-                  FontSize -> 12
+                  "Column"
                  ],
-                 StyleBox[
-                  TemplateBox[
+                 TagBox[
+                  GridBox[
                    {
-                    CheckboxBox[False, {False, "Core Language & Structure"}],
-                    "\" \"",
-                    "\"Core Language & Structure\""
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Core Language & Structure"}],
+                        "\" \"",
+                        "\"Core Language & Structure\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Engineering Data & Computation"}
+                        ],
+                        "\" \"",
+                        "\"Engineering Data & Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Financial Data & Computation"}],
+                        "\" \"",
+                        "\"Financial Data & Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Geometry"}],
+                        "\" \"",
+                        "\"Geometry\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Higher Mathematical Computation"}
+                        ],
+                        "\" \"",
+                        "\"Higher Mathematical Computation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Knowledge Representation & Natural Language"}
+                        ],
+                        "\" \"",
+                        "\"Knowledge Representation & Natural Language\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Notebook Documents & Presentation"}
+                        ],
+                        "\" \"",
+                        "\"Notebook Documents & Presentation\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         False,
+                         {False, "Social, Cultural & Linguistic Data"}
+                        ],
+                        "\" \"",
+                        "\"Social, Cultural & Linguistic Data\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "Strings & Text"}],
+                        "\" \"",
+                        "\"Strings & Text\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[
+                         "System Operation & Setup",
+                         {False, "System Operation & Setup"}
+                        ],
+                        "\" \"",
+                        "\"System Operation & Setup\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {
+                     StyleBox[
+                      TemplateBox[
+                       {
+                        CheckboxBox[False, {False, "User Interface Construction"}],
+                        "\" \"",
+                        "\"User Interface Construction\""
+                       },
+                       "RowDefault"
+                      ],
+                      StripOnInput -> False,
+                      FontSize -> 12
+                     ]
+                    },
+                    {"\"\""}
                    },
-                   "RowDefault"
+                   DefaultBaseStyle -> "Column",
+                   GridBoxAlignment -> {"Columns" -> {{Left}}},
+                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                   ],
-                  StripOnInput -> False,
-                  FontSize -> 12
+                  "Column"
                  ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Data Manipulation & Analysis"}],
-                    "\" \"",
-                    "\"Data Manipulation & Analysis\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Engineering Data & Computation"}
-                    ],
-                    "\" \"",
-                    "\"Engineering Data & Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     "External Interfaces & Connections",
-                     {False, "External Interfaces & Connections"}
-                    ],
-                    "\" \"",
-                    "\"External Interfaces & Connections\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Financial Data & Computation"}],
-                    "\" \"",
-                    "\"Financial Data & Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Geographic Data & Computation"}
-                    ],
-                    "\" \"",
-                    "\"Geographic Data & Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Geometry"}],
-                    "\" \"",
-                    "\"Geometry\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Graphs & Networks"}],
-                    "\" \"",
-                    "\"Graphs & Networks\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Higher Mathematical Computation"}
-                    ],
-                    "\" \"",
-                    "\"Higher Mathematical Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Images"}],
-                    "\" \"",
-                    "\"Images\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Knowledge Representation & Natural Language"}
-                    ],
-                    "\" \"",
-                    "\"Knowledge Representation & Natural Language\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Machine Learning"}],
-                    "\" \"",
-                    "\"Machine Learning\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Notebook Documents & Presentation"}
-                    ],
-                    "\" \"",
-                    "\"Notebook Documents & Presentation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Scientific and Medical Data & Computation"}
-                    ],
-                    "\" \"",
-                    "\"Scientific and Medical Data & Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Social, Cultural & Linguistic Data"}
-                    ],
-                    "\" \"",
-                    "\"Social, Cultural & Linguistic Data\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Sound & Video"}],
-                    "\" \"",
-                    "\"Sound & Video\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Strings & Text"}],
-                    "\" \"",
-                    "\"Strings & Text\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     False,
-                     {False, "Symbolic & Numeric Computation"}
-                    ],
-                    "\" \"",
-                    "\"Symbolic & Numeric Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[
-                     "System Operation & Setup",
-                     {False, "System Operation & Setup"}
-                    ],
-                    "\" \"",
-                    "\"System Operation & Setup\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Time-Related Computation"}],
-                    "\" \"",
-                    "\"Time-Related Computation\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "User Interface Construction"}],
-                    "\" \"",
-                    "\"User Interface Construction\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ]
-                },
-                {
-                 StyleBox[
-                  TemplateBox[
-                   {
-                    CheckboxBox[False, {False, "Visualization & Graphics"}],
-                    "\" \"",
-                    "\"Visualization & Graphics\""
-                   },
-                   "RowDefault"
-                  ],
-                  StripOnInput -> False,
-                  FontSize -> 12
-                 ],
-                 "\"\""
                 }
                },
                AutoDelete -> False,
                BaseStyle -> {"ControlStyle"},
-               GridBoxAlignment -> {"Columns" -> {{Left}}},
+               GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
                GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                GridBoxSpacings -> {"Columns" -> {{2}}}
               ],
@@ -8823,10 +9147,10 @@ Notebook[
             Editable -> False,
             Deletable -> False,
             TaggingRules -> {
-             "CheckboxData" -> "OEM6eJxVT9EKwjAMFHG6ifgn+4gxFQbCxuIPdF3mil1bmvShf2+HIPqUI3eXu1R5CRlw1Aj7NrALXMKhnlG+cJw2tLsrSpusYVyIiiqwXQQrWULeeevQc4RjLRif1iuk5G0dK2to2n686+yDRsqvo2IxJJTdhCb8EsUFNf4yawGrw2L+A8+NYfTOJ+2aAEVlIoSBMPU79Ug2eImP6NIjnZDp5Bu0Gkuz"
+             "CheckboxData" -> "OEM6eJxVkEFLxEAMhUFdbUU8ePJYL976I0p3hQWhy8Y/MDt91eJ0ZphkwPn3piuInhLyPfJe0lUtbUiKA10PWWKWlm76D9hPjNMlX73OLPTQu5DH5rnZIrpQFnihp92XIHnjmr3XZjIWrIo+eA8rc/BMj1RYsDRDRDLrSDlBclTLvQLmussSFmW2peqQggql0G1vBO8hzWANM8TztuniJ8xaj9mBq904izlpt3kxjvEL6i0c/pL1ouDy4v8b3p+Dx6Ta1YHqzhfKJ4a+4O4IDjlZvJWonzkYqyu/AYfqaJU="
             },
             CellTags -> {"Categories", "Categories-Checkboxes", "CheckboxCell"},
-            CellID -> 991423350
+            CellID -> 147197681
            ]
           },
           Open
@@ -9147,12 +9471,29 @@ Notebook[
            ],
            Cell[
             TextData[
-             ButtonBox[
-              "Features \[Bullet] GitHub Actions \[CenterDot] GitHub",
-              BaseStyle -> "Hyperlink",
-              ButtonData -> {URL["https://github.com/features/actions"], None},
-              ButtonNote -> "https://github.com/features/actions"
-             ]
+             {
+              ButtonBox[
+               "Features",
+               BaseStyle -> "Hyperlink",
+               ButtonData -> {URL["https://github.com/features/actions"], None},
+               ButtonNote -> "https://github.com/features/actions"
+              ],
+              ButtonBox[
+               " \[CenterDot] ",
+               BaseStyle -> "Hyperlink",
+               ButtonData -> {
+                URL["https://github.com/marketplace/actions/test-paclet"],
+                None
+               },
+               ButtonNote -> "https://github.com/marketplace/actions/test-paclet"
+              ],
+              ButtonBox[
+               "GitHub Actions \[CenterDot] GitHub",
+               BaseStyle -> "Hyperlink",
+               ButtonData -> {URL["https://github.com/features/actions"], None},
+               ButtonNote -> "https://github.com/features/actions"
+              ]
+             }
             ],
             "Item",
             CellID -> 365910252
@@ -9358,43 +9699,79 @@ Notebook[
                  GridBox[
                   {
                    {
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox["Windows", {False, "Windows"}],
-                       "\" \"",
-                       "\"Windows\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["Windows", {False, "Windows"}],
+                           "\" \"",
+                           "\"Windows\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox["MacOSX", {False, "MacOSX"}],
-                       "\" \"",
-                       "\"Mac\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["MacOSX", {False, "MacOSX"}],
+                           "\" \"",
+                           "\"Mac\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
-                      {CheckboxBox["Unix", {False, "Unix"}], "\" \"", "\"Unix\""},
-                      "RowDefault"
+                    TagBox[
+                     GridBox[
+                      {
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {CheckboxBox["Unix", {False, "Unix"}], "\" \"", "\"Unix\""},
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
+                      },
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ]
                    }
                   },
                   AutoDelete -> False,
                   BaseStyle -> {"ControlStyle"},
-                  GridBoxAlignment -> {"Columns" -> {{Left}}},
+                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                   GridBoxSpacings -> {"Columns" -> {{2}}}
                  ],
@@ -9412,7 +9789,7 @@ Notebook[
                 "CompatibilityOperatingSystem",
                 "CompatibilityOperatingSystem-Checkboxes"
                },
-               CellID -> 232235591
+               CellID -> 153789423
               ]
              },
              Closed
@@ -9501,47 +9878,83 @@ Notebook[
                  GridBox[
                   {
                    {
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox[False, {False, "Notebooks"}],
-                       "\" \"",
-                       "\"Notebooks\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox[False, {False, "Notebooks"}],
+                           "\" \"",
+                           "\"Notebooks\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox[False, {False, "Parallel Kernels"}],
-                       "\" \"",
-                       "\"Parallel Kernels\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox[False, {False, "Parallel Kernels"}],
+                           "\" \"",
+                           "\"Parallel Kernels\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox[False, {False, "Cloud Access"}],
-                       "\" \"",
-                       "\"Cloud Access\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox[False, {False, "Cloud Access"}],
+                           "\" \"",
+                           "\"Cloud Access\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ]
                    }
                   },
                   AutoDelete -> False,
                   BaseStyle -> {"ControlStyle"},
-                  GridBoxAlignment -> {"Columns" -> {{Left}}},
+                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                   GridBoxSpacings -> {"Columns" -> {{2}}}
                  ],
@@ -9559,7 +9972,7 @@ Notebook[
                 "CompatibilityFeatures",
                 "CompatibilityFeatures-Checkboxes"
                },
-               CellID -> 930433121
+               CellID -> 569908528
               ]
              },
              Closed
@@ -9669,125 +10082,165 @@ Notebook[
                  GridBox[
                   {
                    {
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox["Session", {False, "Session"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"Session\"", "\"Local or cloud interactive session\""},
-                        "PrettyTooltipTemplate"
-                       ]
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["Session", {False, "Session"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"Session\"", "\"Local or cloud interactive session\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["WebEvaluation", {False, "WebEvaluation"}],
+                           "\" \"",
+                           TemplateBox[
+                            {
+                             "\"WebEvaluation\"",
+                             "\"Cloud evaluation initiated by an HTTP request\""
+                            },
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["BatchJob", {False, "BatchJob"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"BatchJob\"", "\"Remote batch job\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox["Script", {False, "Script"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"Script\"", "\"Script run in batch mode\""},
-                        "PrettyTooltipTemplate"
-                       ]
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["Script", {False, "Script"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"Script\"", "\"Script run in batch mode\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["WebAPI", {False, "WebAPI"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"WebAPI\"", "\"API called through an HTTP request\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {"\"\""}
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ],
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox["Subkernel", {False, "Subkernel"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"Subkernel\"", "\"Parallel or grid subkernel\""},
-                        "PrettyTooltipTemplate"
-                       ]
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["Subkernel", {False, "Subkernel"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"Subkernel\"", "\"Parallel or grid subkernel\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox["Scheduled", {False, "Scheduled"}],
+                           "\" \"",
+                           TemplateBox[
+                            {"\"Scheduled\"", "\"Scheduled task\""},
+                            "PrettyTooltipTemplate"
+                           ]
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       },
+                       {"\"\""}
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ]
-                   },
-                   {
-                    StyleBox[
-                     TemplateBox[
-                      {
-                       CheckboxBox["WebEvaluation", {False, "WebEvaluation"}],
-                       "\" \"",
-                       TemplateBox[
-                        {
-                         "\"WebEvaluation\"",
-                         "\"Cloud evaluation initiated by an HTTP request\""
-                        },
-                        "PrettyTooltipTemplate"
-                       ]
-                      },
-                      "RowDefault"
-                     ],
-                     StripOnInput -> False,
-                     FontSize -> 12
-                    ],
-                    StyleBox[
-                     TemplateBox[
-                      {
-                       CheckboxBox["WebAPI", {False, "WebAPI"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"WebAPI\"", "\"API called through an HTTP request\""},
-                        "PrettyTooltipTemplate"
-                       ]
-                      },
-                      "RowDefault"
-                     ],
-                     StripOnInput -> False,
-                     FontSize -> 12
-                    ],
-                    StyleBox[
-                     TemplateBox[
-                      {
-                       CheckboxBox["Scheduled", {False, "Scheduled"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"Scheduled\"", "\"Scheduled task\""},
-                        "PrettyTooltipTemplate"
-                       ]
-                      },
-                      "RowDefault"
-                     ],
-                     StripOnInput -> False,
-                     FontSize -> 12
-                    ]
-                   },
-                   {
-                    StyleBox[
-                     TemplateBox[
-                      {
-                       CheckboxBox["BatchJob", {False, "BatchJob"}],
-                       "\" \"",
-                       TemplateBox[
-                        {"\"BatchJob\"", "\"Remote batch job\""},
-                        "PrettyTooltipTemplate"
-                       ]
-                      },
-                      "RowDefault"
-                     ],
-                     StripOnInput -> False,
-                     FontSize -> 12
-                    ],
-                    "\"\"",
-                    "\"\""
                    }
                   },
                   AutoDelete -> False,
                   BaseStyle -> {"ControlStyle"},
-                  GridBoxAlignment -> {"Columns" -> {{Left}}},
+                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                   GridBoxSpacings -> {"Columns" -> {{2}}}
                  ],
@@ -9798,14 +10251,14 @@ Notebook[
                Editable -> False,
                Deletable -> False,
                TaggingRules -> {
-                "CheckboxData" -> "OEM6eJxdUdFqwzAMhK1tEtj2EXvPR3RZBhmDhmqwZydRialjG0su5O/nlMTJ9uSTTtzp5GOawx54VAiHk2frOYek6LG9YndJaPcliSEBJJJGwwFaJy1DBr65otOo4PkHm/ImlBd8nwjlsa7CRNtj5xV2kL4JbvtP0wSninGgRffyQLtzGFn1FxCZxXB+Y3+zwAoj+2+nv+WqPa86vxvtuPoKIxvTbHOltTMWHY/wWpjBBp9GKsnj6lrqm3RGD6inA5/s1KNJdHsISstOsmgC2n8IRRiJ7B0Vbpnpl4zyg6biMYeXSjM668LIPXF21GM4C2EwezojGe9a/B5tCF2LNij9AojVrVE="
+                "CheckboxData" -> "OEM6eJxdkdtqwzAMhmFrc4BtD7H7PESWZpAxaKgGu3YclZg6trHlQt5+ztY46a70S7/5dHCZFbAHmiRCcvRkPBWQVgPyC/bn1O0+hSNIAZ0TWsHzN3b1lUnPaE6zN0Z8+NAdJMCtMARJeFC2DeTguwtahTJIPmDvJfahU0M4uoV7fnC7UzBW/iKiE7l/Mdbv+IuM7r8x79OVfZv1FjfsZeCNjO66c1QFZK3VBi1N8Frp0YQ+nZCCprVrra7CajWimg98NHPNzdDtIVxW94JYF9T+nUmH0cgPKHHrzL+kpR+Vqx4LeGkUoTU2PPndOC/VFM7iMDR7OqHT3nL8mkxYumU8kH4AghGtUQ=="
                },
                CellTags -> {
                 "CheckboxCell",
                 "CompatibilityEvaluationEnvironment",
                 "CompatibilityEvaluationEnvironment-Checkboxes"
                },
-               CellID -> 630833500
+               CellID -> 261417967
               ]
              },
              Closed
@@ -9880,23 +10333,35 @@ Notebook[
                  GridBox[
                   {
                    {
-                    StyleBox[
-                     TemplateBox[
+                    TagBox[
+                     GridBox[
                       {
-                       CheckboxBox[True, {False, True}],
-                       "\" \"",
-                       "\"Supported in cloud\""
+                       {
+                        StyleBox[
+                         TemplateBox[
+                          {
+                           CheckboxBox[True, {False, True}],
+                           "\" \"",
+                           "\"Supported in cloud\""
+                          },
+                          "RowDefault"
+                         ],
+                         StripOnInput -> False,
+                         FontSize -> 12
+                        ]
+                       }
                       },
-                      "RowDefault"
+                      DefaultBaseStyle -> "Column",
+                      GridBoxAlignment -> {"Columns" -> {{Left}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
                      ],
-                     StripOnInput -> False,
-                     FontSize -> 12
+                     "Column"
                     ]
                    }
                   },
                   AutoDelete -> False,
                   BaseStyle -> {"ControlStyle"},
-                  GridBoxAlignment -> {"Columns" -> {{Left}}},
+                  GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                   GridBoxSpacings -> {"Columns" -> {{2}}}
                  ],
@@ -9914,7 +10379,7 @@ Notebook[
                 "CompatibilityCloudSupport",
                 "CompatibilityCloudSupport-Checkboxes"
                },
-               CellID -> 631048332
+               CellID -> 2090926
               ]
              },
              Closed
@@ -10022,7 +10487,6 @@ Notebook[
    ]
   ]
  },
- WindowTitle -> "PacletCICD | Definition Notebook",
  WindowStatusArea -> Automatic,
  DockedCells -> {
   Cell[
@@ -10030,7 +10494,7 @@ Notebook[
    "DockedCell",
    CellMargins -> {{-10, -10}, {-8, -8}},
    CellFrame -> 0,
-   Background -> RGBColor[0.47058823529411764, 0., 0.00784313725490196],
+   Background -> RGBColor[0.333333, 0.333333, 0.333333],
    CellTags -> {"MainDockedCell"},
    CacheGraphics -> False
   ],
@@ -10052,11 +10516,6 @@ Notebook[
   ]
  },
  TaggingRules -> {
-  "ResourceType" -> "Paclet",
-  "ResourceCreateNotebook" -> True,
-  "TemplateVersion" -> "1.5.53",
-  "CreationTimestamp" -> 3851869727.,
-  "UpdatedTimestamp" -> 3851869727.,
   "CompatibilityTest" -> HoldComplete[
    BinaryDeserialize[
     BaseDecode[
@@ -10064,86 +10523,73 @@ Notebook[
     ]
    ]
   ],
+  "CreationTimestamp" -> 3851869727.,
   "DefinitionNotebookFramework" -> "DefinitionNotebookClient",
+  "ResourceCreateNotebook" -> True,
+  "ResourceType" -> "Paclet",
   "RuntimeConfiguration" -> {
    "LoadingMethod" -> "Paclet",
    "PacletName" -> "PacletResource",
    "Contexts" -> {"PacletResource`", "PacletResource`DefinitionNotebook`"},
    "DefaultContentMethod" -> "Tagged"
   },
-  "ToolsOpen" -> True,
-  "StatusMessage" -> "",
   "SubmissionReviewData" -> {"Review" -> False},
+  "ToolsOpen" -> False,
+  "UpdatedTimestamp" -> 3856449795.,
+  "TemplateVersion" -> "1.5.58",
+  "StatusMessage" -> "",
+  "PacletBuildData" -> {"FileHashes" -> {}},
+  "AutoUpdate" -> True,
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 24, 13, 55, 13.9588103`8.897423358940308},
+   {2022, 3, 17, 16, 58, 11.1173219`8.798575139916569},
    "Instant",
    "Gregorian",
-   -5.
+   -4.
   ],
-  "NotebookUUID" -> "41d4b859-2c5b-4b6e-a2ae-9d96841a4653",
-  "AutoUpdate" -> True,
-  "Openers" -> {
-   "ExampleSection" -> {
-    "2" -> Closed,
-    "0" -> Closed,
-    "1" -> Closed,
-    "3" -> Closed,
-    "4" -> Closed
-   },
-   "NotesSection" -> Closed,
-   "PrimaryExamplesSection" -> Open,
-   "ExampleSubsection" -> {"0" -> Closed, "1" -> Closed, "2" -> Closed}
-  }
+  "NotebookUUID" -> "6d8e0782-7445-4069-99ba-30f35ae431c1"
  },
  CreateCellID -> True,
  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> Notebook[
   {
+   Cell[StyleData[StyleDefinitions -> "Default.nb"]],
    Cell[
-    CellGroupData[
-     {
-      Cell[StyleData[StyleDefinitions -> "Default.nb"]],
-      Cell[
-       StyleData[All, "Working"],
-       DockedCells -> {
-        Cell[
-         BoxData[TemplateBox[{}, "MainGridTemplate"]],
-         "DockedCell",
-         CellMargins -> {{-10, -10}, {-8, -8}},
-         CellFrame -> 0,
-         Background -> RGBColor[0.47058823529411764, 0., 0.00784313725490196],
-         CellTags -> {"MainDockedCell"},
-         CacheGraphics -> False
-        ],
-        Cell[
-         BoxData[TemplateBox[{}, "ToolsGridTemplate"]],
-         "DockedCell",
-         TaggingRules -> {"Tools" -> True},
-         CellTags -> {"ToolbarDockedCell"},
-         CellFrameMargins -> {{0, 0}, {2, 2}},
-         CellFrame -> {{0, 0}, {1, 0}},
-         CacheGraphics -> False,
-         CellOpen -> Dynamic[
-          CurrentValue[
-           EvaluationNotebook[],
-           {TaggingRules, "ToolsOpen"},
-           True
-          ]
-         ]
-        ]
-       },
-       PrivateNotebookOptions -> {
-        "FileOutlineCache" -> False,
-        "SafeFileOpen" -> "IgnoreCache"
-       },
-       CellLabelAutoDelete -> False,
-       CodeAssistOptions -> {"AutoDetectHyperlinks" -> False},
-       AutoQuoteCharacters -> { }
+    StyleData[All, "Working"],
+    DockedCells -> {
+     Cell[
+      BoxData[TemplateBox[{}, "MainGridTemplate"]],
+      "DockedCell",
+      CellMargins -> {{-10, -10}, {-8, -8}},
+      CellFrame -> 0,
+      Background -> RGBColor[0.333333, 0.333333, 0.333333],
+      CellTags -> {"MainDockedCell"},
+      CacheGraphics -> False
+     ],
+     Cell[
+      BoxData[TemplateBox[{}, "ToolsGridTemplate"]],
+      "DockedCell",
+      TaggingRules -> {"Tools" -> True},
+      CellTags -> {"ToolbarDockedCell"},
+      CellFrameMargins -> {{0, 0}, {2, 2}},
+      CellFrame -> {{0, 0}, {1, 0}},
+      CacheGraphics -> False,
+      CellOpen -> Dynamic[
+       CurrentValue[
+        EvaluationNotebook[],
+        {TaggingRules, "ToolsOpen"},
+        True
+       ]
       ]
-     },
-     Open
-    ]
+     ]
+    },
+    PrivateNotebookOptions -> {
+     "FileOutlineCache" -> False,
+     "SafeFileOpen" -> "IgnoreCache"
+    },
+    CellLabelAutoDelete -> False,
+    CodeAssistOptions -> {"AutoDetectHyperlinks" -> False},
+    AutoQuoteCharacters -> { }
    ],
    Cell[
     StyleData[
@@ -11164,12 +11610,12 @@ Notebook[
                  TaggingRules -> {"ButtonHovering" -> True}
                 },
                 {
-                 FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                 FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
                {
-                FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                 TaggingRules -> {"ButtonHovering" -> False}
                }
               ],
@@ -11178,7 +11624,7 @@ Notebook[
              Appearance -> {
               "Default" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11187,7 +11633,7 @@ Notebook[
               ],
               "Hover" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11196,7 +11642,7 @@ Notebook[
               ],
               "Pressed" -> Image[
                CompressedData[
-                "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                  "
+                "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11204,12 +11650,15 @@ Notebook[
                Interleaving -> True
               ]
              },
-             Background -> GrayLevel[16/17],
+             Background -> RGBColor[0.941176, 0.941176, 0.941176],
              Method -> "Queued",
              ImageSize -> {All, 20},
              Evaluator -> Automatic
             ],
-            FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+            FrameStyle -> Directive[
+             RGBColor[0.941176, 0.941176, 0.941176],
+             AbsoluteThickness[2]
+            ],
             FrameMargins -> -1,
             ContentPadding -> False,
             StripOnInput -> False
@@ -11278,12 +11727,12 @@ Notebook[
                  TaggingRules -> {"ButtonHovering" -> True}
                 },
                 {
-                 FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                 FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
                {
-                FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                 TaggingRules -> {"ButtonHovering" -> False}
                }
               ],
@@ -11292,7 +11741,7 @@ Notebook[
              Appearance -> {
               "Default" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11301,7 +11750,7 @@ Notebook[
               ],
               "Hover" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11310,7 +11759,7 @@ Notebook[
               ],
               "Pressed" -> Image[
                CompressedData[
-                "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                  "
+                "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11318,12 +11767,15 @@ Notebook[
                Interleaving -> True
               ]
              },
-             Background -> GrayLevel[16/17],
+             Background -> RGBColor[0.941176, 0.941176, 0.941176],
              Method -> "Queued",
              ImageSize -> {All, 20},
              Evaluator -> Automatic
             ],
-            FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+            FrameStyle -> Directive[
+             RGBColor[0.941176, 0.941176, 0.941176],
+             AbsoluteThickness[2]
+            ],
             FrameMargins -> -1,
             ContentPadding -> False,
             StripOnInput -> False
@@ -11392,12 +11844,12 @@ Notebook[
                  TaggingRules -> {"ButtonHovering" -> True}
                 },
                 {
-                 FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                 FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
                {
-                FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                 TaggingRules -> {"ButtonHovering" -> False}
                }
               ],
@@ -11406,7 +11858,7 @@ Notebook[
              Appearance -> {
               "Default" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11415,7 +11867,7 @@ Notebook[
               ],
               "Hover" -> Image[
                CompressedData[
-                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                  "
+                "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11424,7 +11876,7 @@ Notebook[
               ],
               "Pressed" -> Image[
                CompressedData[
-                "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                  "
+                "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                  "
                ],
                "Byte",
                ColorSpace -> "RGB",
@@ -11432,12 +11884,15 @@ Notebook[
                Interleaving -> True
               ]
              },
-             Background -> GrayLevel[16/17],
+             Background -> RGBColor[0.941176, 0.941176, 0.941176],
              Method -> "Queued",
              ImageSize -> {All, 20},
              Evaluator -> Automatic
             ],
-            FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+            FrameStyle -> Directive[
+             RGBColor[0.941176, 0.941176, 0.941176],
+             AbsoluteThickness[2]
+            ],
             FrameMargins -> -1,
             ContentPadding -> False,
             StripOnInput -> False
@@ -11510,12 +11965,12 @@ Notebook[
                   TaggingRules -> {"ButtonHovering" -> True}
                  },
                  {
-                  FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                  FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                   TaggingRules -> {"ButtonHovering" -> False}
                  }
                 ],
                 {
-                 FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                 FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
@@ -11524,7 +11979,7 @@ Notebook[
               Appearance -> {
                "Default" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11533,7 +11988,7 @@ Notebook[
                ],
                "Hover" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11542,7 +11997,7 @@ Notebook[
                ],
                "Pressed" -> Image[
                 CompressedData[
-                 "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                   "
+                 "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11550,12 +12005,15 @@ Notebook[
                 Interleaving -> True
                ]
               },
-              Background -> GrayLevel[16/17],
+              Background -> RGBColor[0.941176, 0.941176, 0.941176],
               Method -> "Queued",
               ImageSize -> {All, 20},
               Evaluator -> Automatic
              ],
-             FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+             FrameStyle -> Directive[
+              RGBColor[0.941176, 0.941176, 0.941176],
+              AbsoluteThickness[2]
+             ],
              FrameMargins -> -1,
              ContentPadding -> False,
              StripOnInput -> False
@@ -11822,12 +12280,12 @@ Notebook[
                   TaggingRules -> {"ButtonHovering" -> True}
                  },
                  {
-                  FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                  FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                   TaggingRules -> {"ButtonHovering" -> False}
                  }
                 ],
                 {
-                 FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                 FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
@@ -11836,7 +12294,7 @@ Notebook[
               Appearance -> {
                "Default" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11845,7 +12303,7 @@ Notebook[
                ],
                "Hover" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11854,7 +12312,7 @@ Notebook[
                ],
                "Pressed" -> Image[
                 CompressedData[
-                 "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                   "
+                 "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -11862,12 +12320,15 @@ Notebook[
                 Interleaving -> True
                ]
               },
-              Background -> GrayLevel[16/17],
+              Background -> RGBColor[0.941176, 0.941176, 0.941176],
               Method -> "Queued",
               ImageSize -> {All, 20},
               Evaluator -> Automatic
              ],
-             FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+             FrameStyle -> Directive[
+              RGBColor[0.941176, 0.941176, 0.941176],
+              AbsoluteThickness[2]
+             ],
              FrameMargins -> -1,
              ContentPadding -> False,
              StripOnInput -> False
@@ -12056,12 +12517,12 @@ Notebook[
                   TaggingRules -> {"ButtonHovering" -> True}
                  },
                  {
-                  FontColor -> RGBColor[1., 0.41568627450980394, 0.],
+                  FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                   TaggingRules -> {"ButtonHovering" -> False}
                  }
                 ],
                 {
-                 FontColor -> RGBColor[1., 0.853921568627451, 0.75],
+                 FontColor -> RGBColor[0.833333, 0.833333, 0.833333],
                  TaggingRules -> {"ButtonHovering" -> False}
                 }
                ],
@@ -12070,7 +12531,7 @@ Notebook[
               Appearance -> {
                "Default" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPHr06BQMANmkGrJjx46WlpZyVAAUAYoTY8it\nW7emTZsG0dXa2jofBoBsiCBQFqgGjyFAWYjK7u7ua9euoYU/UAQoDlGAbA6a\nIRA3TJgw4c+fP1jjESgOlIW4B6shQP9C3IDLBLg5EPfAwwfZEEhIXr9+nWC6\nAqqBhDNEIyQ1QmITEpIETYAASDhD4p0BDCg3hCou+U+9MKFW7FAlnVArxVIl\n78ABhbkYGVBYnpAEqGgIfkBMaQ8Ao5poRw==\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu3qz1S7sOQBCQDREEygLV4DEEKAtROalw881zT9DCHygC\nFIcoQDYHzRCIG6aXbfvz+y/WeASKA2Uh7sFqCNC/EDfgMgFuDsQ98PBBNgQS\nkjfPPSWYroBqIOEM0QhJjZDYhIQkQRMgABLOkHhnAAPKDaGKS/5TL0yoFTtU\nSSfUSrFUyTtwQGEuRgYUlickASoagh8QU9oDACL9cXs=\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -12079,7 +12540,7 @@ Notebook[
                ],
                "Hover" -> Image[
                 CompressedData[
-                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GfHp45euxpRAEZJNqyPdNjf8qJP5nMSAjoAhQ\nnBhDPl8/8rvHDk07MgLKAtXgMQQoC1WcicMQmDiyOWiG4HcDmnuwGgL0L5Em\nQBA8fJANwQxJ/AioHqIRkhohsUmSCRAEiXcGMKDcEKq4hIphQq3YoUo6oVaK\npUregQMKczEyoLA8IQlQ0RD8gJjSHgCjx6pq\n                   "
+                 "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqA4ANlgA6GPL7/4uzBmxAEZJNqyJ5V53oy1jVELkNGQBGg\nODGG3LnyeG7DToiu1oSV/TkbIAjIhggCZYFq8BgClIWobE9evaR93+ZZJ5ER\nUAQoDlGAbA6aIRA3dKWs3TTjBJoJEAQUB8pC3IPVEKB/gbIdyWtwmQA3B6gG\nqBIePsiGQEJySft+PCbA/LUfEs4QjZDUCIlNcEiuImgCBAFVAtVD4p0BDCg3\nhCouoWKYUCt2qJJOqJViqZJ34IDCXIwMKCxPSAJUNAQ/IKa0BwBUkgRI\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -12088,7 +12549,7 @@ Notebook[
                ],
                "Pressed" -> Image[
                 CompressedData[
-                 "\n1:eJy9lD0OgkAQhYk2lnbW3sLW0hbjASAiscEETIichlt5AxoagRgKEvTpE4KA\n/GQ3fglkeDu8zM7+LPWTepgoiuLM8FI1d23b2mU7x8fOco6mZew31tkwDXul\nTyEuPs8rfvQxJAfcxPiDSRzH9wLEY03SNM3zvDZrKNCHmCRJkmUZ9SiKrgWI\nKWIUOR0mGKUShqHv++43UKAzoepTM2ENQRB4nue2AR2jrKfVBPNlDb8cSh/W\nU/anasJONmfRBDnsM3/kbuRqspO9DoR95rorb8RNpFQisSeyVkfKPpG1Y6Wc\nnRLBU1xF8D4ZhUSTbobc9k/SEjih\n                   "
+                 "\n1:eJy9lM8KgkAQxpe6dOzWuZeQwFPHrkYPoGTSxWANovfrLbyJNy+hhAfB+mpS\nTE2NHfqBMn47fszO/plbB2M3EkJ4E7wM87SU0jyvp/jYuN7ece3tyj3aji0X\n1hji7P0843sfQ3LAVY0/mMRxfCtA/KtJmqZ5ntdmDQX6EJMkSbIsIz2KoksB\nYhIxipwOE4ySEgSBlFL7BAp0Sqj61EyoBt/3dV3X2oCOUaqn1QTzRRyG4TeH\n0gc5yCz7UzWhTjZn0QQ51Gf6kXYjrSZ1steBoD7TuosX6iYslTD2hGt1WPYJ\n145lOTsliqe4iuJ98hOMJt0Mue0feOHclw==\n                   "
                 ],
                 "Byte",
                 ColorSpace -> "RGB",
@@ -12096,12 +12557,15 @@ Notebook[
                 Interleaving -> True
                ]
               },
-              Background -> GrayLevel[16/17],
+              Background -> RGBColor[0.941176, 0.941176, 0.941176],
               Method -> "Queued",
               ImageSize -> {All, 20},
               Evaluator -> Automatic
              ],
-             FrameStyle -> Directive[GrayLevel[16/17], AbsoluteThickness[2]],
+             FrameStyle -> Directive[
+              RGBColor[0.941176, 0.941176, 0.941176],
+              AbsoluteThickness[2]
+             ],
              FrameMargins -> -1,
              ContentPadding -> False,
              StripOnInput -> False
@@ -12238,10 +12702,13 @@ Notebook[
          },
          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Center}}},
          AutoDelete -> False,
-         GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {GrayLevel[16/17]}},
+         GridBoxBackground -> {
+          "Columns" -> {{None}},
+          "Rows" -> {RGBColor[0.941176, 0.941176, 0.941176]}
+         },
          GridBoxFrame -> {
           "Columns" -> False,
-          "RowsIndexed" -> {1 -> GrayLevel[16/17]}
+          "RowsIndexed" -> {1 -> RGBColor[0.941176, 0.941176, 0.941176]}
          },
          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
          GridBoxSpacings -> {"Columns" -> {5, {0.5}, 5}, "Rows" -> {{Automatic}}},
@@ -12275,132 +12742,524 @@ Notebook[
               {
                GraphicsBox[
                 {
-                 Thickness[0.016667],
+                 Thickness[0.015384615384615385],
                  StyleBox[
                   {
                    FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                    {{{4., 30.63}, {4., 43.68}, {15.31, 37.16}, {15.31, 24.1}}}
-                   ]
-                  },
-                  {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
-                  StripOnInput -> False
-                 ],
-                 StyleBox[
-                  {
-                   FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                    {
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                    },
                     {
                      {
-                      {42.43, 7.14},
-                      {31.13, 0.62},
-                      {31.13, 13.67},
-                      {42.43, 20.19}
+                      {19.29685914516449, 56.875006675720215},
+                      {32.49997329711914, 64.49218791723251},
+                      {45.70308744907379, 56.875006675720215},
+                      {32.49997329711914, 49.257825434207916},
+                      {19.29685914516449, 56.875006675720215}
+                     },
+                     {
+                      {21.328107476234436, 56.875006675720215},
+                      {32.49997329711914, 63.32422015108166},
+                      {43.671839118003845, 56.875006675720215},
+                      {32.49997329711914, 50.42579283714326},
+                      {21.328107476234436, 56.875006675720215}
+                     },
+                     {
+                      {33.00778537988663, 33.26174482703209},
+                      {33.00778537988663, 48.496107310056686},
+                      {46.21089953184128, 56.113288551568985},
+                      {46.21089953184128, 40.87892606854439},
+                      {33.00778537988663, 33.26174482703209}
                      }
                     }
                    ]
                   },
-                  {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
+                  {FaceForm[RGBColor[0.701961, 0.603922, 0.788235, 1.]]},
                   StripOnInput -> False
                  ],
                  StyleBox[
                   {
                    FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
                     {
                      {
-                      {43.56, 52.17},
-                      {54.86, 45.64},
-                      {43.56, 39.11},
-                      {32.26, 45.64}
+                      {31.992161214351654, 33.26174482703209},
+                      {18.789047062397003, 40.87892606854439},
+                      {18.789047062397003, 56.113288551568985},
+                      {31.992161214351654, 48.496107310056686},
+                      {31.992161214351654, 33.26174482703209}
                      }
                     }
                    ]
                   },
-                  {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
+                  {FaceForm[RGBColor[0.537255, 0.403922, 0.67451, 1.]]},
                   StripOnInput -> False
                  ],
                  StyleBox[
                   {
                    FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                    {{{4., 14.97}, {4., 28.02}, {28.87, 13.67}, {28.87, 0.62}}}
-                   ]
-                  },
-                  {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
-                  StripOnInput -> False
-                 ],
-                 StyleBox[
-                  {
-                   FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
                     {
-                     {{30., 60.}, {41.3, 53.47}, {16.44, 39.11}, {5.14, 45.64}}
-                    }
-                   ]
-                  },
-                  {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
-                  StripOnInput -> False
-                 ],
-                 StyleBox[
-                  {
-                   FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                    },
                     {
                      {
-                      {56., 14.97},
-                      {44.7, 8.44},
-                      {44.69, 37.16},
-                      {55.99, 43.68}
+                      {17.77342289686203, 8.886764854192734},
+                      {4.570308744907379, 16.503946095705032},
+                      {4.570308744907379, 31.73830857872963},
+                      {17.77342289686203, 24.12112733721733},
+                      {17.77342289686203, 8.886764854192734}
+                     },
+                     {
+                      {16.757798731327057, 10.664107143878937},
+                      {5.585932910442352, 17.113319045306525},
+                      {5.585932910442352, 29.960966289043427},
+                      {16.757798731327057, 23.511754387615838},
+                      {16.757798731327057, 10.664107143878937}
+                     },
+                     {
+                      {31.484349131584167, 32.50002670288086},
+                      {18.281234979629517, 40.11720794439316},
+                      {5.078120827674866, 32.50002670288086},
+                      {18.281234979629517, 24.88284546136856},
+                      {31.484349131584167, 32.50002670288086}
                      }
                     }
                    ]
                   },
-                  {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
+                  {FaceForm[RGBColor[0.635294, 0.733333, 0.831373, 1.]]},
                   StripOnInput -> False
                  ],
                  StyleBox[
                   {
                    FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
                     {
                      {
-                      {17.57, 22.8},
-                      {17.57, 35.85},
-                      {28.87, 29.33},
-                      {28.87, 16.28}
+                      {31.992161214351654, 31.73830857872963},
+                      {18.789047062397003, 24.12112733721733},
+                      {18.789047062397003, 8.886764854192734},
+                      {31.992161214351654, 16.503946095705032},
+                      {31.992161214351654, 31.73830857872963}
                      }
                     }
                    ]
                   },
-                  {FaceForm[GrayLevel[1.]]},
+                  {FaceForm[RGBColor[0.290196, 0.407843, 0.576471, 1.]]},
                   StripOnInput -> False
                  ],
                  StyleBox[
                   {
                    FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                    {{{30., 44.33}, {41.3, 37.8}, {30., 31.28}, {18.7, 37.8}}}
-                   ]
-                  },
-                  {FaceForm[GrayLevel[1.]]},
-                  StripOnInput -> False
-                 ],
-                 StyleBox[
-                  {
-                   FilledCurveBox[
-                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                    {
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                    },
                     {
                      {
-                      {42.43, 22.8},
-                      {31.13, 16.28},
-                      {31.13, 29.33},
-                      {42.43, 35.85}
+                      {47.22652369737625, 8.886764854192734},
+                      {47.22652369737625, 24.12112733721733},
+                      {60.4296378493309, 31.73830857872963},
+                      {60.4296378493309, 16.503946095705032},
+                      {47.22652369737625, 8.886764854192734}
+                     },
+                     {
+                      {48.242147862911224, 10.664107143878937},
+                      {48.242147862911224, 23.511754387615838},
+                      {59.41401368379593, 29.960966289043427},
+                      {59.41401368379593, 17.113319045306525},
+                      {48.242147862911224, 10.664107143878937}
+                     },
+                     {
+                      {33.515597462654114, 32.50002670288086},
+                      {46.718711614608765, 40.11720794439316},
+                      {59.921825766563416, 32.50002670288086},
+                      {46.718711614608765, 24.88284546136856},
+                      {33.515597462654114, 32.50002670288086}
                      }
                     }
                    ]
                   },
-                  {FaceForm[GrayLevel[1.]]},
+                  {FaceForm[RGBColor[0.6, 0.6, 0.37254901960784315, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
+                    {
+                     {
+                      {33.00778537988663, 31.73830857872963},
+                      {33.00778537988663, 16.503946095705032},
+                      {46.21089953184128, 8.886764854192734},
+                      {46.21089953184128, 24.12112733721733},
+                      {33.00778537988663, 31.73830857872963}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.396078, 0.603922, 0.301961, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                     {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                    },
+                    CompressedData[
+                     "\n1:eJxTTMoPSmVmYGBgA2JWIGZiAIMz/8LFHBgYGs4xtDo6wPgJxpuLGj66g/iS\n/w8agOQ9GbS94fwFZ3yWNuxzccCin+W/uxCQPnCrYaEDMr+wwd4DxOf+f9QQ\nSDvYNvD5IPOXNRS4YNHfEP/PzA+Zv+vfHHck9XA+1Dy4eqh9GPrT/m3xRXJv\nw+Z/ch5I/oHwEf6FqEeEB7p+hm//vI1BtAKbgwKY/m8P9rcfa40+iD7676Yb\nNnmFfIcH9lj03/oXbIqp3szYilVNF8S//O+qK6Z8QJqexYVf9uj6ARROjv4=\n\n                    "
+                    ]
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {7.109369158744812, 32.50002670288086},
+                      {7.109369158744812, 31.097747524374427},
+                      {5.972591313425198, 29.960966289043427},
+                      {4.570308744907379, 29.960966289043427},
+                      {3.168024481383867, 29.960966289043427},
+                      {2.0312483310699463, 31.097747524374427},
+                      {2.0312483310699463, 32.50002670288086},
+                      {2.0312483310699463, 33.90230975568602},
+                      {3.168024481383867, 35.03908711671829},
+                      {4.570308744907379, 35.03908711671829},
+                      {5.972591313425198, 35.03908711671829},
+                      {7.109369158744812, 33.90230975568602},
+                      {7.109369158744812, 32.50002670288086}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {20.82029539346695, 56.36719459295273},
+                      {20.82029539346695, 54.96491250872225},
+                      {19.683518032434677, 53.828134179115295},
+                      {18.281234979629517, 53.828134179115295},
+                      {16.878951926824357, 53.828134179115295},
+                      {15.742174565792084, 54.96491250872225},
+                      {15.742174565792084, 56.36719459295273},
+                      {15.742174565792084, 57.76947716147055},
+                      {16.878951926824357, 58.90625500679016},
+                      {18.281234979629517, 58.90625500679016},
+                      {19.683518032434677, 58.90625500679016},
+                      {20.82029539346695, 57.76947716147055},
+                      {20.82029539346695, 56.36719459295273}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {20.82029539346695, 40.625020027160645},
+                      {20.82029539346695, 39.222736974355485},
+                      {19.683518032434677, 38.08595961332321},
+                      {18.281234979629517, 38.08595961332321},
+                      {16.878951926824357, 38.08595961332321},
+                      {15.742174565792084, 39.222736974355485},
+                      {15.742174565792084, 40.625020027160645},
+                      {15.742174565792084, 42.027303079965804},
+                      {16.878951926824357, 43.16408044099808},
+                      {18.281234979629517, 43.16408044099808},
+                      {19.683518032434677, 43.16408044099808},
+                      {20.82029539346695, 42.027303079965804},
+                      {20.82029539346695, 40.625020027160645}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {20.82029539346695, 24.375033378601074},
+                      {20.82029539346695, 22.97275420009464},
+                      {19.683518032434677, 21.83597296476364},
+                      {18.281234979629517, 21.83597296476364},
+                      {16.878951926824357, 21.83597296476364},
+                      {15.742174565792084, 22.97275420009464},
+                      {15.742174565792084, 24.375033378601074},
+                      {15.742174565792084, 25.777316431406234},
+                      {16.878951926824357, 26.914093792438507},
+                      {18.281234979629517, 26.914093792438507},
+                      {19.683518032434677, 26.914093792438507},
+                      {20.82029539346695, 25.777316431406234},
+                      {20.82029539346695, 24.375033378601074}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {20.82029539346695, 8.63285881280899},
+                      {20.82029539346695, 7.230591257198739},
+                      {19.683518032434677, 6.093798398971558},
+                      {18.281234979629517, 6.093798398971558},
+                      {16.878951926824357, 6.093798398971558},
+                      {15.742174565792084, 7.230591257198739},
+                      {15.742174565792084, 8.63285881280899},
+                      {15.742174565792084, 10.035130242717969},
+                      {16.878951926824357, 11.171919226646423},
+                      {18.281234979629517, 11.171919226646423},
+                      {19.683518032434677, 11.171919226646423},
+                      {20.82029539346695, 10.035130242717969},
+                      {20.82029539346695, 8.63285881280899}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {35.03903371095657, 48.75001335144043},
+                      {35.03903371095657, 47.34773029863527},
+                      {33.90225247562557, 46.210952937603},
+                      {32.49997329711914, 46.210952937603},
+                      {31.09769024431398, 46.210952937603},
+                      {29.960912883281708, 47.34773029863527},
+                      {29.960912883281708, 48.75001335144043},
+                      {29.960912883281708, 50.15229543567091},
+                      {31.09769024431398, 51.28907376527786},
+                      {32.49997329711914, 51.28907376527786},
+                      {33.90225247562557, 51.28907376527786},
+                      {35.03903371095657, 50.15229543567091},
+                      {35.03903371095657, 48.75001335144043}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {35.03903371095657, 32.50002670288086},
+                      {35.03903371095657, 31.097747524374427},
+                      {33.90225247562557, 29.960966289043427},
+                      {32.49997329711914, 29.960966289043427},
+                      {31.09769024431398, 29.960966289043427},
+                      {29.960912883281708, 31.097747524374427},
+                      {29.960912883281708, 32.50002670288086},
+                      {29.960912883281708, 33.90230975568602},
+                      {31.09769024431398, 35.03908711671829},
+                      {32.49997329711914, 35.03908711671829},
+                      {33.90225247562557, 35.03908711671829},
+                      {35.03903371095657, 33.90230975568602},
+                      {35.03903371095657, 32.50002670288086}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {35.03903371095657, 16.25004005432129},
+                      {35.03903371095657, 14.847760875814856},
+                      {33.90225247562557, 13.710979640483856},
+                      {32.49997329711914, 13.710979640483856},
+                      {31.09769024431398, 13.710979640483856},
+                      {29.960912883281708, 14.847760875814856},
+                      {29.960912883281708, 16.25004005432129},
+                      {29.960912883281708, 17.65232310712645},
+                      {31.09769024431398, 18.789100468158722},
+                      {32.49997329711914, 18.789100468158722},
+                      {33.90225247562557, 18.789100468158722},
+                      {35.03903371095657, 17.65232310712645},
+                      {35.03903371095657, 16.25004005432129}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {49.2577720284462, 56.36719459295273},
+                      {49.2577720284462, 54.96491250872225},
+                      {48.1209907931152, 53.828134179115295},
+                      {46.718711614608765, 53.828134179115295},
+                      {45.316428561803605, 53.828134179115295},
+                      {44.17965120077133, 54.96491250872225},
+                      {44.17965120077133, 56.36719459295273},
+                      {44.17965120077133, 57.76947716147055},
+                      {45.316428561803605, 58.90625500679016},
+                      {46.718711614608765, 58.90625500679016},
+                      {48.1209907931152, 58.90625500679016},
+                      {49.2577720284462, 57.76947716147055},
+                      {49.2577720284462, 56.36719459295273}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {49.2577720284462, 40.625020027160645},
+                      {49.2577720284462, 39.222736974355485},
+                      {48.1209907931152, 38.08595961332321},
+                      {46.718711614608765, 38.08595961332321},
+                      {45.316428561803605, 38.08595961332321},
+                      {44.17965120077133, 39.222736974355485},
+                      {44.17965120077133, 40.625020027160645},
+                      {44.17965120077133, 42.027303079965804},
+                      {45.316428561803605, 43.16408044099808},
+                      {46.718711614608765, 43.16408044099808},
+                      {48.1209907931152, 43.16408044099808},
+                      {49.2577720284462, 42.027303079965804},
+                      {49.2577720284462, 40.625020027160645}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {49.2577720284462, 24.375033378601074},
+                      {49.2577720284462, 22.97275420009464},
+                      {48.1209907931152, 21.83597296476364},
+                      {46.718711614608765, 21.83597296476364},
+                      {45.316428561803605, 21.83597296476364},
+                      {44.17965120077133, 22.97275420009464},
+                      {44.17965120077133, 24.375033378601074},
+                      {44.17965120077133, 25.777316431406234},
+                      {45.316428561803605, 26.914093792438507},
+                      {46.718711614608765, 26.914093792438507},
+                      {48.1209907931152, 26.914093792438507},
+                      {49.2577720284462, 25.777316431406234},
+                      {49.2577720284462, 24.375033378601074}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {49.2577720284462, 8.63285881280899},
+                      {49.2577720284462, 7.230591257198739},
+                      {48.1209907931152, 6.093798398971558},
+                      {46.718711614608765, 6.093798398971558},
+                      {45.316428561803605, 6.093798398971558},
+                      {44.17965120077133, 7.230591257198739},
+                      {44.17965120077133, 8.63285881280899},
+                      {44.17965120077133, 10.035130242717969},
+                      {45.316428561803605, 11.171919226646423},
+                      {46.718711614608765, 11.171919226646423},
+                      {48.1209907931152, 11.171919226646423},
+                      {49.2577720284462, 10.035130242717969},
+                      {49.2577720284462, 8.63285881280899}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+                  StripOnInput -> False
+                 ],
+                 StyleBox[
+                  {
+                   FilledCurveBox[
+                    {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                    {
+                     {
+                      {62.968698263168335, 32.50002670288086},
+                      {62.968698263168335, 31.097747524374427},
+                      {61.83190540494115, 29.960966289043427},
+                      {60.4296378493309, 29.960966289043427},
+                      {59.027366419421924, 29.960966289043427},
+                      {57.89057743549347, 31.097747524374427},
+                      {57.89057743549347, 32.50002670288086},
+                      {57.89057743549347, 33.90230975568602},
+                      {59.027366419421924, 35.03908711671829},
+                      {60.4296378493309, 35.03908711671829},
+                      {61.83190540494115, 35.03908711671829},
+                      {62.968698263168335, 33.90230975568602},
+                      {62.968698263168335, 32.50002670288086}
+                     }
+                    }
+                   ]
+                  },
+                  {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
                   StripOnInput -> False
                  ]
                 },
@@ -12409,7 +13268,7 @@ Notebook[
                  ImagePadding -> {{5, 0}, {0, 0}},
                  BaselinePosition -> Scaled[0.25],
                  ImageSize -> 50,
-                 ImageSize -> {Automatic, 30}
+                 ImageSize -> {Automatic, 35}
                 }
                ],
                StyleBox[
@@ -12435,7 +13294,7 @@ Notebook[
                   GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
                   AutoDelete -> False,
                   GridBoxDividers -> {
-                   "ColumnsIndexed" -> {2 -> RGBColor[1., 1., 1.]},
+                   "ColumnsIndexed" -> {2 -> RGBColor[0.333333, 0.333333, 0.333333]},
                    "Rows" -> {{None}}
                   },
                   GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
@@ -12443,7 +13302,7 @@ Notebook[
                  "Grid"
                 ],
                 FontSize -> 24,
-                FontColor -> RGBColor[1., 1., 1.],
+                FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
                 StripOnInput -> False
                ]
               }
@@ -12468,7 +13327,7 @@ Notebook[
                "RowDefault"
               ],
               "Text",
-              FontColor -> RGBColor[1., 1., 1.],
+              FontColor -> RGBColor[0.333333, 0.333333, 0.333333],
               StripOnInput -> False
              ],
              "https://resources.wolframcloud.com/PacletRepository"
@@ -12481,7 +13340,7 @@ Notebook[
             {
              TemplateBox[
               {
-               "\"Style Guidelines\"",
+               "\"Guidelines\"",
                "\"View general guidelines for authoring paclets\""
               },
               "PrettyTooltipTemplate"
@@ -12577,7 +13436,7 @@ Notebook[
              GridBoxDividers -> {"ColumnsIndexed" -> {2 -> True}, "Rows" -> {{False}}},
              GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{2}}},
              GridBoxSpacings -> {"Columns" -> {{0.5}}},
-             FrameStyle -> RGBColor[0.835294, 0.605882, 0.57451]
+             FrameStyle -> RGBColor[1., 1., 1.]
             ],
             "Grid"
            ],
@@ -13356,15 +14215,15 @@ Notebook[
          GridBoxBackground -> {
           "Columns" -> {{None}},
           "Rows" -> {
-           RGBColor[0.670588, 0.211765, 0.14902],
-           RGBColor[0.47058823529411764, 0., 0.00784313725490196]
+           RGBColor[1., 1., 1.],
+           RGBColor[0.333333, 0.333333, 0.333333]
           }
          },
          GridBoxFrame -> {
           "Columns" -> False,
           "RowsIndexed" -> {
-           1 -> RGBColor[0.670588, 0.211765, 0.14902],
-           2 -> RGBColor[0.47058823529411764, 0., 0.00784313725490196]
+           1 -> RGBColor[1., 1., 1.],
+           2 -> RGBColor[0.333333, 0.333333, 0.333333]
           }
          },
          GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
@@ -13372,7 +14231,7 @@ Notebook[
           "Columns" -> {5, {0.9}, 5},
           "RowsIndexed" -> {1 -> 1.1, 2 -> 1.3, 3 -> 0.25}
          },
-         FrameStyle -> RGBColor[0.670588, 0.211765, 0.14902]
+         FrameStyle -> RGBColor[1., 1., 1.]
         ],
         "Grid"
        ],
@@ -13400,139 +14259,531 @@ Notebook[
            {
             GraphicsBox[
              {
-              Thickness[0.016667],
+              Thickness[0.015384615384615385],
               StyleBox[
                {
                 FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                 {{{4., 30.63}, {4., 43.68}, {15.31, 37.16}, {15.31, 24.1}}}
-                ]
-               },
-               {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
-               StripOnInput -> False
-              ],
-              StyleBox[
-               {
-                FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                 {
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                 },
                  {
                   {
-                   {42.43, 7.14},
-                   {31.13, 0.62},
-                   {31.13, 13.67},
-                   {42.43, 20.19}
+                   {19.29685914516449, 56.875006675720215},
+                   {32.49997329711914, 64.49218791723251},
+                   {45.70308744907379, 56.875006675720215},
+                   {32.49997329711914, 49.257825434207916},
+                   {19.29685914516449, 56.875006675720215}
+                  },
+                  {
+                   {21.328107476234436, 56.875006675720215},
+                   {32.49997329711914, 63.32422015108166},
+                   {43.671839118003845, 56.875006675720215},
+                   {32.49997329711914, 50.42579283714326},
+                   {21.328107476234436, 56.875006675720215}
+                  },
+                  {
+                   {33.00778537988663, 33.26174482703209},
+                   {33.00778537988663, 48.496107310056686},
+                   {46.21089953184128, 56.113288551568985},
+                   {46.21089953184128, 40.87892606854439},
+                   {33.00778537988663, 33.26174482703209}
                   }
                  }
                 ]
                },
-               {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
+               {FaceForm[RGBColor[0.701961, 0.603922, 0.788235, 1.]]},
                StripOnInput -> False
               ],
               StyleBox[
                {
                 FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
                  {
                   {
-                   {43.56, 52.17},
-                   {54.86, 45.64},
-                   {43.56, 39.11},
-                   {32.26, 45.64}
+                   {31.992161214351654, 33.26174482703209},
+                   {18.789047062397003, 40.87892606854439},
+                   {18.789047062397003, 56.113288551568985},
+                   {31.992161214351654, 48.496107310056686},
+                   {31.992161214351654, 33.26174482703209}
                   }
                  }
                 ]
                },
-               {FaceForm[RGBColor[1., 0.41569, 0.058824, 1.]]},
+               {FaceForm[RGBColor[0.537255, 0.403922, 0.67451, 1.]]},
                StripOnInput -> False
               ],
               StyleBox[
                {
                 FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                 {{{4., 14.97}, {4., 28.02}, {28.87, 13.67}, {28.87, 0.62}}}
-                ]
-               },
-               {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
-               StripOnInput -> False
-              ],
-              StyleBox[
-               {
-                FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
                  {
-                  {{30., 60.}, {41.3, 53.47}, {16.44, 39.11}, {5.14, 45.64}}
-                 }
-                ]
-               },
-               {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
-               StripOnInput -> False
-              ],
-              StyleBox[
-               {
-                FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                 },
                  {
                   {
-                   {56., 14.97},
-                   {44.7, 8.44},
-                   {44.69, 37.16},
-                   {55.99, 43.68}
+                   {17.77342289686203, 8.886764854192734},
+                   {4.570308744907379, 16.503946095705032},
+                   {4.570308744907379, 31.73830857872963},
+                   {17.77342289686203, 24.12112733721733},
+                   {17.77342289686203, 8.886764854192734}
+                  },
+                  {
+                   {16.757798731327057, 10.664107143878937},
+                   {5.585932910442352, 17.113319045306525},
+                   {5.585932910442352, 29.960966289043427},
+                   {16.757798731327057, 23.511754387615838},
+                   {16.757798731327057, 10.664107143878937}
+                  },
+                  {
+                   {31.484349131584167, 32.50002670288086},
+                   {18.281234979629517, 40.11720794439316},
+                   {5.078120827674866, 32.50002670288086},
+                   {18.281234979629517, 24.88284546136856},
+                   {31.484349131584167, 32.50002670288086}
                   }
                  }
                 ]
                },
-               {FaceForm[RGBColor[0.98039, 0.66274, 0.25098, 1.]]},
+               {FaceForm[RGBColor[0.635294, 0.733333, 0.831373, 1.]]},
                StripOnInput -> False
               ],
               StyleBox[
                {
                 FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
                  {
                   {
-                   {17.57, 22.8},
-                   {17.57, 35.85},
-                   {28.87, 29.33},
-                   {28.87, 16.28}
+                   {31.992161214351654, 31.73830857872963},
+                   {18.789047062397003, 24.12112733721733},
+                   {18.789047062397003, 8.886764854192734},
+                   {31.992161214351654, 16.503946095705032},
+                   {31.992161214351654, 31.73830857872963}
                   }
                  }
                 ]
                },
-               {FaceForm[GrayLevel[1.]]},
+               {FaceForm[RGBColor[0.290196, 0.407843, 0.576471, 1.]]},
                StripOnInput -> False
               ],
               StyleBox[
                {
                 FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
-                 {{{30., 44.33}, {41.3, 37.8}, {30., 31.28}, {18.7, 37.8}}}
-                ]
-               },
-               {FaceForm[GrayLevel[1.]]},
-               StripOnInput -> False
-              ],
-              StyleBox[
-               {
-                FilledCurveBox[
-                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}},
+                 {
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                 },
                  {
                   {
-                   {42.43, 22.8},
-                   {31.13, 16.28},
-                   {31.13, 29.33},
-                   {42.43, 35.85}
+                   {47.22652369737625, 8.886764854192734},
+                   {47.22652369737625, 24.12112733721733},
+                   {60.4296378493309, 31.73830857872963},
+                   {60.4296378493309, 16.503946095705032},
+                   {47.22652369737625, 8.886764854192734}
+                  },
+                  {
+                   {48.242147862911224, 10.664107143878937},
+                   {48.242147862911224, 23.511754387615838},
+                   {59.41401368379593, 29.960966289043427},
+                   {59.41401368379593, 17.113319045306525},
+                   {48.242147862911224, 10.664107143878937}
+                  },
+                  {
+                   {33.515597462654114, 32.50002670288086},
+                   {46.718711614608765, 40.11720794439316},
+                   {59.921825766563416, 32.50002670288086},
+                   {46.718711614608765, 24.88284546136856},
+                   {33.515597462654114, 32.50002670288086}
                   }
                  }
                 ]
                },
-               {FaceForm[GrayLevel[1.]]},
+               {FaceForm[RGBColor[0.6, 0.6, 0.37254901960784315, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
+                 {
+                  {
+                   {33.00778537988663, 31.73830857872963},
+                   {33.00778537988663, 16.503946095705032},
+                   {46.21089953184128, 8.886764854192734},
+                   {46.21089953184128, 24.12112733721733},
+                   {33.00778537988663, 31.73830857872963}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.396078, 0.603922, 0.301961, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}},
+                  {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}
+                 },
+                 CompressedData[
+                  "\n1:eJxTTMoPSmVmYGBgA2JWIGZiAIMz/8LFHBgYGs4xtDo6wPgJxpuLGj66g/iS\n/w8agOQ9GbS94fwFZ3yWNuxzccCin+W/uxCQPnCrYaEDMr+wwd4DxOf+f9QQ\nSDvYNvD5IPOXNRS4YNHfEP/PzA+Zv+vfHHck9XA+1Dy4eqh9GPrT/m3xRXJv\nw+Z/ch5I/oHwEf6FqEeEB7p+hm//vI1BtAKbgwKY/m8P9rcfa40+iD7676Yb\nNnmFfIcH9lj03/oXbIqp3szYilVNF8S//O+qK6Z8QJqexYVf9uj6ARROjv4=\n\n                  "
+                 ]
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {7.109369158744812, 32.50002670288086},
+                   {7.109369158744812, 31.097747524374427},
+                   {5.972591313425198, 29.960966289043427},
+                   {4.570308744907379, 29.960966289043427},
+                   {3.168024481383867, 29.960966289043427},
+                   {2.0312483310699463, 31.097747524374427},
+                   {2.0312483310699463, 32.50002670288086},
+                   {2.0312483310699463, 33.90230975568602},
+                   {3.168024481383867, 35.03908711671829},
+                   {4.570308744907379, 35.03908711671829},
+                   {5.972591313425198, 35.03908711671829},
+                   {7.109369158744812, 33.90230975568602},
+                   {7.109369158744812, 32.50002670288086}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {20.82029539346695, 56.36719459295273},
+                   {20.82029539346695, 54.96491250872225},
+                   {19.683518032434677, 53.828134179115295},
+                   {18.281234979629517, 53.828134179115295},
+                   {16.878951926824357, 53.828134179115295},
+                   {15.742174565792084, 54.96491250872225},
+                   {15.742174565792084, 56.36719459295273},
+                   {15.742174565792084, 57.76947716147055},
+                   {16.878951926824357, 58.90625500679016},
+                   {18.281234979629517, 58.90625500679016},
+                   {19.683518032434677, 58.90625500679016},
+                   {20.82029539346695, 57.76947716147055},
+                   {20.82029539346695, 56.36719459295273}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {20.82029539346695, 40.625020027160645},
+                   {20.82029539346695, 39.222736974355485},
+                   {19.683518032434677, 38.08595961332321},
+                   {18.281234979629517, 38.08595961332321},
+                   {16.878951926824357, 38.08595961332321},
+                   {15.742174565792084, 39.222736974355485},
+                   {15.742174565792084, 40.625020027160645},
+                   {15.742174565792084, 42.027303079965804},
+                   {16.878951926824357, 43.16408044099808},
+                   {18.281234979629517, 43.16408044099808},
+                   {19.683518032434677, 43.16408044099808},
+                   {20.82029539346695, 42.027303079965804},
+                   {20.82029539346695, 40.625020027160645}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {20.82029539346695, 24.375033378601074},
+                   {20.82029539346695, 22.97275420009464},
+                   {19.683518032434677, 21.83597296476364},
+                   {18.281234979629517, 21.83597296476364},
+                   {16.878951926824357, 21.83597296476364},
+                   {15.742174565792084, 22.97275420009464},
+                   {15.742174565792084, 24.375033378601074},
+                   {15.742174565792084, 25.777316431406234},
+                   {16.878951926824357, 26.914093792438507},
+                   {18.281234979629517, 26.914093792438507},
+                   {19.683518032434677, 26.914093792438507},
+                   {20.82029539346695, 25.777316431406234},
+                   {20.82029539346695, 24.375033378601074}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {20.82029539346695, 8.63285881280899},
+                   {20.82029539346695, 7.230591257198739},
+                   {19.683518032434677, 6.093798398971558},
+                   {18.281234979629517, 6.093798398971558},
+                   {16.878951926824357, 6.093798398971558},
+                   {15.742174565792084, 7.230591257198739},
+                   {15.742174565792084, 8.63285881280899},
+                   {15.742174565792084, 10.035130242717969},
+                   {16.878951926824357, 11.171919226646423},
+                   {18.281234979629517, 11.171919226646423},
+                   {19.683518032434677, 11.171919226646423},
+                   {20.82029539346695, 10.035130242717969},
+                   {20.82029539346695, 8.63285881280899}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {35.03903371095657, 48.75001335144043},
+                   {35.03903371095657, 47.34773029863527},
+                   {33.90225247562557, 46.210952937603},
+                   {32.49997329711914, 46.210952937603},
+                   {31.09769024431398, 46.210952937603},
+                   {29.960912883281708, 47.34773029863527},
+                   {29.960912883281708, 48.75001335144043},
+                   {29.960912883281708, 50.15229543567091},
+                   {31.09769024431398, 51.28907376527786},
+                   {32.49997329711914, 51.28907376527786},
+                   {33.90225247562557, 51.28907376527786},
+                   {35.03903371095657, 50.15229543567091},
+                   {35.03903371095657, 48.75001335144043}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {35.03903371095657, 32.50002670288086},
+                   {35.03903371095657, 31.097747524374427},
+                   {33.90225247562557, 29.960966289043427},
+                   {32.49997329711914, 29.960966289043427},
+                   {31.09769024431398, 29.960966289043427},
+                   {29.960912883281708, 31.097747524374427},
+                   {29.960912883281708, 32.50002670288086},
+                   {29.960912883281708, 33.90230975568602},
+                   {31.09769024431398, 35.03908711671829},
+                   {32.49997329711914, 35.03908711671829},
+                   {33.90225247562557, 35.03908711671829},
+                   {35.03903371095657, 33.90230975568602},
+                   {35.03903371095657, 32.50002670288086}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {35.03903371095657, 16.25004005432129},
+                   {35.03903371095657, 14.847760875814856},
+                   {33.90225247562557, 13.710979640483856},
+                   {32.49997329711914, 13.710979640483856},
+                   {31.09769024431398, 13.710979640483856},
+                   {29.960912883281708, 14.847760875814856},
+                   {29.960912883281708, 16.25004005432129},
+                   {29.960912883281708, 17.65232310712645},
+                   {31.09769024431398, 18.789100468158722},
+                   {32.49997329711914, 18.789100468158722},
+                   {33.90225247562557, 18.789100468158722},
+                   {35.03903371095657, 17.65232310712645},
+                   {35.03903371095657, 16.25004005432129}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {49.2577720284462, 56.36719459295273},
+                   {49.2577720284462, 54.96491250872225},
+                   {48.1209907931152, 53.828134179115295},
+                   {46.718711614608765, 53.828134179115295},
+                   {45.316428561803605, 53.828134179115295},
+                   {44.17965120077133, 54.96491250872225},
+                   {44.17965120077133, 56.36719459295273},
+                   {44.17965120077133, 57.76947716147055},
+                   {45.316428561803605, 58.90625500679016},
+                   {46.718711614608765, 58.90625500679016},
+                   {48.1209907931152, 58.90625500679016},
+                   {49.2577720284462, 57.76947716147055},
+                   {49.2577720284462, 56.36719459295273}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {49.2577720284462, 40.625020027160645},
+                   {49.2577720284462, 39.222736974355485},
+                   {48.1209907931152, 38.08595961332321},
+                   {46.718711614608765, 38.08595961332321},
+                   {45.316428561803605, 38.08595961332321},
+                   {44.17965120077133, 39.222736974355485},
+                   {44.17965120077133, 40.625020027160645},
+                   {44.17965120077133, 42.027303079965804},
+                   {45.316428561803605, 43.16408044099808},
+                   {46.718711614608765, 43.16408044099808},
+                   {48.1209907931152, 43.16408044099808},
+                   {49.2577720284462, 42.027303079965804},
+                   {49.2577720284462, 40.625020027160645}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {49.2577720284462, 24.375033378601074},
+                   {49.2577720284462, 22.97275420009464},
+                   {48.1209907931152, 21.83597296476364},
+                   {46.718711614608765, 21.83597296476364},
+                   {45.316428561803605, 21.83597296476364},
+                   {44.17965120077133, 22.97275420009464},
+                   {44.17965120077133, 24.375033378601074},
+                   {44.17965120077133, 25.777316431406234},
+                   {45.316428561803605, 26.914093792438507},
+                   {46.718711614608765, 26.914093792438507},
+                   {48.1209907931152, 26.914093792438507},
+                   {49.2577720284462, 25.777316431406234},
+                   {49.2577720284462, 24.375033378601074}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {49.2577720284462, 8.63285881280899},
+                   {49.2577720284462, 7.230591257198739},
+                   {48.1209907931152, 6.093798398971558},
+                   {46.718711614608765, 6.093798398971558},
+                   {45.316428561803605, 6.093798398971558},
+                   {44.17965120077133, 7.230591257198739},
+                   {44.17965120077133, 8.63285881280899},
+                   {44.17965120077133, 10.035130242717969},
+                   {45.316428561803605, 11.171919226646423},
+                   {46.718711614608765, 11.171919226646423},
+                   {48.1209907931152, 11.171919226646423},
+                   {49.2577720284462, 10.035130242717969},
+                   {49.2577720284462, 8.63285881280899}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
+               StripOnInput -> False
+              ],
+              StyleBox[
+               {
+                FilledCurveBox[
+                 {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                 {
+                  {
+                   {62.968698263168335, 32.50002670288086},
+                   {62.968698263168335, 31.097747524374427},
+                   {61.83190540494115, 29.960966289043427},
+                   {60.4296378493309, 29.960966289043427},
+                   {59.027366419421924, 29.960966289043427},
+                   {57.89057743549347, 31.097747524374427},
+                   {57.89057743549347, 32.50002670288086},
+                   {57.89057743549347, 33.90230975568602},
+                   {59.027366419421924, 35.03908711671829},
+                   {60.4296378493309, 35.03908711671829},
+                   {61.83190540494115, 35.03908711671829},
+                   {62.968698263168335, 33.90230975568602},
+                   {62.968698263168335, 32.50002670288086}
+                  }
+                 }
+                ]
+               },
+               {FaceForm[RGBColor[0.960784, 0.509804, 0.207843, 1.]]},
                StripOnInput -> False
               ]
              },
              {
               ImageSize -> 12,
               ImageSize -> 50,
-              ImageSize -> {Automatic, 30}
+              ImageSize -> {Automatic, 35}
              }
             ],
             "Wolfram Function Repository Reviewer"
@@ -13616,7 +14867,7 @@ Notebook[
           FEPrivate`If[
            CurrentValue[Enabled],
            GrayLevel[1],
-           RGBColor[0.917647, 0.802941, 0.787255]
+           RGBColor[0.802941, 0.802941, 0.802941]
           ],
           Evaluator -> "System"
          ],
@@ -13670,7 +14921,7 @@ Notebook[
         Appearance -> {
          "Default" -> Image[
           CompressedData[
-           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAoIKBiRJEB0Pq2Ng6BHkhCMgm1ZB+SeHlhkqrzdSQEVAE\nKE6MIU1cnHM1ZOEaV8EQXAQoC1SDxxCgLJrtuBCyOWiGILsBPwKqxGoI0L9E\nmgBB8PBBNgQzJPEjoHqIRkhqhMQmSSZAECTeGcCAckOo4hIqhgm1Yocq6YRa\nKZYqeYdauZiK5QlJiIqG4AfElPYAYH5C2g==\n             "
+           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAIJQyQAdDAgMDvWEAyCbVEHd3d0tLSzNUABQBihNjiL+/\nv52dnRluAJQFqsFjCFAWj3ZkgGwOmiH43YDmHqyGAP1LpAkQAA8fZEMwQxI/\nAKqHaISkRkhskmQCBEDinQEMKDeEKi6hYphQK3aokk6olWKpknfggMJcjAwo\nLE9IAlQ0BD8gprQHAO6KZcs=\n             "
           ],
           "Byte",
           ColorSpace -> "RGB",
@@ -13679,7 +14930,7 @@ Notebook[
          ],
          "Hover" -> Image[
           CompressedData[
-           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAoIKBiRJEB0Pq2Ng6BHkhCMgm1ZB+SeHlhkqrzdSQEVAE\nKE6MIU1cnHM1ZKEajVRX6SpDEJANEQTKAtXgMQQoC9VuqLJaQXa1uBQKAooA\nxcEKkM1BMwTqBgMVdO3IyEAF4h6shgD9C3UDHhMgCOweePggGwINSUxfYCIF\nWUg4QzRCUiMkNiEhSdgECAKHMyTeGcCAckOo4hIqhgm1Yocq6YRaKZYqeYda\nuZiK5QlJiIqG4AfElPYAAjcuaw==\n             "
+           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAIJQyQAdDAgMDvWEAyCbVEHd3d0tLSzNUABQBihNjiL+/\nv52dHUSXraWjj0M4BAHZEEGgLFANHkOAshCVDtZuWX6tDZHLkBFQBCgOUYBs\nDpohEDc423jVRSxGMwGCgOJAWYh7sBoC9C/YDa64TICbA1QDVAkPH2RDICGJ\n6QtMBFQDCWeIRkhqhMQmJCQJmgBBkHCGxDsDGFBuCFVcQsUwoVbsUCWdUCvF\nUiXvwAGFuRgZUFiekASoaAh+QExpDwCymM4u\n             "
           ],
           "Byte",
           ColorSpace -> "RGB",
@@ -13688,7 +14939,7 @@ Notebook[
          ],
          "Pressed" -> Image[
           CompressedData[
-           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAoIKBiRJEB0M65BQWBQRCEJBNqiHbyso/PXuG5mugCFCc\nGEMm6hve2bsPIv7t+Ytnu/dAEJANEQTKAtXgMQQoCxH5fPfekZi41eJSyAgo\nAhSHKEA2B80QiBs+XL22VkYezQQIAooDZSHuwWoI0L8QN+AyAW4OxD3w8EE2\nBBKSmL7AREA1kHCGaISkRkhsQkKSoAkQBAlnSLwzgAHlhlDFJVQME2rFDlXS\nCbVSLFXyDrVyMRXLE5IQFQ3BD4gp7QFlfuGB\n             "
+           "\n1:eJxTTMoPSmNiYGAo5gASQYnljkVFiZXBAkBOaF5xZnpeaopnXklqemqRRRIz\nUFAcikHs/4QAMWqAIJQyQAdDMjMzu2AAyCbVkCVLlrx79w7N10ARoDgxhpSU\nlFy+fBmu6ywMwM0EygLV4DEEKAsRefbsWUdHB5qNQBGgOEQBsjlohkDc8PDh\nw8jISKzeB4oDZSHuwWoI0L8QN+AyAW4OxD3w8EE2BOJrTF9gAqAaSIhBuJDU\nGAqOTWRxggBiIyTeGcCAckOo4hIqhkkolWInlBrpJJRKKTaUGnkHDijMxciA\nwvKEJEBFQ/ADYkp7ALL8aPE=\n             "
           ],
           "Byte",
           ColorSpace -> "RGB",
@@ -13696,13 +14947,13 @@ Notebook[
           Interleaving -> True
          ]
         },
-        Background -> RGBColor[0.47058823529411764, 0., 0.00784313725490196],
+        Background -> RGBColor[0.333333, 0.333333, 0.333333],
         Method -> "Queued",
         ImageSize -> {All, 23},
         Evaluator -> Automatic
        ],
        FrameStyle -> Directive[
-        RGBColor[0.47058823529411764, 0., 0.00784313725490196],
+        RGBColor[0.333333, 0.333333, 0.333333],
         AbsoluteThickness[2]
        ],
        FrameMargins -> -1,

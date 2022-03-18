@@ -147,7 +147,8 @@ toDisabledHints[ Automatic|Inherited ] :=
     toDisabledHints @ {
         dnc`$DisabledHints,
         "PacletRequiresBuild",
-        "PacletFileChanged"
+        "PacletFileChanged",
+        "PacletFilesChanged"
     };
 
 toDisabledHints[ tag_String ] :=

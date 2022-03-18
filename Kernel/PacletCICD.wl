@@ -24,6 +24,7 @@ Wolfram`PacletCICD`FormattingHelper;
 Wolfram`PacletCICD`FromAST;
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`GitHubSecret;
+Wolfram`PacletCICD`LoadSubPackage;
 Wolfram`PacletCICD`MessageFailure;
 Wolfram`PacletCICD`PacletCICD;
 Wolfram`PacletCICD`ResetExampleDirectory;
@@ -53,6 +54,7 @@ Quiet[
 If[ $VersionNumber < 13.1 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
     PacletInstall[ "https://wolfr.am/11FhS453R" ];
     PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
+    PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
 ];
 
 If[ $VersionNumber < 13.1,

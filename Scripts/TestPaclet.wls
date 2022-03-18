@@ -8,6 +8,8 @@ $pacDir = DirectoryName[ $InputFileName, 2 ];
 PacletDirectoryLoad @ $pacDir;
 
 Needs[ "Wolfram`PacletCICD`" ];
+Needs[ "ResourceSystemClient`" -> None ];
+$ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
 
 result = Wolfram`PacletCICD`TestPaclet[ FileNameJoin @ { $pacDir, "Tests" } ];
 

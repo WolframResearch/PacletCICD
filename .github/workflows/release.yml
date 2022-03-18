@@ -9,6 +9,8 @@ on:
 env:
   WOLFRAM_SYSTEM_ID: Linux-x86-64
   WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+  RESOURCE_PUBLISHER_TOKEN: ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
+  RESOURCE_SYSTEM_BASE: https://www.wolframcloud.com/obj/rhennigan/api/1.0
 
 jobs:
   check-paclet:
@@ -21,9 +23,6 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
 
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
@@ -39,9 +38,6 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
-
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
 
@@ -53,13 +49,10 @@ jobs:
       image: wolframresearch/wolframengine:latest
       options: --user root
 
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: wolframscript Scripts/InstallDependencies.wls
 
       - name: Build paclet
         run: wolframscript Scripts/BuildPaclet.wls
@@ -91,3 +84,19 @@ jobs:
           asset_path: ${{ env.PACLET_PATH }}
           asset_name: ${{ env.PACLET_FILE }}
           asset_content_type: application/zip
+
+  submit-paclet:
+    name: Submit
+    needs: [release-paclet]
+    runs-on: ubuntu-latest
+    container:
+      image: wolframresearch/wolframengine:latest
+      options: --user root
+
+    timeout-minutes: 20
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Submit paclet
+        run: wolframscript Scripts/SubmitPaclet.wls
