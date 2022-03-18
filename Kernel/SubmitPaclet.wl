@@ -114,9 +114,10 @@ submitPaclet[ file_File, opts___ ] :=
 submitPaclet[ nbo_NotebookObject, opts___ ] :=
     Enclose @ Module[ { built, submitted },
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
-        built = Confirm @ buildPaclet[ nbo, opts ];
+        built = buildPaclet[ nbo, opts ];
+        Print[ "built: ", built ];
         submitted = dnc`SubmitRepository[ "Paclet", nbo ];
-        dnc`ConsolePrint @ submitted;
+        Print[ "submitted: ", submitted ];
         submitted
     ];
 

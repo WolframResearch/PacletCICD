@@ -87,7 +87,7 @@ jobs:
 
   submit-paclet:
     name: Submit
-    needs: [release-paclet]
+    needs: [check-paclet, test-paclet]
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
