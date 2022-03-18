@@ -44,9 +44,7 @@ SubmitPaclet // Options = {
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Argument patterns*)
-$$spOpts = OptionsPattern @ {
-               SubmitPaclet
-           };
+$$spOpts = OptionsPattern[ SubmitPaclet ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -65,7 +63,7 @@ SubmitPaclet[ file_File? defNBQ, opts: $$spOpts ] :=
                 $PublisherID        = toPublisherID @ OptionValue @ PublisherID,
                 $ResourceSystemBase = toRSB @ OptionValue @ ResourceSystemBase
             },
-            submitPaclet[ file, opts ]
+            ccPromptFix @ submitPaclet[ file, opts ]
         ]
     ];
 
@@ -114,10 +112,12 @@ submitPaclet[ file_File, opts___ ] :=
     ];
 
 submitPaclet[ nbo_NotebookObject, opts___ ] :=
-    Enclose @ Module[ { built },
+    Enclose @ Module[ { built, submitted },
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = Confirm @ buildPaclet[ nbo, opts ];
-        dnc`SubmitRepository[ "Paclet", nbo ]
+        submitted = dnc`SubmitRepository[ "Paclet", nbo ];
+        dnc`ConsolePrint @ submitted;
+        submitted
     ];
 
 (* ::**********************************************************************:: *)
