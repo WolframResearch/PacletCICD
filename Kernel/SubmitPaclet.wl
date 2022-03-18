@@ -110,9 +110,7 @@ e: SubmitPaclet[ ___ ] :=
 (* ::Subsection::Closed:: *)
 (*submitPaclet*)
 submitPaclet[ file_File, opts___ ] :=
-    withTokenPublisher @ Module[ { cOpts, nbo },
-        cOpts = filterOptions[ $$cpOpts, "Target" -> "Submit", opts ];
-        CheckPaclet[ file, cOpts ];
+    withTokenPublisher @ Module[ { nbo },
         nbo = First[ Notebooks @ ExpandFileName @ file, $Failed ];
         If[ MatchQ[ nbo, _NotebookObject ],
             submitPaclet[ nbo, opts ],
