@@ -3,6 +3,8 @@
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
+Print @ TableForm[ List @@@ GetEnvironment[ ] ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Definitions*)
