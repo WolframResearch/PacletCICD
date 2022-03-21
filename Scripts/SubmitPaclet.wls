@@ -39,7 +39,7 @@ releaseID[ dir_ ] :=
 (*updatePacletInfo*)
 updatePacletInfo[ dir_ ] := Enclose[
     Module[ { cs, file, string, id, date, new },
-        cs     = ConfirmBy[ EchoEvaluation @ #, StringQ ] &;
+        cs     = Function[ e, ConfirmBy[ EchoEvaluation @ e, StringQ ], HoldFirst ];
         file   = cs @ FileNameJoin @ { dir, "PacletInfo.wl" };
         string = cs @ ReadString @ file;
         id     = cs @ releaseID @ dir;
@@ -64,6 +64,7 @@ updatePacletInfo[ dir_ ] := Enclose[
 (* ::Section::Closed:: *)
 (*Run*)
 $pacDir = DirectoryName[ $InputFileName, 2 ];
+Print[ "$pacDir: ", $pacDir ];
 updatePacletInfo @ $pacDir;
 PacletDirectoryLoad @ $pacDir;
 
