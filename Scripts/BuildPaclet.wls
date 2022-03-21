@@ -11,24 +11,10 @@ Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Run*)
-$pacDir = DirectoryName[ $InputFileName, 2 ];
-updatePacletInfo @ $pacDir;
-PacletDirectoryLoad @ $pacDir;
-
-Needs[ "Wolfram`PacletCICD`" ];
-Needs[ "ResourceSystemClient`" -> None ];
-$ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
-
-result = Wolfram`PacletCICD`BuildPaclet[
-    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
+checkResult @ Wolfram`PacletCICD`BuildPaclet[
+    $defNB,
     "Check"  -> False,
     "Target" -> "Submit"
-];
-
-If[ MatchQ[ result, _Wolfram`PacletCICD`BuildPaclet ],
-    Print[ "::error::Wolfram`PacletCICD`BuildPaclet not defined" ];
-    Exit[ 1 ],
-    Print @ result
 ];
 
 (* :!CodeAnalysis::EndBlock:: *)

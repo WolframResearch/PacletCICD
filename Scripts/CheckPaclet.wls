@@ -3,23 +3,14 @@
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
-$pacDir = DirectoryName[ $InputFileName, 2 ];
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Definitions*)
+Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
 
-PacletDirectoryLoad @ $pacDir;
-
-Needs[ "Wolfram`PacletCICD`" ];
-Needs[ "ResourceSystemClient`" -> None ];
-$ResourceSystemBase = Environment[ "RESOURCE_SYSTEM_BASE" ];
-
-result = Wolfram`PacletCICD`CheckPaclet[
-    File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" },
-    "Target" -> "Submit"
-];
-
-If[ MatchQ[ result, _Wolfram`PacletCICD`CheckPaclet ],
-    Print[ "::error::Wolfram`PacletCICD`CheckPaclet not defined" ];
-    Exit[ 1 ],
-    Print @ result
-];
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Run*)
+checkResult @ Wolfram`PacletCICD`CheckPaclet[ $defNB, "Target" -> "Submit" ];
 
 (* :!CodeAnalysis::EndBlock:: *)

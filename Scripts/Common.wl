@@ -50,6 +50,10 @@ updatePacletInfo[ dir_ ] := Enclose[
             }
         ];
 
+        Print[ "Updating PacletInfo" ];
+        Print[ "    ReleaseID: ", id ];
+        Print[ "    ReleaseDate: ", date <> "Z" ];
+
         Confirm @ BinaryWrite[ file, new ]
     ],
     Function[
@@ -57,5 +61,51 @@ updatePacletInfo[ dir_ ] := Enclose[
         Exit[ 1 ]
     ]
 ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*setResourceSystemBase*)
+setResourceSystemBase[ ] := (
+    Needs[ "ResourceSystemClient`" -> None ];
+    $ResourceSystemBase =
+        With[ { rsBase = Environment[ "RESOURCE_SYSTEM_BASE" ] },
+            If[ StringQ @ rsBase, rsBase, $ResourceSystemBase ]
+        ]
+);
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*checkResult*)
+checkResult // Attributes = { HoldFirst };
+checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
+    Module[ { result, ctx, name, full },
+        result = eval;
+        If[ MatchQ[ Head @ result, HoldPattern @ sym ]
+            ,
+            ctx  = Context @ Unevaluated @ sym;
+            name = SymbolName @ Unevaluated @ sym;
+            full = ctx <> name;
+            Print[ "::error::" <> full <> " not defined" ];
+            Exit[ 1 ]
+            ,
+            Print @ result
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Setup*)
+$pacDir = DirectoryName[ $InputFileName, 2 ];
+Print[ "Paclet Directory: ", $pacDir ];
+
+updatePacletInfo @ $pacDir;
+PacletDirectoryLoad @ $pacDir;
+Needs[ "Wolfram`PacletCICD`" -> None ];
+
+setResourceSystemBase[ ];
+Print[ "ResourceSystemBase: ", $ResourceSystemBase ];
+
+$defNB = File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" };
+Print[ "Definition Notebook: ", $defNB ];
 
 (* :!CodeAnalysis::EndBlock:: *)
