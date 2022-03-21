@@ -123,7 +123,6 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
         submitted = scrapeAndSubmit @ nbo;
-        Print[ "submitted: ", submitted ];
         Confirm @ submitted
     ],
     exitFailure[
