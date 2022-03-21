@@ -73,7 +73,7 @@ testContext[ eval_ ] :=
              $Context     = "PacletCICDTest`";
              $ContextPath = { "PacletCICDTest`", "System`" };
              ,
-             eval
+             Block[ { $catching = False }, eval ]
              ,
              $Context     = context;
              $ContextPath = contextPath;
