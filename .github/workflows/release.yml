@@ -13,81 +13,81 @@ env:
   RESOURCE_SYSTEM_BASE: https://www.wolframcloud.com/obj/rhennigan/api/1.0
 
 jobs:
-  check-paclet:
-    name: Check
-    runs-on: ubuntu-latest
-    container:
-      image: wolframresearch/wolframengine:latest
-      options: --user root
-    timeout-minutes: 10
-    steps:
-      - name: Checkout files
-        uses: actions/checkout@v2
+  # check-paclet:
+  #   name: Check
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: wolframresearch/wolframengine:latest
+  #     options: --user root
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout files
+  #       uses: actions/checkout@v2
 
-      - name: Check paclet
-        run: wolframscript Scripts/CheckPaclet.wls
+  #     - name: Check paclet
+  #       run: wolframscript Scripts/CheckPaclet.wls
 
-  test-paclet:
-    name: Test
-    runs-on: ubuntu-latest
-    container:
-      image: wolframresearch/wolframengine:latest
-      options: --user root
-    timeout-minutes: 10
-    steps:
-      - name: Checkout files
-        uses: actions/checkout@v2
+  # test-paclet:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: wolframresearch/wolframengine:latest
+  #     options: --user root
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout files
+  #       uses: actions/checkout@v2
 
-      - name: Test paclet
-        run: wolframscript Scripts/TestPaclet.wls
+  #     - name: Test paclet
+  #       run: wolframscript Scripts/TestPaclet.wls
 
-  release-paclet:
-    name: Release
-    needs: [check-paclet, test-paclet]
-    runs-on: ubuntu-latest
-    container:
-      image: wolframresearch/wolframengine:latest
-      options: --user root
+  # release-paclet:
+  #   name: Release
+  #   needs: [check-paclet, test-paclet]
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: wolframresearch/wolframengine:latest
+  #     options: --user root
 
-    timeout-minutes: 20
-    steps:
-      - name: Checkout files
-        uses: actions/checkout@v2
+  #   timeout-minutes: 20
+  #   steps:
+  #     - name: Checkout files
+  #       uses: actions/checkout@v2
 
-      - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
+  #     - name: Build paclet
+  #       run: wolframscript Scripts/BuildPaclet.wls
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ env.BUILD_DIR }}
-          if-no-files-found: error
+  #     - name: Upload build artifacts
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         path: ${{ env.BUILD_DIR }}
+  #         if-no-files-found: error
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          release_name: Release ${{ env.RELEASE_TAG }}
-          draft: false
-          prerelease: false
+  #     - name: Create release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ env.RELEASE_TAG }}
+  #         release_name: Release ${{ env.RELEASE_TAG }}
+  #         draft: false
+  #         prerelease: false
 
-      - name: Upload release asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.PACLET_PATH }}
-          asset_name: ${{ env.PACLET_FILE }}
-          asset_content_type: application/zip
+  #     - name: Upload release asset
+  #       id: upload-release-asset
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #         asset_path: ${{ env.PACLET_PATH }}
+  #         asset_name: ${{ env.PACLET_FILE }}
+  #         asset_content_type: application/zip
 
   submit-paclet:
     name: Submit
-    needs: [check-paclet, test-paclet]
+    # needs: [check-paclet, test-paclet]
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest

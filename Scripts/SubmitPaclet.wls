@@ -39,7 +39,7 @@ releaseID[ dir_ ] :=
 (*updatePacletInfo*)
 updatePacletInfo[ dir_ ] := Enclose[
     Module[ { cs, file, string, id, date, new },
-        cs     = ConfirmBy[ #, StringQ ] &;
+        cs     = ConfirmBy[ EchoEvaluation @ #, StringQ ] &;
         file   = cs @ FileNameJoin @ { dir, "PacletInfo.wl" };
         string = cs @ ReadString @ file;
         id     = cs @ releaseID @ dir;
