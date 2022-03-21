@@ -66,13 +66,18 @@ testPaclet[ dir_? DirectoryQ ] :=
 testContext // Attributes = { HoldFirst };
 
 testContext[ eval_ ] :=
-    Block[
-        {
-            $catching    = False,
-            $Context     = "PacletCICDTest`",
-            $ContextPath = { "PacletCICDTest`", "System`" }
-        },
-        eval
+    Module[ { context, contextPath },
+        context     = $Context;
+        contextPath = $ContextPath;
+        WithCleanup[
+             $Context     = "PacletCICDTest`";
+             $ContextPath = { "PacletCICDTest`", "System`" };
+             ,
+             eval
+             ,
+             $Context     = context;
+             $ContextPath = contextPath;
+        ]
     ];
 
 (* ::**********************************************************************:: *)
