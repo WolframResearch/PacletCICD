@@ -56,8 +56,10 @@ updatePacletInfo[ dir_ ] := Enclose[
 
         Confirm @ BinaryWrite[ file, new ]
     ],
-    Print[ "::error::Failed to update PacletInfo template parameters." ];
-    Exit[ 1 ]
+    Function[
+        Print[ "::error::Failed to update PacletInfo template parameters." ];
+        Exit[ 1 ]
+    ]
 ];
 
 (* ::**********************************************************************:: *)
