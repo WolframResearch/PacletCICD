@@ -3,8 +3,16 @@
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
-$pacDir = DirectoryName[ $InputFileName, 2 ];
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Definitions*)
+Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
 
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Run*)
+$pacDir = DirectoryName[ $InputFileName, 2 ];
+updatePacletInfo @ $pacDir;
 PacletDirectoryLoad @ $pacDir;
 
 Needs[ "Wolfram`PacletCICD`" ];
