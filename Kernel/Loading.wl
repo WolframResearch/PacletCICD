@@ -107,6 +107,12 @@ SetContextLoad[ ConsoleWarning, "Console" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*PacletInformation*)
+SetContextLoad[ ReplacePacletInfo, "PacletInformation" ];
+SetContextLoad[ SetPacletInfo    , "PacletInformation" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
 SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
