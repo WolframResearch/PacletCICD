@@ -58,7 +58,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    With[ { rsb = Environment[ "RESOURCE_SYSTEM_BASE" ] },
+    EchoEvaluation @ With[ { rsb = Environment[ "RESOURCE_SYSTEM_BASE" ] },
         If[ StringQ @ rsb, $ResourceSystemBase = rsb, $ResourceSystemBase ]
     ],
     _String? StringQ,
@@ -67,7 +67,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    With[
+    EchoEvaluation @ With[
         {
             user = Environment[ "TEST_CLOUD_ACCOUNT_USER" ],
             pass = Environment[ "TEST_CLOUD_ACCOUNT_PASSWORD" ]
@@ -84,7 +84,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    With[ { publisher = Environment[ "TEST_PUBLISHER_ID" ] },
+    EchoEvaluation @ With[ { publisher = Environment[ "TEST_PUBLISHER_ID" ] },
         $PublisherID = If[ StringQ @ publisher,
                            publisher,
                            ResourceSystemClient`GetDefaultPublisherID[ ]
