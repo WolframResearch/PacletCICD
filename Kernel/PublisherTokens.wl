@@ -54,6 +54,9 @@ CreatePublisherToken::InvalidEndpoints =
 "The endpoints `1` are not valid for the resource system at `2`. \
 Supported endpoints are `3`.";
 
+CreatePublisherToken::CreateTokenFailed =
+"Token creation failed.";
+
 CreatePublisherToken::ServerError =
 "The resource system server was unable to fulfill the request.";
 
@@ -111,12 +114,11 @@ createPublisherToken[ as_Association ] := Enclose[
         info = rsExecute[ "CreatePublisherToken", as ];
         If[ AssociationQ @ info,
             PublisherTokenObject @ info,
-            info
+            createPublisherFailure @ info
         ]
     ],
     throwMessageFailure[ CreatePublisherToken::ServerError ] &
 ];
-
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -132,10 +134,11 @@ withRSTokenSettings[ eval_, publisher_, rsBase_ ] :=
         eval
     ];
 
-withRSTokenSettings[ publisher_, rsBase_ ] :=
-    Function[ Null,
-              withRSTokenSettings[ #, publisher, rsBase ],
-              { HoldAllComplete }
+withRSTokenSettings[ eval_, token_PublisherTokenObject ] :=
+    withRSTokenSettings[
+        eval,
+        token[ "PublisherID" ],
+        token[ "ResourceSystemBase" ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -166,7 +169,7 @@ toTokenResourceSystemBase // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*$defaultResourceSystemBase*)
-$defaultResourceSystemBase = Enclose[
+$defaultResourceSystemBase := Enclose[
     URLBuild @ {
         ConfirmBy[ $CloudBase, StringQ ],
         "obj",
@@ -323,6 +326,17 @@ tokenEnabledEndpoints[ rsb_ ] := Enclose[
 tokenEnabledEndpoints // catchUndefined;
 
 (* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*createPublisherFailure*)
+createPublisherFailure[ $Failed ] :=
+    throwMessageFailure[ CreatePublisherToken::CreateTokenFailed ];
+
+createPublisherFailure[ fail_Failure ] :=
+    throwMessageFailure @ fail;
+
+createPublisherFailure // catchUndefined;
+
+(* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*DeletePublisherToken*)
 DeletePublisherToken::InvalidToken =
@@ -335,7 +349,7 @@ DeletePublisherToken::InternalError =
 (* ::Subsection::Closed:: *)
 (*Main definition*)
 DeletePublisherToken[ token_PublisherTokenObject? publisherTokenObjectQ ] :=
-    catchTop @ deletePublisherToken @ token;
+    catchTop @ withRSTokenSettings[ deletePublisherToken @ token, token ];
 
 DeletePublisherToken[ tokens_List ] := Map[ DeletePublisherToken, tokens ];
 
@@ -600,10 +614,11 @@ tokenURLs // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*$extraTokenProperties*)
 $extraTokenProperties = {
+    "AllowedURLs",
+    "ClickToCopy",
     "Dataset",
     "Properties",
-    "TokenString",
-    "ClickToCopy"
+    "TokenString"
 };
 
 (* ::**********************************************************************:: *)
@@ -753,7 +768,7 @@ rsExecute[ endpoint_, params_ ] := (
     rsc`ResourceSystemExecute[
         endpoint,
         { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
-        "QuietAPICalls" -> True
+        "QuietAPICalls" -> False
     ]
 );
 

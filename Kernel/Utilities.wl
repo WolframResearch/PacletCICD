@@ -140,8 +140,8 @@ ghRelativePath // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*setOutput*)
-setOutput[ name_, value_ ] /; $gitHub :=
-    setOutput[ $gitHubEnv, name, value ];
+setOutput[ name_, value_ ] :=
+    If[ TrueQ @ $gitHub, setOutput[ $gitHubEnv, name, value ] ];
 
 setOutput[ str_OutputStream, name_, value_ ] := (
 

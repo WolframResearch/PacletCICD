@@ -300,7 +300,7 @@ parseTestIDs[ file_, type_ ] :=
                      Infinity
               ];
 
-        unmasked = all /. masked[ h_ ] :> h;
+        unmasked = all /. mask[ h_ ] :> h;
         getTestIDData @ type /@ unmasked
     ];
 
