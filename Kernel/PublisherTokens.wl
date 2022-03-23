@@ -313,9 +313,7 @@ DeletePublisherToken::InternalError =
 (*Main definition*)
 DeletePublisherToken[ token_PublisherTokenObject? publisherTokenObjectQ ] :=
     catchTop @ Enclose[
-        Module[ {},
-            lskdjf
-        ],
+        Failure[ "NotImplemented", <| |> ],
         throwMessageFailure[ DeletePublisherToken::InternalError, # ] &
     ];
 
