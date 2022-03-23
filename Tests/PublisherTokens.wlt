@@ -346,7 +346,7 @@ VerificationTest[
     TestID -> "PublisherTokenObject-Get-TokenString@@Tests/PublisherTokens.wlt:343,1-347,2"
 ]
 
-VerificationTest[
+(* VerificationTest[
     While[ $expirationNow + Quantity[ 1, "Seconds" ] < Now, Pause[ 1 ] ],
     Null,
     TimeConstraint -> 20,
@@ -358,7 +358,7 @@ VerificationTest[
     withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
     True,
     TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:356,1-361,2"
-]
+] *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
