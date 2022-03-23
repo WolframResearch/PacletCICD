@@ -24,17 +24,17 @@ ClearAll[
 
 Begin[ "`Private`" ];
 
-Needs[ "CodeParser`" ];
+Needs[ "CodeParser`" -> "cp`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*FromAST*)
 FromAST[ ast_ ] := FromAST[ ast, ##1 & ];
 
-FromAST[ ast: _LeafNode|_CallNode, wrapper_ ] :=
-    ToExpression[ ToFullFormString @ ast, InputForm, wrapper ];
+FromAST[ ast: _cp`LeafNode|_cp`CallNode, wrapper_ ] :=
+    ToExpression[ cp`ToFullFormString @ ast, InputForm, wrapper ];
 
-FromAST[ ContainerNode[ _, ast_List, _ ], wrapper_ ] :=
+FromAST[ cp`ContainerNode[ _, ast_List, _ ], wrapper_ ] :=
     FromAST[ ast, wrapper ];
 
 FromAST[ ast_List, wrapper_ ] := FromAST[ #, wrapper ] & /@ ast;
@@ -70,7 +70,11 @@ astCVRule[ node_, { pos_ } ] :=
 (* ::Section::Closed:: *)
 (*EquivalentNodeQ*)
 EquivalentNodeQ[ nodes___ ] :=
-    SameQ @@ DeleteCases[ { nodes }, KeyValuePattern[ Source -> _ ], Infinity ];
+    SameQ @@ DeleteCases[
+        { nodes },
+        KeyValuePattern[ cp`Source -> _ ],
+        Infinity
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -129,7 +133,7 @@ verbatimAST[ expr: _Integer|_Real|_String ] /; AtomQ @ Unevaluated @ expr :=
     leafNode[ Head @ expr, ToString[ expr, InputForm ] ];
 
 verbatimAST[ head_[ args___ ] ] :=
-    CallNode[ astPattern @ head, astPattern /@ Unevaluated @ { args }, _ ];
+    cp`CallNode[ astPattern @ head, astPattern /@ Unevaluated @ { args }, _ ];
 
 verbatimAST // catchUndefined;
 
@@ -155,30 +159,30 @@ blank // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*leafNode*)
-leafNode[            ] := LeafNode[ _, _, _ ];
-leafNode[ a_         ] := LeafNode[ a, _, _ ];
-leafNode[ a_, b_     ] := LeafNode[ a, b, _ ];
-leafNode[ a_, b_, c_ ] := LeafNode[ a, b, c ];
+leafNode[            ] := cp`LeafNode[ _, _, _ ];
+leafNode[ a_         ] := cp`LeafNode[ a, _, _ ];
+leafNode[ a_, b_     ] := cp`LeafNode[ a, b, _ ];
+leafNode[ a_, b_, c_ ] := cp`LeafNode[ a, b, c ];
 
 leafNode // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*callNode*)
-callNode[            ] := CallNode[ _, _, _ ];
-callNode[ a_         ] := CallNode[ a, _, _ ];
-callNode[ a_, b_     ] := CallNode[ a, b, _ ];
-callNode[ a_, b_, c_ ] := CallNode[ a, b, c ];
+callNode[            ] := cp`CallNode[ _, _, _ ];
+callNode[ a_         ] := cp`CallNode[ a, _, _ ];
+callNode[ a_, b_     ] := cp`CallNode[ a, b, _ ];
+callNode[ a_, b_, c_ ] := cp`CallNode[ a, b, c ];
 
 callNode // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*callOrLeafNode*)
-callOrLeafNode[            ] := (CallNode|LeafNode)[ _, _, _ ];
-callOrLeafNode[ a_         ] := (CallNode|LeafNode)[ a, _, _ ];
-callOrLeafNode[ a_, b_     ] := (CallNode|LeafNode)[ a, b, _ ];
-callOrLeafNode[ a_, b_, c_ ] := (CallNode|LeafNode)[ a, b, c ];
+callOrLeafNode[            ] := (cp`CallNode|cp`LeafNode)[ _, _, _ ];
+callOrLeafNode[ a_         ] := (cp`CallNode|cp`LeafNode)[ a, _, _ ];
+callOrLeafNode[ a_, b_     ] := (cp`CallNode|cp`LeafNode)[ a, b, _ ];
+callOrLeafNode[ a_, b_, c_ ] := (cp`CallNode|cp`LeafNode)[ a, b, c ];
 
 callOrLeafNode // catchUndefined;
 
@@ -351,6 +355,7 @@ appearsIn[ rhs_ ] :=
 (*patternSymbols*)
 patternSymbols // Attributes = { HoldFirst };
 patternSymbols[ patt_ ] := Flatten[ HoldComplete @@ patternSymbols0 @ patt ];
+patternSymbols[ patt_, wrapper_ ] := List @@ (wrapper /@ patternSymbols @ patt);
 
 patternSymbols0 // Attributes = { HoldFirst };
 patternSymbols0[ patt_ ] :=
@@ -410,7 +415,7 @@ $conditionRules // Attributes = { HoldAllComplete };
 (* ::Subsection::Closed:: *)
 (*Normal expressions*)
 astPattern[ head_[ args___ ] ] :=
-    CallNode[ astPattern @ head, astPattern /@ Unevaluated @ { args }, _ ];
+    cp`CallNode[ astPattern @ head, astPattern /@ Unevaluated @ { args }, _ ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -421,10 +426,10 @@ astPattern[ patt_, meta_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*insertMetaPatt*)
-insertMetaPatt[ (h: CallNode|LeafNode)[ a_, b_, _ ], meta_ ] :=
+insertMetaPatt[ (h: cp`CallNode|cp`LeafNode)[ a_, b_, _ ], meta_ ] :=
     h[ a, b, meta ];
 
-insertMetaPatt[ (h: Verbatim[ CallNode|LeafNode ])[ a_, b_, _ ], meta_ ] :=
+insertMetaPatt[ (h: Verbatim[ cp`CallNode|cp`LeafNode ])[ a_, b_, _ ], meta_ ] :=
     h[ a, b, meta ];
 
 insertMetaPatt[ Verbatim[ Pattern ][ s_, p_ ], meta_ ] :=
@@ -455,27 +460,40 @@ astPattern // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*checkDuplicatePatterns*)
 checkDuplicatePatterns[ p_ ] :=
-    Module[ { names, realDups, possibleDups, dups },
-
-        names =
-            Cases[ p, Verbatim[ Pattern ][ s_, _ ] :> HoldPattern @ s, Infinity ];
-
+    Module[ { pSyms, names, realDups, possibleDups, dups },
+        pSyms    = patternSymbols[ #, HoldPattern ] &;
+        names    = pSyms @ p;
         realDups = Select[ Counts @ names, GreaterThan[ 1 ] ];
 
         possibleDups = Association @ Cases[
             p,
-            (Repeated | RepeatedNull)[ a_, ___ ] :>
-                Cases[
-                    HoldComplete @ a,
-                    Verbatim[ Pattern ][ s_, _ ] :> (HoldPattern @ s -> Infinity),
-                    Infinity
-                ],
-            Infinity
+            (Repeated|RepeatedNull)[ a_, ___ ] :>
+                Map[ # -> Infinity &, pSyms @ HoldComplete @ a ],
+            Infinity,
+            Heads -> True
         ];
 
         dups = KeyDrop[ Join[ realDups, possibleDups ], HoldPattern @ e ];
-        If[ TrueQ[ Length @ dups > 0 ], rebindConditionPattern[ p, dups ], p ]
+
+        If[ TrueQ[ Length @ dups > 0 ],
+            rebindConditionPattern[ p, dups ],
+            p
+        ]
     ];
+
+checkDuplicatePatterns // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*patternSymbolPatterns*)
+patternSymPatterns[ expr_, wrapper_: HoldPattern ] :=
+    Cases[ expr,
+           Verbatim[ Pattern ][ s_Symbol? symbolQ, _ ] :> wrapper @ s,
+           Infinity,
+           Heads -> True
+    ];
+
+patternSymPatterns // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -537,7 +555,7 @@ newPattSym[ s_Symbol ] := Module @@ HoldComplete[ { s }, s ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*symbolNode*)
-symbolNode[ name_String ] := LeafNode[ Symbol, name, _ ];
+symbolNode[ name_String ] := cp`LeafNode[ Symbol, name, _ ];
 symbolNode[ sym_Symbol  ] := symNamePatt @ sym;
 symbolNode // catchUndefined;
 
@@ -552,7 +570,7 @@ symNamePatt[ sym_Symbol? symbolQ ] :=
             name = SymbolName @ Unevaluated @ sym,
             ctx  = Context @ Unevaluated @ sym
         },
-        LeafNode[ Symbol, name | ctx <> name, _ ]
+        cp`LeafNode[ Symbol, name | ctx <> name, _ ]
     ];
 
 symNamePatt // catchUndefined;

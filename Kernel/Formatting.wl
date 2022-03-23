@@ -171,6 +171,159 @@ actionIcon[ ___ ] := $defaultIcon;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*PublisherTokenObject*)
+FormattingHelper[ pt: PublisherTokenObject[ as_Association ], fmt_ ] := Enclose[
+    Module[ { c2cStr, creation, expiration, endpoints, rsb, mainRow, extraRow },
+
+        c2cStr     = Confirm @ tokenC2C @ as;
+        creation   = Confirm @ tokenCreationRow @ as;
+        expiration = Confirm @ tokenExpirationRow @ as;
+        endpoints  = Confirm @ tokenEndpointsRow @ as;
+        rsb        = Confirm @ tokenRSBRow @ as;
+        mainRow    = Confirm @ tokenMainRow @ as;
+        extraRow   = Confirm @ tokenExtraRow @ as;
+
+        BoxForm`ArrangeSummaryBox[
+            PublisherTokenObject,
+            Unevaluated @ pt,
+            $publisherTokenIcon,
+            {
+                { BoxForm`SummaryItem @ { "Token:", c2cStr } },
+                mainRow
+            },
+            {
+                Sequence @@ extraRow,
+                creation,
+                expiration,
+                rsb,
+                endpoints
+            },
+            fmt
+        ]
+    ],
+    ToBoxes[ #, fmt ] &
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenMainRow*)
+tokenMainRow[ KeyValuePattern[ "Name" -> name_String? StringQ ] ] :=
+    { BoxForm`SummaryItem @ { "Name: ", name } };
+
+tokenMainRow[ KeyValuePattern[ "Creator" -> user_String? StringQ ] ] :=
+    { BoxForm`SummaryItem @ { "Creator: ", user } };
+
+tokenMainRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenExtraRow*)
+tokenExtraRow[ KeyValuePattern @ {
+    "Creator"     -> user_String? StringQ,
+    "PublisherID" -> publisher_String? StringQ,
+    "Name"        -> _String? StringQ
+} ] :=
+    {
+        { BoxForm`SummaryItem @ { "Creator: "    , user      } },
+        { BoxForm`SummaryItem @ { "PublisherID: ", publisher } }
+    };
+
+tokenExtraRow[ KeyValuePattern[ "PublisherID" -> publisher_String? StringQ ] ] :=
+    {
+        { BoxForm`SummaryItem @ { "PublisherID: ", publisher } }
+    };
+
+tokenExtraRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenC2C*)
+tokenC2C[ as_Association ] :=
+    tokenC2C @ catch @ publisherTokenProperty[ as, "TokenString" ];
+
+tokenC2C[ token_String? StringQ ] :=
+    tokenC2C[ token, StringSplit[ token, "-" ] ];
+
+(* tokenC2C[ token_, { _, _, id_String, _ } ] :=
+    If[ TrueQ[ StringLength @ id > 12 ],
+        clickToCopy[
+            Style[
+                StringJoin[
+                    StringDrop[ id, -6 ],
+                    ConstantArray[ "\[Bullet]", 6 ]
+                ],
+                FontFamily -> Dynamic @ CurrentValue @ {
+                    StyleHints,
+                    "CodeFont"
+                }
+            ],
+            token
+        ],
+        $Failed
+    ]; *)
+
+tokenC2C[ token_, { _, _, id_String, _ } ] :=
+    If[ TrueQ[ StringLength @ id > 12 ],
+        clickToCopy[
+            StringDrop[ id, -6 ] <> ConstantArray[ "\[ThinSpace]\[Bullet]", 6 ],
+            token
+        ],
+        $Failed
+    ];
+
+tokenC2C[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenCreationRow*)
+tokenCreationRow[ KeyValuePattern[ "CreationDate" -> date_ ] ] :=
+    tokenCreationRow @ date;
+
+tokenCreationRow[ date_DateObject? DateObjectQ ] :=
+    { BoxForm`SummaryItem @ { "CreationDate: ", date  } };
+
+tokenCreationRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenExpirationRow*)
+tokenExpirationRow[ KeyValuePattern[ "ExpirationDate" -> date_ ] ] :=
+    tokenExpirationRow @ date;
+
+tokenExpirationRow[ None ] := Nothing;
+
+tokenExpirationRow[ date_DateObject? DateObjectQ ] :=
+    { BoxForm`SummaryItem @ { "ExpirationDate: ", date  } };
+
+tokenExpirationRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenEndpointsRow*)
+tokenEndpointsRow[ KeyValuePattern[ "AllowedEndpoints" -> list_ ] ] :=
+    tokenEndpointsRow @ list;
+
+tokenEndpointsRow[ list: { ___String? StringQ } ] :=
+    { BoxForm`SummaryItem @ { "AllowedEndpoints: ", assocViewer @ list  } };
+
+tokenEndpointsRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*tokenRSBRow*)
+tokenRSBRow[ KeyValuePattern[ "ResourceSystemBase" -> rsb_String ] ] :=
+    tokenRSBRow @ rsb;
+
+tokenRSBRow[ "https://www.wolframcloud.com/obj/resourcesystem/api/1.0" ] :=
+    Nothing;
+
+tokenRSBRow[ rsb_String ] :=
+    { BoxForm`SummaryItem @ { "ResourceSystemBase: ", rsb  } };
+
+tokenRSBRow[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 FormattingHelper[ other_, fmt_ ] := $Failed;
 
@@ -273,116 +426,132 @@ $elidedList = "{\[Ellipsis]}";
 (*boxIcon*)
 boxIcon[ head_ ] := $defaultIcon;
 
-$defaultIcon := $defaultIcon =
-    Show[
-        Import @ FileNameJoin @ {
-            $thisPaclet[ "AssetLocation", "Images" ],
-            "Icon.png"
-        },
-        ImageSize -> $iconSize
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Icons*)
+$defaultIcon        := wxfResource[ "DefaultIcon"        ];
+$ghIcon             := wxfResource[ "GitHubIcon"         ];
+$terminalIcon       := wxfResource[ "TerminalIcon"       ];
+$publisherTokenIcon := wxfResource[ "PublisherTokenIcon" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*wxfResource*)
+wxfResource[ name_String? StringQ ] :=
+    Enclose @ Module[ { dir, base, file },
+        dir  = ConfirmBy[ $resourceDirectory, DirectoryQ ];
+        base = StringDelete[ name, ".wxf"~~EndOfString, IgnoreCase -> True ];
+        file = ConfirmBy[ FileNameJoin @ { dir, base <> ".wxf" }, FileExistsQ ];
+        wxfResource[ name ] = Confirm @ Developer`ReadWXFFile @ file
     ];
 
-$ghIcon := $ghIcon = BinaryDeserialize @ ByteArray[ "\
-OEM6eJzFmM1PE0EUwKUtAfmwhQCLF6g3PGBoKdgao+kHmB6akC4HTYi4tNN2k3aX7G4RPPAHeOHIwci\
-JCxqJN+NR9OJNPXAQgkEvRL0AURMg1DfuVNZlZ7v9IDb5pcmb995vdtjpTEjVy/XRHJdGay672+04Z/\
-HDdHZ1AAlgGfgA7AMFwj6JLZOcDqt9LXg9wApwqPGV4pDUeKrwOoFHwHEZXj3HpIezgmfeqsKrZ8vqW\
-kBeCNitobsI7hkq4R48I7d2DoMUdxvwSZe/DjyrcE67pHZdF8eONgP/kkGPCTLWwKj7aof5d7+9Imj3\
-4w7JbSC1EwZ9l3RuH+UZvLo8vCf6AJvB/G1kzKmLeym9fZqcVUrOkNn7YuWDe1B6r5LxbuCIkjNZA/8\
-kpfcRcacp41+A9hr424HPFAd2r1DGpqp1a+YwRXGsGOyP4tqU9ZtZwu+k/I2x+6dBfLtWbs0ctg08Rm\
-7Mxhn4NykuI/bOwL9Hc1HiXTV0d5m431HG7tbQf5fiwO7HlLH3gOX7mYnbQXoZObD7jsl7sFAD/4JJf\
-+xuBX6Y5DwFuivwXiS1tL7Y2UpyFzXxh8BNYE0TOwCeAIhRz0o7ZZ0DQIZRz7ODEntsUVPbA/wicXxn\
-lBn1zH9rUId71xn464DnJZxFsKtHVz+vy/EDl5jTZ8d1kzW/YdE/T1m/N5qclyTuYtT7zANg1GjtNT0\
-6Lbixw3BfMep5rP2dFGkuSr2rhHuz1LsM473AhqbmNZAH7gGzQGOFftyz1+Jz4DvDC0ofVwV+3Kusuw\
-x5n5PA1yr83xh1z57aL2XMo4VR9+NH4DtD7tWU3AaSg3MVXFuqf6FQ+K+wjtCcglI22RHPZ5HcFBazo\
-sROcwnE2uO3Qn8HWqKCgqQs4mZ4IS07xqX8SZEzhhQuKqREKccpvCgEbf2s/XZsDH9fgO8QJ/MJNpFB\
-OS5Y1882hyXEKaI0LopZtjeYFKeQeywjKqKcEafdYXbY3RfjEryAA5f72W7oEENJnotxApdGOSQopJe\
-9n22KCrLCCQkUjbB9s7npKzyfvDYy5LnqD3qDgUBwwOMZ8QaCnqFQ2DPgGw76AwO+CJRFxEQedyqWJU\
-/KQvSy5giS+BmUHJXEHH6S83GUQhICPX5Us7n4K5tLgF7WGBZzuErGE2lkxZRyn5MQ61LX889/eOKIS\
-879BnZkPNE=" ];
+wxfResource // catchUndefined;
 
-$terminalIcon := With[ { size = $iconSize }, RawBoxes @ GraphicsBox[
-    {
-        Thickness[ 0.05 ],
-        {
-            FaceForm @ { RGBColor[ 0.749, 0.749, 0.749 ], Opacity[ 1.0 ] },
-            FilledCurveBox[
-                {
-                    {
-                        { 1, 4, 3 },
-                        { 0, 1, 0 },
-                        { 1, 3, 3 },
-                        { 0, 1, 0 },
-                        { 1, 3, 3 },
-                        { 0, 1, 0 },
-                        { 1, 3, 3 },
-                        { 0, 1, 0 }
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$resourceDirectory*)
+$resourceDirectory := Enclose[
+    $resourceDirectory = ConfirmBy[
+        $thisPaclet[ "AssetLocation", "Resources" ],
+        DirectoryQ
+    ]
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*clickToCopy*)
+clickToCopy[ label_, content_String ] :=
+    RawBoxes @ clickToCopyBoxes[ ToBoxes @ label, content ];
+
+clickToCopy[ label_, content_ ] :=
+    RawBoxes @ clickToCopyBoxes[
+        ToBoxes @ label,
+        RawBoxes @ MakeBoxes @ content
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*clickToCopyBoxes*)
+clickToCopyBoxes[ label_, content_ ] :=
+    TagBox[
+        DynamicModuleBox[
+            { $CellContext`boxObj, $CellContext`cellObj },
+            TagBox[
+                TagBox[
+                    ButtonBox[
+                        TagBox[
+                            label,
+                            BoxForm`Undeploy,
+                            DefaultBaseStyle -> { Deployed -> False }
+                        ],
+                        ButtonFunction :>
+                            FrontEndExecute @ {
+                                CopyToClipboard @ content,
+                                NotebookDelete @ $CellContext`cellObj,
+                                FrontEnd`AttachCell[
+                                    $CellContext`boxObj,
+                                    Cell @ BoxData @ TemplateBox[
+                                        { "Copied" },
+                                        "ClickToCopyTooltip"
+                                    ],
+                                    { 1, { Center, Bottom } },
+                                    { Center, Top },
+                                    "ClosingActions" -> {
+                                        "ParentChanged",
+                                        "MouseExit"
+                                    }
+                                ]
+                            },
+                        Evaluator -> None,
+                        Appearance -> {
+                            "Default" -> None,
+                            "Hover" ->
+                                FrontEnd`FileName[
+                                    { "Typeset", "ClickToCopy" },
+                                    "Hover.9.png"
+                                ],
+                            "Pressed" ->
+                                FrontEnd`FileName[
+                                    { "Typeset", "ClickToCopy" },
+                                    "Pressed.9.png"
+                                ]
+                        },
+                        BaseStyle -> { },
+                        DefaultBaseStyle -> { },
+                        BaselinePosition -> Baseline,
+                        FrameMargins -> 2,
+                        Method -> "Preemptive"
+                    ],
+                    EventHandlerTag @ {
+                        "MouseEntered" :> (
+                            $CellContext`cellObj =
+                                MathLink`CallFrontEnd @ FrontEnd`AttachCell[
+                                    $CellContext`boxObj,
+                                    Cell @ BoxData @ TemplateBox[
+                                        { "Copy" },
+                                        "ClickToCopyTooltip"
+                                    ],
+                                    { 1, { Center, Bottom } },
+                                    { Center, Top },
+                                    "ClosingActions" -> { "ParentChanged" }
+                                ]
+                            ),
+                        "MouseExited" :> NotebookDelete @ $CellContext`cellObj,
+                        PassEventsDown -> True,
+                        Method -> "Preemptive",
+                        PassEventsUp -> True
                     }
-                },
-                {
-                    {
-                        { 16.0, 17.0 },
-                        { 17.104, 17.0 },
-                        { 18.0, 16.104 },
-                        { 18.0, 15.0 },
-                        { 18.0, 5.0 },
-                        { 18.0, 3.896 },
-                        { 17.104, 3.0 },
-                        { 16.0, 3.0 },
-                        { 4.0, 3.0 },
-                        { 2.896, 3.0 },
-                        { 2.0, 3.896 },
-                        { 2.0, 5.0 },
-                        { 2.0, 15.0 },
-                        { 2.0, 16.104 },
-                        { 2.896, 17.0 },
-                        { 4.0, 17.0 },
-                        { 16.0, 17.0 }
-                    }
-                }
-            ]
-        },
-        {
-            FaceForm @ { RGBColor[ 1.0, 1.0, 1.0 ], Opacity[ 1.0 ] },
-            FilledCurveBox[
-                {
-                    {
-                        { 0, 2, 0 },
-                        { 0, 1, 0 },
-                        { 0, 1, 0 },
-                        { 0, 1, 0 },
-                        { 0, 1, 0 },
-                        { 0, 1, 0 },
-                        { 0, 1, 0 }
-                    }
-                },
-                {
-                    {
-                        { 9.0, 9.3159 },
-                        { 4.0, 6.1269 },
-                        { 4.0, 8.2219 },
-                        { 7.0, 10.032 },
-                        { 7.0, 10.08 },
-                        { 4.0, 11.889 },
-                        { 4.0, 13.984 },
-                        { 9.0, 10.795 }
-                    }
-                }
+                ],
+                MouseAppearanceTag[ "LinkHand" ]
             ],
-            FilledCurveBox[
-                { { { 0, 2, 0 }, { 0, 1, 0 }, { 0, 1, 0 } } },
-                { { { 16.0, 5.0 }, { 10.0, 5.0 }, { 10.0, 6.0 }, { 16.0, 6.0 } } }
-            ]
-        }
-    },
-    AspectRatio -> Automatic,
-    ImageSize -> size,
-    PlotRange -> { { 1.0, 20.0 }, { 1.0, 18.0 } }
-] ];
-
-$iconSize = Dynamic @ {
-    Automatic,
-    (3 CurrentValue[ "FontCapHeight" ]) / AbsoluteCurrentValue @ Magnification
-};
+            Initialization :> ($CellContext`boxObj = EvaluationBox[ ]),
+            DynamicModuleValues :> { },
+            UnsavedVariables :> { $CellContext`boxObj, $CellContext`cellObj },
+            BaseStyle -> { Editable -> False }
+        ],
+        Deploy,
+        DefaultBaseStyle -> "Deploy"
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

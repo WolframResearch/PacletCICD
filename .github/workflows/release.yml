@@ -7,10 +7,13 @@ on:
     branches: ["release/*"]
 
 env:
-  WOLFRAM_SYSTEM_ID: Linux-x86-64
+  RESOURCE_PUBLISHER_TOKEN:    ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
+  RESOURCE_SYSTEM_BASE:        https://www.wolframcloud.com/obj/rhennigan/api/1.0
+  TEST_CLOUD_ACCOUNT_PASSWORD: ${{ secrets.TEST_CLOUD_ACCOUNT_PASSWORD }}
+  TEST_CLOUD_ACCOUNT_USER:     ${{ secrets.TEST_CLOUD_ACCOUNT_USER }}
+  TEST_PUBLISHER_ID:           ${{ secrets.TEST_PUBLISHER_ID }}
+  WOLFRAM_SYSTEM_ID:           Linux-x86-64
   WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
-  RESOURCE_PUBLISHER_TOKEN: ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
-  RESOURCE_SYSTEM_BASE: https://www.wolframcloud.com/obj/rhennigan/api/1.0
 
 jobs:
   check-paclet:

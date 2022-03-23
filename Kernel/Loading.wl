@@ -19,6 +19,9 @@ $subPackageSymbols = Internal`Bag[ ];
 
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+LoadSubPackage[ name_String, label_ ] /; StringFreeQ[ name, "`" ] :=
+    LoadSubPackage[ "Wolfram`PacletCICD`" <> name <> "`", label ];
+
 LoadSubPackage[ ctx_String, label_ ] :=
     Block[ { $ContextPath },
         If[ TrueQ @ $Debug,
@@ -104,6 +107,20 @@ SetContextLoad[ ConsoleError  , "Console" ];
 SetContextLoad[ ConsoleLog    , "Console" ];
 SetContextLoad[ ConsoleNotice , "Console" ];
 SetContextLoad[ ConsoleWarning, "Console" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*PublisherTokens*)
+SetContextLoad[ CreatePublisherToken, "PublisherTokens" ];
+SetContextLoad[ DeletePublisherToken, "PublisherTokens" ];
+SetContextLoad[ PublisherTokenObject, "PublisherTokens" ];
+SetContextLoad[ PublisherTokens     , "PublisherTokens" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*PacletInformation*)
+SetContextLoad[ ReplacePacletInfo, "PacletInformation" ];
+SetContextLoad[ SetPacletInfo    , "PacletInformation" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
