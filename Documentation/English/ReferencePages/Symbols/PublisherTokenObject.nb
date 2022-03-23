@@ -1,0 +1,4456 @@
+Notebook[
+ {
+  Cell[
+   TextData[
+    {
+     "New in: ",
+     Cell["", "HistoryData", CellTags -> "New"],
+     " | Modified in: ",
+     Cell[" ", "HistoryData", CellTags -> "Modified"],
+     " | Obsolete in: ",
+     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
+     " | Excised in: ",
+     Cell[" ", "HistoryData", CellTags -> "Excised"]
+    }
+   ],
+   "History",
+   CellID -> 779918462
+  ],
+  Cell[
+   "Created by: rhennigan on 03-23-2022 15:45:44",
+   "AuthorDate",
+   CellID -> 478537884
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Categorization",
+      "CategorizationSection",
+      CellID -> 111751463
+     ],
+     Cell[
+      "Symbol",
+      "Categorization",
+      CellLabel -> "Entity Type",
+      CellID -> 20572136
+     ],
+     Cell[
+      "Wolfram/PacletCICD",
+      "Categorization",
+      CellLabel -> "Paclet Name",
+      CellID -> 184759944
+     ],
+     Cell[
+      "Wolfram`PacletCICD`",
+      "Categorization",
+      CellLabel -> "Context",
+      CellID -> 34186585
+     ],
+     Cell[
+      "Wolfram/PacletCICD/ref/PublisherTokenObject",
+      "Categorization",
+      CellLabel -> "URI",
+      CellID -> 582139336
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Keywords", "KeywordsSection", CellID -> 951312319],
+     Cell["XXXX", "Keywords", CellID -> 82542594]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Syntax Templates",
+      "TemplatesSection",
+      CellID -> 516651670
+     ],
+     Cell[
+      BoxData[""],
+      "Template",
+      CellLabel -> "Additional Function Template",
+      CellID -> 17402366
+     ],
+     Cell[
+      BoxData[""],
+      "Template",
+      CellLabel -> "Arguments Pattern",
+      CellID -> 266156641
+     ],
+     Cell[
+      BoxData[""],
+      "Template",
+      CellLabel -> "Local Variables",
+      CellID -> 12767801
+     ],
+     Cell[
+      BoxData[""],
+      "Template",
+      CellLabel -> "Color Equal Signs",
+      CellID -> 403292625
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "PublisherTokenObject",
+      "ObjectName",
+      CellID -> 622685482
+     ],
+     Cell[
+      TextData[
+       {
+        Cell["   ", "ModInfo"],
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            ButtonBox[
+             "PublisherTokenObject",
+             BaseStyle -> "Link",
+             ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+            ],
+            "[",
+            StyleBox["\[Ellipsis]", "TR"],
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[LineSeparator]represents a token that can be used for some authentication with the resource system.\n",
+        Cell["   ", "ModInfo"],
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            RowBox[
+             {
+              ButtonBox[
+               "PublisherTokenObject",
+               BaseStyle -> "Link",
+               ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+              ],
+              "[",
+              StyleBox["\[Ellipsis]", "TR"],
+              "]"
+             }
+            ],
+            "[",
+            StyleBox["prop", "TI"],
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "\[LineSeparator]gives the specified property of the publisher token."
+       }
+      ],
+      "Usage",
+      CellID -> 16120242
+     ],
+     Cell[
+      TextData[
+       {
+        "A ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "PublisherTokenObject",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " can be created with ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "CreatePublisherToken",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreatePublisherToken"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "."
+       }
+      ],
+      "Notes",
+      CellID -> 168367730
+     ],
+     Cell[
+      TextData[
+       {
+        "A list of available properties can be obtained with ",
+        Cell[
+         BoxData[
+          RowBox[
+           {
+            RowBox[
+             {
+              ButtonBox[
+               "PublisherTokenObject",
+               BaseStyle -> "Link",
+               ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+              ],
+              "[",
+              StyleBox["\[Ellipsis]", "TR"],
+              "]"
+             }
+            ],
+            "[",
+            "\"Properties\"",
+            "]"
+           }
+          ]
+         ],
+         "InlineFormula"
+        ],
+        "."
+       }
+      ],
+      "Notes",
+      CellID -> 62123039
+     ],
+     Cell[
+      "Some possible properties are:",
+      "Notes",
+      CellID -> 38305429
+     ],
+     Cell[
+      BoxData[
+       GridBox[
+        {
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"Name\"", "TableText"],
+          Cell["the name of the token", "TableText"]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"Creator\"", "TableText"],
+          Cell[
+           TextData[
+            {
+             "the ",
+             Cell[
+              BoxData[ButtonBox["CloudUserID", BaseStyle -> "Link"]],
+              "InlineFormula"
+             ],
+             " used to create the token"
+            }
+           ],
+           "TableText"
+          ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"PublisherID\"", "TableText"],
+          Cell[
+           TextData[
+            {
+             "the ",
+             Cell[
+              BoxData[ButtonBox["PublisherID", BaseStyle -> "Link"]],
+              "InlineFormula"
+             ],
+             " associated with the token"
+            }
+           ],
+           "TableText"
+          ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"CreationDate\"", "TableText"],
+          Cell[
+           TextData[
+            {
+             "a ",
+             Cell[
+              BoxData[ButtonBox["DateObject", BaseStyle -> "Link"]],
+              "InlineFormula"
+             ],
+             " corresponding to when the token was created"
+            }
+           ],
+           "TableText"
+          ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"ExpirationDate\"", "TableText"],
+          Cell["the date when the token will expire", "TableText"]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"AllowedEndpoints\"", "TableText"],
+          Cell[
+           "resource system endpoints that the token can be used for",
+           "TableText"
+          ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"ResourceSystemBase\"", "TableText"],
+          Cell[
+           "the resource system that issued the token",
+           "TableText"
+          ]
+         },
+         {
+          Cell["      ", "ModInfo"],
+          Cell["\"TokenString\"", "TableText"],
+          Cell[
+           TextData[
+            {
+             "a string representation of the token that can be used as a  ",
+             ButtonBox[
+              "GitHub repository secret",
+              BaseStyle -> "Hyperlink",
+              ButtonData -> {
+               URL[
+                "https://docs.github.com/en/actions/security-guides/encrypted-secrets"
+               ],
+               None
+              },
+              ButtonNote -> "https://docs.github.com/en/actions/security-guides/encrypted-secrets"
+             ]
+            }
+           ],
+           "TableText"
+          ]
+         }
+        }
+       ]
+      ],
+      "2ColumnTableMod",
+      CellID -> 540636594
+     ],
+     Cell[
+      TextData[
+       {
+        "See the ",
+        ButtonBox[
+         "license entitlement tutorial",
+         BaseStyle -> "Link",
+         ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+        ],
+        " for more information on how to use tokens for authentication in GitHub workflows."
+       }
+      ],
+      "Notes",
+      "FutureExample",
+      CellDingbat -> Cell[
+       BoxData[
+        TooltipBox[
+         Cell["rhennigan      ", "TentativeID"],
+         "2022-03-23"
+        ]
+       ],
+       "TentativeWrapper"
+      ],
+      CellID -> 341359723
+     ],
+     Cell[
+      TextData[
+       {
+        "A ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "PublisherTokenObject",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " can be deleted with ",
+        Cell[
+         BoxData[ButtonBox["DeleteObject", BaseStyle -> "Link"]],
+         "InlineFormula"
+        ],
+        "."
+       }
+      ],
+      "Notes",
+      CellID -> 342948724
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Tech Notes", "TechNotesSection", CellID -> 333012576],
+     Cell[
+      TextData[
+       ButtonBox[
+        "License Entitlements and Repository Secrets",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/tutorial/LicenseEntitlementsAndRepositorySecrets"
+       ]
+      ],
+      "Tutorials",
+      CellID -> 92530123
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Demonstrations",
+      "RelatedDemonstrationsSection",
+      CellID -> 450650509
+     ],
+     Cell["XXXX", "RelatedDemonstrations", CellID -> 165985242]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Links",
+      "RelatedLinksSection",
+      CellID -> 9858866
+     ],
+     Cell["XXXX", "RelatedLinks", CellID -> 388594311]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["See Also", "SeeAlsoSection", CellID -> 169616990],
+     Cell[
+      TextData[
+       {
+        Cell[
+         BoxData[
+          ButtonBox[
+           "DeletePublisherToken",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/DeletePublisherToken"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "CreatePublisherToken",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreatePublisherToken"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox[
+           "PublisherTokens",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokens"
+          ]
+         ],
+         "InlineFormula"
+        ],
+        " \[EmptyVerySmallSquare] ",
+        Cell[
+         BoxData[
+          ButtonBox["CreateLicenseEntitlement", BaseStyle -> "Link"]
+         ],
+         "InlineFormula"
+        ]
+       }
+      ],
+      "SeeAlso",
+      CellID -> 135699967
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "Related Guides",
+      "MoreAboutSection",
+      CellID -> 71297715
+     ],
+     Cell[
+      TextData[
+       ButtonBox[
+        "Workflows",
+        BaseStyle -> "Link",
+        ButtonData -> "paclet:Wolfram/PacletCICD/guide/Workflows"
+       ]
+      ],
+      "MoreAbout",
+      CellID -> 59394675
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      BoxData[
+       InterpretationBox[
+        GridBox[
+         {
+          {
+           StyleBox["Examples", "PrimaryExamplesSection"],
+           ButtonBox[
+            RowBox[
+             {
+              RowBox[{"More", " ", "Examples"}],
+              " ",
+              "\[RightTriangle]"
+             }
+            ],
+            BaseStyle -> "ExtendedExamplesLink",
+            ButtonData :> "ExtendedExamples"
+           ]
+          }
+         }
+        ],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "PrimaryExamplesSection",
+      CellID -> 266851013
+     ],
+     Cell[
+      "Load the PacletCICD package:",
+      "ExampleText",
+      CellID -> 349985564
+     ],
+     Cell[
+      BoxData[
+       RowBox[
+        {
+         RowBox[{"Needs", "[", "\"Wolfram`PacletCICD`\"", "]"}],
+         ";"
+        }
+       ]
+      ],
+      "Input",
+      CellProlog :> ($Line = 0),
+      InitializationCell -> True,
+      CellLabel -> "In[1]:=",
+      CellID -> 222115023
+     ],
+     Cell[
+      BoxData[
+       {
+        RowBox[
+         {
+          RowBox[
+           {
+            "Needs",
+            "[",
+            " ",
+            RowBox[
+             {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+            ],
+            " ",
+            "]"
+           }
+          ],
+          ";"
+         }
+        ],
+        "\[IndentingNewLine]",
+        RowBox[
+         {
+          RowBox[
+           {
+            "$ResourceSystemBase",
+            "=",
+            "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+           }
+          ],
+          ";"
+         }
+        ],
+        "\[IndentingNewLine]",
+        RowBox[
+         {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+        ],
+        "\[IndentingNewLine]",
+        RowBox[
+         {
+          RowBox[
+           {
+            "CC",
+            "[",
+            " ",
+            "\"richardh-testing-1@example.com\"",
+            " ",
+            "]"
+           }
+          ],
+          ";"
+         }
+        ],
+        "\[IndentingNewLine]",
+        RowBox[
+         {
+          RowBox[
+           {
+            RowBox[
+             {
+              "DownValues",
+              "[",
+              "CloudObject`Private`hiddenOptions",
+              "]"
+             }
+            ],
+            "=",
+            RowBox[
+             {
+              "Replace",
+              "[",
+              RowBox[
+               {
+                RowBox[
+                 {"DownValues", "@", "CloudObject`Private`hiddenOptions"}
+                ],
+                ",",
+                RowBox[
+                 {
+                  RowBox[
+                   {
+                    "HoldPattern",
+                    "[",
+                    RowBox[{"\"Prompt\"", "->", "Automatic"}],
+                    "]"
+                   }
+                  ],
+                  ":>",
+                  RowBox[{"(", RowBox[{"\"Prompt\"", "->", "False"}], ")"}]
+                 }
+                ],
+                ",",
+                RowBox[{"{", "3", "}"}]
+               }
+              ],
+              "]"
+             }
+            ]
+           }
+          ],
+          ";"
+         }
+        ]
+       }
+      ],
+      "Input",
+      "FutureExample",
+      CellDingbat -> Cell[
+       BoxData[
+        TooltipBox[
+         Cell["rhennigan      ", "TentativeID"],
+         "2022-01-30"
+        ]
+       ],
+       "TentativeWrapper"
+      ],
+      InitializationCell -> True,
+      CellLabel -> "In[1]:=",
+      CellID -> 150642313
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["\t", "ExampleDelimiter"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleDelimiter",
+         CellID -> 107573276
+        ],
+        Cell[
+         "Create a publisher token using default settings:",
+         "ExampleText",
+         CellID -> 3111288
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[
+             RowBox[
+              {"token", "=", RowBox[{"CreatePublisherToken", "[", "]"}]}
+             ]
+            ],
+            "Input",
+            CellLabel -> "In[1]:=",
+            CellID -> 123870388
+           ],
+           Cell[
+            BoxData[
+             InterpretationBox[
+              RowBox[
+               {
+                TagBox["PublisherTokenObject", "SummaryHead"],
+                "[",
+                DynamicModuleBox[
+                 {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                 TemplateBox[
+                  {
+                   PaneSelectorBox[
+                    {
+                     False -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"],
+                           ImageSizeCache -> {10.032937898673117, {0., 10.032937898673117}}
+                          ],
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          ButtonFunction :> (Typeset`open$$ = True),
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         {
+                          {
+                           RGBColor[0.8784313725490196, 0.06666666666666667, 0.],
+                           {
+                            Thickness[0.011627906976744186],
+                            FilledCurveBox[
+                             {
+                              {
+                               {0, 2, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              },
+                              {
+                               {0, 2, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              CompressedData[
+                               "\n1:eJxTTMoPSmViYGAQBWIQDQEaDu86rB/17TB3UAEy+HSUHbSyT81anG0M5l9J\nF3HYofzO42GVqUP8BfEvsdvFHJr3LdA/NdXAYdOyNZrZp17Zn5q1aZmxrb6D\nwQvuX037BBxg5sLkgcZt+rBfAa4faF7H76WycPPZah2BUixw+5cDte3yFoKb\nU35EttD9zkV7iS+stfFXdRyAjlWe5ifk4BsZfI3rmZEDSHu7LIvDVNNU3/tB\nRnDzQe5ao2kOdZeCA1A7UKUx3FyYPMj8hXb6cP1AY0UapxnAzd8MVDWj2tQB\nZj9Qc0NUDsIcWPgBAJGGhcY=\n                  "
+                              ],
+                              CompressedData[
+                               "\n1:eJxdU19IU3EUXsJWYulWibK7zV3vvO5u6+5el/3BhOND2MARuf5gDwnBQHIR\nQiA9CKXCEsqQpGhBLTCTsSwsVJD2UD6EYAnFXuqlUTCCAmsFLYp+58z7e+jC\n5cfZ+e73fec7v4mnz3XHKkwmUzt78Sw/XrAMdfSu1e2Gsbb8eO6WD9iPF5++\n0qFQVRq+U6HA3HRG+TivwoOM0v9zbzP1E04dBpedAyf8MpSGs25bnwb3goWq\n8yNeOvfdVGAkmwpuSavAjkK4WoW1uqL5yJQKRTMKBgknu/3Ev2BWIZqbbN3/\nOACL0tfLzrgO/SvJufU3GrBj2nKlBTrf2wZPxjXCR44aPCG4xj44YNoFe2KR\nnnd/dMItOxV4qCCDymsNB8pq6Jc58nMfrgFEBEiPUYORi9HPj6MjiX9fzsvD\n+bHblpe5vlEb/nCuY38bgR0x21kNtjM3B9Mi5T3zVoPbTLVytZb4dj4JkN5s\nlx3Q9nXRD5GeaO5QSYStTD17v5xjSHUDk4smZ1RgZorSd5HwH0a9gO5e9sl8\nP60MuNTr4vtD/vyYwPeLaQhhke8fcd3P63kOqDfUUQOsvXj1rofmOnxJ2NiX\ng+b69LqW6onPTvLxotpN+FC7RDopnwRsjMnNqUaoZwTPEi5g9jpnuzy0jx3J\nBsDUVqZk8l80NwOm1yS4eI043eqge5O90UR5xb+I5H/il4dy8o0K4GFE8+vi\nxr6shNM2SeT7h8vO5zL6xv3BuS0JgXQWalTOj/sMV/pJ9/g2B/l6dMbH/SH+\nwm8v92/UxnzovsWu8fnx1lhPaTwf3M9qLsDzQ3z6W5Dna9x/I39Wy5kGHf7/\n//4DXt+QGQ==\n                  "
+                              ]
+                             }
+                            ]
+                           }
+                          },
+                          {
+                           Thickness[0.041666666666666664],
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {11.5, 22.},
+                               {11.5, 22.276},
+                               {11.724, 22.5},
+                               {12., 22.5},
+                               {20.5, 22.5},
+                               {20., 22.5},
+                               {19.723999999999997, 22.5},
+                               {19.5, 22.276},
+                               {19.5, 22.},
+                               {19.5, 21.5},
+                               {11.5, 21.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {11.5, 22.},
+                               {11.5, 22.276},
+                               {11.724, 22.5},
+                               {12., 22.5},
+                               {20.5, 22.5},
+                               {20., 22.5},
+                               {19.723999999999997, 22.5},
+                               {19.5, 22.276},
+                               {19.5, 22.},
+                               {19.5, 21.5},
+                               {11.5, 21.5},
+                               {11.5, 22.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {{{0, 2, 0}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {1, 3, 3}}},
+                             {
+                              {
+                               {21.5, 10.5},
+                               {13.5, 10.5},
+                               {12.947, 10.5},
+                               {12.5, 10.947},
+                               {12.5, 11.5},
+                               {12.5, 22.5},
+                               {20.5, 22.5},
+                               {21.053, 22.5},
+                               {21.5, 22.053},
+                               {21.5, 21.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {0, 2, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {21.5, 10.5},
+                               {13.5, 10.5},
+                               {12.947, 10.5},
+                               {12.5, 10.947},
+                               {12.5, 11.5},
+                               {12.5, 22.5},
+                               {20.5, 22.5},
+                               {21.053, 22.5},
+                               {21.5, 22.053},
+                               {21.5, 21.5},
+                               {21.5, 10.5}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {22.5, 11.},
+                               {22.5, 10.724},
+                               {22.276, 10.5},
+                               {22., 10.5},
+                               {13.5, 10.5},
+                               {14., 10.5},
+                               {14.276000000000002, 10.5},
+                               {14.5, 10.724},
+                               {14.5, 11.},
+                               {14.5, 11.5},
+                               {22.5, 11.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {22.5, 11.},
+                               {22.5, 10.724},
+                               {22.276, 10.5},
+                               {22., 10.5},
+                               {13.5, 10.5},
+                               {14., 10.5},
+                               {14.276000000000002, 10.5},
+                               {14.5, 10.724},
+                               {14.5, 11.},
+                               {14.5, 11.5},
+                               {22.5, 11.5},
+                               {22.5, 11.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            EdgeForm[
+                             {
+                              RGBColor[0.29800000000000004, 0.584, 0.898],
+                              Opacity[1.],
+                              Thickness[0.042374999999999996],
+                              CapForm["Round"],
+                              JoinForm["Round"]
+                             }
+                            ],
+                            FaceForm[
+                             {
+                              RGBColor[0.353, 0.6779999999999999, 0.8310000000000001],
+                              Opacity[1.]
+                             }
+                            ],
+                            FilledCurveBox[
+                             {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
+                             {
+                              {
+                               {16.286099999999998, 17.499},
+                               {15.571099999999998, 13.5},
+                               {17.000099999999996, 14.977999999999998},
+                               {18.4291, 13.5},
+                               {17.7141, 17.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 0.757, 0.318], Opacity[1.]}],
+                            FilledCurveBox[
+                             {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                             {
+                              {
+                               {19.5, 18.},
+                               {19.5, 19.381},
+                               {18.381, 20.5},
+                               {17., 20.5},
+                               {15.619, 20.5},
+                               {14.5, 19.381},
+                               {14.5, 18.},
+                               {14.5, 16.619},
+                               {15.619, 15.5},
+                               {17., 15.5},
+                               {18.381, 15.5},
+                               {19.5, 16.619},
+                               {19.5, 18.}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.8670000000000001, 0.541, 0.],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                             {
+                              {
+                               {19.5, 18.},
+                               {19.5, 19.381},
+                               {18.381, 20.5},
+                               {17., 20.5},
+                               {15.619, 20.5},
+                               {14.5, 19.381},
+                               {14.5, 18.},
+                               {14.5, 16.619},
+                               {15.619, 15.5},
+                               {17., 15.5},
+                               {18.381, 15.5},
+                               {19.5, 16.619},
+                               {19.5, 18.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           }
+                          }
+                         },
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3*CurrentValue["FontCapHeight"],
+                            AbsoluteCurrentValue[Magnification]^(-1)
+                           ]
+                          }
+                         ]
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Token:\"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              TagBox[
+                               DynamicModuleBox[
+                                {boxObj, cellObj},
+                                TagBox[
+                                 TagBox[
+                                  ButtonBox[
+                                   TagBox[
+                                    "\"feDt88UaAVkwtp27\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\"",
+                                    BoxForm`Undeploy,
+                                    DefaultBaseStyle -> {Deployed -> False}
+                                   ],
+                                   Appearance -> {
+                                    "Default" -> None,
+                                    "Hover" -> FrontEnd`FileName[
+                                     {"Typeset", "ClickToCopy"},
+                                     "Hover.9.png"
+                                    ],
+                                    "Pressed" -> FrontEnd`FileName[
+                                     {"Typeset", "ClickToCopy"},
+                                     "Pressed.9.png"
+                                    ]
+                                   },
+                                   BaseStyle -> { },
+                                   BaselinePosition -> Baseline,
+                                   ButtonFunction :> FrontEndExecute[
+                                    {
+                                     CopyToClipboard[
+                                      "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-feDt88UaAVkwtp27LTKO0e-1"
+                                     ],
+                                     NotebookDelete[cellObj],
+                                     FrontEnd`AttachCell[
+                                      boxObj,
+                                      Cell[
+                                       BoxData[TemplateBox[{"Copied"}, "ClickToCopyTooltip"]]
+                                      ],
+                                      {1, {Center, Bottom}},
+                                      {Center, Top},
+                                      "ClosingActions" -> {"ParentChanged", "MouseExit"}
+                                     ]
+                                    }
+                                   ],
+                                   DefaultBaseStyle -> { },
+                                   Evaluator -> None,
+                                   FrameMargins -> 2,
+                                   Method -> "Preemptive"
+                                  ],
+                                  EventHandlerTag[
+                                   {
+                                    "MouseEntered" :> (cellObj = MathLink`CallFrontEnd[
+                                     FrontEnd`AttachCell[
+                                      boxObj,
+                                      Cell[BoxData[TemplateBox[{"Copy"}, "ClickToCopyTooltip"]]],
+                                      {1, {Center, Bottom}},
+                                      {Center, Top},
+                                      "ClosingActions" -> {"ParentChanged"}
+                                     ]
+                                    ]),
+                                    "MouseExited" :> NotebookDelete[cellObj],
+                                    PassEventsDown -> True,
+                                    Method -> "Preemptive",
+                                    PassEventsUp -> True
+                                   }
+                                  ]
+                                 ],
+                                 MouseAppearanceTag["LinkHand"]
+                                ],
+                                BaseStyle -> {Editable -> False},
+                                DynamicModuleValues :> { },
+                                Initialization :> (boxObj = EvaluationBox[]),
+                                UnsavedVariables :> {boxObj, cellObj}
+                               ],
+                               Deploy,
+                               DefaultBaseStyle -> "Deploy"
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Creator: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"richardh-testing-1@example.com\"", "SummaryItem"]
+                            }
+                           ]
+                          }
+                         },
+                         AutoDelete -> False,
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}}
+                        ]
+                       }
+                      },
+                      AutoDelete -> False,
+                      BaselinePosition -> {1, 1},
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                     ],
+                     True -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                          ],
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          ButtonFunction :> (Typeset`open$$ = False),
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        GraphicsBox[
+                         {
+                          {
+                           RGBColor[0.8784313725490196, 0.06666666666666667, 0.],
+                           {
+                            Thickness[0.011627906976744186],
+                            FilledCurveBox[
+                             {
+                              {
+                               {0, 2, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              },
+                              {
+                               {0, 2, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              CompressedData[
+                               "\n1:eJxTTMoPSmViYGAQBWIQDQEaDu86rB/17TB3UAEy+HSUHbSyT81anG0M5l9J\nF3HYofzO42GVqUP8BfEvsdvFHJr3LdA/NdXAYdOyNZrZp17Zn5q1aZmxrb6D\nwQvuX037BBxg5sLkgcZt+rBfAa4faF7H76WycPPZah2BUixw+5cDte3yFoKb\nU35EttD9zkV7iS+stfFXdRyAjlWe5ifk4BsZfI3rmZEDSHu7LIvDVNNU3/tB\nRnDzQe5ao2kOdZeCA1A7UKUx3FyYPMj8hXb6cP1AY0UapxnAzd8MVDWj2tQB\nZj9Qc0NUDsIcWPgBAJGGhcY=\n                  "
+                              ],
+                              CompressedData[
+                               "\n1:eJxdU19IU3EUXsJWYulWibK7zV3vvO5u6+5el/3BhOND2MARuf5gDwnBQHIR\nQiA9CKXCEsqQpGhBLTCTsSwsVJD2UD6EYAnFXuqlUTCCAmsFLYp+58z7e+jC\n5cfZ+e73fec7v4mnz3XHKkwmUzt78Sw/XrAMdfSu1e2Gsbb8eO6WD9iPF5++\n0qFQVRq+U6HA3HRG+TivwoOM0v9zbzP1E04dBpedAyf8MpSGs25bnwb3goWq\n8yNeOvfdVGAkmwpuSavAjkK4WoW1uqL5yJQKRTMKBgknu/3Ev2BWIZqbbN3/\nOACL0tfLzrgO/SvJufU3GrBj2nKlBTrf2wZPxjXCR44aPCG4xj44YNoFe2KR\nnnd/dMItOxV4qCCDymsNB8pq6Jc58nMfrgFEBEiPUYORi9HPj6MjiX9fzsvD\n+bHblpe5vlEb/nCuY38bgR0x21kNtjM3B9Mi5T3zVoPbTLVytZb4dj4JkN5s\nlx3Q9nXRD5GeaO5QSYStTD17v5xjSHUDk4smZ1RgZorSd5HwH0a9gO5e9sl8\nP60MuNTr4vtD/vyYwPeLaQhhke8fcd3P63kOqDfUUQOsvXj1rofmOnxJ2NiX\ng+b69LqW6onPTvLxotpN+FC7RDopnwRsjMnNqUaoZwTPEi5g9jpnuzy0jx3J\nBsDUVqZk8l80NwOm1yS4eI043eqge5O90UR5xb+I5H/il4dy8o0K4GFE8+vi\nxr6shNM2SeT7h8vO5zL6xv3BuS0JgXQWalTOj/sMV/pJ9/g2B/l6dMbH/SH+\nwm8v92/UxnzovsWu8fnx1lhPaTwf3M9qLsDzQ3z6W5Dna9x/I39Wy5kGHf7/\n//4DXt+QGQ==\n                  "
+                              ]
+                             }
+                            ]
+                           }
+                          },
+                          {
+                           Thickness[0.041666666666666664],
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {11.5, 22.},
+                               {11.5, 22.276},
+                               {11.724, 22.5},
+                               {12., 22.5},
+                               {20.5, 22.5},
+                               {20., 22.5},
+                               {19.723999999999997, 22.5},
+                               {19.5, 22.276},
+                               {19.5, 22.},
+                               {19.5, 21.5},
+                               {11.5, 21.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {11.5, 22.},
+                               {11.5, 22.276},
+                               {11.724, 22.5},
+                               {12., 22.5},
+                               {20.5, 22.5},
+                               {20., 22.5},
+                               {19.723999999999997, 22.5},
+                               {19.5, 22.276},
+                               {19.5, 22.},
+                               {19.5, 21.5},
+                               {11.5, 21.5},
+                               {11.5, 22.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {{{0, 2, 0}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {1, 3, 3}}},
+                             {
+                              {
+                               {21.5, 10.5},
+                               {13.5, 10.5},
+                               {12.947, 10.5},
+                               {12.5, 10.947},
+                               {12.5, 11.5},
+                               {12.5, 22.5},
+                               {20.5, 22.5},
+                               {21.053, 22.5},
+                               {21.5, 22.053},
+                               {21.5, 21.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {0, 2, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {21.5, 10.5},
+                               {13.5, 10.5},
+                               {12.947, 10.5},
+                               {12.5, 10.947},
+                               {12.5, 11.5},
+                               {12.5, 22.5},
+                               {20.5, 22.5},
+                               {21.053, 22.5},
+                               {21.5, 22.053},
+                               {21.5, 21.5},
+                               {21.5, 10.5}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 1., 1.], Opacity[1.]}],
+                            FilledCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {22.5, 11.},
+                               {22.5, 10.724},
+                               {22.276, 10.5},
+                               {22., 10.5},
+                               {13.5, 10.5},
+                               {14., 10.5},
+                               {14.276000000000002, 10.5},
+                               {14.5, 10.724},
+                               {14.5, 11.},
+                               {14.5, 11.5},
+                               {22.5, 11.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.749, 0.749, 0.749],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {
+                              {
+                               {1, 4, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {1, 3, 3},
+                               {0, 1, 0},
+                               {0, 1, 0},
+                               {0, 1, 0}
+                              }
+                             },
+                             {
+                              {
+                               {22.5, 11.},
+                               {22.5, 10.724},
+                               {22.276, 10.5},
+                               {22., 10.5},
+                               {13.5, 10.5},
+                               {14., 10.5},
+                               {14.276000000000002, 10.5},
+                               {14.5, 10.724},
+                               {14.5, 11.},
+                               {14.5, 11.5},
+                               {22.5, 11.5},
+                               {22.5, 11.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           },
+                           {
+                            EdgeForm[
+                             {
+                              RGBColor[0.29800000000000004, 0.584, 0.898],
+                              Opacity[1.],
+                              Thickness[0.042374999999999996],
+                              CapForm["Round"],
+                              JoinForm["Round"]
+                             }
+                            ],
+                            FaceForm[
+                             {
+                              RGBColor[0.353, 0.6779999999999999, 0.8310000000000001],
+                              Opacity[1.]
+                             }
+                            ],
+                            FilledCurveBox[
+                             {{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}},
+                             {
+                              {
+                               {16.286099999999998, 17.499},
+                               {15.571099999999998, 13.5},
+                               {17.000099999999996, 14.977999999999998},
+                               {18.4291, 13.5},
+                               {17.7141, 17.5}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            FaceForm[{RGBColor[1., 0.757, 0.318], Opacity[1.]}],
+                            FilledCurveBox[
+                             {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                             {
+                              {
+                               {19.5, 18.},
+                               {19.5, 19.381},
+                               {18.381, 20.5},
+                               {17., 20.5},
+                               {15.619, 20.5},
+                               {14.5, 19.381},
+                               {14.5, 18.},
+                               {14.5, 16.619},
+                               {15.619, 15.5},
+                               {17., 15.5},
+                               {18.381, 15.5},
+                               {19.5, 16.619},
+                               {19.5, 18.}
+                              }
+                             }
+                            ]
+                           },
+                           {
+                            RGBColor[0.8670000000000001, 0.541, 0.],
+                            Opacity[1.],
+                            CapForm["Round"],
+                            JoinForm["Round"],
+                            JoinedCurveBox[
+                             {{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}},
+                             {
+                              {
+                               {19.5, 18.},
+                               {19.5, 19.381},
+                               {18.381, 20.5},
+                               {17., 20.5},
+                               {15.619, 20.5},
+                               {14.5, 19.381},
+                               {14.5, 18.},
+                               {14.5, 16.619},
+                               {15.619, 15.5},
+                               {17., 15.5},
+                               {18.381, 15.5},
+                               {19.5, 16.619},
+                               {19.5, 18.}
+                              }
+                             },
+                             CurveClosed -> {1}
+                            ]
+                           }
+                          }
+                         },
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3*CurrentValue["FontCapHeight"],
+                            AbsoluteCurrentValue[Magnification]^(-1)
+                           ]
+                          }
+                         ]
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Token:\"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              TagBox[
+                               DynamicModuleBox[
+                                {boxObj, cellObj},
+                                TagBox[
+                                 TagBox[
+                                  ButtonBox[
+                                   TagBox[
+                                    "\"feDt88UaAVkwtp27\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\[ThinSpace]\[Bullet]\"",
+                                    BoxForm`Undeploy,
+                                    DefaultBaseStyle -> {Deployed -> False}
+                                   ],
+                                   Appearance -> {
+                                    "Default" -> None,
+                                    "Hover" -> FrontEnd`FileName[
+                                     {"Typeset", "ClickToCopy"},
+                                     "Hover.9.png"
+                                    ],
+                                    "Pressed" -> FrontEnd`FileName[
+                                     {"Typeset", "ClickToCopy"},
+                                     "Pressed.9.png"
+                                    ]
+                                   },
+                                   BaseStyle -> { },
+                                   BaselinePosition -> Baseline,
+                                   ButtonFunction :> FrontEndExecute[
+                                    {
+                                     CopyToClipboard[
+                                      "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-feDt88UaAVkwtp27LTKO0e-1"
+                                     ],
+                                     NotebookDelete[cellObj],
+                                     FrontEnd`AttachCell[
+                                      boxObj,
+                                      Cell[
+                                       BoxData[TemplateBox[{"Copied"}, "ClickToCopyTooltip"]]
+                                      ],
+                                      {1, {Center, Bottom}},
+                                      {Center, Top},
+                                      "ClosingActions" -> {"ParentChanged", "MouseExit"}
+                                     ]
+                                    }
+                                   ],
+                                   DefaultBaseStyle -> { },
+                                   Evaluator -> None,
+                                   FrameMargins -> 2,
+                                   Method -> "Preemptive"
+                                  ],
+                                  EventHandlerTag[
+                                   {
+                                    "MouseEntered" :> (cellObj = MathLink`CallFrontEnd[
+                                     FrontEnd`AttachCell[
+                                      boxObj,
+                                      Cell[BoxData[TemplateBox[{"Copy"}, "ClickToCopyTooltip"]]],
+                                      {1, {Center, Bottom}},
+                                      {Center, Top},
+                                      "ClosingActions" -> {"ParentChanged"}
+                                     ]
+                                    ]),
+                                    "MouseExited" :> NotebookDelete[cellObj],
+                                    PassEventsDown -> True,
+                                    Method -> "Preemptive",
+                                    PassEventsUp -> True
+                                   }
+                                  ]
+                                 ],
+                                 MouseAppearanceTag["LinkHand"]
+                                ],
+                                BaseStyle -> {Editable -> False},
+                                DynamicModuleValues :> { },
+                                Initialization :> (boxObj = EvaluationBox[]),
+                                UnsavedVariables :> {boxObj, cellObj}
+                               ],
+                               Deploy,
+                               DefaultBaseStyle -> "Deploy"
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"Creator: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"richardh-testing-1@example.com\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"CreationDate: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              TemplateBox[
+                               {
+                                RowBox[
+                                 {
+                                  "\"Wed 23 Mar 2022 21:27:58\"",
+                                  StyleBox["\"GMT\"", FontColor -> GrayLevel[0.5]]
+                                 }
+                                ],
+                                RowBox[
+                                 {
+                                  "DateObject",
+                                  "[",
+                                  RowBox[
+                                   {
+                                    RowBox[
+                                     {
+                                      "{",
+                                      RowBox[
+                                       {
+                                        "2022",
+                                        ",",
+                                        "3",
+                                        ",",
+                                        "23",
+                                        ",",
+                                        "21",
+                                        ",",
+                                        "27",
+                                        ",",
+                                        "58.685065`8.521102563286952"
+                                       }
+                                      ],
+                                      "}"
+                                     }
+                                    ],
+                                    ",",
+                                    "\"Instant\"",
+                                    ",",
+                                    "\"Gregorian\"",
+                                    ",",
+                                    "0.`"
+                                   }
+                                  ],
+                                  "]"
+                                 }
+                                ]
+                               },
+                               "DateObject",
+                               Editable -> False
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox["\"AllowedEndpoints: \"", "SummaryItemAnnotation"],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              DynamicModuleBox[
+                               {Wolfram`PacletCICD`Private`x$$ = False},
+                               TagBox[
+                                GridBox[
+                                 {
+                                  {
+                                   OpenerBox[Dynamic[Wolfram`PacletCICD`Private`x$$]],
+                                   PaneSelectorBox[
+                                    {
+                                     False -> "\"{\[Ellipsis]}\"",
+                                     True -> TagBox[
+                                      GridBox[
+                                       {
+                                        {
+                                         StyleBox[
+                                          "\"AcquireResource\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"CheckPublisherToken\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"DefaultPublisher\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"EditSubmission\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"GetPublisherToken\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"GetSubmission\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"PublisherInformation\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"PublisherSlug\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"StageSubmissionFile\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"SubmitResource\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"UpdateCheck\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        },
+                                        {
+                                         StyleBox[
+                                          "\"UserPublishers\"",
+                                          "SummaryItem",
+                                          StripOnInput -> False
+                                         ]
+                                        }
+                                       },
+                                       DefaultBaseStyle -> "Column",
+                                       FrameStyle -> GrayLevel[0, 0.1],
+                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                       GridBoxDividers -> {"Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                      ],
+                                      "Column"
+                                     ]
+                                    },
+                                    Dynamic[Wolfram`PacletCICD`Private`x$$],
+                                    ContentPadding -> False,
+                                    ImageSize -> Automatic
+                                   ]
+                                  }
+                                 },
+                                 AutoDelete -> False,
+                                 GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                 GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                                ],
+                                "Grid"
+                               ],
+                               DynamicModuleValues :> { }
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          }
+                         },
+                         AutoDelete -> False,
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}}
+                        ]
+                       }
+                      },
+                      AutoDelete -> False,
+                      BaselinePosition -> {1, 1},
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}
+                     ]
+                    },
+                    Dynamic[Typeset`open$$],
+                    ImageSize -> Automatic
+                   ]
+                  },
+                  "SummaryPanel"
+                 ],
+                 DynamicModuleValues :> { }
+                ],
+                "]"
+               }
+              ],
+              Wolfram`PacletCICD`PublisherTokenObject[
+               Association[
+                "Name" -> None,
+                "Creator" -> "richardh-testing-1@example.com",
+                "PublisherID" -> "MyPublisher",
+                "CreationDate" -> DateObject[
+                 {2022, 3, 23, 21, 27, 58.685065`8.521102563286952},
+                 "Instant",
+                 "Gregorian",
+                 0.
+                ],
+                "ExpirationDate" -> None,
+                "AllowedEndpoints" -> {
+                 "AcquireResource",
+                 "CheckPublisherToken",
+                 "DefaultPublisher",
+                 "EditSubmission",
+                 "GetPublisherToken",
+                 "GetSubmission",
+                 "PublisherInformation",
+                 "PublisherSlug",
+                 "StageSubmissionFile",
+                 "SubmitResource",
+                 "UpdateCheck",
+                 "UserPublishers"
+                },
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "Version" -> 1,
+                "TokenByteArray" -> ByteArray[
+                 {
+                  103,
+                  50,
+                  102,
+                  112,
+                  69,
+                  112,
+                  72,
+                  66,
+                  88,
+                  122,
+                  53,
+                  106,
+                  107,
+                  56,
+                  109,
+                  105,
+                  122,
+                  119,
+                  89,
+                  81,
+                  49,
+                  84,
+                  45,
+                  98,
+                  86,
+                  120,
+                  121,
+                  85,
+                  119,
+                  80,
+                  99,
+                  108,
+                  110,
+                  102,
+                  87,
+                  117,
+                  72,
+                  82,
+                  84,
+                  113,
+                  114,
+                  119,
+                  107,
+                  86,
+                  98,
+                  45,
+                  102,
+                  101,
+                  68,
+                  116,
+                  56,
+                  56,
+                  85,
+                  97,
+                  65,
+                  86,
+                  107,
+                  119,
+                  116,
+                  112,
+                  50,
+                  55,
+                  76,
+                  84,
+                  75,
+                  79,
+                  48,
+                  101,
+                  45,
+                  49
+                 }
+                ],
+                "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
+                "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab"
+               ]
+              ],
+              Editable -> False,
+              SelectWithContents -> True,
+              Selectable -> False
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[1]=",
+            CellID -> 96687579
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell[
+         "Get a list of the available properties:",
+         "ExampleText",
+         CellID -> 262990602
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"token", "[", "\"Properties\"", "]"}]],
+            "Input",
+            CellLabel -> "In[2]:=",
+            CellID -> 39661422
+           ],
+           Cell[
+            BoxData[
+             RowBox[
+              {
+               "{",
+               RowBox[
+                {
+                 "\"AllowedEndpoints\"",
+                 ",",
+                 "\"AllowedURLs\"",
+                 ",",
+                 "\"ClickToCopy\"",
+                 ",",
+                 "\"CreationDate\"",
+                 ",",
+                 "\"Creator\"",
+                 ",",
+                 "\"CreatorUUID\"",
+                 ",",
+                 "\"Dataset\"",
+                 ",",
+                 "\"ExpirationDate\"",
+                 ",",
+                 "\"Name\"",
+                 ",",
+                 "\"Properties\"",
+                 ",",
+                 "\"PublisherID\"",
+                 ",",
+                 "\"PublisherUUID\"",
+                 ",",
+                 "\"ResourceSystemBase\"",
+                 ",",
+                 "\"TokenByteArray\"",
+                 ",",
+                 "\"TokenString\"",
+                 ",",
+                 "\"Version\""
+                }
+               ],
+               "}"
+              }
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[2]=",
+            CellID -> 56598934
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell[
+         TextData[
+          {
+           "Get a ",
+           Cell[
+            BoxData[ButtonBox["Dataset", BaseStyle -> "Link"]],
+            "InlineFormula"
+           ],
+           " of property values:"
+          }
+         ],
+         "ExampleText",
+         CellID -> 852285001
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"token", "[", "\"Dataset\"", "]"}]],
+            "Input",
+            CellLabel -> "In[3]:=",
+            CellID -> 265379472
+           ],
+           Cell[
+            BoxData[
+             TagBox[
+              TagBox[
+               DynamicModuleBox[
+                {
+                 TypeSystem`NestedGrid`PackagePrivate`$state$$ = Association[
+                  "InitialData" -> Association[
+                   "Name" -> None,
+                   "Creator" -> "richardh-testing-1@example.com",
+                   "PublisherID" -> "MyPublisher",
+                   "CreationDate" -> DateObject[
+                    {2022, 3, 23, 21, 27, 58.685065`8.521102563286952},
+                    "Instant",
+                    "Gregorian",
+                    0.
+                   ],
+                   "ExpirationDate" -> None,
+                   "AllowedEndpoints" -> {
+                    "AcquireResource",
+                    "CheckPublisherToken",
+                    "DefaultPublisher",
+                    "EditSubmission",
+                    "GetPublisherToken",
+                    "GetSubmission",
+                    "PublisherInformation",
+                    "PublisherSlug",
+                    "StageSubmissionFile",
+                    "SubmitResource",
+                    "UpdateCheck",
+                    "UserPublishers"
+                   },
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "Version" -> 1,
+                   "TokenByteArray" -> ByteArray[
+                    {
+                     103,
+                     50,
+                     102,
+                     112,
+                     69,
+                     112,
+                     72,
+                     66,
+                     88,
+                     122,
+                     53,
+                     106,
+                     107,
+                     56,
+                     109,
+                     105,
+                     122,
+                     119,
+                     89,
+                     81,
+                     49,
+                     84,
+                     45,
+                     98,
+                     86,
+                     120,
+                     121,
+                     85,
+                     119,
+                     80,
+                     99,
+                     108,
+                     110,
+                     102,
+                     87,
+                     117,
+                     72,
+                     82,
+                     84,
+                     113,
+                     114,
+                     119,
+                     107,
+                     86,
+                     98,
+                     45,
+                     102,
+                     101,
+                     68,
+                     116,
+                     56,
+                     56,
+                     85,
+                     97,
+                     65,
+                     86,
+                     107,
+                     119,
+                     116,
+                     112,
+                     50,
+                     55,
+                     76,
+                     84,
+                     75,
+                     79,
+                     48,
+                     101,
+                     45,
+                     49
+                    }
+                   ],
+                   "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
+                   "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab"
+                  ],
+                  "AllowEmbedding" -> True,
+                  "InitialShape" -> TypeSystem`PackageScope`DocumentShape[
+                   Association[
+                    {"Name"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"Creator"} -> TypeSystem`PackageScope`AtomShape[336.00000000000006],
+                    {"PublisherID"} -> TypeSystem`PackageScope`AtomShape[123.20000000000002],
+                    {"CreationDate"} -> TypeSystem`PackageScope`AtomShape[75],
+                    {"ExpirationDate"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"AllowedEndpoints"} -> TypeSystem`PackageScope`ElidedShape[1],
+                    {"ResourceSystemBase"} -> TypeSystem`PackageScope`AtomShape[560.],
+                    {"Version"} -> TypeSystem`PackageScope`AtomShape[34],
+                    {"TokenByteArray"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"CreatorUUID"} -> TypeSystem`PackageScope`AtomShape[403.20000000000005],
+                    {"PublisherUUID"} -> TypeSystem`PackageScope`AtomShape[403.20000000000005]
+                   ],
+                   1
+                  ],
+                  "InitialType" -> TypeSystem`Struct[
+                   {
+                    "Name",
+                    "Creator",
+                    "PublisherID",
+                    "CreationDate",
+                    "ExpirationDate",
+                    "AllowedEndpoints",
+                    "ResourceSystemBase",
+                    "Version",
+                    "TokenByteArray",
+                    "CreatorUUID",
+                    "PublisherUUID"
+                   },
+                   {
+                    TypeSystem`AnyType,
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[DateObject],
+                    TypeSystem`AnyType,
+                    TypeSystem`Vector[TypeSystem`Atom[String], 12],
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[Integer],
+                    TypeSystem`AnyType,
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[String]
+                   }
+                  ],
+                  "Meta" -> <| |>,
+                  "RowTarget" -> 20,
+                  "ColumnTarget" -> 10,
+                  "Shape" -> TypeSystem`PackageScope`DocumentShape[
+                   Association[
+                    {"Name"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"Creator"} -> TypeSystem`PackageScope`AtomShape[336.00000000000006],
+                    {"PublisherID"} -> TypeSystem`PackageScope`AtomShape[123.20000000000002],
+                    {"CreationDate"} -> TypeSystem`PackageScope`AtomShape[75],
+                    {"ExpirationDate"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"AllowedEndpoints"} -> TypeSystem`PackageScope`ElidedShape[1],
+                    {"ResourceSystemBase"} -> TypeSystem`PackageScope`AtomShape[560.],
+                    {"Version"} -> TypeSystem`PackageScope`AtomShape[34],
+                    {"TokenByteArray"} -> TypeSystem`PackageScope`UnknownShape[False],
+                    {"CreatorUUID"} -> TypeSystem`PackageScope`AtomShape[403.20000000000005],
+                    {"PublisherUUID"} -> TypeSystem`PackageScope`AtomShape[403.20000000000005]
+                   ],
+                   1
+                  ],
+                  "Type" -> TypeSystem`Struct[
+                   {
+                    "Name",
+                    "Creator",
+                    "PublisherID",
+                    "CreationDate",
+                    "ExpirationDate",
+                    "AllowedEndpoints",
+                    "ResourceSystemBase",
+                    "Version",
+                    "TokenByteArray",
+                    "CreatorUUID",
+                    "PublisherUUID"
+                   },
+                   {
+                    TypeSystem`AnyType,
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[DateObject],
+                    TypeSystem`AnyType,
+                    TypeSystem`Vector[TypeSystem`Atom[String], 12],
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[Integer],
+                    TypeSystem`AnyType,
+                    TypeSystem`Atom[String],
+                    TypeSystem`Atom[String]
+                   }
+                  ],
+                  "Path" -> { },
+                  "DisplayedRowCount" -> 20,
+                  "DisplayedColumnCount" -> 10,
+                  "DataRowCount" -> 11,
+                  "DataColumnCount" -> 1,
+                  "SortPaths" -> { },
+                  "SortDirections" -> { },
+                  "HiddenItemsMap" -> Null,
+                  "UpdateType" -> 1
+                 ],
+                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$,
+                 TypeSystem`NestedGrid`PackagePrivate`$path$$ = { },
+                 TypeSystem`NestedGrid`PackagePrivate`$vPos$$ = 1,
+                 TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1,
+                 TypeSystem`NestedGrid`PackagePrivate`$grid$$ = DynamicModule[
+                  {
+                   TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = Deploy[
+                    Style[
+                     Grid[
+                      {
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "Name",
+                              Style[
+                               "Name",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["Name"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Name"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           RawBoxes[
+                            StyleBox[
+                             "None",
+                             FontFamily -> Dynamic[CurrentValue[{"StyleHints", "CodeFont"}]],
+                             ShowStringCharacters -> True
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Name"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{60, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "Creator",
+                              Style[
+                               "Creator",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["Creator"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Creator"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           "richardh-testing-1@example.com",
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Creator"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{336.00000000000006, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "PublisherID",
+                              Style[
+                               "PublisherID",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["PublisherID"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["PublisherID"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           "MyPublisher",
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["PublisherID"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{123.20000000000002, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "CreationDate",
+                              Style[
+                               "CreationDate",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["CreationDate"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["CreationDate"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           RawBoxes["\"Wed 23 Mar 2022 21:27:58\""],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["CreationDate"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{75, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "ExpirationDate",
+                              Style[
+                               "ExpirationDate",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["ExpirationDate"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["ExpirationDate"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           RawBoxes[
+                            StyleBox[
+                             "None",
+                             FontFamily -> Dynamic[CurrentValue[{"StyleHints", "CodeFont"}]],
+                             ShowStringCharacters -> True
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["ExpirationDate"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{60, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "AllowedEndpoints",
+                              Style[
+                               "AllowedEndpoints",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["AllowedEndpoints"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["AllowedEndpoints"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              Style[
+                               Row[
+                                {
+                                 "\[ThinSpace]{ ",
+                                 Subscript["\[Ellipsis]", 12],
+                                 " }\[ThinSpace]"
+                                }
+                               ],
+                               GrayLevel[0.5]
+                              ],
+                              Style[
+                               Style[
+                                Row[
+                                 {
+                                  "\[ThinSpace]{ ",
+                                  Subscript["\[Ellipsis]", 12],
+                                  " }\[ThinSpace]"
+                                 }
+                                ],
+                                GrayLevel[0.5]
+                               ],
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["AllowedEndpoints"]},
+                              4
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["AllowedEndpoints"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         BaseStyle -> {GrayLevel[0.5]}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "ResourceSystemBase",
+                              Style[
+                               "ResourceSystemBase",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["ResourceSystemBase"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["ResourceSystemBase"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["ResourceSystemBase"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{560., Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "Version",
+                              Style[
+                               "Version",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["Version"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Version"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           RawBoxes["1"],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["Version"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{34, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "TokenByteArray",
+                              Style[
+                               "TokenByteArray",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["TokenByteArray"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["TokenByteArray"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           RawBoxes[
+                            StyleBox[
+                             RowBox[
+                              {
+                               TagBox["ByteArray", "SummaryHead"],
+                               "[",
+                               TemplateBox[
+                                {
+                                 PaneSelectorBox[
+                                  {
+                                   False -> GridBox[
+                                    {
+                                     {
+                                      GridBox[
+                                       {{TagBox["\"70 bytes\"", "SummaryItem"]}},
+                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                                       AutoDelete -> False,
+                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                       GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                                       BaseStyle -> {
+                                        ShowStringCharacters -> False,
+                                        NumberMarks -> False,
+                                        PrintPrecision -> 3,
+                                        ShowSyntaxStyles -> False
+                                       }
+                                      ]
+                                     }
+                                    },
+                                    GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                    AutoDelete -> False,
+                                    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                    BaselinePosition -> {1, 1}
+                                   ],
+                                   True -> GridBox[
+                                    {
+                                     {
+                                      GridBox[
+                                       {{TagBox["\"70 bytes\"", "SummaryItem"]}},
+                                       GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                                       AutoDelete -> False,
+                                       GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                       GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                                       BaseStyle -> {
+                                        ShowStringCharacters -> False,
+                                        NumberMarks -> False,
+                                        PrintPrecision -> 3,
+                                        ShowSyntaxStyles -> False
+                                       }
+                                      ]
+                                     }
+                                    },
+                                    GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                                    AutoDelete -> False,
+                                    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                                    BaselinePosition -> {1, 1}
+                                   ]
+                                  },
+                                  Dynamic[Typeset`open$$],
+                                  ImageSize -> Automatic
+                                 ]
+                                },
+                                "SummaryPanel"
+                               ],
+                               "]"
+                              }
+                             ],
+                             FontFamily -> Dynamic[CurrentValue[{"StyleHints", "CodeFont"}]],
+                             ShowStringCharacters -> True
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["TokenByteArray"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{60, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "CreatorUUID",
+                              Style[
+                               "CreatorUUID",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["CreatorUUID"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["CreatorUUID"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["CreatorUUID"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{403.20000000000005, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       },
+                       {
+                        Item[
+                         Pane[
+                          Annotation[
+                           EventHandler[
+                            MouseAppearance[
+                             Mouseover[
+                              "PublisherUUID",
+                              Style[
+                               "PublisherUUID",
+                               FontColor -> RGBColor[
+                                0.27451,
+                                0.537255,
+                                0.792157
+                               ]
+                              ]
+                             ],
+                             "LinkHand"
+                            ],
+                            {"MouseClicked", 1} :> If[
+                             TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`updateState[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                              {Key["PublisherUUID"]},
+                              1
+                             ]
+                            ]
+                           ],
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["PublisherUUID"]},
+                            "RowHeader",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{1, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         Background -> GrayLevel[0.95],
+                         Alignment -> {Left, Baseline}
+                        ],
+                        Item[
+                         Pane[
+                          Annotation[
+                           "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
+                           TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                            {Key["PublisherUUID"]},
+                            "Item",
+                            False
+                           ],
+                           "Mouse"
+                          ],
+                          ImageSize -> {{403.20000000000005, Full}, Automatic},
+                          ImageMargins -> {{5, 3}, {4, 5}}
+                         ],
+                         ItemSize -> {Full, Automatic}
+                        ]
+                       }
+                      },
+                      BaseStyle -> {
+                       ContextMenu -> Dynamic[
+                        TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger;
+                        Which[
+                         UnsameQ[
+                          TypeSystem`NestedGrid`PackagePrivate`$lastOutputID,
+                          TypeSystem`NestedGrid`PackagePrivate`localHold[
+                           TypeSystem`NestedGrid`PackagePrivate`$outputID$$
+                          ]
+                         ],
+                         { },
+                         SameQ[
+                          TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger,
+                          TypeSystem`NestedGrid`PackagePrivate`$lastContextMenuTrigger
+                         ],
+                         TypeSystem`NestedGrid`PackagePrivate`$lastContextMenu,
+                         True,
+                         TypeSystem`NestedGrid`PackagePrivate`$lastContextMenuTrigger = TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger;
+                         TypeSystem`NestedGrid`PackagePrivate`$lastContextMenu = Block[
+                          {
+                           TypeSystem`NestedGrid`PackagePrivate`$globalScrollPos = {
+                            TypeSystem`NestedGrid`PackagePrivate`$vPos$$,
+                            TypeSystem`NestedGrid`PackagePrivate`$hPos$$
+                           }
+                          },
+                          With[
+                           {
+                            TypeSystem`NestedGrid`PackagePrivate`lastPath$ = TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                            TypeSystem`NestedGrid`PackagePrivate`lastPathType$ = TypeSystem`NestedGrid`PackagePrivate`$lastPathType,
+                            TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$ = TypeSystem`NestedGrid`PackagePrivate`$lastPathIsLeafHeader,
+                            TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
+                             MatchQ[
+                              TypeSystem`NestedGrid`PackagePrivate`$lastPathType,
+                              Alternatives["RowHeader", "ColumnHeader"]
+                             ],
+                             TypeSystem`NestedGrid`PackagePrivate`headerHiddenQ[
+                              TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                              TypeSystem`NestedGrid`PackagePrivate`$state$$
+                             ]
+                            ],
+                            TypeSystem`NestedGrid`PackagePrivate`allHidden$ = TypeSystem`NestedGrid`PackagePrivate`allHiddenQ[
+                             TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                             TypeSystem`NestedGrid`PackagePrivate`$state$$
+                            ],
+                            TypeSystem`NestedGrid`PackagePrivate`anyHidden$ = TypeSystem`NestedGrid`PackagePrivate`anyHiddenQ[
+                             TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                             TypeSystem`NestedGrid`PackagePrivate`$state$$
+                            ],
+                            TypeSystem`NestedGrid`PackagePrivate`sortDirection$ = TypeSystem`NestedGrid`PackagePrivate`columnSortDirection[
+                             TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                             TypeSystem`NestedGrid`PackagePrivate`$state$$["SortPaths"],
+                             TypeSystem`NestedGrid`PackagePrivate`$state$$[
+                              "SortDirections"
+                             ]
+                            ],
+                            TypeSystem`NestedGrid`PackagePrivate`haveData$ = Not[
+                             FailureQ[
+                              TypeSystem`NestedGrid`PackagePrivate`datasetInitialData[
+                               TypeSystem`NestedGrid`PackagePrivate`$state$$
+                              ]
+                             ]
+                            ],
+                            TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$ = Not[
+                             FreeQ[TypeSystem`NestedGrid`PackagePrivate`$lastPath, Keys]
+                            ]
+                           },
+                           Join[
+                            {
+                             If[
+                              Or[
+                               Not[TypeSystem`NestedGrid`PackagePrivate`haveData$],
+                               Not[TypeSystem`NestedGrid`PackagePrivate`anyHidden$],
+                               TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$
+                              ],
+                              Nothing,
+                              MenuItem[
+                               StringJoin[
+                                "Show ",
+                                Which[
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "Item"
+                                 ],
+                                 "",
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "RowHeader"
+                                 ],
+                                 "Row",
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "ColumnHeader"
+                                 ],
+                                 "Column",
+                                 True,
+                                 ""
+                                ]
+                               ],
+                               KernelExecute[
+                                TypeSystem`NestedGrid`PackagePrivate`updateHiddenItems[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                                 TypeSystem`NestedGrid`PackagePrivate`lastPath$,
+                                 "remove"
+                                ]
+                               ],
+                               MenuEvaluator -> Automatic
+                              ]
+                             ],
+                             If[
+                              Or[
+                               Not[TypeSystem`NestedGrid`PackagePrivate`haveData$],
+                               TypeSystem`NestedGrid`PackagePrivate`pathEmptyQ[
+                                TypeSystem`NestedGrid`PackagePrivate`$lastPath,
+                                TypeSystem`NestedGrid`PackagePrivate`$state$$
+                               ],
+                               TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$,
+                               And[
+                                TypeSystem`NestedGrid`PackagePrivate`allHidden$,
+                                TypeSystem`NestedGrid`PackagePrivate`headerHidden$
+                               ]
+                              ],
+                              Nothing,
+                              MenuItem[
+                               StringJoin[
+                                "Hide ",
+                                Which[
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "Item"
+                                 ],
+                                 "",
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "RowHeader"
+                                 ],
+                                 "Row",
+                                 Equal[
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                                  "ColumnHeader"
+                                 ],
+                                 "Column",
+                                 True,
+                                 ""
+                                ]
+                               ],
+                               KernelExecute[
+                                TypeSystem`NestedGrid`PackagePrivate`updateHiddenItems[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                                 TypeSystem`NestedGrid`PackagePrivate`lastPath$,
+                                 "add"
+                                ]
+                               ],
+                               MenuEvaluator -> Automatic
+                              ]
+                             ],
+                             Delimiter
+                            },
+                            If[
+                             And[
+                              TypeSystem`NestedGrid`PackagePrivate`haveData$,
+                              MatchQ[
+                               TypeSystem`NestedGrid`PackagePrivate`lastPathType$,
+                               Alternatives["ColumnHeader", "KeyDummy"]
+                              ],
+                              TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$,
+                              Not[TypeSystem`NestedGrid`PackagePrivate`allHidden$]
+                             ],
+                             {
+                              If[
+                               UnsameQ[
+                                TypeSystem`NestedGrid`PackagePrivate`sortDirection$,
+                                "Ascending"
+                               ],
+                               MenuItem[
+                                "Sort",
+                                KernelExecute[
+                                 TypeSystem`NestedGrid`PackagePrivate`updateSort[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPath$,
+                                  "Ascending"
+                                 ]
+                                ],
+                                MenuEvaluator -> Automatic
+                               ],
+                               Nothing
+                              ],
+                              If[
+                               UnsameQ[
+                                TypeSystem`NestedGrid`PackagePrivate`sortDirection$,
+                                "Descending"
+                               ],
+                               MenuItem[
+                                "Reverse Sort",
+                                KernelExecute[
+                                 TypeSystem`NestedGrid`PackagePrivate`updateSort[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPath$,
+                                  "Descending"
+                                 ]
+                                ],
+                                MenuEvaluator -> Automatic
+                               ],
+                               Nothing
+                              ],
+                              If[
+                               UnsameQ[
+                                TypeSystem`NestedGrid`PackagePrivate`sortDirection$,
+                                None
+                               ],
+                               MenuItem[
+                                "Unsort",
+                                KernelExecute[
+                                 TypeSystem`NestedGrid`PackagePrivate`updateSort[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                                  TypeSystem`NestedGrid`PackagePrivate`lastPath$,
+                                  None
+                                 ]
+                                ],
+                                MenuEvaluator -> Automatic
+                               ],
+                               Nothing
+                              ],
+                              Delimiter
+                             },
+                             { }
+                            ],
+                            {
+                             MenuItem[
+                              "Copy Position to Clipboard",
+                              KernelExecute[
+                               TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                                TypeSystem`NestedGrid`PackagePrivate`copyClip
+                               ]
+                              ],
+                              MenuEvaluator -> Automatic
+                             ],
+                             If[
+                              TypeSystem`NestedGrid`PackagePrivate`haveData$,
+                              MenuItem[
+                               "Copy Data to Clipboard",
+                               KernelExecute[
+                                TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                                 TypeSystem`NestedGrid`PackagePrivate`$state$$,
+                                 TypeSystem`NestedGrid`PackagePrivate`copyClip
+                                ]
+                               ],
+                               MenuEvaluator -> Automatic
+                              ],
+                              Nothing
+                             ],
+                             Delimiter,
+                             MenuItem[
+                              "Paste Position in New Cell",
+                              KernelExecute[
+                               TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                                TypeSystem`NestedGrid`PackagePrivate`cellPaste
+                               ]
+                              ],
+                              MenuEvaluator -> Automatic
+                             ],
+                             If[
+                              TypeSystem`NestedGrid`PackagePrivate`haveData$,
+                              MenuItem[
+                               "Paste Data in New Cell",
+                               KernelExecute[
+                                TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                                 TypeSystem`NestedGrid`PackagePrivate`$state$$,
+                                 TypeSystem`NestedGrid`PackagePrivate`cellPaste
+                                ]
+                               ],
+                               MenuEvaluator -> Automatic
+                              ],
+                              Nothing
+                             ]
+                            }
+                           ]
+                          ]
+                         ]
+                        ]
+                       ],
+                       FontFamily -> "Source Sans Pro",
+                       FontSize -> 14,
+                       FontWeight -> Plain
+                      },
+                      Dividers -> All,
+                      FrameStyle -> GrayLevel[0.7490196078431373],
+                      Spacings -> {0, 0},
+                      Alignment -> Left,
+                      BaseStyle -> {
+                       FontFamily -> "Source Sans Pro",
+                       FontSize -> 14,
+                       FontWeight -> Plain
+                      }
+                     ],
+                     LineBreakWithin -> False,
+                     ContextMenu -> { },
+                     NumberMarks -> False,
+                     ShowAutoStyles -> False
+                    ]
+                   ],
+                   TypeSystem`NestedGrid`PackagePrivate`initialQ$ = True
+                  },
+                  Dynamic[
+                   TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$,
+                    If[
+                     Not[TypeSystem`NestedGrid`PackagePrivate`initialQ$],
+                     Module[
+                      {
+                       TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed,
+                       TypeSystem`NestedGrid`PackagePrivate`tmpData$ = TypeSystem`NestedGrid`PackagePrivate`datasetData[
+                        TypeSystem`NestedGrid`PackagePrivate`$state$$
+                       ]
+                      },
+                      TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = If[
+                       FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpData$],
+                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$,
+                       TypeSystem`NestedGrid`PackagePrivate`renderGrid[TypeSystem`NestedGrid`PackagePrivate`$state$$, TypeSystem`NestedGrid`PackagePrivate`$path$$, TypeSystem`NestedGrid`PackagePrivate`$vPos$$, TypeSystem`NestedGrid`PackagePrivate`$hPos$$, TypeSystem`NestedGrid`PackagePrivate`$grid$$, TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                        TypeSystem`NestedGrid`PackagePrivate`tmpData$
+                       ]
+                      ];
+                      If[
+                       Not[
+                        FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]
+                       ],
+                       TypeSystem`NestedGrid`PackagePrivate`renderedGrid$ = TypeSystem`NestedGrid`PackagePrivate`tmpGrid$
+                      ];
+                      Null
+                     ]
+                    ];
+                    TypeSystem`NestedGrid`PackagePrivate`initialQ$ = False;
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$;
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$;
+                    If[
+                     FailureQ[
+                      TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
+                     ],
+                     TypeSystem`SparseGrid[
+                      TypeSystem`H["(data no longer present)"]
+                     ],
+                     TypeSystem`NestedGrid`PackagePrivate`renderedGrid$
+                    ]
+                   ],
+                   TrackedSymbols :> {
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$,
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$
+                   }
+                  ],
+                  DynamicModuleValues :> { }
+                 ],
+                 TypeSystem`NestedGrid`PackagePrivate`$topBar$$ = Dynamic[
+                  TypeSystem`NestedGrid`PackagePrivate`makeFramedBar[
+                   TypeSystem`PackageScope`SubViewPathbar[
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$,
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                     TypeSystem`NestedGrid`PackagePrivate`$state$$,
+                     TypeSystem`NestedGrid`PackagePrivate`$path$$,
+                     TypeSystem`NestedGrid`PackagePrivate`$vPos$$,
+                     TypeSystem`NestedGrid`PackagePrivate`$hPos$$,
+                     TypeSystem`NestedGrid`PackagePrivate`$grid$$,
+                     TypeSystem`NestedGrid`PackagePrivate`localHold[
+                      TypeSystem`NestedGrid`PackagePrivate`$outputID$$
+                     ]
+                    ]
+                   ]
+                  ],
+                  TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`$path$$}
+                 ],
+                 TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$ = Style[
+                  Framed[
+                   Dynamic[
+                    Replace[
+                     TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$,
+                     {
+                      TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                       Null,
+                       _
+                      ] -> "",
+                      TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                       Pattern[
+                        TypeSystem`NestedGrid`PackagePrivate`path$,
+                        _
+                       ],
+                       Pattern[
+                        TypeSystem`NestedGrid`PackagePrivate`pathType$,
+                        _
+                       ],
+                       Pattern[
+                        TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$,
+                        _
+                       ]
+                      ] :> (Increment[
+                       TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger
+                      ];
+                      TypeSystem`NestedGrid`PackagePrivate`$lastPath = TypeSystem`NestedGrid`PackagePrivate`path$;
+                      TypeSystem`NestedGrid`PackagePrivate`$lastPathType = TypeSystem`NestedGrid`PackagePrivate`pathType$;
+                      TypeSystem`NestedGrid`PackagePrivate`$lastPathIsLeafHeader = TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$;
+                      TypeSystem`NestedGrid`PackagePrivate`$lastOutputID = TypeSystem`NestedGrid`PackagePrivate`localHold[
+                       TypeSystem`NestedGrid`PackagePrivate`$outputID$$
+                      ];
+                      TypeSystem`NestedGrid`PackagePrivate`makePathTrail[
+                       TypeSystem`NestedGrid`PackagePrivate`path$,
+                       TypeSystem`NestedGrid`PackagePrivate`makePathElements
+                      ]),
+                      Null :> Spacer[10],
+                      _ :> Spacer[10]
+                     }
+                    ],
+                    TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$}
+                   ],
+                   FrameStyle -> None,
+                   ImageMargins -> 0,
+                   FrameMargins -> 0,
+                   Alignment -> Top,
+                   ImageSize -> {Automatic, 15}
+                  ],
+                  FontSize -> 1
+                 ],
+                 TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = Null
+                },
+                DynamicWrapperBox[
+                 DynamicBox[
+                  ToBoxes[
+                   Dataset`DatasetContent[
+                    2,
+                    "Path" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$path$$],
+                    "Grid" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$grid$$],
+                    "State" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$state$$],
+                    "VPos" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$vPos$$],
+                    "HPos" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$hPos$$],
+                    "TopBar" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$topBar$$],
+                    "BottomBar" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$],
+                    "OutputID" -> Hold[
+                     TypeSystem`NestedGrid`PackagePrivate`localHold[
+                      TypeSystem`NestedGrid`PackagePrivate`$outputID$$
+                     ]
+                    ]
+                   ],
+                   StandardForm
+                  ],
+                  ImageSizeCache -> {590., {161.8544921875, 167.1455078125}},
+                  TrackedSymbols :> {
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$,
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$
+                  }
+                 ],
+                 TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = MouseAnnotation[],
+                 ImageSizeCache -> {590., {161.8544921875, 167.1455078125}}
+                ],
+                BaseStyle -> {LineBreakWithin -> False},
+                DynamicModuleValues :> { },
+                Initialization :> (TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = CreateUUID[]),
+                UnsavedVariables :> {TypeSystem`NestedGrid`PackagePrivate`$outputID$$}
+               ],
+               Deploy,
+               DefaultBaseStyle -> "Deploy"
+              ],
+              Dataset`InterpretDataset[1],
+              Editable -> False,
+              SelectWithContents -> True,
+              Selectable -> False
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[3]=",
+            CellID -> 53673335
+           ]
+          },
+          Open
+         ]
+        ],
+        Cell[
+         "Delete the token:",
+         "ExampleText",
+         CellID -> 460961868
+        ],
+        Cell[
+         CellGroupData[
+          {
+           Cell[
+            BoxData[RowBox[{"DeleteObject", "[", "token", "]"}]],
+            "Input",
+            CellLabel -> "In[4]:=",
+            CellID -> 384139218
+           ],
+           Cell[
+            BoxData[
+             InterpretationBox[
+              RowBox[
+               {
+                TagBox["Success", "SummaryHead"],
+                "[",
+                DynamicModuleBox[
+                 {Typeset`open$$ = False, Typeset`embedState$$ = "Ready"},
+                 TemplateBox[
+                  {
+                   PaneSelectorBox[
+                    {
+                     False -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = True),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        FrameBox[
+                         StyleBox[
+                          "\"\[Checkmark]\"",
+                          Directive[
+                           RGBColor[
+                            0.360784,
+                            0.596078,
+                            0.380392
+                           ],
+                           25
+                          ],
+                          StripOnInput -> False
+                         ],
+                         ContentPadding -> False,
+                         FrameStyle -> None,
+                         FrameMargins -> {{0, 0}, {0, 0}},
+                         StripOnInput -> False
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Message\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"The token was successfully deleted.\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Tag\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"TokenDeleted\"", "SummaryItem"]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ],
+                     True -> GridBox[
+                      {
+                       {
+                        PaneBox[
+                         ButtonBox[
+                          DynamicBox[
+                           FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]
+                          ],
+                          ButtonFunction :> (Typeset`open$$ = False),
+                          Appearance -> None,
+                          BaseStyle -> { },
+                          Evaluator -> Automatic,
+                          Method -> "Preemptive"
+                         ],
+                         Alignment -> {Center, Center},
+                         ImageSize -> Dynamic[
+                          {
+                           Automatic,
+                           Times[
+                            3.5,
+                            Times[
+                             CurrentValue["FontCapHeight"],
+                             AbsoluteCurrentValue[Magnification]^(-1)
+                            ]
+                           ]
+                          }
+                         ]
+                        ],
+                        FrameBox[
+                         StyleBox[
+                          "\"\[Checkmark]\"",
+                          Directive[
+                           RGBColor[
+                            0.360784,
+                            0.596078,
+                            0.380392
+                           ],
+                           25
+                          ],
+                          StripOnInput -> False
+                         ],
+                         ContentPadding -> False,
+                         FrameStyle -> None,
+                         FrameMargins -> {{0, 0}, {0, 0}},
+                         StripOnInput -> False
+                        ],
+                        GridBox[
+                         {
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Message\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"The token was successfully deleted.\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Tag\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"TokenDeleted\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Date\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              TemplateBox[
+                               {
+                                RowBox[
+                                 {
+                                  "\"Wed 23 Mar 2022 21:30:07\"",
+                                  StyleBox["\"GMT\"", FontColor -> GrayLevel[0.5]]
+                                 }
+                                ],
+                                RowBox[
+                                 {
+                                  "DateObject",
+                                  "[",
+                                  RowBox[
+                                   {
+                                    RowBox[
+                                     {
+                                      "{",
+                                      RowBox[
+                                       {
+                                        "2022",
+                                        ",",
+                                        "3",
+                                        ",",
+                                        "23",
+                                        ",",
+                                        "21",
+                                        ",",
+                                        "30",
+                                        ",",
+                                        "7.738245`7.641217463018908"
+                                       }
+                                      ],
+                                      "}"
+                                     }
+                                    ],
+                                    ",",
+                                    "\"Instant\"",
+                                    ",",
+                                    "\"Gregorian\"",
+                                    ",",
+                                    "0.`"
+                                   }
+                                  ],
+                                  "]"
+                                 }
+                                ]
+                               },
+                               "DateObject",
+                               Editable -> False
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"TokenID\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"feDt88UaAVkwtp27LTKO0e\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Creator\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"richardh-testing-1@example.com\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"PublisherID\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"CreatorUUID\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"e1cda2fe-8e45-4fe2-b235-69c9d6850a5b\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"PublisherUUID\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"39f6e806-fbe2-4ff5-9881-aaf48aef30ab\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"CreationDate\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              TemplateBox[
+                               {
+                                RowBox[
+                                 {
+                                  "\"Wed 23 Mar 2022 21:27:58\"",
+                                  StyleBox["\"GMT\"", FontColor -> GrayLevel[0.5]]
+                                 }
+                                ],
+                                RowBox[
+                                 {
+                                  "DateObject",
+                                  "[",
+                                  RowBox[
+                                   {
+                                    RowBox[
+                                     {
+                                      "{",
+                                      RowBox[
+                                       {
+                                        "2022",
+                                        ",",
+                                        "3",
+                                        ",",
+                                        "23",
+                                        ",",
+                                        "21",
+                                        ",",
+                                        "27",
+                                        ",",
+                                        "58.685065`8.521102563286952"
+                                       }
+                                      ],
+                                      "}"
+                                     }
+                                    ],
+                                    ",",
+                                    "\"Instant\"",
+                                    ",",
+                                    "\"Gregorian\"",
+                                    ",",
+                                    "0.`"
+                                   }
+                                  ],
+                                  "]"
+                                 }
+                                ]
+                               },
+                               "DateObject",
+                               Editable -> False
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"ExpirationDate\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["None", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[
+                               {"\"AllowedEndpoints\"", "\": \""},
+                               "RowDefault"
+                              ],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              RowBox[
+                               {
+                                "{",
+                                RowBox[
+                                 {
+                                  "\"AcquireResource\"",
+                                  ",",
+                                  "\"CheckPublisherToken\"",
+                                  ",",
+                                  "\"DefaultPublisher\"",
+                                  ",",
+                                  "\"EditSubmission\"",
+                                  ",",
+                                  "\"GetPublisherToken\"",
+                                  ",",
+                                  "\"GetSubmission\"",
+                                  ",",
+                                  "\"PublisherInformation\"",
+                                  ",",
+                                  "\"PublisherSlug\"",
+                                  ",",
+                                  "\"StageSubmissionFile\"",
+                                  ",",
+                                  "\"SubmitResource\"",
+                                  ",",
+                                  "\"UpdateCheck\"",
+                                  ",",
+                                  "\"UserPublishers\""
+                                 }
+                                ],
+                                "}"
+                               }
+                              ],
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[
+                               {"\"ResourceSystemBase\"", "\": \""},
+                               "RowDefault"
+                              ],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Version\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["1", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Name\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["None", "SummaryItem"]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"TokenString\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox[
+                              "\"g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-feDt88UaAVkwtp27LTKO0e-1\"",
+                              "SummaryItem"
+                             ]
+                            }
+                           ]
+                          },
+                          {
+                           RowBox[
+                            {
+                             TagBox[
+                              TemplateBox[{"\"Tag\"", "\": \""}, "RowDefault"],
+                              "SummaryItemAnnotation"
+                             ],
+                             "\[InvisibleSpace]",
+                             TagBox["\"TokenDeleted\"", "SummaryItem"]
+                            }
+                           ]
+                          }
+                         },
+                         GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+                         AutoDelete -> False,
+                         GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                         GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+                         BaseStyle -> {
+                          ShowStringCharacters -> False,
+                          NumberMarks -> False,
+                          PrintPrecision -> 3,
+                          ShowSyntaxStyles -> False
+                         }
+                        ]
+                       }
+                      },
+                      GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+                      AutoDelete -> False,
+                      GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                      BaselinePosition -> {1, 1}
+                     ]
+                    },
+                    Dynamic[Typeset`open$$],
+                    ImageSize -> Automatic
+                   ]
+                  },
+                  "SummaryPanel"
+                 ],
+                 DynamicModuleValues :> { }
+                ],
+                "]"
+               }
+              ],
+              Success[
+               "TokenDeleted",
+               Association[
+                "MessageTemplate" -> "The token was successfully deleted.",
+                "Tag" -> "TokenDeleted",
+                "Date" -> DateObject[
+                 {2022, 3, 23, 21, 30, 7.738245`7.641217463018908},
+                 "Instant",
+                 "Gregorian",
+                 0.
+                ],
+                "TokenID" -> "feDt88UaAVkwtp27LTKO0e",
+                "Creator" -> "richardh-testing-1@example.com",
+                "PublisherID" -> "MyPublisher",
+                "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
+                "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
+                "CreationDate" -> DateObject[
+                 {2022, 3, 23, 21, 27, 58.685065`8.521102563286952},
+                 "Instant",
+                 "Gregorian",
+                 0.
+                ],
+                "ExpirationDate" -> None,
+                "AllowedEndpoints" -> {
+                 "AcquireResource",
+                 "CheckPublisherToken",
+                 "DefaultPublisher",
+                 "EditSubmission",
+                 "GetPublisherToken",
+                 "GetSubmission",
+                 "PublisherInformation",
+                 "PublisherSlug",
+                 "StageSubmissionFile",
+                 "SubmitResource",
+                 "UpdateCheck",
+                 "UserPublishers"
+                },
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "Version" -> 1,
+                "Name" -> None,
+                "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-feDt88UaAVkwtp27LTKO0e-1"
+               ]
+              ],
+              Editable -> False,
+              SelectWithContents -> True,
+              Selectable -> False
+             ]
+            ],
+            "Output",
+            CellLabel -> "Out[4]=",
+            CellID -> 305540731
+           ]
+          },
+          Open
+         ]
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      "More Examples",
+      "ExtendedExamplesSection",
+      CellTags -> "ExtendedExamples",
+      CellID -> 13759640
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Scope", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 5063815
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Generalizations & Extensions", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 32859758
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["Options", "ExampleSection"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleSection",
+         CellID -> 508854732
+        ],
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["XXXX", "ExampleSubsection"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleSubsection",
+         CellID -> 315403792
+        ],
+        Cell[
+         BoxData[
+          InterpretationBox[
+           Cell["XXXX", "ExampleSubsection"],
+           $Line = 0;
+           Null
+          ]
+         ],
+         "ExampleSubsection",
+         CellID -> 62964331
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Applications", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 139337869
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Properties & Relations", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 432987196
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Possible Issues", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 18276162
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Interactive Examples", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 285132813
+     ],
+     Cell[
+      BoxData[
+       InterpretationBox[
+        Cell["Neat Examples", "ExampleSection"],
+        $Line = 0;
+        Null
+       ]
+      ],
+      "ExampleSection",
+      CellID -> 75844947
+     ]
+    },
+    Open
+   ]
+  ]
+ },
+ WindowStatusArea -> Automatic,
+ TaggingRules -> {
+  "InformationPopupMenuItemAdded" -> True,
+  "Author" -> "rhennigan",
+  "CreationDate" -> "03-23-2022 15:45:44",
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 3, 23, 17, 33, 2.4573972`8.143050342800498},
+   "Instant",
+   "Gregorian",
+   -4.
+  ],
+  "NotebookUUID" -> "07ced920-47c2-47ed-8d56-8454fef045b1"
+ },
+ CellContext -> "Global`",
+ FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (March 19, 2022)",
+ StyleDefinitions -> FrontEnd`FileName[
+  {"Wolfram"},
+  "FunctionPageStylesExt.nb",
+  CharacterEncoding -> "UTF-8"
+ ],
+ ExpressionUUID -> "07ced920-47c2-47ed-8d56-8454fef045b1"
+]
