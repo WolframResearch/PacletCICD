@@ -190,9 +190,10 @@ VerificationTest[
 ]
 
 VerificationTest[
-    EchoEvaluation @ token3[ "CreationDate" ],
+    token3[ "CreationDate" ],
     _DateObject? DateObjectQ,
-    TestID -> "PublisherTokenObject-CreationDate-1@@Tests/PublisherTokens.wlt:192,1-196,2"
+    SameTest -> MatchQ,
+    TestID   -> "PublisherTokenObject-CreationDate-1@@Tests/PublisherTokens.wlt:192,1-196,2"
 ]
 
 VerificationTest[
@@ -226,7 +227,8 @@ VerificationTest[
 VerificationTest[
     token1[ "Dataset" ],
     _Dataset,
-    TestID -> "PublisherTokenObject-Dataset-1@@Tests/PublisherTokens.wlt:226,1-230,2"
+    SameTest -> MatchQ,
+    TestID   -> "PublisherTokenObject-Dataset-1@@Tests/PublisherTokens.wlt:226,1-230,2"
 ]
 
 VerificationTest[
@@ -345,14 +347,14 @@ VerificationTest[
 ]
 
 VerificationTest[
-    While[ $expiration24 < Now, Pause[ 1 ] ],
+    While[ $expirationNow < Now, Pause[ 1 ] ],
     Null,
     TimeConstraint -> 6,
     TestID         -> "PublisherTokenObject-Expiration-Wait@@Tests/PublisherTokens.wlt:347,1-352,2"
 ]
 
 VerificationTest[
-    withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
+    withoutToken @ Quiet @ FailureQ @ EchoEvaluation @ PublisherTokenObject @ token5[ "TokenString" ],
     True,
     TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:354,1-358,2"
 ]
