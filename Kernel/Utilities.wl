@@ -27,6 +27,8 @@ withDNCSettings[ { type_, tgt_ }, eval_ ] := (
     ]
 );
 
+withDNCSettings // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*withConsoleType*)
@@ -39,11 +41,14 @@ withConsoleType[ type_, eval_ ] := (
     ]
 );
 
+withConsoleType // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*autoConsole*)
 autoConsole // Attributes = { HoldFirst };
 autoConsole[ eval_ ] := withConsoleType[ Automatic, eval ];
+autoConsole // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -166,6 +171,8 @@ setOutput[ _, name_, value_ ] := (
     ]
 );
 
+setOutput // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*$gitHubEnv*)
@@ -195,6 +202,8 @@ parentPacletDirectory[ file_ ] := Enclose[
     ] &
 ];
 
+parentPacletDirectory // catchUndefined;
+
 parentPacletDirectory0[ file_ ] :=
     Quiet[ SelectFirst[ FixedPointList[ DirectoryName, file, 50 ],
                         pacletDirectoryQ,
@@ -202,6 +211,8 @@ parentPacletDirectory0[ file_ ] :=
            ],
            PacletManager`CreatePaclet::badarg
     ];
+
+parentPacletDirectory0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

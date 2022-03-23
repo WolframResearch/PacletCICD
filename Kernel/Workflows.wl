@@ -17,6 +17,8 @@ ClearAll[
 
 Begin[ "`Private`" ];
 
+$ContextAliases[ "sp`" ] = "System`Private`";
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*WorkflowEvaluate*)
@@ -87,7 +89,7 @@ Workflow[
     name_String,
     as_Association,
     opts0: OptionsPattern[ ]
-]? System`Private`HoldNotValidQ :=
+]? sp`HoldNotValidQ :=
     catchTop @ Module[ { opts, ts, new },
         opts = FilterRules[ { opts0 }, { ProcessEnvironment } ];
 
@@ -100,7 +102,7 @@ Workflow[
         With[ { a = new },
             If[ FailureQ @ a,
                 a,
-                System`Private`HoldSetValid @ Workflow[ name, a ]
+                sp`HoldSetValid @ Workflow[ name, a ]
             ]
         ]
     ];
@@ -180,7 +182,7 @@ workflowNameQ[ name_ ] := MemberQ[ $workflowNames, toWorkflowName @ name ];
 workflowQ // Attributes = { HoldFirst };
 
 workflowQ[ workflow: Workflow[ name_? StringQ, as_? AssociationQ ] ] :=
-    System`Private`HoldValidQ @ workflow;
+    sp`HoldValidQ @ workflow;
 
 workflowQ[ ___ ] := False;
 
@@ -310,7 +312,7 @@ WorkflowJob[
     name_String,
     as_Association,
     opts: OptionsPattern[ ]
-]? System`Private`HoldNotValidQ :=
+]? sp`HoldNotValidQ :=
     catchTop @ withOS[ OptionValue @ OperatingSystem,
     Module[ { new },
         new = postProcessYAML @ makeWorkflowJobData[ name, <| as, opts |> ];
@@ -318,7 +320,7 @@ WorkflowJob[
         With[ { a = new },
             If[ FailureQ @ a,
                 a,
-                System`Private`HoldSetValid @ WorkflowJob[ name, a ]
+                sp`HoldSetValid @ WorkflowJob[ name, a ]
             ]
         ]
     ] ];
@@ -444,7 +446,7 @@ jobNameQ[ name_ ] := MemberQ[ $jobNames, name ];
 workflowJobQ // Attributes = { HoldFirst };
 
 workflowJobQ[ job: WorkflowJob[ name_? StringQ, as_? AssociationQ ] ] :=
-    System`Private`HoldValidQ @ job;
+    sp`HoldValidQ @ job;
 
 workflowJobQ[ ___ ] := False;
 
@@ -540,14 +542,14 @@ WorkflowStep[
     name_String,
     as_Association,
     opts: OptionsPattern[ ]
-]? System`Private`HoldNotValidQ :=
+]? sp`HoldNotValidQ :=
     catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { new },
         new = postProcessYAML @ makeWorkflowStepData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
             If[ FailureQ @ a,
                 a,
-                System`Private`HoldSetValid @ WorkflowStep[ name, a ]
+                sp`HoldSetValid @ WorkflowStep[ name, a ]
             ]
         ]
     ]];
@@ -683,7 +685,7 @@ stepNameQ[ name_ ] := MemberQ[ $stepNames, name ];
 workflowStepQ // Attributes = { HoldFirst };
 
 workflowStepQ[ job: WorkflowStep[ name_? StringQ, as_? AssociationQ ] ] :=
-    System`Private`HoldValidQ @ job;
+    sp`HoldValidQ @ job;
 
 workflowStepQ[ ___ ] := False;
 
