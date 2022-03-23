@@ -67,7 +67,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    EchoEvaluation @ With[ { rsb = Environment[ "RESOURCE_SYSTEM_BASE" ] },
+    With[ { rsb = Environment[ "RESOURCE_SYSTEM_BASE" ] },
         If[ StringQ @ rsb, $ResourceSystemBase = rsb, $ResourceSystemBase ]
     ],
     _String? StringQ,
@@ -76,7 +76,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    EchoEvaluation @ With[
+    With[
         {
             user = Environment[ "TEST_CLOUD_ACCOUNT_USER" ],
             pass = Environment[ "TEST_CLOUD_ACCOUNT_PASSWORD" ]
@@ -93,7 +93,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    EchoEvaluation @ With[ { publisher = Environment[ "TEST_PUBLISHER_ID" ] },
+    With[ { publisher = Environment[ "TEST_PUBLISHER_ID" ] },
         $PublisherID = If[ StringQ @ publisher,
                            publisher,
                            ResourceSystemClient`GetDefaultPublisherID[ ]
@@ -347,16 +347,17 @@ VerificationTest[
 ]
 
 VerificationTest[
-    While[ $expirationNow < Now, Pause[ 1 ] ],
+    While[ $expirationNow + Quantity[ 1, "Seconds" ] < Now, Pause[ 1 ] ],
     Null,
-    TimeConstraint -> 6,
+    TimeConstraint -> 20,
     TestID         -> "PublisherTokenObject-Expiration-Wait@@Tests/PublisherTokens.wlt:349,1-354,2"
 ]
 
 VerificationTest[
-    withoutToken @ Quiet @ FailureQ @ EchoEvaluation @ PublisherTokenObject @ token5[ "TokenString" ],
+    Pause[ 3 ];
+    withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
     True,
-    TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:356,1-360,2"
+    TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:356,1-361,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -366,21 +367,21 @@ VerificationTest[
     withoutToken @ DeletePublisherToken @ token1,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:365,1-370,2"
+    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:366,1-371,2"
 ]
 
 VerificationTest[
     withoutToken @ DeleteObject @ token2,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:372,1-377,2"
+    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:373,1-378,2"
 ]
 
 VerificationTest[
     withoutToken @ DeletePublisherToken @ { token3, token4 },
     { Success[ "TokenDeleted", _ ].. },
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:379,1-384,2"
+    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:380,1-385,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -391,5 +392,5 @@ VerificationTest[
         CloudDisconnect[ ]
     ],
     Null,
-    TestID -> "CloudDisconnect@@Tests/PublisherTokens.wlt:389,1-395,2"
+    TestID -> "CloudDisconnect@@Tests/PublisherTokens.wlt:390,1-396,2"
 ]
