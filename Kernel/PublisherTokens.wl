@@ -107,9 +107,8 @@ createPublisherToken[ name_, expiration_, publisher_, rsBase_, endpoints_ ] :=
     ];
 
 createPublisherToken[ as_Association ] := Enclose[
-    Module[ { params, info },
-        params = <| "ContentFormat" -> "Compressed", "Data" -> Compress @ as |>;
-        info = rsc`ResourceSystemExecute[ "CreatePublisherToken", params ];
+    Module[ { info },
+        info = rsExecute[ "CreatePublisherToken", as ];
         If[ AssociationQ @ info,
             PublisherTokenObject @ info,
             info
@@ -117,6 +116,27 @@ createPublisherToken[ as_Association ] := Enclose[
     ],
     throwMessageFailure[ CreatePublisherToken::ServerError ] &
 ];
+
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*withRSTokenSettings*)
+withRSTokenSettings // Attributes = { HoldFirst };
+
+withRSTokenSettings[ eval_, publisher_, rsBase_ ] :=
+    Block[
+        {
+            $ResourceSystemBase = toTokenResourceSystemBase @ rsBase,
+            $PublisherID        = toTokenPublisherID @ publisher
+        },
+        eval
+    ];
+
+withRSTokenSettings[ publisher_, rsBase_ ] :=
+    Function[ Null,
+              withRSTokenSettings[ #, publisher, rsBase ],
+              { HoldAllComplete }
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -218,7 +238,7 @@ toTokenPublisherID[ Automatic ] :=
     Module[ { pub },
         If[ StringQ @ $PublisherID,
             $PublisherID,
-            pub = Catch @ ResourceSystemClient`GetDefaultPublisherID[ ];
+            pub = Catch @ rsc`GetDefaultPublisherID[ ];
             If[ StringQ @ pub,
                 pub,
                 throwMessageFailure[ CreatePublisherToken::NoDefaultPublisher ]
@@ -305,6 +325,9 @@ tokenEnabledEndpoints // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*DeletePublisherToken*)
+DeletePublisherToken::InvalidToken =
+"The specified token is not valid.";
+
 DeletePublisherToken::InternalError =
 "An unexpected error occurred.";
 
@@ -312,9 +335,23 @@ DeletePublisherToken::InternalError =
 (* ::Subsection::Closed:: *)
 (*Main definition*)
 DeletePublisherToken[ token_PublisherTokenObject? publisherTokenObjectQ ] :=
-    catchTop @ Enclose[
-        Failure[ "NotImplemented", <| |> ],
-        throwMessageFailure[ DeletePublisherToken::InternalError, # ] &
+    catchTop @ deletePublisherToken @ token;
+
+DeletePublisherToken[ tokens_List ] := Map[ DeletePublisherToken, tokens ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*deletePublisherToken*)
+deletePublisherToken[ token_PublisherTokenObject ] :=
+    deletePublisherToken @ token[ "TokenString" ];
+
+deletePublisherToken[ token_String ] :=
+    Module[ { res },
+        res = rsExecute[ "DeletePublisherToken", { "TokenString" -> token } ];
+        If[ MatchQ[ res, _Success ],
+            res,
+            throwMessageFailure[ DeletePublisherToken::InvalidToken ]
+        ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -334,8 +371,19 @@ PublisherTokenObject::InvalidTokenRule =
 PublisherTokenObject::InvalidTokenProperty =
 "Invalid token property: `1`";
 
+PublisherTokenObject::TokenNotFound =
+"The specified token could not be found.";
+
 PublisherTokenObject::Undefined =
 "Unhandled arguments for `1` in `2`.";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+PublisherTokenObject // Options = {
+    PublisherID        -> Automatic,
+    ResourceSystemBase -> Automatic
+};
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -345,7 +393,55 @@ PublisherTokenObject[ as0_Association ]? sp`HoldNotValidQ :=
         sp`HoldSetValid @ PublisherTokenObject @ as /; AssociationQ @ as
     ];
 
-PublisherTokenObject[ name_String ]
+PublisherTokenObject[ token_PublisherTokenObject ] := token;
+
+PublisherTokenObject[ token_String? tokenStringQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ withRSTokenSettings[
+        fromTokenString @ token,
+        OptionValue @ PublisherID,
+        OptionValue @ ResourceSystemBase
+    ];
+
+PublisherTokenObject[ name_String? StringQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ withRSTokenSettings[
+        fromTokenName @ name,
+        OptionValue @ PublisherID,
+        OptionValue @ ResourceSystemBase
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*fromTokenString*)
+fromTokenString[ token_String ] :=
+    Module[ { info },
+        info = rsExecute[ "GetPublisherToken", { "TokenString" -> token } ];
+        If[ AssociationQ @ info,
+            PublisherTokenObject @ info,
+            throwMessageFailure[ PublisherTokenObject::TokenNotFound ]
+        ]
+    ];
+
+fromTokenString // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*fromTokenName*)
+fromTokenName[ name_String ] :=
+    Module[ { tokens },
+        tokens = rsExecute[ "GetPublisherToken", { "Name" -> name } ];
+        PublisherTokenObject @ mostRecentToken @ tokens
+    ];
+
+fromTokenName // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*mostRecentToken*)
+mostRecentToken[ tokens: { __Association } ] :=
+    First @ ReverseSortBy[ tokens, Lookup[ "CreationDate" ] ];
+
+mostRecentToken[ ___ ] :=
+    throwMessageFailure[ PublisherTokenObject::TokenNotFound ]
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -648,6 +744,18 @@ $clientDroppedTokenKeys = {
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*rsExecute*)
+rsExecute[ endpoint_, params_ ] := (
+    Needs[ "ResourceSystemClient`" -> None ];
+    rsc`ResourceSystemExecute[
+        endpoint,
+        { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
+        "QuietAPICalls" -> True
+    ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
