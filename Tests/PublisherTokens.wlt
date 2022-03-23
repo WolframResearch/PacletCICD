@@ -205,7 +205,7 @@ VerificationTest[
 VerificationTest[
     Less[
         Quantity[ 0, "Minutes" ],
-        Now - token3[ "CreationDate" ],
+        Echo[ Now, "Now" ] - Echo[ token3[ "CreationDate" ], "CreationDate" ],
         Quantity[ 30, "Minutes" ]
     ],
     True,
