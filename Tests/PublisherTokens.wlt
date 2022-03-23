@@ -190,7 +190,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    token3[ "CreationDate" ],
+    EchoEvaluation @ token3[ "CreationDate" ],
     _DateObject? DateObjectQ,
     TestID -> "PublisherTokenObject-CreationDate-1@@Tests/PublisherTokens.wlt:192,1-196,2"
 ]
