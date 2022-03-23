@@ -380,3 +380,14 @@ VerificationTest[
     SameTest -> MatchQ,
     TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:377,1-382,2"
 ]
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Cleanup*)
+VerificationTest[
+    If[ Environment[ "TEST_CLOUD_ACCOUNT_USER" ] === $CloudUserID,
+        CloudDisconnect[ ]
+    ],
+    Null,
+    TestID -> "CloudDisconnect"
+]
