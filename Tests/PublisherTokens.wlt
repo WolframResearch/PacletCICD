@@ -193,13 +193,13 @@ VerificationTest[
     token3[ "CreationDate" ],
     _DateObject? DateObjectQ,
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-CreationDate-1@@Tests/PublisherTokens.wlt:192,1-196,2"
+    TestID   -> "PublisherTokenObject-CreationDate-1@@Tests/PublisherTokens.wlt:192,1-197,2"
 ]
 
 VerificationTest[
     Equal[ token3[ "CreationDate" ][ "TimeZone" ], 0 ],
     True,
-    TestID -> "PublisherTokenObject-CreationDate-2@@Tests/PublisherTokens.wlt:198,1-202,2"
+    TestID -> "PublisherTokenObject-CreationDate-2@@Tests/PublisherTokens.wlt:199,1-203,2"
 ]
 
 VerificationTest[
@@ -209,50 +209,50 @@ VerificationTest[
         Quantity[ 30, "Minutes" ]
     ],
     True,
-    TestID -> "PublisherTokenObject-CreationDate-3@@Tests/PublisherTokens.wlt:204,1-212,2"
+    TestID -> "PublisherTokenObject-CreationDate-3@@Tests/PublisherTokens.wlt:205,1-213,2"
 ]
 
 VerificationTest[
     token1[ "Creator" ],
     $CloudUserID,
-    TestID -> "PublisherTokenObject-Creator@@Tests/PublisherTokens.wlt:214,1-218,2"
+    TestID -> "PublisherTokenObject-Creator@@Tests/PublisherTokens.wlt:215,1-219,2"
 ]
 
 VerificationTest[
     token1[ "CreatorUUID" ],
     $CloudUserUUID,
-    TestID -> "PublisherTokenObject-CreatorUUID@@Tests/PublisherTokens.wlt:220,1-224,2"
+    TestID -> "PublisherTokenObject-CreatorUUID@@Tests/PublisherTokens.wlt:221,1-225,2"
 ]
 
 VerificationTest[
     token1[ "Dataset" ],
     _Dataset,
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-Dataset-1@@Tests/PublisherTokens.wlt:226,1-230,2"
+    TestID   -> "PublisherTokenObject-Dataset-1@@Tests/PublisherTokens.wlt:227,1-232,2"
 ]
 
 VerificationTest[
     Normal[ token1[ "Dataset" ], Dataset ],
     Normal[ Dataset @ token1 @ All, Dataset ],
-    TestID -> "PublisherTokenObject-Dataset-2@@Tests/PublisherTokens.wlt:232,1-236,2"
+    TestID -> "PublisherTokenObject-Dataset-2@@Tests/PublisherTokens.wlt:234,1-238,2"
 ]
 
 VerificationTest[
     Equal[ token4[ "ExpirationDate" ], token4 @ ExpirationDate, $expiration24 ],
     True,
-    TestID -> "PublisherTokenObject-ExpirationDate@@Tests/PublisherTokens.wlt:238,1-242,2"
+    TestID -> "PublisherTokenObject-ExpirationDate@@Tests/PublisherTokens.wlt:240,1-244,2"
 ]
 
 VerificationTest[
     token1[ "Name" ],
     None,
-    TestID -> "PublisherTokenObject-Name-Anonymous@@Tests/PublisherTokens.wlt:244,1-248,2"
+    TestID -> "PublisherTokenObject-Name-Anonymous@@Tests/PublisherTokens.wlt:246,1-250,2"
 ]
 
 VerificationTest[
     token2[ "Name" ],
     $deleteMeName,
-    TestID -> "PublisherTokenObject-Name-Named@@Tests/PublisherTokens.wlt:250,1-254,2"
+    TestID -> "PublisherTokenObject-Name-Named@@Tests/PublisherTokens.wlt:252,1-256,2"
 ]
 
 VerificationTest[
@@ -279,13 +279,13 @@ VerificationTest[
         ]
     },
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-Properties@@Tests/PublisherTokens.wlt:256,1-281,2"
+    TestID   -> "PublisherTokenObject-Properties@@Tests/PublisherTokens.wlt:258,1-283,2"
 ]
 
 VerificationTest[
     token1[ "PublisherID" ] === token1 @ PublisherID === $PublisherID,
     True,
-    TestID -> "PublisherTokenObject-PublisherID@@Tests/PublisherTokens.wlt:283,1-287,2"
+    TestID -> "PublisherTokenObject-PublisherID@@Tests/PublisherTokens.wlt:285,1-289,2"
 ]
 
 VerificationTest[
@@ -297,7 +297,7 @@ VerificationTest[
         "AccountInformation",
         "UUID"
     ],
-    TestID -> "PublisherTokenObject-PublisherUUID@@Tests/PublisherTokens.wlt:289,1-299,2"
+    TestID -> "PublisherTokenObject-PublisherUUID@@Tests/PublisherTokens.wlt:291,1-301,2"
 ]
 
 VerificationTest[
@@ -307,28 +307,28 @@ VerificationTest[
         $ResourceSystemBase
     ],
     True,
-    TestID -> "PublisherTokenObject-ResourceSystemBase@@Tests/PublisherTokens.wlt:301,1-309,2"
+    TestID -> "PublisherTokenObject-ResourceSystemBase@@Tests/PublisherTokens.wlt:303,1-311,2"
 ]
 
 VerificationTest[
     $tokenByteArray = token3[ "TokenByteArray" ],
     _ByteArray? ByteArrayQ,
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-TokenByteArray@@Tests/PublisherTokens.wlt:311,1-316,2"
+    TestID   -> "PublisherTokenObject-TokenByteArray@@Tests/PublisherTokens.wlt:313,1-318,2"
 ]
 
 VerificationTest[
     $tokenString = token3[ "TokenString" ],
     _String? StringQ,
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-TokenString@@Tests/PublisherTokens.wlt:318,1-323,2"
+    TestID   -> "PublisherTokenObject-TokenString@@Tests/PublisherTokens.wlt:320,1-325,2"
 ]
 
 VerificationTest[
     token1[ "Version" ],
     (_Integer | _Real)? Positive,
     SameTest -> MatchQ,
-    TestID   -> "PublisherTokenObject-Version@@Tests/PublisherTokens.wlt:325,1-330,2"
+    TestID   -> "PublisherTokenObject-Version@@Tests/PublisherTokens.wlt:327,1-332,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -337,26 +337,26 @@ VerificationTest[
 VerificationTest[
     withoutToken @ PublisherTokenObject @ $deleteMeName,
     token2,
-    TestID -> "PublisherTokenObject-Get-Name@@Tests/PublisherTokens.wlt:335,1-339,2"
+    TestID -> "PublisherTokenObject-Get-Name@@Tests/PublisherTokens.wlt:337,1-341,2"
 ]
 
 VerificationTest[
     withoutToken @ PublisherTokenObject @ $tokenString,
     token3,
-    TestID -> "PublisherTokenObject-Get-TokenString@@Tests/PublisherTokens.wlt:341,1-345,2"
+    TestID -> "PublisherTokenObject-Get-TokenString@@Tests/PublisherTokens.wlt:343,1-347,2"
 ]
 
 VerificationTest[
     While[ $expirationNow < Now, Pause[ 1 ] ],
     Null,
     TimeConstraint -> 6,
-    TestID         -> "PublisherTokenObject-Expiration-Wait@@Tests/PublisherTokens.wlt:347,1-352,2"
+    TestID         -> "PublisherTokenObject-Expiration-Wait@@Tests/PublisherTokens.wlt:349,1-354,2"
 ]
 
 VerificationTest[
     withoutToken @ Quiet @ FailureQ @ EchoEvaluation @ PublisherTokenObject @ token5[ "TokenString" ],
     True,
-    TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:354,1-358,2"
+    TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:356,1-360,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -366,21 +366,21 @@ VerificationTest[
     withoutToken @ DeletePublisherToken @ token1,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:363,1-368,2"
+    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:365,1-370,2"
 ]
 
 VerificationTest[
     withoutToken @ DeleteObject @ token2,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:370,1-375,2"
+    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:372,1-377,2"
 ]
 
 VerificationTest[
     withoutToken @ DeletePublisherToken @ { token3, token4 },
     { Success[ "TokenDeleted", _ ].. },
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:377,1-382,2"
+    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:379,1-384,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -391,5 +391,5 @@ VerificationTest[
         CloudDisconnect[ ]
     ],
     Null,
-    TestID -> "CloudDisconnect"
+    TestID -> "CloudDisconnect@@Tests/PublisherTokens.wlt:389,1-395,2"
 ]
