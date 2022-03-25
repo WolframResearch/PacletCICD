@@ -10130,32 +10130,18 @@ Notebook[
            ],
            Cell[
             TextData[
-             {
-              ButtonBox[
-               "Features",
-               BaseStyle -> "Hyperlink",
-               ButtonData -> {URL["https://github.com/features/actions"], None},
-               ButtonNote -> "https://github.com/features/actions"
-              ],
-              ButtonBox[
-               " \[CenterDot] ",
-               BaseStyle -> "Hyperlink",
-               ButtonData -> {
-                URL["https://github.com/marketplace/actions/test-paclet"],
-                None
-               },
-               ButtonNote -> "https://github.com/marketplace/actions/test-paclet"
-              ],
-              ButtonBox[
-               "GitHub Actions \[CenterDot] GitHub",
-               BaseStyle -> "Hyperlink",
-               ButtonData -> {URL["https://github.com/features/actions"], None},
-               ButtonNote -> "https://github.com/features/actions"
-              ]
-             }
+             ButtonBox[
+              "Features \[CenterDot] GitHub Actions \[CenterDot] GitHub",
+              BaseStyle -> "Hyperlink",
+              ButtonData -> {
+               URL["https://github.com/marketplace/actions/test-paclet"],
+               None
+              },
+              ButtonNote -> "https://github.com/marketplace/actions/test-paclet"
+             ]
             ],
             "Item",
-            CellID -> 365910252
+            CellID -> 437042005
            ]
           },
           Open
