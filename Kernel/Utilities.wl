@@ -138,7 +138,7 @@ ghRelativePath[ file_ ] := Enclose[
 ghRelativePath // catchUndefined;
 
 (* ::**********************************************************************:: *)
-(* ::Subsubsubsection::Closed:: *)
+(* ::Subsubsection::Closed:: *)
 (*setOutput*)
 setOutput[ name_, value_ ] :=
     If[ TrueQ @ $gitHub, setOutput[ $gitHubEnv, name, value ] ];

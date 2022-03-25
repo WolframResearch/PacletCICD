@@ -29,6 +29,13 @@ jobs:
 
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
+      
+      - name: Upload stack data
+        uses: actions/upload-artifact@v2
+        with:
+          name: check-paclet-stacks
+          path: ${{ env.STACK_HISTORY }}
+          if-no-files-found: ignore
 
   test-paclet:
     name: Test
@@ -43,6 +50,13 @@ jobs:
 
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
+      
+      - name: Upload stack data
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-paclet-stacks
+          path: ${{ env.STACK_HISTORY }}
+          if-no-files-found: ignore
 
   release-paclet:
     name: Release
@@ -59,6 +73,13 @@ jobs:
 
       - name: Build paclet
         run: wolframscript Scripts/BuildPaclet.wls
+      
+      - name: Upload stack data
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-paclet-stacks
+          path: ${{ env.STACK_HISTORY }}
+          if-no-files-found: ignore
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
@@ -103,3 +124,10 @@ jobs:
 
       - name: Submit paclet
         run: wolframscript Scripts/SubmitPaclet.wls
+
+      - name: Upload stack data
+        uses: actions/upload-artifact@v2
+        with:
+          name: submit-paclet-stacks
+          path: ${{ env.STACK_HISTORY }}
+          if-no-files-found: ignore

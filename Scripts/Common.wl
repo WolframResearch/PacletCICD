@@ -3,6 +3,33 @@
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Initialization*)
+$messageHistoryLength = 100;
+$messageNumber        = 0;
+$messageHistory       = <| |>;
+$stackHistory         = <| |>;
+
+Internal`AddHandler[ "Message", messageHandler ];
+
+messageHandler[ Hold[ msg_, True ] ] :=
+    StackInhibit @ Module[ { unprotected, keys, limit, drop },
+        $messageNumber += 1;
+
+        $messageHistory[ $messageNumber ] = HoldForm @ msg;
+        $stackHistory[   $messageNumber ] = Stack[ _ ];
+
+        keys  = Union[ Keys @ $messageHistory, Keys @ $stackHistory ];
+        limit = $messageNumber - $messageHistoryLength;
+        drop  = Select[ keys, ! TrueQ[ # > limit ] & ];
+
+        KeyDropFrom[ $messageHistory, drop ];
+        KeyDropFrom[ $stackHistory  , drop ];
+
+        Print[ "::warning::", msg ];
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*Definitions*)
 
 (* ::**********************************************************************:: *)
@@ -80,8 +107,18 @@ setResourceSystemBase[ ] := (
 (*checkResult*)
 checkResult // Attributes = { HoldFirst };
 checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
-    Module[ { result, ctx, name, full },
+    Module[ { result, stacks, ctx, name, full },
         result = eval;
+        If[ $messageNumber > 0,
+            stacks = ExpandFileName[ "stack_history.wxf" ];
+            Print[ "::notice::Exporting stack data: ", stacks ];
+            Export[ stacks,
+                    $stackHistory,
+                    "WXF",
+                    PerformanceGoal -> "Size"
+            ];
+            Wolfram`PacletCICD`Private`setOutput[ "STACK_HISTORY", stacks ]
+        ];
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
             ,
             ctx  = Context @ Unevaluated @ sym;
