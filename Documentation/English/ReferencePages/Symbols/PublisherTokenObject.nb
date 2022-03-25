@@ -400,7 +400,7 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 333012576],
+     Cell["Tutorials", "TutorialsSection", CellID -> 333012576],
      Cell[
       TextData[
        ButtonBox[
@@ -2456,11 +2456,7 @@ Notebook[
                               "Name",
                               Style[
                                "Name",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2521,11 +2517,7 @@ Notebook[
                               "Creator",
                               Style[
                                "Creator",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2580,11 +2572,7 @@ Notebook[
                               "PublisherID",
                               Style[
                                "PublisherID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2639,11 +2627,7 @@ Notebook[
                               "CreationDate",
                               Style[
                                "CreationDate",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2698,11 +2682,7 @@ Notebook[
                               "ExpirationDate",
                               Style[
                                "ExpirationDate",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2763,11 +2743,7 @@ Notebook[
                               "AllowedEndpoints",
                               Style[
                                "AllowedEndpoints",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2822,11 +2798,7 @@ Notebook[
                                 ],
                                 GrayLevel[0.5]
                                ],
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2863,11 +2835,7 @@ Notebook[
                               "ResourceSystemBase",
                               Style[
                                "ResourceSystemBase",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2922,11 +2890,7 @@ Notebook[
                               "Version",
                               Style[
                                "Version",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -2981,11 +2945,7 @@ Notebook[
                               "TokenByteArray",
                               Style[
                                "TokenByteArray",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -3109,11 +3069,7 @@ Notebook[
                               "CreatorUUID",
                               Style[
                                "CreatorUUID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -3168,11 +3124,7 @@ Notebook[
                               "PublisherUUID",
                               Style[
                                "PublisherUUID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -3742,14 +3694,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -3836,14 +3781,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
