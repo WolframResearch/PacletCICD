@@ -456,7 +456,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    withoutToken @ DeletePublisherToken @ { token3, token4, token5, token6 },
+    withoutToken @ DeletePublisherToken @ { token3, token4, token6 },
     { Success[ "TokenDeleted", _ ].. },
     SameTest -> MatchQ,
     TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:458,1-463,2"
