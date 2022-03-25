@@ -54,7 +54,9 @@ updatePacletInfo[ dir_ ] := Enclose[
         Print[ "    ReleaseID: ", id ];
         Print[ "    ReleaseDate: ", date <> "Z" ];
 
-        Confirm @ BinaryWrite[ file, new ]
+        Confirm @ WithCleanup[ BinaryWrite[ file, new ],
+                               Close @ file
+                  ]
     ],
     Function[
         Print[ "::error::Failed to update PacletInfo template parameters." ];
