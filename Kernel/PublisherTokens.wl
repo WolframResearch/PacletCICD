@@ -67,7 +67,7 @@ CreatePublisherToken // Options = {
     ExpirationDate     -> None,
     PublisherID        -> Automatic,
     ResourceSystemBase -> Automatic,
-    "AllowedEndpoints" -> All
+    "AllowedEndpoints" -> Automatic
 };
 
 (* ::**********************************************************************:: *)
@@ -111,7 +111,7 @@ createPublisherToken[ name_, expiration_, publisher_, rsBase_, endpoints_ ] :=
 
 createPublisherToken[ as_Association ] := Enclose[
     Module[ { info },
-        info = rsExecute[ "CreatePublisherToken", as ];
+        info = rsExecute[ CreatePublisherToken, as ];
         If[ AssociationQ @ info,
             PublisherTokenObject @ info,
             createPublisherFailure @ info
@@ -332,7 +332,7 @@ createPublisherFailure[ $Failed ] :=
     throwMessageFailure[ CreatePublisherToken::CreateTokenFailed ];
 
 createPublisherFailure[ fail_Failure ] :=
-    throwMessageFailure @ fail;
+    reissueRSMessage[ CreatePublisherToken, fail ];
 
 createPublisherFailure // catchUndefined;
 
@@ -344,6 +344,9 @@ DeletePublisherToken::InvalidToken =
 
 DeletePublisherToken::InternalError =
 "An unexpected error occurred.";
+
+DeletePublisherToken::ServerError =
+"The resource system server was unable to fulfill the request.";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -361,7 +364,7 @@ deletePublisherToken[ token_PublisherTokenObject ] :=
 
 deletePublisherToken[ token_String ] :=
     Module[ { res },
-        res = rsExecute[ "DeletePublisherToken", { "TokenString" -> token } ];
+        res = rsExecute[ DeletePublisherToken, { "TokenString" -> token } ];
         If[ MatchQ[ res, _Success ],
             res,
             throwMessageFailure[ DeletePublisherToken::InvalidToken ]
@@ -371,6 +374,9 @@ deletePublisherToken[ token_String ] :=
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*PublisherTokens*)
+PublisherTokens::ServerError =
+"The resource system server was unable to fulfill the request.";
+
 PublisherTokens[ ___ ] := Failure[ "NotImplemented", <| |> ];
 
 (* ::**********************************************************************:: *)
@@ -390,6 +396,9 @@ PublisherTokenObject::TokenNotFound =
 
 PublisherTokenObject::Undefined =
 "Unhandled arguments for `1` in `2`.";
+
+PublisherTokenObject::ServerError =
+"The resource system server was unable to fulfill the request.";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -428,7 +437,11 @@ PublisherTokenObject[ name_String? StringQ, opts: OptionsPattern[ ] ] :=
 (*fromTokenString*)
 fromTokenString[ token_String ] :=
     Module[ { info },
-        info = rsExecute[ "GetPublisherToken", { "TokenString" -> token } ];
+        info = rsExecute[
+            PublisherTokenObject,
+            "GetPublisherToken",
+            { "TokenString" -> token }
+        ];
         If[ AssociationQ @ info,
             PublisherTokenObject @ info,
             throwMessageFailure[ PublisherTokenObject::TokenNotFound ]
@@ -442,7 +455,11 @@ fromTokenString // catchUndefined;
 (*fromTokenName*)
 fromTokenName[ name_String ] :=
     Module[ { tokens },
-        tokens = rsExecute[ "GetPublisherToken", { "Name" -> name } ];
+        tokens = rsExecute[
+            PublisherTokenObject,
+            "GetPublisherToken",
+            { "Name" -> name }
+        ];
         PublisherTokenObject @ mostRecentToken @ tokens
     ];
 
@@ -763,7 +780,13 @@ $clientDroppedTokenKeys = {
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*rsExecute*)
-rsExecute[ endpoint_, params_ ] := (
+rsExecute[ head_Symbol, params_ ] :=
+    rsExecute[ head, SymbolName @ head, params ];
+
+rsExecute[ endpoint_String, params_ ] :=
+    rsExecute[ None, endpoint, params ];
+
+rsExecute[ None, endpoint_String, params_ ] := (
     Needs[ "ResourceSystemClient`" -> None ];
     rsc`ResourceSystemExecute[
         endpoint,
@@ -771,6 +794,45 @@ rsExecute[ endpoint_, params_ ] := (
         "QuietAPICalls" -> False
     ]
 );
+
+rsExecute[ head_, endpoint_String, params_ ] :=
+    Module[ { res },
+        Needs[ "ResourceSystemClient`" -> None ];
+        res = rsc`ResourceSystemExecute[
+            endpoint,
+            { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
+            "QuietAPICalls" -> Automatic
+        ];
+        If[ FailureQ @ res,
+            reissueRSMessage[ head, res ],
+            res
+        ]
+    ];
+
+rsExecute // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*reissueRSMessage*)
+reissueRSMessage[ head_, Failure[ tag_String, as_Association ] ] :=
+    reissueRSMessage[ head, tag, as ];
+
+reissueRSMessage[ head_, tag_String, as_Association ] :=
+    Module[ { template, params },
+        template = SelectFirst[
+            { as[ "MessageTemplate" ], as[ "Message" ] },
+            StringQ,
+            "An unexpected error occurred."
+        ];
+        params = Sequence @@ Lookup[ as, "MessageParameters", { } ];
+        MessageName[ head, tag ] = template;
+        throwMessageFailure[ MessageName[ head, tag ], params ]
+    ];
+
+reissueRSMessage[ head_, $Failed ] :=
+    Quiet @ throwMessageFailure @ head::ServerError;
+
+reissueRSMessage // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -782,6 +844,8 @@ hideTokenString[ expr_ ] :=
             token_String? tokenStringQ :> str
         ]
     ];
+
+hideTokenString // catchUndefined;
 
 $redactedTokenString = "\[LeftSkeleton]RedactedTokenString\[RightSkeleton]";
 

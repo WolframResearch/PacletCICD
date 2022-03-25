@@ -422,7 +422,7 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 38431213],
+     Cell["Tutorials", "TutorialsSection", CellID -> 38431213],
      Cell[
       TextData[
        ButtonBox[
@@ -2414,14 +2414,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -2508,14 +2501,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -5917,14 +5903,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -6011,14 +5990,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -11285,14 +11257,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -11379,14 +11344,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -11888,14 +11846,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -11982,14 +11933,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -13949,14 +13893,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -14043,14 +13980,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -16072,14 +16002,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -16166,14 +16089,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -18269,14 +18185,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -18363,14 +18272,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -18820,7 +18722,7 @@ Notebook[
   "CreationDate" -> "03-23-2022 15:44:44",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 3, 23, 17, 33, 1.6236813`7.963075775355943},
+   {2022, 3, 24, 11, 6, 36.7071007`9.31732497420028},
    "Instant",
    "Gregorian",
    -4.
