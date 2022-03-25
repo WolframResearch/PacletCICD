@@ -25,7 +25,7 @@ messageHandler[ Hold[ msg_, True ] ] :=
         KeyDropFrom[ $messageHistory, drop ];
         KeyDropFrom[ $stackHistory  , drop ];
 
-        Print[ "::warning::", msg ];
+        Print[ "::warning::", HoldForm @ msg ];
     ];
 
 (* ::**********************************************************************:: *)
