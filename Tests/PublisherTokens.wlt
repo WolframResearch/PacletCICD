@@ -378,7 +378,7 @@ VerificationTest[
 
 VerificationTest[
     stagedNB =
-        ResourceSystemExecute[
+        ResourceSystemClient`ResourceSystemExecute[
             "StageSubmissionFile",
             {
                 "Name"       -> "MyPaclet",
@@ -406,7 +406,7 @@ VerificationTest[
 
 VerificationTest[
     stagedWL =
-        ResourceSystemExecute[
+        ResourceSystemClient`ResourceSystemExecute[
             "StageSubmissionFile",
             {
                 "Name"       -> "MyPaclet",
