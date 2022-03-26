@@ -12,11 +12,16 @@ $stackHistory         = <| |>;
 Internal`AddHandler[ "Message", messageHandler ];
 
 messageHandler[ Hold[ msg_, True ] ] :=
-    StackInhibit @ Module[ { unprotected, keys, limit, drop },
+    StackInhibit @ Module[ { stack, keys, limit, drop },
         $messageNumber += 1;
+        stack = Stack[ _ ];
+
+        If[ MemberQ[ stack, HoldForm @ (TestReport|VerificationTest)[ ___ ] ],
+            Throw[ Null, $tag ]
+        ];
 
         $messageHistory[ $messageNumber ] = HoldForm @ msg;
-        $stackHistory[   $messageNumber ] = Stack[ _ ];
+        $stackHistory[   $messageNumber ] = stack;
 
         keys  = Union[ Keys @ $messageHistory, Keys @ $stackHistory ];
         limit = $messageNumber - $messageHistoryLength;
@@ -25,8 +30,8 @@ messageHandler[ Hold[ msg_, True ] ] :=
         KeyDropFrom[ $messageHistory, drop ];
         KeyDropFrom[ $stackHistory  , drop ];
 
-        Print[ "::warning::", HoldForm @ msg ];
-    ];
+        Print[ "::warning::", ToString[ Unevaluated @ msg, InputForm ] ];
+    ] ~Catch~ $tag;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
