@@ -41,7 +41,7 @@ VerificationTest[
 (*ResetExampleDirectory*)
 VerificationTest[
     ResetExampleDirectory @ All,
-    _Success,
+    { __Success },
     SameTest -> MatchQ,
     TestID   -> "ResetExampleDirectory-Initialization@@Tests/BuildPaclet.wlt:42,1-47,2"
 ]
@@ -162,7 +162,7 @@ VerificationTest[
 (*Cleanup*)
 VerificationTest[
     ResetExampleDirectory @ All,
-    _Success,
+    { __Success },
     SameTest -> MatchQ,
     TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:163,1-168,2"
 ]
