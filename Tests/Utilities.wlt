@@ -46,9 +46,3 @@ VerificationTest[
     "../../another/file",
     TestID -> "relativePath@@Tests/Utilities.wlt:42,1-48,2"
 ]
-
-VerificationTest[
-    1+1,
-    3,
-    TestID -> "FailureTest"
-]
