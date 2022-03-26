@@ -126,6 +126,7 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
         result = noExit @ eval;
         ctx    = Context @ Unevaluated @ sym;
         name   = SymbolName @ Unevaluated @ sym;
+        full   = ctx <> name;
 
         If[ $messageNumber > 0
             ,
@@ -133,13 +134,12 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             stacks = ExpandFileName[ stackName <> ".wxf" ];
             Print[ "::notice::Exporting stack data: ", stacks ];
             Export[ stacks, $stackHistory, "WXF", PerformanceGoal -> "Size" ];
-            setOutput[ "PACLET_STACK_HISTORY", stacks    ];
-            setOutput[ "PACLET_STACK_NAME"   , stackName ];
+            EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
+            EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
         ];
 
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
             ,
-            full = ctx <> name;
             Print[ "::error::" <> full <> " not defined" ];
             Exit[ 1 ]
         ];
@@ -147,13 +147,11 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
         If[ FailureQ @ result,
             Print[ "::error::" <> full <> " failed" ];
             Exit[ 1 ]
-        ];
-
-        Print @ result
+        ]
     ];
 
-noExit    = Wolfram`PacletCICD`Private`noExit;
-setOutput = Wolfram`PacletCICD`Private`setOutput;
+noExit    := Wolfram`PacletCICD`Private`noExit;
+setOutput := Wolfram`PacletCICD`Private`setOutput;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
