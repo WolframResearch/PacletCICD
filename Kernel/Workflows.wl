@@ -2058,7 +2058,7 @@ normalizeStep[
     "id" -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
-        "path"              -> "${{ env.BUILD_DIR }}",
+        "path"              -> "${{ env.PACLET_BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
 |>;
@@ -2069,8 +2069,8 @@ normalizeStep[ ___, "createrelease" ] := <|
     "uses" -> "actions/create-release@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
-        "tag_name"     -> "${{ env.RELEASE_TAG }}",
-        "release_name" -> "Release ${{ env.RELEASE_TAG }}",
+        "tag_name"     -> "${{ env.PACLET_RELEASE_TAG }}",
+        "release_name" -> "Release ${{ env.PACLET_RELEASE_TAG }}",
         "draft"        -> False,
         "prerelease"   -> False
     |>

@@ -1,6 +1,8 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
+BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
+
 (*
     To configure this script to run automatically before each commit, run the
     following in the repository directory:
@@ -254,3 +256,5 @@ If[ MemberQ[ $ScriptCommandLine, "--unformat" ],
 
 
 (* :!CodeAnalysis::EndBlock:: *)
+
+EndPackage[ ];

@@ -30,6 +30,14 @@ jobs:
 
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
+      
+      - name: Upload stack data
+        if: ${{ env.PACLET_STACK_HISTORY }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: check-paclet-stacks
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
 
   test-paclet:
     name: Test
@@ -44,5 +52,19 @@ jobs:
 
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
-
-      # TODO upload test results if there are failures (set env like build-paclet)
+      
+      - name: Upload stack data
+        if: ${{ env.PACLET_STACK_HISTORY }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-paclet-stacks
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+      
+      - name: Upload test results
+        if: ${{ env.PACLET_TEST_RESULTS }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-paclet-results
+          path: ${{ env.PACLET_TEST_RESULTS }}
+          if-no-files-found: error

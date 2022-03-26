@@ -1,3 +1,5 @@
+BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
+
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
@@ -77,19 +79,20 @@ updatePacletInfo[ dir_ ] := Enclose[
         string = cs @ ReadString @ file;
         id     = cs @ releaseID @ dir;
         date   = cs @ DateString[ "ISODateTime", TimeZone -> 0 ];
+        date   = StringTrim[ date, "Z" ] <> "Z";
 
         new = cs @ StringReplace[
             string,
             {
                 "\r\n"           -> "\n",
                 "$RELEASE_ID$"   -> id,
-                "$RELEASE_DATE$" -> date <> "Z"
+                "$RELEASE_DATE$" -> date
             }
         ];
 
         Print[ "Updating PacletInfo" ];
-        Print[ "    ReleaseID: ", id ];
-        Print[ "    ReleaseDate: ", date <> "Z" ];
+        Print[ "    ReleaseID: "  , id   ];
+        Print[ "    ReleaseDate: ", date ];
 
         Confirm @ WithCleanup[ BinaryWrite[ file, new ],
                                Close @ file
@@ -116,23 +119,26 @@ setResourceSystemBase[ ] := (
 (* ::Subsection::Closed:: *)
 (*checkResult*)
 checkResult // Attributes = { HoldFirst };
+
 checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
-    Module[ { result, stacks, ctx, name, full },
+    Module[ { result, ctx, name, stacks, stackName, full },
+
         result = eval;
-        If[ $messageNumber > 0,
-            stacks = ExpandFileName[ "stack_history.wxf" ];
+        ctx    = Context @ Unevaluated @ sym;
+        name   = SymbolName @ Unevaluated @ sym;
+
+        If[ $messageNumber > 0
+            ,
+            stackName = name <> "StackHistory";
+            stacks = ExpandFileName[ stackName <> ".wxf" ];
             Print[ "::notice::Exporting stack data: ", stacks ];
-            Export[ stacks,
-                    $stackHistory,
-                    "WXF",
-                    PerformanceGoal -> "Size"
-            ];
-            Wolfram`PacletCICD`Private`setOutput[ "STACK_HISTORY", stacks ]
+            Export[ stacks, $stackHistory, "WXF", PerformanceGoal -> "Size" ];
+            setOutput[ "PACLET_STACK_HISTORY", stacks    ];
+            setOutput[ "PACLET_STACK_NAME"   , stackName ];
         ];
+
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
             ,
-            ctx  = Context @ Unevaluated @ sym;
-            name = SymbolName @ Unevaluated @ sym;
             full = ctx <> name;
             Print[ "::error::" <> full <> " not defined" ];
             Exit[ 1 ]
@@ -140,6 +146,8 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             Print @ result
         ]
     ];
+
+setOutput = Wolfram`PacletCICD`Private`setOutput;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -158,3 +166,5 @@ $defNB = File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" };
 Print[ "Definition Notebook: ", $defNB ];
 
 (* :!CodeAnalysis::EndBlock:: *)
+
+EndPackage[ ];

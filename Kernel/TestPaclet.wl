@@ -13,7 +13,12 @@ Needs[ "CodeParser`"               -> "cp`"  ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*TestPaclet*)
+TestPaclet::failures =
+"Failures encountered while testing paclet.";
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
 TestPaclet // Options = {
     "Target"          -> "Submit",
     "Debug"           -> False,
@@ -21,11 +26,10 @@ TestPaclet // Options = {
     "ConsoleType"     -> Automatic
 };
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
-
-TestPaclet::failures =
-"Failures encountered while testing paclet.";
-
 TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
     (* TODO: do the right stuff here *)
     catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
@@ -46,22 +50,53 @@ testPaclet[ dir_? DirectoryQ ] :=
         files  = FileNames[ "*.wlt", dir, Infinity ];
         report = testContext @ TestReport @ files;
         annotateTestResult /@ report[ "TestResults" ];
-        If[ TrueQ @ report[ "AllTestsSucceeded" ],
-            report,
-            exitFailure[
-                "TestPaclet::failures",
-                Association[
-                    "MessageTemplate"   :> TestPaclet::failures,
-                    "MessageParameters" :> { },
-                    "Result"            -> report
-                ],
-                1
-            ]
-        ]
+        makeTestResult @ report
     ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Dependencies*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*makeTestResult*)
+makeTestResult[ report_TestReportObject ] :=
+    makeTestResult[ report, report[ "AllTestsSucceeded" ] ];
+
+makeTestResult[ report_, True ] :=
+    Success[ "AllTestsSucceeded",
+             <|
+                 "MessageTemplate"   -> "All tests successful",
+                 "MessageParameters" -> { },
+                 "Result"            :> report
+             |>
+    ];
+
+makeTestResult[ report_, False ] :=
+    Module[ { export },
+        export = ExpandFileName[ "test_results.wxf" ];
+        ConsoleNotice[ "Exporting test results: " <> export ];
+        Export[ export,
+                report,
+                "WXF",
+                PerformanceGoal -> "Size"
+        ];
+        setOutput[ "PACLET_TEST_RESULTS", export ];
+        exitFailure[
+            "TestPaclet::failures",
+            Association[
+                "MessageTemplate"   :> TestPaclet::failures,
+                "MessageParameters" :> { },
+                "Result"            :> report
+            ],
+            1
+        ]
+    ];
+
+makeTestResult // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
 (*testContext*)
 testContext // Attributes = { HoldFirst };
 
@@ -81,7 +116,7 @@ testContext[ eval_ ] :=
     ];
 
 (* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
+(* ::Subsubsection::Closed:: *)
 (*annotateTestResult*)
 annotateTestResult[
     tro: TestResultObject[
@@ -407,7 +442,7 @@ codeParseType[ file_, type_ ] :=
 (*makeTestID*)
 makeTestID[
     KeyValuePattern @ {
-        "TestID" -> id_String,
+        "TestID"         -> id_String,
         "TestLineColumn" -> { { l1_, c1_ }, { l2_, c2_ } }
     },
     base_String

@@ -31,12 +31,12 @@ jobs:
         run: wolframscript Scripts/CheckPaclet.wls
       
       - name: Upload stack data
-        if: ${{ env.STACK_HISTORY }}
+        if: ${{ env.PACLET_STACK_HISTORY }}
         uses: actions/upload-artifact@v2
         with:
           name: check-paclet-stacks
-          path: ${{ env.STACK_HISTORY }}
-          if-no-files-found: ignore
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
 
   test-paclet:
     name: Test
@@ -53,12 +53,20 @@ jobs:
         run: wolframscript Scripts/TestPaclet.wls
       
       - name: Upload stack data
-        if: ${{ env.STACK_HISTORY }}
+        if: ${{ env.PACLET_STACK_HISTORY }}
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-stacks
-          path: ${{ env.STACK_HISTORY }}
-          if-no-files-found: ignore
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+      
+      - name: Upload test results
+        if: ${{ env.PACLET_TEST_RESULTS }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-paclet-results
+          path: ${{ env.PACLET_TEST_RESULTS }}
+          if-no-files-found: error
 
   release-paclet:
     name: Release
@@ -77,17 +85,18 @@ jobs:
         run: wolframscript Scripts/BuildPaclet.wls
       
       - name: Upload stack data
-        if: ${{ env.STACK_HISTORY }}
+        if: ${{ env.PACLET_STACK_HISTORY }}
         uses: actions/upload-artifact@v2
         with:
           name: release-paclet-stacks
-          path: ${{ env.STACK_HISTORY }}
-          if-no-files-found: ignore
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: ${{ env.BUILD_DIR }}
+          name: PacletBuildArtifact
+          path: ${{ env.PACLET_BUILD_DIR }}
           if-no-files-found: error
 
       - name: Create release
@@ -96,8 +105,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          release_name: Release ${{ env.RELEASE_TAG }}
+          tag_name: ${{ env.PACLET_RELEASE_TAG }}
+          release_name: Release ${{ env.PACLET_RELEASE_TAG }}
           draft: false
           prerelease: false
 
@@ -129,9 +138,9 @@ jobs:
         run: wolframscript Scripts/SubmitPaclet.wls
 
       - name: Upload stack data
-        if: ${{ env.STACK_HISTORY }}
+        if: ${{ env.PACLET_STACK_HISTORY }}
         uses: actions/upload-artifact@v2
         with:
           name: submit-paclet-stacks
-          path: ${{ env.STACK_HISTORY }}
-          if-no-files-found: ignore
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error

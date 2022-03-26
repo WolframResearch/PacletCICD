@@ -1,5 +1,7 @@
 #!/usr/bin/env wolframscript
 
+BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
+
 Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
 checkResult @ Wolfram`PacletCICD`BuildPaclet[
     $defNB,
@@ -7,3 +9,5 @@ checkResult @ Wolfram`PacletCICD`BuildPaclet[
     "ExitOnFail" -> True,
     "Target"     -> "Submit"
 ];
+
+EndPackage[ ];
