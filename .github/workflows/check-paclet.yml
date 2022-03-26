@@ -17,7 +17,7 @@ env:
   WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
 
 jobs:
-  check-paclet:
+  Check:
     name: Check
     runs-on: ubuntu-latest
     container:

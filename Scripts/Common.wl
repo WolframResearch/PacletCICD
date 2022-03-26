@@ -123,7 +123,7 @@ checkResult // Attributes = { HoldFirst };
 checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
     Module[ { result, ctx, name, stacks, stackName, full },
 
-        result = eval;
+        result = noExit @ eval;
         ctx    = Context @ Unevaluated @ sym;
         name   = SymbolName @ Unevaluated @ sym;
 
@@ -142,11 +142,17 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             full = ctx <> name;
             Print[ "::error::" <> full <> " not defined" ];
             Exit[ 1 ]
-            ,
-            Print @ result
-        ]
+        ];
+
+        If[ FailureQ @ result,
+            Print[ "::error::" <> full <> " failed" ];
+            Exit[ 1 ]
+        ];
+
+        Print @ result
     ];
 
+noExit    = Wolfram`PacletCICD`Private`noExit;
 setOutput = Wolfram`PacletCICD`Private`setOutput;
 
 (* ::**********************************************************************:: *)
