@@ -21,6 +21,21 @@ $ContextAliases[ "sp`" ] = "System`Private`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Defaults*)
+$buildAction     = "rhennigan/build-paclet@latest";
+$checkAction     = "rhennigan/check-paclet@latest";
+$testAction      = "rhennigan/test-paclet@latest";
+$defaultBranch   = "main";
+$timeConstraint  = 10;
+$actionTarget    = "Submit";
+$defNotebookPath = "./ResourceDefinition.nb";
+$defaultOS       = "Linux-x86-64";
+$defaultRunner   = "ubuntu-latest";
+$resSystemBase   = "https://www.wolframcloud.com/obj/resourcesystem/api/1.0";
+$publisherToken  = GitHubSecret[ "RESOURCE_PUBLISHER_TOKEN" ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*WorkflowEvaluate*)
 WorkflowEvaluate // Attributes = { HoldFirst };
 WorkflowEvaluate[ code_ ] := WorkflowEvaluate[ code, makeEvalName @ code ];
@@ -76,9 +91,16 @@ Workflow::invprop =
 (* ::Subsection::Closed:: *)
 (*Options*)
 Workflow // Options = {
-    TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic,
-    OperatingSystem    -> Automatic
+    "BuildPacletAction"      -> $buildAction,
+    "CheckPacletAction"      -> $checkAction,
+    "TestPacletAction"       -> $testAction,
+    "DefaultBranch"          -> $defaultBranch,
+    "DefinitionNotebookPath" -> Automatic,
+    OperatingSystem          -> Automatic,
+    ProcessEnvironment       -> Automatic,
+    ResourceSystemBase       -> Automatic,
+    "Target"                 -> $actionTarget,
+    TimeConstraint           -> Infinity
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -89,8 +111,8 @@ Workflow[
     name_String,
     as_Association,
     opts0: OptionsPattern[ ]
-]? sp`HoldNotValidQ :=
-    catchTop @ Module[ { opts, ts, new },
+]? sp`HoldNotValidQ := withWorkflowOptions[ Workflow, opts0 ] @
+    Module[ { opts, ts, new },
         opts = FilterRules[ { opts0 }, { ProcessEnvironment } ];
 
         new = withDefaultTimeConstraint[
@@ -258,7 +280,7 @@ withDefaultTimeConstraint[ ts0_, eval_ ] :=
     Module[ { rule, ts },
         rule = normalizeForYAML[ "jobs", Automatic, TimeConstraint -> ts0 ];
         ts = Last[ rule, $noValue ];
-        Block[ { $defaultTimeConstraint = ts }, eval ]
+        Block[ { $timeConstraint = ts }, eval ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -299,9 +321,16 @@ WorkflowJob::invprop =
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowJob // Options = {
-    TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic,
-    OperatingSystem    -> Automatic
+    "BuildPacletAction"      -> $buildAction,
+    "CheckPacletAction"      -> $checkAction,
+    "TestPacletAction"       -> $testAction,
+    "DefaultBranch"          -> $defaultBranch,
+    "DefinitionNotebookPath" -> Automatic,
+    OperatingSystem          -> Automatic,
+    ProcessEnvironment       -> Automatic,
+    ResourceSystemBase       -> Automatic,
+    "Target"                 -> $actionTarget,
+    TimeConstraint           -> Infinity
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -312,8 +341,7 @@ WorkflowJob[
     name_String,
     as_Association,
     opts: OptionsPattern[ ]
-]? sp`HoldNotValidQ :=
-    catchTop @ withOS[ OptionValue @ OperatingSystem,
+]? sp`HoldNotValidQ := withWorkflowOptions[ Workflow, opts ] @
     Module[ { new },
         new = postProcessYAML @ makeWorkflowJobData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
@@ -323,7 +351,7 @@ WorkflowJob[
                 sp`HoldSetValid @ WorkflowJob[ name, a ]
             ]
         ]
-    ] ];
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -529,9 +557,16 @@ WorkflowStep::invprop =
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowStep // Options = {
-    TimeConstraint     -> Infinity,
-    ProcessEnvironment -> Automatic,
-    OperatingSystem    -> Automatic
+    "BuildPacletAction"      -> $buildAction,
+    "CheckPacletAction"      -> $checkAction,
+    "TestPacletAction"       -> $testAction,
+    "DefaultBranch"          -> $defaultBranch,
+    "DefinitionNotebookPath" -> Automatic,
+    OperatingSystem          -> Automatic,
+    ProcessEnvironment       -> Automatic,
+    ResourceSystemBase       -> Automatic,
+    "Target"                 -> $actionTarget,
+    TimeConstraint           -> Infinity
 };
 (* TODO: set options like WorkflowExport *)
 
@@ -542,8 +577,8 @@ WorkflowStep[
     name_String,
     as_Association,
     opts: OptionsPattern[ ]
-]? sp`HoldNotValidQ :=
-    catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { new },
+]? sp`HoldNotValidQ := withWorkflowOptions[ WorkflowStep, opts ] @
+    Module[ { new },
         new = postProcessYAML @ makeWorkflowStepData[ name, <| as, opts |> ];
         (* TODO: always insert "name" property as first arg *)
         With[ { a = new },
@@ -552,27 +587,29 @@ WorkflowStep[
                 sp`HoldSetValid @ WorkflowStep[ name, a ]
             ]
         ]
-    ]];
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Named*)
 WorkflowStep[ name_String, opts: OptionsPattern[ ] ] :=
-    catchTop @ withOS[ OptionValue @ OperatingSystem,If[ stepNameQ @ name,
-        WorkflowStep[ name, <| opts |> ],
-        throwMessageFailure[ WorkflowStep::invname, name ]
-    ]];
+    withWorkflowOptions[ WorkflowStep, opts ] @
+        If[ stepNameQ @ name,
+            WorkflowStep[ name, <| opts |> ],
+            throwMessageFailure[ WorkflowStep::invname, name ]
+        ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Custom*)
 WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
-    catchTop @ withOS[ OptionValue @ OperatingSystem,Module[ { new, id },
-        new = makeWorkflowStepData @ <| as, opts |>;
-        (* TODO: write a getWorkFlowID function *)
-        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
-        WorkflowStep[ id, new ]
-    ]];
+    withWorkflowOptions[ WorkflowStep, opts ] @
+        Module[ { new, id },
+            new = makeWorkflowStepData @ <| as, opts |>;
+            (* TODO: write a getWorkFlowID function *)
+            id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+            WorkflowStep[ id, new ]
+        ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -581,8 +618,7 @@ WorkflowStep[
     wf_WorkflowStep? workflowStepQ,
     as_Association,
     opts: OptionsPattern[ ]
-] :=
-    catchTop @ withOS[ OptionValue @ OperatingSystem,
+] := withWorkflowOptions[ WorkflowStep, opts ] @
     Module[ { name, as1, as2, merged, data },
         name = wf[ "Name" ];
         as1 = wf[ "Data" ];
@@ -590,14 +626,13 @@ WorkflowStep[
         merged = merger @ { as1, as2 };
         data = Join[ KeyTake[ merged, Keys @ as1 ], merged ];
         WorkflowStep[ name, data ]
-    ]];
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*File*)
 WorkflowStep[ File[ file_String ], opts: OptionsPattern[ ] ] :=
-    catchTop @ withOS[
-        OptionValue @ OperatingSystem,
+    withWorkflowOptions[ WorkflowStep, opts ] @
         Module[ { name, run },
             name = FileBaseName @ file;
             run = makeRunString @ file;
@@ -609,8 +644,7 @@ WorkflowStep[ File[ file_String ], opts: OptionsPattern[ ] ] :=
                 |>,
                 opts
             ]
-        ]
-    ];
+        ];
 
 WorkflowStep[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
     WorkflowStep[ WorkflowStep[ File @ file, opts ], as, opts ];
@@ -622,8 +656,7 @@ WorkflowStep[
     WorkflowEvaluate[ code_, name_String ],
     opts: OptionsPattern[ ]
 ] :=
-    catchTop @ withOS[
-        OptionValue @ OperatingSystem,
+    withWorkflowOptions[ WorkflowStep, opts ] @
         Module[ { run },
             run = makeEvaluateString @ code;
             WorkflowStep[
@@ -634,8 +667,7 @@ WorkflowStep[
                 |>,
                 opts
             ]
-        ]
-    ];
+        ];
 
 WorkflowStep[ e_WorkflowEvaluate, as_Association, opts: OptionsPattern[ ] ] :=
     WorkflowStep[ WorkflowStep[ e, opts ], as, opts ];
@@ -839,12 +871,16 @@ WorkflowExport::target =
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowExport // Options = {
-    "BuildPacletAction" -> "rhennigan/build-paclet@latest",
-    "CheckPacletAction" -> "rhennigan/check-paclet@latest",
-    "DefaultBranch"     -> "main",
-    OverwriteTarget     -> False,
-    TimeConstraint      -> Quantity[ 20, "Minutes" ],
-    "Target"            -> "Submit"
+    "BuildPacletAction"      -> $buildAction,
+    "CheckPacletAction"      -> $checkAction,
+    "TestPacletAction"       -> $testAction,
+    "DefaultBranch"          -> $defaultBranch,
+    "DefinitionNotebookPath" -> Automatic,
+    OperatingSystem          -> Automatic,
+    ProcessEnvironment       -> Automatic,
+    ResourceSystemBase       -> Automatic,
+    "Target"                 -> $actionTarget,
+    TimeConstraint           -> Infinity
 };
 
 (* ::**********************************************************************:: *)
@@ -864,12 +900,6 @@ WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
         exportWorkflow[ pac, workflow ]
     ];
 
-$buildPacletAction     = "rhennigan/build-paclet@latest";
-$checkPacletAction     = "rhennigan/check-paclet@latest";
-$testPacletAction      = "rhennigan/test-paclet@latest";
-$defaultBranch         = "main";
-$defaultTimeConstraint = 10;
-
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowExport*)
@@ -884,12 +914,12 @@ workflowExport[
 ] :=
     Block[
         {
-            $defaultBranch         = branch,
-            $defaultTimeConstraint = timeConstraint,
-            $buildPacletAction     = buildPacletAction,
-            $checkPacletAction     = checkPacletAction,
-            $defNotebookLocation   = defNotebookLocation,
-            $defaultActionTarget   = actionTarget
+            $defaultBranch   = branch,
+            $timeConstraint  = timeConstraint,
+            $buildAction     = buildPacletAction,
+            $checkAction     = checkPacletAction,
+            $defNotebookPath = defNotebookLocation,
+            $actionTarget    = actionTarget
         },
         workflowExport0 @ spec
     ];
@@ -921,7 +951,7 @@ workflowExport0 // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*toActionTarget*)
 toActionTarget[ str_String? StringQ ] := str;
-toActionTarget[ Automatic ] := $defaultActionTarget;
+toActionTarget[ Automatic ] := $actionTarget;
 
 toActionTarget[ str: Except[ _String? StringQ ] ] :=
     throwMessageFailure[ WorkflowExport::target, str ];
@@ -946,7 +976,7 @@ toDefNBLocation[ dir_? DirectoryQ ] := Enclose[
         file = ConfirmBy[ findDefinitionNotebook @ dir, FileExistsQ ];
         ConfirmBy[ relativePath[ dir, file ], StringQ ]
     ],
-    $defNotebookLocation &
+    $defNotebookPath &
 ];
 
 toDefNBLocation[ pac_PacletObject ] := toDefNBLocation @ pac[ "Location" ];
@@ -956,14 +986,20 @@ toDefNBLocation // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toBuildPacletAction*)
-toBuildPacletAction[ Automatic ] := normalizeActionName @ $buildPacletAction;
+toBuildPacletAction[ Automatic ] := normalizeActionName @ $buildAction;
 toBuildPacletAction[ name_     ] := normalizeActionName @ name;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toCheckPacletAction*)
-toCheckPacletAction[ Automatic ] := normalizeActionName @ $checkPacletAction;
+toCheckPacletAction[ Automatic ] := normalizeActionName @ $checkAction;
 toCheckPacletAction[ name_     ] := normalizeActionName @ name;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toTestPacletAction*)
+toTestPacletAction[ Automatic ] := normalizeActionName @ $testAction;
+toTestPacletAction[ name_     ] := normalizeActionName @ name;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1491,7 +1527,7 @@ normalizeJob[ "check" | "checkpaclet" ] :=
         "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
-        "timeout-minutes" -> $defaultTimeConstraint,
+        "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
             normalizeStep[ "Checkout"    ],
             normalizeStep[ "CheckPaclet" ]
@@ -1504,7 +1540,7 @@ normalizeJob[ "build" | "buildpaclet" ] :=
         "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
-        "timeout-minutes" -> $defaultTimeConstraint,
+        "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
             normalizeStep[ "Checkout"             ],
             normalizeStep[ "BuildPaclet"          ],
@@ -1518,7 +1554,7 @@ normalizeJob[ "release" | "releasepaclet" ] :=
         "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
-        "timeout-minutes" -> $defaultTimeConstraint,
+        "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
             normalizeStep[ "Checkout"             ],
             normalizeStep[ "BuildPaclet"          ],
@@ -1534,7 +1570,7 @@ normalizeJob[ "test" | "testpaclet" ] :=
         "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
-        "timeout-minutes" -> $defaultTimeConstraint,
+        "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
             normalizeStep[ "Checkout"   ],
             normalizeStep[ "TestPaclet" ]
@@ -1603,7 +1639,7 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
     "name"            -> "Compile (Windows-x86-64)",
     "runs-on"         -> "windows-latest",
     "env"             -> compilationEnv[ "Windows-x86-64" ],
-    "timeout-minutes" -> $defaultTimeConstraint,
+    "timeout-minutes" -> $timeConstraint,
     "steps" -> {
         normalizeStep[ "Checkout" ],
         $windowsCacheRestoreStep,
@@ -1617,7 +1653,7 @@ normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
     "name"            -> "Compile (MacOSX-x86-64)",
     "runs-on"         -> "macos-latest",
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
-    "timeout-minutes" -> $defaultTimeConstraint,
+    "timeout-minutes" -> $timeConstraint,
     "steps" -> {
         normalizeStep[ "Checkout" ],
         $macCacheRestoreStep,
@@ -1632,7 +1668,7 @@ normalizeCompilationJob0[ "Linux-x86-64", as_Association ] := <|
     "runs-on"         -> "ubuntu-latest",
     "container"       -> $defaultJobContainer,
     "env"             -> compilationEnv[ "Linux-x86-64" ],
-    "timeout-minutes" -> $defaultTimeConstraint,
+    "timeout-minutes" -> $timeConstraint,
     "steps" -> {
         normalizeStep[ "Checkout" ],
         linuxInstallBuildStep @ as,
@@ -1652,7 +1688,7 @@ buildCompiledPacletJob[ as_Association ] :=
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
-        "timeout-minutes" -> $defaultTimeConstraint,
+        "timeout-minutes" -> $timeConstraint,
         "needs"           -> {
             "Compile-Windows-x86-64",
             "Compile-MacOSX-x86-64",
@@ -1910,24 +1946,37 @@ $defaultJobContainer :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$defaultJobEnv*)
-$defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := <|
+$defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
     "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "RESOURCE_PUBLISHER_TOKEN"             -> $publisherToken,
     "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
     "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
 |>;
 
-$defaultJobEnv /; $defaultOS === "Windows-x86-64" := <|
+$defaultJobEnv /; $defaultOS === "Windows-x86-64" := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
     "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
     "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
     "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A"
 |>;
 
-$defaultJobEnv /; True := <|
+$defaultJobEnv /; True := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "RESOURCE_PUBLISHER_TOKEN"    -> $publisherToken
 |>;
+
+takeEnvStrings[ as_ ] :=
+    Select[
+        ReplaceAll[
+            as,
+            GitHubSecret[ sec_String? StringQ ] :>
+                "${{ secrets." <> sec <> " }}"
+        ],
+        StringQ
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -2000,33 +2049,36 @@ normalizeStep[ ___, "checkout"|"checkoutcode" ] := <|
 normalizeStep[ ___, "check"|"checkpaclet" ] := <|
     "name" -> "Check",
     "id"   -> "check-paclet-step",
-    "uses" -> normalizeActionName @ $checkPacletAction,
+    "uses" -> normalizeActionName @ $checkAction,
     "with" -> <|
-        "target"              -> $defaultActionTarget,
-        "paclet_cicd_version" -> $latestPacletCICDVersion,
-        "definition_notebook" -> $defNotebookLocation
+        "target"               -> $actionTarget,
+        "paclet_cicd_version"  -> $latestPacletCICDVersion,
+        "definition_notebook"  -> $defNotebookPath,
+        "resource_system_base" -> $resSystemBase
     |>
 |>;
 
 normalizeStep[ ___, "build"|"buildpaclet" ] := <|
     "name" -> "Build",
     "id"   -> "build-paclet-step",
-    "uses" -> normalizeActionName @ $buildPacletAction,
+    "uses" -> normalizeActionName @ $buildAction,
     "with" -> <|
-        "target"              -> $defaultActionTarget,
-        "paclet_cicd_version" -> $latestPacletCICDVersion,
-        "definition_notebook" -> $defNotebookLocation
+        "target"               -> $actionTarget,
+        "paclet_cicd_version"  -> $latestPacletCICDVersion,
+        "definition_notebook"  -> $defNotebookPath,
+        "resource_system_base" -> $resSystemBase
     |>
 |>;
 
 normalizeStep[ ___, "test"|"testpaclet" ] := <|
     "name" -> "Test",
     "id"   -> "test-paclet-step",
-    "uses" -> normalizeActionName @ $testPacletAction,
+    "uses" -> normalizeActionName @ $testAction,
     "with" -> <|
-        "target"              -> $defaultActionTarget,
-        "paclet_cicd_version" -> $latestPacletCICDVersion,
-        "definition_notebook" -> $defNotebookLocation
+        "target"               -> $actionTarget,
+        "paclet_cicd_version"  -> $latestPacletCICDVersion,
+        "definition_notebook"  -> $defNotebookPath,
+        "resource_system_base" -> $resSystemBase
     |>
 |>;
 
@@ -2058,7 +2110,7 @@ normalizeStep[
     "id" -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
-        "path"              -> "${{ env.BUILD_DIR }}",
+        "path"              -> "${{ env.PACLET_BUILD_DIR }}",
         "if-no-files-found" -> "error"
     |>
 |>;
@@ -2069,8 +2121,8 @@ normalizeStep[ ___, "createrelease" ] := <|
     "uses" -> "actions/create-release@v1",
     "env"  -> <| "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}" |>,
     "with" -> <|
-        "tag_name"     -> "${{ env.RELEASE_TAG }}",
-        "release_name" -> "Release ${{ env.RELEASE_TAG }}",
+        "tag_name"     -> "${{ env.PACLET_RELEASE_TAG }}",
+        "release_name" -> "Release ${{ env.PACLET_RELEASE_TAG }}",
         "draft"        -> False,
         "prerelease"   -> False
     |>
@@ -2179,9 +2231,6 @@ toLowerCase[ str_String ] := ToLowerCase @ str;
 toLowerCase[ other_ ] := other;
 
 (*TODO: check against schema *)
-
-$defaultActionTarget = "Submit";
-$defNotebookLocation = "./ResourceDefinition.nb";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -2320,8 +2369,103 @@ stringJoin[ a___, { b___ }, c___ ] := stringJoin[ a, b, c ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Utilities*)
-$defaultOS     = "Linux-x86-64";
-$defaultRunner = "ubuntu-latest";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*withWorkflowOptions*)
+withWorkflowOptions[ s_, opts___ ] :=
+    Block[ { $wfHead = s }, withWorkflowOptions0[ s, opts ] ];
+
+withWorkflowOptions0[ s_, opts___ ] := Function[
+    eval,
+    catchTop @ Block[
+        {
+            $buildAction     = wfOpt[ s, opts, "BuildPacletAction"           ],
+            $checkAction     = wfOpt[ s, opts, "CheckPacletAction"           ],
+            $testAction      = wfOpt[ s, opts, "TestPacletAction"            ],
+            $defaultBranch   = wfOpt[ s, opts, "DefaultBranch"               ],
+            $timeConstraint  = wfOpt[ s, opts, "TimeConstraint"              ],
+            $actionTarget    = wfOpt[ s, opts, "Target"                      ],
+            $defNotebookPath = wfOpt[ s, opts, "DefinitionNotebookPath"      ],
+            $defaultOS       = wfOpt[ s, opts, "OperatingSystem"             ],
+            $defaultRunner   = wfOpt[ s, opts, "OperatingSystem" -> "Runner" ],
+            $resSystemBase   = wfOpt[ s, opts, "ResourceSystemBase"          ]
+        },
+        eval
+    ],
+    HoldAllComplete
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*wfOptFail*)
+wfOptFail // Attributes = { HoldFirst };
+
+wfOptFail[ MessageName[ _, tag_String ], args___ ] :=
+    wfOptFail[ tag, args ];
+
+wfOptFail[ tag_String, args___ ] :=
+    With[ { s = $wfHead },
+        If[ StringQ @ MessageName[ s, tag ],
+            throwMessageFailure[ MessageName[ s, tag ], args ],
+            throwError[ "Invalid option specification.", args ]
+        ]
+    ];
+
+(* TODO: define these message tags for all workflow symbols:
+    InvalidResourceSystemBase
+    InvalidDefinitionNotebookPath
+*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*wfOpt*)
+wfOpt[ sym_, opts___, opt_Symbol ] :=
+    wfOpt[ sym, opts, SymbolName @ opt ];
+
+wfOpt[ sym_, opts___, name_String ] :=
+    wfOptFunc[ name ] @ OptionValue[ sym, { opts }, name ];
+
+wfOpt[ sym_, opts___, from_String -> name_String ] :=
+    wfOptFunc[ name ] @ OptionValue[ sym, { opts }, from ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*wfOptFunc*)
+wfOptFunc[ "BuildPacletAction"      ] := toBuildPacletAction;
+wfOptFunc[ "CheckPacletAction"      ] := toCheckPacletAction;
+wfOptFunc[ "TestPacletAction"       ] := toTestPacletAction;
+wfOptFunc[ "DefaultBranch"          ] := toDefaultBranch;
+wfOptFunc[ "DefinitionNotebookPath" ] := toDefinitionNotebookPath;
+wfOptFunc[ "OperatingSystem"        ] := toDefaultOS;
+wfOptFunc[ "ResourceSystemBase"     ] := toResourceSystemBase;
+wfOptFunc[ "Runner"                 ] := toDefaultRunner;
+wfOptFunc[ "Target"                 ] := toActionTarget;
+wfOptFunc[ "TimeConstraint"         ] := toTimeConstraint;
+
+wfOptFunc[ other_   ] := throwError[ "`1` is not a valid option."   , other ];
+wfOptFunc[ other___ ] := throwError[ "An unexpected error occurred.", other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toResourceSystemBase*)
+toResourceSystemBase[ Automatic ] := toResourceSystemBase @ $ResourceSystemBase;
+toResourceSystemBase[ url_String ] := url;
+toResourceSystemBase[ URL[ url_ ] ] := toResourceSystemBase @ url;
+toResourceSystemBase[ HoldPattern @ $ResourceSystemBase ] := $resSystemBase;
+
+toResourceSystemBase[ other_ ] :=
+    wfOptFail[ "InvalidResourceSystemBase", other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toDefinitionNotebookPath*)
+toDefinitionNotebookPath[ Automatic ] := $defNotebookPath;
+toDefinitionNotebookPath[ path_String ] := path;
+toDefinitionNotebookPath[ File[ path_ ] ] := toDefinitionNotebookPath @ path;
+
+toDefinitionNotebookPath[ other_ ] :=
+    wfOptFail[ "InvalidDefinitionNotebookPath", other ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

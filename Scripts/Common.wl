@@ -1,5 +1,44 @@
+BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
+
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Initialization*)
+$messageHistoryLength = 100;
+$messageNumber        = 0;
+$messageHistory       = <| |>;
+$stackHistory         = <| |>;
+
+Internal`AddHandler[ "Message", messageHandler ];
+
+$testingHeads = HoldPattern @ Alternatives[
+    TestReport,
+    VerificationTest,
+    Testing`Private`extractUnevaluated
+];
+
+$testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
+
+messageHandler[ Hold[ msg_, True ] ] :=
+    StackInhibit @ Module[ { stack, keys, limit, drop },
+        stack = Stack[ _ ];
+        If[ MemberQ[ stack, $testStack ], Throw[ Null, $tag ] ];
+
+        $messageNumber += 1;
+        $messageHistory[ $messageNumber ] = HoldForm @ msg;
+        $stackHistory[   $messageNumber ] = stack;
+
+        keys  = Union[ Keys @ $messageHistory, Keys @ $stackHistory ];
+        limit = $messageNumber - $messageHistoryLength;
+        drop  = Select[ keys, ! TrueQ[ # > limit ] & ];
+
+        KeyDropFrom[ $messageHistory, drop ];
+        KeyDropFrom[ $stackHistory  , drop ];
+
+        Print[ "::warning::", ToString[ Unevaluated @ msg, InputForm ] ];
+    ] ~Catch~ $tag;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -40,21 +79,24 @@ updatePacletInfo[ dir_ ] := Enclose[
         string = cs @ ReadString @ file;
         id     = cs @ releaseID @ dir;
         date   = cs @ DateString[ "ISODateTime", TimeZone -> 0 ];
+        date   = StringTrim[ date, "Z" ] <> "Z";
 
         new = cs @ StringReplace[
             string,
             {
                 "\r\n"           -> "\n",
                 "$RELEASE_ID$"   -> id,
-                "$RELEASE_DATE$" -> date <> "Z"
+                "$RELEASE_DATE$" -> date
             }
         ];
 
         Print[ "Updating PacletInfo" ];
-        Print[ "    ReleaseID: ", id ];
-        Print[ "    ReleaseDate: ", date <> "Z" ];
+        Print[ "    ReleaseID: "  , id   ];
+        Print[ "    ReleaseDate: ", date ];
 
-        Confirm @ BinaryWrite[ file, new ]
+        Confirm @ WithCleanup[ BinaryWrite[ file, new ],
+                               Close @ file
+                  ]
     ],
     Function[
         Print[ "::error::Failed to update PacletInfo template parameters." ];
@@ -77,20 +119,39 @@ setResourceSystemBase[ ] := (
 (* ::Subsection::Closed:: *)
 (*checkResult*)
 checkResult // Attributes = { HoldFirst };
+
 checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
-    Module[ { result, ctx, name, full },
-        result = eval;
+    Module[ { result, ctx, name, stacks, stackName, full },
+
+        result = noExit @ eval;
+        ctx    = Context @ Unevaluated @ sym;
+        name   = SymbolName @ Unevaluated @ sym;
+        full   = ctx <> name;
+
+        If[ $messageNumber > 0
+            ,
+            stackName = name <> "StackHistory";
+            stacks = ExpandFileName[ stackName <> ".wxf" ];
+            Print[ "::notice::Exporting stack data: ", stacks ];
+            Export[ stacks, $stackHistory, "WXF", PerformanceGoal -> "Size" ];
+            EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
+            EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
+        ];
+
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
             ,
-            ctx  = Context @ Unevaluated @ sym;
-            name = SymbolName @ Unevaluated @ sym;
-            full = ctx <> name;
             Print[ "::error::" <> full <> " not defined" ];
             Exit[ 1 ]
-            ,
-            Print @ result
+        ];
+
+        If[ FailureQ @ result,
+            Print[ "::error::" <> full <> " failed" ];
+            Exit[ 1 ]
         ]
     ];
+
+noExit    := Wolfram`PacletCICD`Private`noExit;
+setOutput := Wolfram`PacletCICD`Private`setOutput;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -109,3 +170,5 @@ $defNB = File @ FileNameJoin @ { $pacDir, "ResourceDefinition.nb" };
 Print[ "Definition Notebook: ", $defNB ];
 
 (* :!CodeAnalysis::EndBlock:: *)
+
+EndPackage[ ];

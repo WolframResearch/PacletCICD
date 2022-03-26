@@ -138,7 +138,7 @@ ghRelativePath[ file_ ] := Enclose[
 ghRelativePath // catchUndefined;
 
 (* ::**********************************************************************:: *)
-(* ::Subsubsubsection::Closed:: *)
+(* ::Subsubsection::Closed:: *)
 (*setOutput*)
 setOutput[ name_, value_ ] :=
     If[ TrueQ @ $gitHub, setOutput[ $gitHubEnv, name, value ] ];
@@ -189,6 +189,14 @@ getGitHubEnv[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*nonEmptyDirectoryQ*)
+nonEmptyDirectoryQ[ dir_? DirectoryQ ] :=
+    MatchQ[ FileNames[ All, dir ], { __ } ];
+
+nonEmptyDirectoryQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*parentPacletDirectory*)
 parentPacletDirectory[ file_ ] := Enclose[
     Module[ { expanded, dir, parent },
@@ -220,9 +228,29 @@ parentPacletDirectory0 // catchUndefined;
 pacletDirectoryQ[ "" ] := False;
 
 pacletDirectoryQ[ dir_? DirectoryQ ] :=
-    PacletObjectQ @ PacletObject @ Flatten @ File @ dir;
+    Quiet @ PacletObjectQ @ PacletObject @ Flatten @ File @ dir;
 
 pacletDirectoryQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*pacletInfoFileQ*)
+pacletInfoFileQ[ "" ] := False;
+
+pacletInfoFileQ[ dir_? DirectoryQ ] := False;
+
+pacletInfoFileQ[ file_? FileExistsQ ] :=
+    TrueQ @ And[
+        StringMatchQ[ FileBaseName @ file, "PacletInfo", IgnoreCase -> True ],
+        StringMatchQ[ FileExtension @ file, ("m"|"wl"), IgnoreCase -> True ],
+        pacletInfoFileQ[ ExpandFileName @ file, Hash @ ReadByteArray @ file ]
+    ];
+
+pacletInfoFileQ[ file_? FileExistsQ, hash_Integer ] :=
+    pacletInfoFileQ[ file, hash ] =
+        TrueQ @Quiet @ PacletObjectQ @ PacletObject @ Flatten @ File @ file;
+
+pacletInfoFileQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

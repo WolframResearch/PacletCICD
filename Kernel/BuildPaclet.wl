@@ -222,18 +222,21 @@ setGHBuildOutput0[ KeyValuePattern[ "BuildResult"|"Result" -> res_ ] ] :=
 setGHBuildOutput0[
     result: Success[ _, KeyValuePattern[ "PacletArchive" -> pa_ ] ]
 ] :=
-    Enclose @ Module[ { archive, file, pac, vers, full },
+    Enclose @ Module[ { cStr, archive, file, pac, vers, full, buildDir, path },
 
-        archive = ConfirmBy[ ExpandFileName @ pa, FileExistsQ ];
-        file    = ConfirmBy[ checkPacArchiveExtension @ archive, StringQ ];
-        pac     = ConfirmBy[ PacletObject @ File @ file, PacletObjectQ ];
-        vers    = ConfirmBy[ pac[ "Version" ], StringQ ];
-        full    = ConfirmBy[ ExpandFileName @ file, StringQ ];
+        cStr     = ConfirmBy[ #, StringQ ] &;
+        archive  = ConfirmBy[ ExpandFileName @ pa, FileExistsQ ];
+        file     = cStr @ checkPacArchiveExtension @ archive;
+        pac      = ConfirmBy[ PacletObject @ File @ file, PacletObjectQ ];
+        vers     = cStr @ pac[ "Version" ];
+        full     = cStr @ ExpandFileName @ file;
+        buildDir = cStr @ ghRelativePath @ DirectoryName @ full;
+        path     = cStr @ ghRelativePath @ full;
 
-        setOutput[ "BUILD_DIR"  , ghRelativePath @ DirectoryName @ full ];
-        setOutput[ "PACLET_PATH", ghRelativePath @ full ];
-        setOutput[ "PACLET_FILE", FileNameTake @ file ];
-        setOutput[ "RELEASE_TAG", "v" <> vers ];
+        setOutput[ "PACLET_BUILD_DIR"  , buildDir                   ];
+        setOutput[ "PACLET_PATH"       , path                       ];
+        setOutput[ "PACLET_FILE"       , cStr @ FileNameTake @ file ];
+        setOutput[ "PACLET_RELEASE_TAG", "v" <> vers                ];
 
         result
     ];

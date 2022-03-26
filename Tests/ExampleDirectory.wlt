@@ -49,14 +49,14 @@ VerificationTest[
 ]
 
 VerificationTest[
-    DirectoryQ[ exDir = $ExamplesLocation ],
+    DirectoryQ[ exDir = ExampleDirectory[ "Sample" ] ],
     True,
     TestID -> "$ExamplesLocation-Create@@Tests/ExampleDirectory.wlt:51,1-55,2"
 ]
 
 VerificationTest[
     ResetExampleDirectory @ All,
-    _Success,
+    { __Success },
     SameTest -> MatchQ,
     TestID -> "ResetExampleDirectory-All@@Tests/ExampleDirectory.wlt:57,1-62,2"
 ]
@@ -160,4 +160,51 @@ VerificationTest[
         "Tests"
     },
     TestID -> "ExampleDirectory-AdvancedSample-Files@@Tests/ExampleDirectory.wlt:149,1-163,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Regression Tests*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Missing files*)
+VerificationTest[
+    dir = ExampleDirectory[ "Sample" ],
+    _File? DirectoryQ,
+    SameTest -> MatchQ,
+    TestID   -> "MissingFile-Get-Sample@@Tests/ExampleDirectory.wlt:172,1-177,2"
+]
+
+VerificationTest[
+    file = FileNameJoin @ { First @ dir, "PacletInfo.wl" },
+    _? FileExistsQ,
+    SameTest -> MatchQ,
+    TestID   -> "MissingFile-Get-PacletInfo@@Tests/ExampleDirectory.wlt:179,1-184,2"
+]
+
+VerificationTest[
+    hash = FileHash @ file,
+    _? IntegerQ,
+    SameTest -> MatchQ,
+    TestID   -> "MissingFile-Get-FileHash@@Tests/ExampleDirectory.wlt:186,1-191,2"
+]
+
+VerificationTest[
+    DeleteFile @ file; FileExistsQ @ file,
+    False,
+    TestID -> "MissingFile-DeleteFile@@Tests/ExampleDirectory.wlt:193,1-197,2"
+]
+
+VerificationTest[
+    ExampleDirectory[ "Sample" ],
+    _File? DirectoryQ,
+    SameTest -> MatchQ,
+    TestID   -> "MissingFile-Restore-Directory@@Tests/ExampleDirectory.wlt:199,1-204,2"
+]
+
+VerificationTest[
+    FileExistsQ @ file && FileHash @ file === hash,
+    True,
+    TestID   -> "MissingFile-Restore-File@@Tests/ExampleDirectory.wlt:206,1-210,2"
 ]
