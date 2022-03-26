@@ -46,7 +46,7 @@ jobs:
       image: wolframresearch/wolframengine:latest
       options: --user root
     timeout-minutes: 10
-    
+
     steps: 
     - name: Checkout
       id: checkout-code-step
@@ -184,3 +184,19 @@ jobs:
       env: 
         WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
         WOLFRAMINIT: "-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+    
+    - name: Upload stack data
+      if: ${{ env.PACLET_STACK_HISTORY }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
+        path: ${{ env.PACLET_STACK_HISTORY }}
+        if-no-files-found: error
+    
+    - name: Upload test results
+      if: ${{ env.PACLET_TEST_RESULTS }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
+        path: ${{ env.PACLET_TEST_RESULTS }}
+        if-no-files-found: error
