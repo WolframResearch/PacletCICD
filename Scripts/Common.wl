@@ -11,14 +11,20 @@ $stackHistory         = <| |>;
 
 Internal`AddHandler[ "Message", messageHandler ];
 
+$testingHeads = HoldPattern @ Alternatives[
+    TestReport,
+    VerificationTest,
+    Testing`Private`extractUnevaluated
+];
+
+$testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
+
 messageHandler[ Hold[ msg_, True ] ] :=
     StackInhibit @ Module[ { stack, keys, limit, drop },
         $messageNumber += 1;
         stack = Stack[ _ ];
 
-        If[ MemberQ[ stack, HoldForm @ (TestReport|VerificationTest)[ ___ ] ],
-            Throw[ Null, $tag ]
-        ];
+        If[ MemberQ[ stack, $testStack ], Throw[ Null, $tag ] ];
 
         $messageHistory[ $messageNumber ] = HoldForm @ msg;
         $stackHistory[   $messageNumber ] = stack;
