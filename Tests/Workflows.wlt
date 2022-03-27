@@ -226,12 +226,10 @@ VerificationTest[
 (* ::Subsection::Closed:: *)
 (*Regression Tests*)
 VerificationTest[
-    StringMatchQ[
-        WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
-        "rhennigan/check-paclet@v" ~~ DigitCharacter.. ~~ ___
-    ],
-    True,
-    TestID -> "Normalize-Action-Version@@Tests/Workflows.wlt:228,1-235,2"
+    WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
+    "rhennigan/check-paclet@v" ~~ DigitCharacter.. ~~ ___,
+    SameTest -> StringMatchQ,
+    TestID   -> "Normalize-Action-Version@@Tests/Workflows.wlt:228,1-233,2"
 ]
 
 VerificationTest[
@@ -248,7 +246,7 @@ VerificationTest[
     <|
         "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
     |>,
-    TestID -> "WorkflowStep-Environment-Env@@Tests/Workflows.wlt:237,1-252,2"
+    TestID -> "WorkflowStep-Environment-Env@@Tests/Workflows.wlt:235,1-250,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -261,25 +259,25 @@ VerificationTest[
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Check" ],
     True,
-    TestID -> "WorkflowJob-Named-Check@@Tests/Workflows.wlt:261,1-265,2"
+    TestID -> "WorkflowJob-Named-Check@@Tests/Workflows.wlt:259,1-263,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Build" ],
     True,
-    TestID -> "WorkflowJob-Named-Build@@Tests/Workflows.wlt:267,1-271,2"
+    TestID -> "WorkflowJob-Named-Build@@Tests/Workflows.wlt:265,1-269,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Release" ],
     True,
-    TestID -> "WorkflowJob-Named-Release@@Tests/Workflows.wlt:273,1-277,2"
+    TestID -> "WorkflowJob-Named-Release@@Tests/Workflows.wlt:271,1-275,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Test" ],
     True,
-    TestID -> "WorkflowJob-Named-Test@@Tests/Workflows.wlt:279,1-283,2"
+    TestID -> "WorkflowJob-Named-Test@@Tests/Workflows.wlt:277,1-281,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -298,7 +296,7 @@ VerificationTest[
             "run"  -> "wolframscript Scripts/MyWorkflowJob.wls"
         |>
     },
-    TestID -> "WorkflowJob-File@@Tests/Workflows.wlt:288,1-302,2"
+    TestID -> "WorkflowJob-File@@Tests/Workflows.wlt:286,1-300,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -311,31 +309,31 @@ VerificationTest[
 VerificationTest[
     WorkflowQ @ Workflow[ "Release" ],
     True,
-    TestID -> "Workflow-Named-Release@@Tests/Workflows.wlt:311,1-315,2"
+    TestID -> "Workflow-Named-Release@@Tests/Workflows.wlt:309,1-313,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Build" ],
     True,
-    TestID -> "Workflow-Named-Build@@Tests/Workflows.wlt:317,1-321,2"
+    TestID -> "Workflow-Named-Build@@Tests/Workflows.wlt:315,1-319,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Check" ],
     True,
-    TestID -> "Workflow-Named-Check@@Tests/Workflows.wlt:323,1-327,2"
+    TestID -> "Workflow-Named-Check@@Tests/Workflows.wlt:321,1-325,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Test" ],
     True,
-    TestID -> "Workflow-Named-Test@@Tests/Workflows.wlt:329,1-333,2"
+    TestID -> "Workflow-Named-Test@@Tests/Workflows.wlt:327,1-331,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Compile" ],
     True,
-    TestID -> "Workflow-Named-Compile@@Tests/Workflows.wlt:335,1-339,2"
+    TestID -> "Workflow-Named-Compile@@Tests/Workflows.wlt:333,1-337,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -355,5 +353,5 @@ VerificationTest[
         "branches"
     ],
     { "test" },
-    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:344,1-359,2"
+    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:342,1-357,2"
 ]
