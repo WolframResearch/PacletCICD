@@ -377,12 +377,19 @@ VerificationTest[
 ]
 
 VerificationTest[
+    $stagingName = CreateUUID[ "Test-" ],
+    _String? StringQ,
+    SameTest -> MatchQ,
+    TestID   -> "Define-Staging-Name@@Tests/PublisherTokens.wlt:379,1-384,2"
+]
+
+VerificationTest[
     stagedNB =
         ResourceSystemClient`ResourceSystemExecute[
             "StageSubmissionFile",
             {
-                "Name"       -> "MyPaclet",
-                "Key"        -> "test",
+                "Name"       -> $stagingName,
+                "Key"        -> "Test",
                 "Initialize" -> True,
                 "Body"       -> <|
                     "SubmissionFile" -> File @ FileNameJoin @ {
@@ -395,13 +402,13 @@ VerificationTest[
         ],
     _CloudObject,
     SameTest -> MatchQ,
-    TestID   -> "StageSubmissionFile-NB@@Tests/PublisherTokens.wlt:379,1-399,2"
+    TestID   -> "StageSubmissionFile-NB@@Tests/PublisherTokens.wlt:386,1-406,2"
 ]
 
 VerificationTest[
     Information[ stagedNB, "MIMEType" ],
     "application/vnd.wolfram.notebook",
-    TestID -> "StageSubmissionFile-NB-MIMEType-1@@Tests/PublisherTokens.wlt:401,1-405,2"
+    TestID -> "StageSubmissionFile-NB-MIMEType-1@@Tests/PublisherTokens.wlt:408,1-412,2"
 ]
 
 VerificationTest[
@@ -409,8 +416,8 @@ VerificationTest[
         ResourceSystemClient`ResourceSystemExecute[
             "StageSubmissionFile",
             {
-                "Name"       -> "MyPaclet",
-                "Key"        -> "test",
+                "Name"       -> $stagingName,
+                "Key"        -> "Test",
                 "Initialize" -> False,
                 "Body"       -> <|
                     "SubmissionFile" -> File @ FileNameJoin @ {
@@ -423,19 +430,47 @@ VerificationTest[
         ],
     _CloudObject,
     SameTest -> MatchQ,
-    TestID   -> "StageSubmissionFile-WL@@Tests/PublisherTokens.wlt:407,1-427,2"
+    TestID   -> "StageSubmissionFile-WL@@Tests/PublisherTokens.wlt:414,1-434,2"
 ]
 
 VerificationTest[
     Information[ stagedWL, "MIMEType" ],
     "application/vnd.wolfram.wl",
-    TestID -> "StageSubmissionFile-WL-MIMEType@@Tests/PublisherTokens.wlt:429,1-433,2"
+    TestID -> "StageSubmissionFile-WL-MIMEType@@Tests/PublisherTokens.wlt:436,1-440,2"
 ]
 
 VerificationTest[
     Information[ stagedNB, "MIMEType" ],
     "application/vnd.wolfram.notebook",
-    TestID -> "StageSubmissionFile-NB-MIMEType-2@@Tests/PublisherTokens.wlt:435,1-439,2"
+    TestID -> "StageSubmissionFile-NB-MIMEType-2@@Tests/PublisherTokens.wlt:442,1-446,2"
+]
+
+VerificationTest[
+    ResourceSystemClient`ResourceSystemExecute[
+        "StageSubmissionFile",
+        {
+            "Name"           -> $stagingName,
+            "Key"            -> "Test",
+            "Initialize"     -> True,
+            "SubmissionFile" -> None
+        },
+        "PublisherToken" -> token6[ "TokenString" ]
+    ],
+    _CloudObject,
+    SameTest -> MatchQ,
+    TestID   -> "StageSubmissionFile-Clear-1@@Tests/PublisherTokens.wlt:448,1-462,2"
+]
+
+VerificationTest[
+    FileExistsQ @ stagedWL,
+    False,
+    TestID -> "StageSubmissionFile-Clear-2@@Tests/PublisherTokens.wlt:464,1-468,2"
+]
+
+VerificationTest[
+    FileExistsQ @ stagedNB,
+    False,
+    TestID -> "StageSubmissionFile-Clear-3@@Tests/PublisherTokens.wlt:470,1-474,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -445,21 +480,21 @@ VerificationTest[
     withoutToken @ DeletePublisherToken @ token1,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:444,1-449,2"
+    TestID   -> "DeletePublisherToken-1@@Tests/PublisherTokens.wlt:479,1-484,2"
 ]
 
 VerificationTest[
     withoutToken @ DeleteObject @ token2,
     Success[ "TokenDeleted", _ ],
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:451,1-456,2"
+    TestID   -> "DeletePublisherToken-DeleteObject@@Tests/PublisherTokens.wlt:486,1-491,2"
 ]
 
 VerificationTest[
     withoutToken @ DeletePublisherToken @ { token3, token4, token6 },
     { Success[ "TokenDeleted", _ ].. },
     SameTest -> MatchQ,
-    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:458,1-463,2"
+    TestID   -> "DeletePublisherToken-List@@Tests/PublisherTokens.wlt:493,1-498,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -470,5 +505,5 @@ VerificationTest[
         CloudDisconnect[ ]
     ],
     Null,
-    TestID -> "CloudDisconnect@@Tests/PublisherTokens.wlt:468,1-474,2"
+    TestID -> "CloudDisconnect@@Tests/PublisherTokens.wlt:503,1-509,2"
 ]
