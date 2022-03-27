@@ -1024,13 +1024,16 @@ normalizeActionName // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*latestActionName*)
+latestActionName::error = "`1`";
+Off[ latestActionName::error ];
+
 latestActionName[ name_, owner_, repo_ ] := Enclose[
     Module[ { url, data, tag, new },
 
         url = URLBuild @ <|
             "Scheme" -> "https",
             "Domain" -> "api.github.com",
-            "Path" -> { "repos", owner, repo, "releases", "latest" }
+            "Path"   -> { "repos", owner, repo, "releases", "latest" }
         |>;
 
         data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
@@ -1039,7 +1042,10 @@ latestActionName[ name_, owner_, repo_ ] := Enclose[
 
         latestActionName[ name, owner, repo ] = new
     ],
-    name &
+    If[ StringQ[ latestActionName::error ],
+        messageFailure[ latestActionName::error, # ],
+        name
+    ] &
 ];
 
 latestActionName // catchUndefined;
