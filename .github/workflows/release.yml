@@ -31,7 +31,7 @@ jobs:
         run: wolframscript Scripts/CheckPaclet.wls
       
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: check-paclet-stacks
@@ -55,7 +55,7 @@ jobs:
         run: wolframscript Scripts/TestPaclet.wls
       
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -63,7 +63,7 @@ jobs:
           if-no-files-found: error
       
       - name: Upload test results
-        if: always() && ${{ env.PACLET_TEST_RESULTS }}
+        if: always() && env.PACLET_TEST_RESULTS
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -108,7 +108,7 @@ jobs:
           WOLFRAMSCRIPT_KERNELPATH: "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel"
 
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -116,7 +116,7 @@ jobs:
           if-no-files-found: error
       
       - name: Upload test results
-        if: always() && ${{ env.PACLET_TEST_RESULTS }}
+        if: always() && env.PACLET_TEST_RESULTS
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -185,7 +185,7 @@ jobs:
           WOLFRAMINIT: "-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
       
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -193,7 +193,7 @@ jobs:
           if-no-files-found: error
       
       - name: Upload test results
-        if: always() && ${{ env.PACLET_TEST_RESULTS }}
+        if: always() && env.PACLET_TEST_RESULTS
         uses: actions/upload-artifact@v2
         with:
           name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
@@ -217,7 +217,7 @@ jobs:
         run: wolframscript Scripts/BuildPaclet.wls
       
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: release-paclet-stacks
@@ -270,7 +270,7 @@ jobs:
         run: wolframscript Scripts/SubmitPaclet.wls
 
       - name: Upload stack data
-        if: always() && ${{ env.PACLET_STACK_HISTORY }}
+        if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v2
         with:
           name: submit-paclet-stacks
