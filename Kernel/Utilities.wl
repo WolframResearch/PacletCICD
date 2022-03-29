@@ -160,7 +160,14 @@ checkGHRateLimits[ num_Integer ] /; num <= 5 :=
         num
     ];
 
-checkGHRateLimits[ num_Integer ] := Print[ "GitHub API requests remaining: ", num ];
+checkGHRateLimits[ num_Integer ] :=
+    If[ TrueQ @ $gitHub,
+        dnc`ConsolePrint @ StringJoin[
+            "GitHub API requests remaining: ",
+            ToString @ num
+        ],
+        Null
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
