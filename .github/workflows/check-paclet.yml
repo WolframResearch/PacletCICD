@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 env:
+  GITHUB_TOKEN:                ${{ secrets.GITHUB_TOKEN }}
   RESOURCE_PUBLISHER_TOKEN:    ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
   RESOURCE_SYSTEM_BASE:        https://www.wolframcloud.com/obj/rhennigan/api/1.0
   TEST_CLOUD_ACCOUNT_PASSWORD: ${{ secrets.TEST_CLOUD_ACCOUNT_PASSWORD }}
