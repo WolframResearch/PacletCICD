@@ -153,10 +153,9 @@ actionIcon[ KeyValuePattern[ "uses" -> uses_String ] ] :=
     Once @ actionIcon @ uses;
 
 actionIcon[ uses_String ] := actionIcon[ uses ] = Enclose[
-    Module[ { repo, url, data, avatar, img, thumb },
+    Module[ { repo, data, avatar, img, thumb },
         repo   = StringDelete[ uses, "@" ~~ __ ~~ EndOfString ];
-        url    = URLBuild @ { "https://api.github.com/repos", repo };
-        data   = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
+        data   = ConfirmBy[ ghAPI[ "repos", repo ], AssociationQ ];
         avatar = ConfirmBy[ data[ "owner", "avatar_url" ], StringQ ];
         img    = ConfirmBy[ Import @ avatar, ImageQ ];
         thumb  = ImageResize[ img, 48 ];

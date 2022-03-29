@@ -90,6 +90,35 @@ findDefinitionNotebook // catchUndefined;
 (* ::Section::Closed:: *)
 (*GitHub Actions*)
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghAPI*)
+ghAPI[ { path__String } ] :=
+    Module[ { url },
+        url = URLBuild @ { "https://api.github.com", path };
+        URLExecute[ url, "RawJSON", Authentication -> $ghTokenAuth ]
+    ];
+
+ghAPI[ path__String ] := ghAPI @ Flatten @ StringSplit[ { path }, "/" ];
+
+ghAPI // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$ghTokenAuth*)
+$ghTokenAuth :=
+    Module[ { user, token },
+        user  = Environment[ "GITHUB_REPOSITORY_OWNER" ];
+        token = Environment[ "GITHUB_TOKEN" ];
+        If[ StringQ @ user && StringQ @ token,
+            Echo[ <| "Username" -> user, "Password" -> token |>, "GH Token Auth" ],
+            Automatic
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$gitHub*)
 $gitHub := TrueQ @ Or[
     DirectoryQ @ $gitHubWorkspace,
     dnc`$ConsoleType === "GitHub"

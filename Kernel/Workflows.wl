@@ -1087,19 +1087,13 @@ latestActionName::error = "`1`";
 Off[ latestActionName::error ];
 
 latestActionName[ name_, owner_, repo_ ] := Enclose[
-    Module[ { url, data, tag, new },
+    Module[ { data, tag, new },
 
-        url = URLBuild @ <|
-            "Scheme" -> "https",
-            "Domain" -> "api.github.com",
-            "Path"   -> { "repos", owner, repo, "releases", "latest" }
-        |>;
+        data = ghAPI[ "repos", owner, repo, "releases", "latest" ];
+        data = ConfirmBy[ data, AssociationQ ];
 
-        data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
-
-        If[ StringQ[ latestActionName::error ] && ! KeyExistsQ[ data, "tag_name" ],
-            ConsoleError @ data
-        ];
+        (* TODO: delete this *)
+        If[ ! KeyExistsQ[ data, "tag_name" ], ConsoleError @ data ];
 
         tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
         new  = owner <> "/" <> repo <> "@" <> tag;
@@ -2063,15 +2057,9 @@ getPacletCICDReleaseVersion[ ver_String ] :=
     getPacletCICDReleaseVersion[ $thisRepository, ver ];
 
 getPacletCICDReleaseVersion[ repo_String, ver_String ] := Enclose[
-    Module[ { url, data, tags, sel },
-
-        url = URLBuild @ <|
-            "Scheme" -> "https",
-            "Domain" -> "api.github.com",
-            "Path" -> { "repos", repo, "releases" }
-        |>;
-
-        data = ConfirmMatch[ URLExecute[ url, "RawJSON" ], { __Association } ];
+    Module[ { data, tags, sel },
+        data = ghAPI[ "repos", repo, "releases" ];
+        data = ConfirmMatch[ data, { __Association } ];
         tags = ConfirmMatch[ Lookup[ data, "tag_name" ], { __String } ];
         sel  = ConfirmBy[ chooseMatchingTagVersion[ tags, "v"<>ver ], StringQ ];
         getPacletCICDReleaseVersion[ repo, ver ] = sel
