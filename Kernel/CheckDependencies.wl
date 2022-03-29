@@ -17,23 +17,26 @@ $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 (* ::Subsection::Closed:: *)
 (*Options*)
 CheckDependencies // Options = {
-    "Message" -> False
+    "Message" -> True
 };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Messages*)
-CheckDependencies::insufficient =
+CheckDependencies::InvalidPaclet =
+"`1` is not a valid paclet specification.";
+
+CheckDependencies::Insufficient =
 "The paclet `1` has version `2`, which does not meet the requested \
 specification `3`.";
 
-CheckDependencies::missing =
+CheckDependencies::Missing =
 "Failed to find the following dependencies for `1`:\n`2`";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
-CheckDependencies[ pac_, opts: OptionsPattern[ ] ] :=
+CheckDependencies[ pac_PacletObject, opts: OptionsPattern[ ] ] :=
     catchTop @ Block[ { $dependencyRules },
         Module[ { checked },
             $dependencyRules = Internal`Bag[ ];
@@ -41,6 +44,17 @@ CheckDependencies[ pac_, opts: OptionsPattern[ ] ] :=
             checked = Internal`BagPart[ $dependencyRules, All ];
             withDNCSettings[ { Automatic, "Submit" },
                 returnDependencies[ pac, checked, OptionValue[ Message ] ]
+            ]
+        ]
+    ];
+
+CheckDependencies[ id_, opts: OptionsPattern[ ] ] :=
+    catchTop @ With[ { pac = PacletObject @ id },
+        If[ PacletObjectQ @ pac,
+            CheckDependencies[ pac, opts ],
+            throwMessageFailure[
+                CheckDependencies::InvalidPaclet,
+                id
             ]
         ]
     ];
@@ -55,7 +69,7 @@ returnDependencies[ pac_, checked: { Rule[ _, _ ]... }, False ] :=
 
 returnDependencies[ pac_, checked: { Rule[ _, _ ]... }, True ] :=
     Module[ { res, missing, table },
-        res = returnDependencies[ checked, False ];
+        res = returnDependencies[ pac, checked, False ];
 
         missing = Cases[
             res,
@@ -70,12 +84,12 @@ returnDependencies[ pac_, checked: { Rule[ _, _ ]... }, True ] :=
                     depFailTable @ missing
                 ];
 
-        messageFailure[ CheckDependencies::missing, pac, table ];
+        messageFailure[ CheckDependencies::Missing, pac, table ];
 
         If[ MatchQ[ dnc`$ConsoleType, "GitHub" ],
             dnc`ConsolePrint[
                 TemplateApply[
-                    CheckDependencies::missing,
+                    CheckDependencies::Missing,
                     { pac[ "Name" ], table }
                 ],
                 "Level" -> "Error"
@@ -85,7 +99,11 @@ returnDependencies[ pac_, checked: { Rule[ _, _ ]... }, True ] :=
         res
     ] ~Catch~ $tag;
 
+returnDependencies // catchUndefined;
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*depFailTable*)
 depFailTable[ missing_ ] :=
     TableForm[
         formatRowItems /@ missing,
@@ -123,6 +141,9 @@ consoleDepFailTable[ missing_ ] :=
         ] <> "\n"
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*formatRowItems*)
 formatRowItems[ as_Association ] :=
     formatRowItems[
         Lookup[ as, "Name" ],
