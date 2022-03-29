@@ -1000,6 +1000,16 @@ toDefNBLocation[ file_ ] /; ToLowerCase @ FileExtension @ file === "yml" :=
         ]
     ];
 
+toDefNBLocation[ File[ file_String ] ] := toDefNBLocation @ file;
+
+toDefNBLocation[ file_String? relativePathQ ] :=
+    "./" <> StringDelete[
+        StringReplace[ file, "\\" -> "/" ],
+        StartOfString~~"./"
+    ];
+
+toDefNBLocation[ file_String ] := file;
+
 toDefNBLocation // catchUndefined;
 
 (* ::**********************************************************************:: *)

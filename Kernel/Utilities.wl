@@ -331,6 +331,35 @@ relativePath ~catchUndefined~ SubValues;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*relativePathQ*)
+relativePathQ[ file_ ] :=
+    With[ { list = Quiet @ FileNameSplit @ file },
+        If[ ListQ @ list,
+            relativePathListQ @ list,
+            False
+        ]
+    ];
+
+relativePathQ // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*relativePathListQ*)
+relativePathListQ[ { "", ___ } ] := False;
+relativePathListQ[ { c_? driveLetterQ, ___ } ] := False;
+relativePathListQ[ { ___String } ] := True;
+relativePathListQ // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*driveLetterQ*)
+driveLetterQ[ c_String ] /; $OperatingSystem === "Windows" :=
+    StringMatchQ[ c, LetterCharacter ~~ ":" ];
+
+driveLetterQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*expandFileName*)
 expandFileName[ file_String /; StringStartsQ[ file, "file://" ] ] := Enclose[
     Module[ { path },
