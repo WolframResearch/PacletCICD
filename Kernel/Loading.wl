@@ -3,7 +3,15 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`Internal`", { "Wolfram`PacletCICD`" } ];
 
-ClearAll[ SetContextLoad, LoadSubPackage, LoadSubPackages, $SubPackageSymbols ];
+$MXFile;
+
+ClearAll[
+    BuildMX,
+    SetContextLoad,
+    LoadSubPackage,
+    LoadSubPackages,
+    $SubPackageSymbols
+];
 
 Begin[ "`Private`" ];
 
@@ -59,6 +67,16 @@ SetContextLoad[ sym_Symbol, context_String ] :=
         sym // ClearAll;
         sym := (ClearAll @ sym; LoadSubPackage[ context, full ]; sym)
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*BuildMX*)
+BuildMX[ ] := (
+    LoadSubPackages[ ];
+    GeneralUtilities`EnsureDirectory @ DirectoryName @ $MXFile;
+    DumpSave[ $MXFile, Evaluate @ Contexts[ "Wolfram`PacletCICD`*" ] ];
+    $MXFile
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

@@ -7,9 +7,9 @@ SubmitPaclet // ClearAll;
 
 Begin[ "`Private`" ];
 
-Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
-Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
-Needs[ "ResourceSystemClient`"              -> "rsc`"  ];
+$ContextAliases[ "dnc`"  ] = "DefinitionNotebookClient`";
+$ContextAliases[ "prdn`" ] = "PacletResource`DefinitionNotebook`";
+$ContextAliases[ "rsc`"  ] = "ResourceSystemClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -63,6 +63,7 @@ SubmitPaclet[ dir_File? DirectoryQ, opts: $$spOpts ] :=
 SubmitPaclet[ file_File? defNBQ, opts: $$spOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
         { OptionValue @ ConsoleType, "Submit" },
+        Needs[ "ResourceSystemClient`" -> None ];
         Block[
             {
                 $PublisherID        = toPublisherID @ OptionValue @ PublisherID,
@@ -139,6 +140,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
 (*openNotebookAndSubmit*)
 openNotebookAndSubmit[ file_, opts___ ] :=
     Module[ { nbo },
+        Needs[ "DefinitionNotebookClient`" -> None ];
         WithCleanup[
             dnc`BeginConsoleGroup[ "SubmitPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,
@@ -181,6 +183,9 @@ toPToken // catchUndefined;
 (*scrapeAndSubmit*)
 scrapeAndSubmit[ nbo_NotebookObject ] :=
     Enclose @ Module[ { dir, pac, ver, ro },
+        Needs[ "DefinitionNotebookClient`"         -> None ];
+        Needs[ "PacletResource`DefinitionNotebook" -> None ];
+
         dir = ConfirmBy[ prdn`ScrapePacletDirectory @ nbo, DirectoryQ ];
         pac = ConfirmBy[ PacletObject @ Flatten @ File @ dir, PacletObjectQ ];
         ver = ConfirmBy[ pac[ "Version" ], StringQ ];
@@ -205,8 +210,10 @@ scrapeAndSubmit // catchUndefined;
 (*withTokenPublisher*)
 withTokenPublisher // Attributes = { HoldFirst };
 
-withTokenPublisher[ eval_ ] :=
-    withTokenPublisher[ eval, $PublisherID, rsc`$PublisherToken ];
+withTokenPublisher[ eval_ ] := (
+    Needs[ "ResourceSystemClient`" -> None ];
+    withTokenPublisher[ eval, $PublisherID, rsc`$PublisherToken ]
+);
 
 withTokenPublisher[ eval_, _String, _    ] := eval;
 withTokenPublisher[ eval_, _      , None ] := eval;
@@ -225,11 +232,13 @@ withTokenPublisher // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*getTokenInfo*)
-getTokenInfo[ ] :=
+getTokenInfo[ ] :=(
+    Needs[ "ResourceSystemClient`" -> None ];
     rsc`ResourceSystemExecute[
         "CheckPublisherToken",
         { "Request" -> "Information" }
-    ];
+    ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

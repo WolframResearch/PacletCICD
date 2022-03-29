@@ -52,6 +52,9 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v2
 
+      - name: BuildPacletMX
+        run: wolframscript Scripts/BuildPacletMX.wls
+
       - name: TestPaclet
         run: wolframscript Scripts/TestPaclet.wls
       
@@ -99,6 +102,14 @@ jobs:
           echo 'Installing Wolfram Engine...'
           brew install --cask wolfram-engine
           echo 'Installed Wolfram Engine.'
+
+      - name: BuildPacletMX
+        run: |
+          export PATH="${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH"
+          wolframscript -debug -verbose -script Scripts/BuildPacletMX.wls
+        env: 
+          WOLFRAMENGINE_EXECUTABLES_DIRECTORY: "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS"
+          WOLFRAMSCRIPT_KERNELPATH: "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel"
 
       - name: TestPaclet
         run: |
@@ -177,6 +188,14 @@ jobs:
           echo 'Installed Wolfram Engine.'
           Set-Alias -Name wolframscript -Value wolfram
 
+      - name: BuildPacletMX
+        run: |
+          $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\'
+          wolfram -script Scripts/BuildPacletMX.wls
+        env: 
+          WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
+          WOLFRAMINIT: "-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+
       - name: TestPaclet
         run: |
           $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\'
@@ -213,6 +232,9 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
+
+      - name: Build paclet MX
+        run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Build paclet
         run: wolframscript Scripts/BuildPaclet.wls
