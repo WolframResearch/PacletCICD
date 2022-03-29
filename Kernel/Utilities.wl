@@ -93,26 +93,122 @@ findDefinitionNotebook // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*ghAPI*)
-ghAPI[ { path__String } ] :=
-    With[ { url = URLBuild @ { "https://api.github.com", path } },
-        EchoEvaluation @ URLExecute[ url, "RawJSON", Authentication -> $ghTokenAuth ]
-    ];
+ghAPI[ { path__String } ] := Enclose[
+    Module[ { url, resp, data, code },
+        url  = URLBuild @ { "https://api.github.com", path };
+        resp = URLRead[ url, Authentication -> $ghTokenAuth ];
+        data = Confirm @ importHTTPResponse @ resp;
+        code = ConfirmBy[ resp[ "StatusCode" ], IntegerQ ];
+
+        If[ code =!= 200,
+            ghAPIError @ data,
+            checkGHRateLimits @ resp;
+            data
+        ]
+    ],
+    throwError[ "Failed to retrieve data from the GitHub API.", # ] &
+];
 
 ghAPI[ path__String ] := ghAPI @ Flatten @ StringSplit[ { path }, "/" ];
 
 ghAPI // catchUndefined;
 
 (* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghAPIError*)
+ghAPIError[ KeyValuePattern[ "message" -> message_String ] ] :=
+    throwError[ "GitHub API Error: `1`", message ];
+
+ghAPIError[ other_ ] :=
+    throwError[ "Failed to retrieve data from the GitHub API.", other ];
+
+ghAPIError // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*importHTTPResponse*)
+importHTTPResponse[ resp_HTTPResponse ] := Enclose[
+    Module[ { mime, fmts },
+        mime = ConfirmBy[ resp[ "ContentType" ], StringQ ];
+        fmts = ConfirmMatch[ MIMETypeToFormatList @ mime, { __String } ];
+        If[ MemberQ[ fmts, "JSON" ],
+            Import[ resp, "RawJSON" ],
+            Import @ resp
+        ]
+    ],
+    Import @ resp &
+];
+
+importHTTPResponse // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkGHRateLimits*)
+checkGHRateLimits[ resp_HTTPResponse ] :=
+    Enclose @ Module[ { str, num },
+        str = lookupHeaders[ resp, "X-RateLimit-Remaining" ];
+        ConfirmAssert[ StringQ @ str && StringMatchQ[ str, DigitCharacter.. ] ];
+        num = ConfirmBy[ ToExpression @ str, IntegerQ ];
+        checkGHRateLimits @ num;
+        num
+    ];
+
+checkGHRateLimits[ num_Integer ] /; num <= 5 :=
+    generalMessage[
+        "warning",
+        "Warning: only `1` GitHub API requests remaining before reaching the rate limit.",
+        num
+    ];
+
+checkGHRateLimits[ num_Integer ] := Print[ "GitHub API requests remaining: ", num ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*lookupHeaders*)
+lookupHeaders // Attributes = { HoldRest };
+
+lookupHeaders[ resp_, keys_ ] :=
+    lookupHeaders[ resp, keys, Missing[ "NotFound" ] ];
+
+lookupHeaders[ resp_HTTPResponse, keys_, default_ ] :=
+    lookupHeaders[ resp[ "Headers" ], keys, default ];
+
+lookupHeaders[ headers: { (_String -> _String).. }, keys_, default_ ] :=
+    Lookup[ MapAt[ normalHeaderKey, headers, { All, 1 } ],
+            normalHeaderKey @ keys,
+            default
+    ];
+
+lookupHeaders // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*normalHeaderKey*)
+normalHeaderKey[ key: _String | { ___String } ] :=
+    StringDelete[ ToLowerCase @ key, "-" ];
+
+normalHeaderKey // catchUndefined;
+
+(* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$ghTokenAuth*)
 $ghTokenAuth :=
     Module[ { user, token },
-        user  = Environment[ "GITHUB_REPOSITORY_OWNER" ];
+        user  = $ghTokenUser;
         token = Environment[ "GITHUB_TOKEN" ];
         If[ StringQ @ user && StringQ @ token,
             <| "Username" -> user, "Password" -> token |>,
             Automatic
         ]
+    ];
+
+$ghTokenUser :=
+    SelectFirst[
+        Values @ GetEnvironment @ {
+            "GITHUB_REPOSITORY_OWNER",
+            "GITHUB_TOKEN_USER"
+        },
+        StringQ
     ];
 
 (* ::**********************************************************************:: *)
