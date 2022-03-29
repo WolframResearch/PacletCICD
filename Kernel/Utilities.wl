@@ -94,9 +94,8 @@ findDefinitionNotebook // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*ghAPI*)
 ghAPI[ { path__String } ] :=
-    Module[ { url },
-        url = URLBuild @ { "https://api.github.com", path };
-        URLExecute[ url, "RawJSON", Authentication -> $ghTokenAuth ]
+    With[ { url = URLBuild @ { "https://api.github.com", path } },
+        EchoEvaluation @ URLExecute[ url, "RawJSON", Authentication -> $ghTokenAuth ]
     ];
 
 ghAPI[ path__String ] := ghAPI @ Flatten @ StringSplit[ { path }, "/" ];
@@ -111,7 +110,7 @@ $ghTokenAuth :=
         user  = Environment[ "GITHUB_REPOSITORY_OWNER" ];
         token = Environment[ "GITHUB_TOKEN" ];
         If[ StringQ @ user && StringQ @ token,
-            Echo[ <| "Username" -> user, "Password" -> token |>, "GH Token Auth" ],
+            <| "Username" -> user, "Password" -> token |>,
             Automatic
         ]
     ];
