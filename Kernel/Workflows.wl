@@ -1083,27 +1083,15 @@ normalizeActionName // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*latestActionName*)
-latestActionName::error = "`1`";
-Off[ latestActionName::error ];
-
 latestActionName[ name_, owner_, repo_ ] := Enclose[
     Module[ { data, tag, new },
-
         data = ghAPI[ "repos", owner, repo, "releases", "latest" ];
         data = ConfirmBy[ data, AssociationQ ];
-
-        (* TODO: delete this *)
-        If[ ! KeyExistsQ[ data, "tag_name" ], ConsoleError @ data ];
-
         tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
         new  = owner <> "/" <> repo <> "@" <> tag;
-
         latestActionName[ name, owner, repo ] = new
     ],
-    If[ StringQ[ latestActionName::error ],
-        messageFailure[ latestActionName::error, # ],
-        name
-    ] &
+    name &
 ];
 
 latestActionName // catchUndefined;

@@ -226,11 +226,7 @@ VerificationTest[
 (* ::Subsection::Closed:: *)
 (*Regression Tests*)
 VerificationTest[
-    WithCleanup[
-        On[ Wolfram`PacletCICD`Private`latestActionName::error ],
-        WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
-        Off[ Wolfram`PacletCICD`Private`latestActionName::error ]
-    ],
+    WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
     "rhennigan/check-paclet@v" ~~ DigitCharacter.. ~~ ___,
     SameTest -> StringMatchQ,
     TestID   -> "Normalize-Action-Version@@Tests/Workflows.wlt:228,1-233,2"
