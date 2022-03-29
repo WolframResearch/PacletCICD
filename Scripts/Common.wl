@@ -133,7 +133,15 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             stackName = name <> "StackHistory";
             stacks = ExpandFileName[ stackName <> ".wxf" ];
             Print[ "::notice::Exporting stack data: ", stacks ];
-            Export[ stacks, $stackHistory, "WXF", PerformanceGoal -> "Size" ];
+            Export[
+                stacks,
+                <|
+                    "Stacks"      -> $stackHistory,
+                    "Environment" -> GetEnvironment[ ]
+                |>,
+                "WXF",
+                PerformanceGoal -> "Size"
+            ];
             EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
             EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
         ];

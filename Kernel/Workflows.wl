@@ -981,25 +981,84 @@ toDefNBLocation[ dir_? DirectoryQ ] := Enclose[
 
 toDefNBLocation[ pac_PacletObject ] := toDefNBLocation @ pac[ "Location" ];
 
+toDefNBLocation[ file_? defNBQ ] :=
+    Module[ { root },
+        root = getRootGitDirectory @ file;
+        If[ DirectoryQ @ root,
+            relativePath[ root, file ],
+            $defNotebookPath
+        ]
+    ];
+
+toDefNBLocation[ file_ ] /; ToLowerCase @ FileExtension @ file === "yml" :=
+    Module[ { root, nb },
+        root = getRootGitDirectory @ file;
+        nb   = findDefinitionNotebook @ root;
+        If[ FileExistsQ @ nb,
+            relativePath[ root, nb ],
+            $defNotebookPath
+        ]
+    ];
+
+toDefNBLocation[ File[ file_String ] ] := toDefNBLocation @ file;
+
+toDefNBLocation[ file_String? relativePathQ ] :=
+    "./" <> StringDelete[
+        StringReplace[ file, "\\" -> "/" ],
+        StartOfString~~"./"
+    ];
+
+toDefNBLocation[ file_String ] := file;
+
 toDefNBLocation // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getRootGitDirectory*)
+getRootGitDirectory[ dir_? DirectoryQ ] :=
+    With[ { root = getRootGitDirectory0 @ dir },
+        If[ DirectoryQ @ root, root, dir ]
+    ];
+
+getRootGitDirectory[ file_ ] := getRootGitDirectory0 @ file;
+
+getRootGitDirectory // catchUndefined;
+
+getRootGitDirectory0[ file_ ] := Enclose[
+    Module[ { dir, dirs, root, nb },
+        dir  = ConfirmBy[ DirectoryName @ file, StringQ ];
+        dirs = FixedPointList[ DirectoryName, dir ];
+        root = SelectFirst[ dirs, FileNames[ ".git", # ] =!= { } & ];
+        If[ DirectoryQ @ root,
+            ConfirmBy[ root, DirectoryQ ],
+            ConfirmBy[ SelectFirst[ dirs, pacletDirectoryQ ], DirectoryQ ]
+        ]
+    ],
+    Missing[ "NotFound" ] &
+];
+
+getRootGitDirectory0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toBuildPacletAction*)
 toBuildPacletAction[ Automatic ] := normalizeActionName @ $buildAction;
 toBuildPacletAction[ name_     ] := normalizeActionName @ name;
+toBuildPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toCheckPacletAction*)
 toCheckPacletAction[ Automatic ] := normalizeActionName @ $checkAction;
 toCheckPacletAction[ name_     ] := normalizeActionName @ name;
+toCheckPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toTestPacletAction*)
 toTestPacletAction[ Automatic ] := normalizeActionName @ $testAction;
 toTestPacletAction[ name_     ] := normalizeActionName @ name;
+toTestPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1024,28 +1083,15 @@ normalizeActionName // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*latestActionName*)
-latestActionName::error = "`1`";
-Off[ latestActionName::error ];
-
 latestActionName[ name_, owner_, repo_ ] := Enclose[
-    Module[ { url, data, tag, new },
-
-        url = URLBuild @ <|
-            "Scheme" -> "https",
-            "Domain" -> "api.github.com",
-            "Path"   -> { "repos", owner, repo, "releases", "latest" }
-        |>;
-
-        data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
+    Module[ { data, tag, new },
+        data = ghAPI[ "repos", owner, repo, "releases", "latest" ];
+        data = ConfirmBy[ data, AssociationQ ];
         tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
         new  = owner <> "/" <> repo <> "@" <> tag;
-
         latestActionName[ name, owner, repo ] = new
     ],
-    If[ StringQ[ latestActionName::error ],
-        messageFailure[ latestActionName::error, # ],
-        name
-    ] &
+    name &
 ];
 
 latestActionName // catchUndefined;
@@ -1068,7 +1114,7 @@ toTimeConstraint // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*exportWorkflow*)
 exportWorkflow[ pac_PacletObject, workflow_ ] :=
-    exportWorkflow[ pac[ "Location" ], workflow ];
+    exportWorkflow[ getRootGitDirectory @ pac[ "Location" ], workflow ];
 
 exportWorkflow[ dir_? DirectoryQ, workflow_ ] :=
     Module[ { wfDir, file },
@@ -1999,15 +2045,9 @@ getPacletCICDReleaseVersion[ ver_String ] :=
     getPacletCICDReleaseVersion[ $thisRepository, ver ];
 
 getPacletCICDReleaseVersion[ repo_String, ver_String ] := Enclose[
-    Module[ { url, data, tags, sel },
-
-        url = URLBuild @ <|
-            "Scheme" -> "https",
-            "Domain" -> "api.github.com",
-            "Path" -> { "repos", repo, "releases" }
-        |>;
-
-        data = ConfirmMatch[ URLExecute[ url, "RawJSON" ], { __Association } ];
+    Module[ { data, tags, sel },
+        data = ghAPI[ "repos", repo, "releases" ];
+        data = ConfirmMatch[ data, { __Association } ];
         tags = ConfirmMatch[ Lookup[ data, "tag_name" ], { __String } ];
         sel  = ConfirmBy[ chooseMatchingTagVersion[ tags, "v"<>ver ], StringQ ];
         getPacletCICDReleaseVersion[ repo, ver ] = sel
@@ -2467,7 +2507,7 @@ toResourceSystemBase[ other_ ] :=
 (* ::Subsubsection::Closed:: *)
 (*toDefinitionNotebookPath*)
 toDefinitionNotebookPath[ Automatic ] := $defNotebookPath;
-toDefinitionNotebookPath[ path_String ] := path;
+toDefinitionNotebookPath[ path_String ] := toDefNBLocation @ path;
 toDefinitionNotebookPath[ File[ path_ ] ] := toDefinitionNotebookPath @ path;
 
 toDefinitionNotebookPath[ other_ ] :=

@@ -77,8 +77,12 @@ findDefinitionNotebook[ pac_PacletObject ] :=
 findDefinitionNotebook[ dir_, file_? defNBQ ] :=
     Flatten @ File @ file;
 
-findDefinitionNotebook[ dir_, _ ] :=
-    SelectFirst[ File /@ FileNames[ "*.nb", dir ], defNBQ ];
+findDefinitionNotebook[ dir_? DirectoryQ, _ ] :=
+    Module[ { files, sorted },
+        files  = File /@ FileNames[ "*.nb", dir, Infinity ];
+        sorted = SortBy[ files, Length @* FileNameSplit ];
+        SelectFirst[ sorted, defNBQ ]
+    ];
 
 findDefinitionNotebook // catchUndefined;
 
@@ -86,6 +90,137 @@ findDefinitionNotebook // catchUndefined;
 (* ::Section::Closed:: *)
 (*GitHub Actions*)
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghAPI*)
+ghAPI[ { path__String } ] := Enclose[
+    Module[ { url, resp, data, code },
+        url  = URLBuild @ { "https://api.github.com", path };
+        resp = URLRead[ url, Authentication -> $ghTokenAuth ];
+        data = Confirm @ importHTTPResponse @ resp;
+        code = ConfirmBy[ resp[ "StatusCode" ], IntegerQ ];
+
+        If[ code =!= 200,
+            ghAPIError @ data,
+            checkGHRateLimits @ resp;
+            data
+        ]
+    ],
+    throwError[ "Failed to retrieve data from the GitHub API.", # ] &
+];
+
+ghAPI[ path__String ] := ghAPI @ Flatten @ StringSplit[ { path }, "/" ];
+
+ghAPI // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghAPIError*)
+ghAPIError[ KeyValuePattern[ "message" -> message_String ] ] :=
+    throwError[ "GitHub API Error: `1`", message ];
+
+ghAPIError[ other_ ] :=
+    throwError[ "Failed to retrieve data from the GitHub API.", other ];
+
+ghAPIError // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*importHTTPResponse*)
+importHTTPResponse[ resp_HTTPResponse ] := Enclose[
+    Module[ { mime, fmts },
+        mime = ConfirmBy[ resp[ "ContentType" ], StringQ ];
+        fmts = ConfirmMatch[ MIMETypeToFormatList @ mime, { __String } ];
+        If[ MemberQ[ fmts, "JSON" ],
+            Import[ resp, "RawJSON" ],
+            Import @ resp
+        ]
+    ],
+    Import @ resp &
+];
+
+importHTTPResponse // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkGHRateLimits*)
+checkGHRateLimits[ resp_HTTPResponse ] :=
+    Enclose @ Module[ { str, num },
+        str = lookupHeaders[ resp, "X-RateLimit-Remaining" ];
+        ConfirmAssert[ StringQ @ str && StringMatchQ[ str, DigitCharacter.. ] ];
+        num = ConfirmBy[ ToExpression @ str, IntegerQ ];
+        checkGHRateLimits @ num;
+        num
+    ];
+
+checkGHRateLimits[ num_Integer ] /; num <= 5 :=
+    generalMessage[
+        "warning",
+        "Warning: only `1` GitHub API requests remaining before reaching the rate limit.",
+        num
+    ];
+
+checkGHRateLimits[ num_Integer ] :=
+    If[ TrueQ @ $gitHub,
+        dnc`ConsolePrint @ StringJoin[
+            "GitHub API requests remaining: ",
+            ToString @ num
+        ],
+        Null
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*lookupHeaders*)
+lookupHeaders // Attributes = { HoldRest };
+
+lookupHeaders[ resp_, keys_ ] :=
+    lookupHeaders[ resp, keys, Missing[ "NotFound" ] ];
+
+lookupHeaders[ resp_HTTPResponse, keys_, default_ ] :=
+    lookupHeaders[ resp[ "Headers" ], keys, default ];
+
+lookupHeaders[ headers: { (_String -> _String).. }, keys_, default_ ] :=
+    Lookup[ MapAt[ normalHeaderKey, headers, { All, 1 } ],
+            normalHeaderKey @ keys,
+            default
+    ];
+
+lookupHeaders // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*normalHeaderKey*)
+normalHeaderKey[ key: _String | { ___String } ] :=
+    StringDelete[ ToLowerCase @ key, "-" ];
+
+normalHeaderKey // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$ghTokenAuth*)
+$ghTokenAuth :=
+    Module[ { user, token },
+        user  = $ghTokenUser;
+        token = Environment[ "GITHUB_TOKEN" ];
+        If[ StringQ @ user && StringQ @ token,
+            <| "Username" -> user, "Password" -> token |>,
+            Automatic
+        ]
+    ];
+
+$ghTokenUser :=
+    SelectFirst[
+        Values @ GetEnvironment @ {
+            "GITHUB_REPOSITORY_OWNER",
+            "GITHUB_TOKEN_USER"
+        },
+        StringQ
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$gitHub*)
 $gitHub := TrueQ @ Or[
     DirectoryQ @ $gitHubWorkspace,
     dnc`$ConsoleType === "GitHub"
@@ -324,6 +459,35 @@ e: relativePath[ PatternSequence[ ] | PatternSequence[ _, _, __ ] ] :=
     ];
 
 relativePath ~catchUndefined~ SubValues;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*relativePathQ*)
+relativePathQ[ file_ ] :=
+    With[ { list = Quiet @ FileNameSplit @ file },
+        If[ ListQ @ list,
+            relativePathListQ @ list,
+            False
+        ]
+    ];
+
+relativePathQ // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*relativePathListQ*)
+relativePathListQ[ { "", ___ } ] := False;
+relativePathListQ[ { c_? driveLetterQ, ___ } ] := False;
+relativePathListQ[ { ___String } ] := True;
+relativePathListQ // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*driveLetterQ*)
+driveLetterQ[ c_String ] /; $OperatingSystem === "Windows" :=
+    StringMatchQ[ c, LetterCharacter ~~ ":" ];
+
+driveLetterQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
