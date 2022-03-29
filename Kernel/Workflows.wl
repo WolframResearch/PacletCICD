@@ -981,25 +981,74 @@ toDefNBLocation[ dir_? DirectoryQ ] := Enclose[
 
 toDefNBLocation[ pac_PacletObject ] := toDefNBLocation @ pac[ "Location" ];
 
+toDefNBLocation[ file_? defNBQ ] :=
+    Module[ { root },
+        root = getRootGitDirectory @ file;
+        If[ DirectoryQ @ root,
+            relativePath[ root, file ],
+            $defNotebookPath
+        ]
+    ];
+
+toDefNBLocation[ file_ ] /; ToLowerCase @ FileExtension @ file === "yml" :=
+    Module[ { root, nb },
+        root = getRootGitDirectory @ file;
+        nb   = findDefinitionNotebook @ root;
+        If[ FileExistsQ @ nb,
+            relativePath[ root, nb ],
+            $defNotebookPath
+        ]
+    ];
+
 toDefNBLocation // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getRootGitDirectory*)
+getRootGitDirectory[ dir_? DirectoryQ ] :=
+    With[ { root = getRootGitDirectory0 @ dir },
+        If[ DirectoryQ @ root, root, dir ]
+    ];
+
+getRootGitDirectory[ file_ ] := getRootGitDirectory0 @ file;
+
+getRootGitDirectory // catchUndefined;
+
+getRootGitDirectory0[ file_ ] := Enclose[
+    Module[ { dir, dirs, root, nb },
+        dir  = ConfirmBy[ DirectoryName @ file, StringQ ];
+        dirs = FixedPointList[ DirectoryName, dir ];
+        root = SelectFirst[ dirs, FileNames[ ".git", # ] =!= { } & ];
+        If[ DirectoryQ @ root,
+            ConfirmBy[ root, DirectoryQ ],
+            ConfirmBy[ SelectFirst[ dirs, pacletDirectoryQ ], DirectoryQ ]
+        ]
+    ],
+    Missing[ "NotFound" ] &
+];
+
+getRootGitDirectory0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toBuildPacletAction*)
 toBuildPacletAction[ Automatic ] := normalizeActionName @ $buildAction;
 toBuildPacletAction[ name_     ] := normalizeActionName @ name;
+toBuildPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toCheckPacletAction*)
 toCheckPacletAction[ Automatic ] := normalizeActionName @ $checkAction;
 toCheckPacletAction[ name_     ] := normalizeActionName @ name;
+toCheckPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toTestPacletAction*)
 toTestPacletAction[ Automatic ] := normalizeActionName @ $testAction;
 toTestPacletAction[ name_     ] := normalizeActionName @ name;
+toTestPacletAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1037,6 +1086,11 @@ latestActionName[ name_, owner_, repo_ ] := Enclose[
         |>;
 
         data = ConfirmBy[ URLExecute[ url, "RawJSON" ], AssociationQ ];
+
+        If[ StringQ[ latestActionName::error ] && ! KeyExistsQ[ data, "tag_name" ],
+            ConsoleError @ data
+        ];
+
         tag  = ConfirmBy[ Lookup[ data, "tag_name" ], StringQ ];
         new  = owner <> "/" <> repo <> "@" <> tag;
 
@@ -1068,7 +1122,7 @@ toTimeConstraint // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*exportWorkflow*)
 exportWorkflow[ pac_PacletObject, workflow_ ] :=
-    exportWorkflow[ pac[ "Location" ], workflow ];
+    exportWorkflow[ getRootGitDirectory @ pac[ "Location" ], workflow ];
 
 exportWorkflow[ dir_? DirectoryQ, workflow_ ] :=
     Module[ { wfDir, file },
@@ -2467,7 +2521,7 @@ toResourceSystemBase[ other_ ] :=
 (* ::Subsubsection::Closed:: *)
 (*toDefinitionNotebookPath*)
 toDefinitionNotebookPath[ Automatic ] := $defNotebookPath;
-toDefinitionNotebookPath[ path_String ] := path;
+toDefinitionNotebookPath[ path_String ] := toDefNBLocation @ path;
 toDefinitionNotebookPath[ File[ path_ ] ] := toDefinitionNotebookPath @ path;
 
 toDefinitionNotebookPath[ other_ ] :=

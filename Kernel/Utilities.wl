@@ -77,8 +77,12 @@ findDefinitionNotebook[ pac_PacletObject ] :=
 findDefinitionNotebook[ dir_, file_? defNBQ ] :=
     Flatten @ File @ file;
 
-findDefinitionNotebook[ dir_, _ ] :=
-    SelectFirst[ File /@ FileNames[ "*.nb", dir ], defNBQ ];
+findDefinitionNotebook[ dir_? DirectoryQ, _ ] :=
+    Module[ { files, sorted },
+        files  = File /@ FileNames[ "*.nb", dir, Infinity ];
+        sorted = SortBy[ files, Length @* FileNameSplit ];
+        SelectFirst[ sorted, defNBQ ]
+    ];
 
 findDefinitionNotebook // catchUndefined;
 
