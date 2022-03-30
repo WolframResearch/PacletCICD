@@ -145,10 +145,12 @@ throwMessageFailure[ args___ ] :=
 (* ::Subsection::Closed:: *)
 (*messageFailure*)
 messageFailure := (
+    LoadSubPackage[ "MessageFailure" ];
+
     SetOptions[
         MessageFailure,
         "GeneralSymbol" -> PacletCICD,
-        "MessagedFlag" :> $messaged
+        "MessagedFlag"  :> $messaged
     ];
 
     messageFailure = MessageFailure

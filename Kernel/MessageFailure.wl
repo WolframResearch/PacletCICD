@@ -6,13 +6,11 @@ Source: https://github.com/rhennigan/ResourceFunctions/blob/main/Definitions/Mes
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Header*)
-BeginPackage[ "Wolfram`PacletCICD`MessageFailure`" ];
-
-needs[ "Wolfram`PacletCICD`" ];
+BeginPackage[ "Wolfram`PacletCICD`" ];
 
 MessageFailure // ClearAll;
 
-Begin[ "`Private`" ];
+Begin[ "`MessageFailure`Private`" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
