@@ -69,9 +69,13 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ],
 ];
 
 If[ $VersionNumber < 13.1 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
-    PacletInstall[ "https://wolfr.am/11FhS453R" ];
-    PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
-    PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
+    Quiet[
+        PacletInstall[ "https://wolfr.am/11FhS453R" ];
+        PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
+        PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
+        ,
+        PacletInstall::samevers
+    ]
 ];
 
 If[ $VersionNumber < 13.1,
