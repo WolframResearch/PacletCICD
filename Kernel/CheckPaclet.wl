@@ -148,11 +148,12 @@ takeCheckDefNBOpts[ opts: $$cpOpts ] := (
 (*toDisabledHints*)
 toDisabledHints[ Automatic|Inherited ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
-    toDisabledHints @ {
+    toDisabledHints @ Flatten @ {
         dnc`$DisabledHints,
         "PacletRequiresBuild",
         "PacletFileChanged",
-        "PacletFilesChanged"
+        "PacletFilesChanged",
+        $eventDisabledHints
     }
 );
 
@@ -171,6 +172,13 @@ toDisabledHints[ hints_List ] :=
     DeleteDuplicates @ Flatten[ toDisabledHints /@ hints ];
 
 toDisabledHints[ ___ ] := { };
+
+
+$eventDisabledHints := eventDisabledHints @ Environment[ "GITHUB_EVENT_NAME" ];
+
+eventDisabledHints[ "schedule"          ] := { "PacletVersionUnchanged" };
+eventDisabledHints[ "workflow_dispatch" ] := { "PacletVersionUnchanged" };
+eventDisabledHints[ ___                 ] := { };
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
