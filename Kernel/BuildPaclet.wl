@@ -132,7 +132,7 @@ buildPaclet[ file_File, opts___ ] :=
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 buildPaclet[ nbo_NotebookObject, opts___ ] :=
     Module[ { result },
-        Needs[ "PacletResource`DefinitionNotebook`" -> None ];
+        needs[ "PacletResource`DefinitionNotebook`" -> None ];
 
         result =
             Internal`InheritedBlock[ { $Line },
@@ -200,7 +200,7 @@ combineBuildResult // catchUndefined;
 (*openNotebookAndBuild*)
 openNotebookAndBuild[ file_, opts___ ] :=
     Module[ { nbo },
-        Needs[ "DefinitionNotebookClient`" -> None ];
+        needs[ "DefinitionNotebookClient`" -> None ];
         WithCleanup[
             dnc`BeginConsoleGroup[ "BuildPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,

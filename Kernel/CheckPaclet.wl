@@ -112,7 +112,7 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     ccPromptFix @ checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ]
 );
 
@@ -139,7 +139,7 @@ checkExit[ result_ ] := result;
 (* ::Subsubsection::Closed:: *)
 (*takeCheckDefNBOpts*)
 takeCheckDefNBOpts[ opts: $$cpOpts ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     filterOptions[ dnc`CheckDefinitionNotebook, opts ]
 );
 
@@ -147,7 +147,7 @@ takeCheckDefNBOpts[ opts: $$cpOpts ] := (
 (* ::Subsubsection::Closed:: *)
 (*toDisabledHints*)
 toDisabledHints[ Automatic|Inherited ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     toDisabledHints @ {
         dnc`$DisabledHints,
         "PacletRequiresBuild",

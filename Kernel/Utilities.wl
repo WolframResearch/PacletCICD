@@ -19,7 +19,7 @@ $simpleTextMode := MatchQ[ dnc`$ConsoleType, "TTY"|"GitHub" ];
 withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
@@ -34,7 +34,7 @@ withDNCSettings // catchUndefined;
 (*withConsoleType*)
 withConsoleType // Attributes = { HoldRest };
 withConsoleType[ type_, eval_ ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = type;
         eval
@@ -703,6 +703,13 @@ longestCommonPrefix0 ~catchUndefined~ UpValues;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Hacks*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*needs*)
+needs[ ctx_String   ] := Quiet[ Needs[ ctx -> None ], General::shdw ];
+needs[ ctx_ -> None ] := needs @ ctx;
+needs[ other___     ] := Needs @ other;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

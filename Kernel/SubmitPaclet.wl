@@ -63,7 +63,7 @@ SubmitPaclet[ dir_File? DirectoryQ, opts: $$spOpts ] :=
 SubmitPaclet[ file_File? defNBQ, opts: $$spOpts ] :=
     catchTop @ UsingFrontEnd @ withDNCSettings[
         { OptionValue @ ConsoleType, "Submit" },
-        Needs[ "ResourceSystemClient`" -> None ];
+        needs[ "ResourceSystemClient`" -> None ];
         Block[
             {
                 $PublisherID        = toPublisherID @ OptionValue @ PublisherID,
@@ -140,7 +140,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
 (*openNotebookAndSubmit*)
 openNotebookAndSubmit[ file_, opts___ ] :=
     Module[ { nbo },
-        Needs[ "DefinitionNotebookClient`" -> None ];
+        needs[ "DefinitionNotebookClient`" -> None ];
         WithCleanup[
             dnc`BeginConsoleGroup[ "SubmitPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,
@@ -183,8 +183,8 @@ toPToken // catchUndefined;
 (*scrapeAndSubmit*)
 scrapeAndSubmit[ nbo_NotebookObject ] :=
     Enclose @ Module[ { dir, pac, ver, ro },
-        Needs[ "DefinitionNotebookClient`"          -> None ];
-        Needs[ "PacletResource`DefinitionNotebook`" -> None ];
+        needs[ "DefinitionNotebookClient`"          -> None ];
+        needs[ "PacletResource`DefinitionNotebook`" -> None ];
 
         dir = ConfirmBy[ prdn`ScrapePacletDirectory @ nbo, DirectoryQ ];
         pac = ConfirmBy[ PacletObject @ Flatten @ File @ dir, PacletObjectQ ];
@@ -211,7 +211,7 @@ scrapeAndSubmit // catchUndefined;
 withTokenPublisher // Attributes = { HoldFirst };
 
 withTokenPublisher[ eval_ ] := (
-    Needs[ "ResourceSystemClient`" -> None ];
+    needs[ "ResourceSystemClient`" -> None ];
     withTokenPublisher[ eval, $PublisherID, rsc`$PublisherToken ]
 );
 
@@ -233,7 +233,7 @@ withTokenPublisher // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*getTokenInfo*)
 getTokenInfo[ ] :=(
-    Needs[ "ResourceSystemClient`" -> None ];
+    needs[ "ResourceSystemClient`" -> None ];
     rsc`ResourceSystemExecute[
         "CheckPublisherToken",
         { "Request" -> "Information" }

@@ -8,7 +8,7 @@ Source: https://github.com/rhennigan/ResourceFunctions/blob/main/Definitions/Mes
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`MessageFailure`" ];
 
-Needs[ "Wolfram`PacletCICD`" ];
+needs[ "Wolfram`PacletCICD`" ];
 
 MessageFailure // ClearAll;
 

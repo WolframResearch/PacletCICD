@@ -32,7 +32,7 @@ $ContextAliases[ "cp`" ] = "CodeParser`";
 FromAST[ ast_ ] := FromAST[ ast, ##1 & ];
 
 FromAST[ ast: _cp`LeafNode|_cp`CallNode, wrapper_ ] := (
-    Needs[ "CodeParser`" -> None ];
+    needs[ "CodeParser`" -> None ];
     ToExpression[ cp`ToFullFormString @ ast, InputForm, wrapper ]
 );
 

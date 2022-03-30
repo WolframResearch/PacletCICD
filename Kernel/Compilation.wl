@@ -69,7 +69,7 @@ toLibraryName // catchUndefined;
 (*compileLibraryResources*)
 compileLibraryResources[ pac_, src_, tgt_, name_ ] :=
     Module[ { files },
-        Needs[ "CCompilerDriver`" -> None ];
+        needs[ "CCompilerDriver`" -> None ];
         files = FileNames[ "*.c", src ];
         CCompilerDriver`CreateLibrary[
             files,

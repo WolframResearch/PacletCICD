@@ -31,7 +31,7 @@ TestPaclet // Options = {
 (*Main definition*)
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
 TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     (* TODO: do the right stuff here *)
     catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = OptionValue[ "ConsoleType" ];
@@ -129,7 +129,7 @@ annotateTestResult[
         ___
     ]
 ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[ "Test passed: " <> testID ]
 );
 
@@ -142,7 +142,7 @@ annotateTestResult[
         ___
     ]
 ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[ "Test failed: " <> testID ];
     annotateTestResult[ tro, testID ]
 );
@@ -177,7 +177,7 @@ annotateTestResult[
     p1: { _String, _String },
     p2: { _String, _String }
 ] := (
-    Needs[ "DefinitionNotebookClient`" -> None ];
+    needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[
         StringJoin[
             "Test \"",
@@ -442,7 +442,7 @@ testIDFilePart[ file_ ] :=
 (* ::Subsection::Closed:: *)
 (*codeParseType*)
 codeParseType[ file_, type_ ] := (
-    Needs[ "CodeParser`" -> None ];
+    needs[ "CodeParser`" -> None ];
     cp`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ]
 );
 
