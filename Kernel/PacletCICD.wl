@@ -48,20 +48,34 @@ Wolfram`PacletCICD`WorkflowStep;
 Wolfram`PacletCICD`WorkflowStepQ;
 Wolfram`PacletCICD`WorkflowValue;
 
-Quiet[
-    Block[ { $ContextPath },
-        Get[ "Wolfram`PacletCICD`Config`"        ];
-        Get[ "Wolfram`PacletCICD`ErrorHandling`" ];
-        Get[ "Wolfram`PacletCICD`Loading`"       ];
-        Get[ "Wolfram`PacletCICD`Utilities`"     ];
-    ],
-    General::shdw
+Wolfram`PacletCICD`Internal`$MXFile =
+    FileNameJoin @ {
+        DirectoryName @ $InputFileName,
+        ToString @ $SystemWordLength <> "Bit",
+        "PacletCICD.mx"
+    };
+
+If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ],
+    Get[ Wolfram`PacletCICD`Internal`$MXFile ],
+    Quiet[
+        Block[ { $ContextPath },
+            Get[ "Wolfram`PacletCICD`Config`" ];
+            Get[ "Wolfram`PacletCICD`ErrorHandling`" ];
+            Get[ "Wolfram`PacletCICD`Loading`" ];
+            Get[ "Wolfram`PacletCICD`Utilities`" ];
+        ],
+        General::shdw
+    ]
 ];
 
 If[ $VersionNumber < 13.1 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
-    PacletInstall[ "https://wolfr.am/11FhS453R" ];
-    PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
-    PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
+    Quiet[
+        PacletInstall[ "https://wolfr.am/11FhS453R" ];
+        PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
+        PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
+        ,
+        PacletInstall::samevers
+    ]
 ];
 
 If[ $VersionNumber < 13.1,

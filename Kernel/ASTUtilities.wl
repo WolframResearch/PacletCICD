@@ -24,15 +24,17 @@ ClearAll[
 
 Begin[ "`Private`" ];
 
-Needs[ "CodeParser`" -> "cp`" ];
+$ContextAliases[ "cp`" ] = "CodeParser`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*FromAST*)
 FromAST[ ast_ ] := FromAST[ ast, ##1 & ];
 
-FromAST[ ast: _cp`LeafNode|_cp`CallNode, wrapper_ ] :=
-    ToExpression[ cp`ToFullFormString @ ast, InputForm, wrapper ];
+FromAST[ ast: _cp`LeafNode|_cp`CallNode, wrapper_ ] := (
+    needs[ "CodeParser`" -> None ];
+    ToExpression[ cp`ToFullFormString @ ast, InputForm, wrapper ]
+);
 
 FromAST[ cp`ContainerNode[ _, ast_List, _ ], wrapper_ ] :=
     FromAST[ ast, wrapper ];

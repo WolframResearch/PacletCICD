@@ -27,7 +27,7 @@ SetPacletInfo[ ___ ] := Failure[ "NotImplemented", <| |> ];
 (* ::Subsection::Closed:: *)
 (*insertPacletInfo*)
 insertPacletInfo[ id_, key_ -> val_ ] := Enclose[
-    Needs[ "CodeParser`" -> None ];
+    needs[ "CodeParser`" -> None ];
     With[ { file = ConfirmBy[ pacletInfoFile @ id, FileExistsQ ] },
         insertPacletInfo[
             file,

@@ -81,7 +81,7 @@ CreatePublisherToken[ name_, opts: OptionsPattern[ ] ] :=
         If[ ! TrueQ @ $CloudConnected,
             throwMessageFailure[ CreatePublisherToken::Authentication ]
         ];
-        Needs[ "ResourceSystemClient`" -> None ];
+        needs[ "ResourceSystemClient`" -> None ];
         createPublisherToken[
             name,
             OptionValue @ ExpirationDate,
@@ -306,7 +306,7 @@ tokenEnabledEndpoints[ ] := tokenEnabledEndpoints @ $ResourceSystemBase;
 
 tokenEnabledEndpoints[ rsb_ ] := Enclose[
     Module[ { info, eps },
-        Needs[ "ResourceSystemClient`" -> None ];
+        needs[ "ResourceSystemClient`" -> None ];
         info = ConfirmBy[ rsc`ResourceSystemInformation @ rsb, AssociationQ ];
         eps  = Lookup[ info, "TokenEnabledEndpoints", { } ];
         If[ eps === { },
@@ -498,7 +498,7 @@ PublisherTokenObject /:
                 ]
             ];
             bytes = publisherTokenProperty[ pt, "ByteArray" ];
-            Needs[ "ResourceSystemClient`" -> None ];
+            needs[ "ResourceSystemClient`" -> None ];
             rsc`$PublisherToken = bytes
         ];
 
@@ -787,7 +787,7 @@ rsExecute[ endpoint_String, params_ ] :=
     rsExecute[ None, endpoint, params ];
 
 rsExecute[ None, endpoint_String, params_ ] := (
-    Needs[ "ResourceSystemClient`" -> None ];
+    needs[ "ResourceSystemClient`" -> None ];
     rsc`ResourceSystemExecute[
         endpoint,
         { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
@@ -797,7 +797,7 @@ rsExecute[ None, endpoint_String, params_ ] := (
 
 rsExecute[ head_, endpoint_String, params_ ] :=
     Module[ { res },
-        Needs[ "ResourceSystemClient`" -> None ];
+        needs[ "ResourceSystemClient`" -> None ];
         res = rsc`ResourceSystemExecute[
             endpoint,
             { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },

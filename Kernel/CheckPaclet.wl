@@ -7,8 +7,7 @@ CheckPaclet // ClearAll;
 
 Begin[ "`Private`" ];
 
-Needs[ "DefinitionNotebookClient`"          -> "dnc`"  ];
-Needs[ "PacletResource`DefinitionNotebook`" -> "prdn`" ];
+$ContextAliases[ "dnc`"  ] = "DefinitionNotebookClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -112,8 +111,10 @@ e: CheckPaclet[ ___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
-checkPaclet[ nb_, opts___ ] :=
-    ccPromptFix @ checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ];
+checkPaclet[ nb_, opts___ ] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
+    ccPromptFix @ checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -137,19 +138,23 @@ checkExit[ result_ ] := result;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*takeCheckDefNBOpts*)
-takeCheckDefNBOpts[ opts: $$cpOpts ] :=
-    filterOptions[ dnc`CheckDefinitionNotebook, opts ];
+takeCheckDefNBOpts[ opts: $$cpOpts ] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
+    filterOptions[ dnc`CheckDefinitionNotebook, opts ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*toDisabledHints*)
-toDisabledHints[ Automatic|Inherited ] :=
+toDisabledHints[ Automatic|Inherited ] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
     toDisabledHints @ {
         dnc`$DisabledHints,
         "PacletRequiresBuild",
         "PacletFileChanged",
         "PacletFilesChanged"
-    };
+    }
+);
 
 toDisabledHints[ tag_String ] :=
     Map[ <| "MessageTag" -> tag, "Level" -> #1, "ID" -> All |> &,

@@ -3,6 +3,8 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
+Wolfram`PacletCICD`$Debug = True;
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)

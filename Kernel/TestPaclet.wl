@@ -7,8 +7,8 @@ ClearAll[ TestPaclet, AnnotateTestIDs ];
 
 Begin[ "`Private`" ];
 
-Needs[ "DefinitionNotebookClient`" -> "dnc`" ];
-Needs[ "CodeParser`"               -> "cp`"  ];
+$ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
+$ContextAliases[ "cp`"  ] = "CodeParser`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -30,7 +30,8 @@ TestPaclet // Options = {
 (* ::Subsection::Closed:: *)
 (*Main definition*)
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
-TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
+TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
     (* TODO: do the right stuff here *)
     catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = OptionValue[ "ConsoleType" ];
@@ -38,7 +39,8 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
             AnnotateTestIDs[ dir, "Reparse" -> False ]
         ];
         testPaclet @ dir
-    ];
+    ]
+);
 
 TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
     catchTop @ TestPaclet[ parentPacletDirectory @ file, opts ];
@@ -126,8 +128,10 @@ annotateTestResult[
         },
         ___
     ]
-] :=
-    dnc`ConsolePrint[ "Test passed: " <> testID ];
+] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
+    dnc`ConsolePrint[ "Test passed: " <> testID ]
+);
 
 annotateTestResult[
     tro: TestResultObject[
@@ -138,6 +142,7 @@ annotateTestResult[
         ___
     ]
 ] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[ "Test failed: " <> testID ];
     annotateTestResult[ tro, testID ]
 );
@@ -171,7 +176,8 @@ annotateTestResult[
     file_String,
     p1: { _String, _String },
     p2: { _String, _String }
-] :=
+] := (
+    needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[
         StringJoin[
             "Test \"",
@@ -187,7 +193,8 @@ annotateTestResult[
             "Type"     -> "LineColumn",
             "Position" -> ToExpression @ { p1, p2 }
         |>
-    ];
+    ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -434,8 +441,10 @@ testIDFilePart[ file_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*codeParseType*)
-codeParseType[ file_, type_ ] :=
-    cp`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ];
+codeParseType[ file_, type_ ] := (
+    needs[ "CodeParser`" -> None ];
+    cp`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
