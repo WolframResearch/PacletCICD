@@ -183,8 +183,8 @@ toPToken // catchUndefined;
 (*scrapeAndSubmit*)
 scrapeAndSubmit[ nbo_NotebookObject ] :=
     Enclose @ Module[ { dir, pac, ver, ro },
-        Needs[ "DefinitionNotebookClient`"         -> None ];
-        Needs[ "PacletResource`DefinitionNotebook" -> None ];
+        Needs[ "DefinitionNotebookClient`"          -> None ];
+        Needs[ "PacletResource`DefinitionNotebook`" -> None ];
 
         dir = ConfirmBy[ prdn`ScrapePacletDirectory @ nbo, DirectoryQ ];
         pac = ConfirmBy[ PacletObject @ Flatten @ File @ dir, PacletObjectQ ];
