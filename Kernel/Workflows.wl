@@ -2219,11 +2219,11 @@ normalizeStep[
     ]
 ] := <|
     "name" -> "UploadArtifact",
-    "id" -> "upload-build-artifacts-step",
+    "id"   -> "upload-build-artifacts-step",
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
         "path"              -> "${{ env.PACLET_BUILD_DIR }}",
-        "if-no-files-found" -> "none"
+        "if-no-files-found" -> "ignore"
     |>
 |>;
 
