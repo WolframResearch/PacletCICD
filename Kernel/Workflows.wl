@@ -478,7 +478,7 @@ WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$jobNames*)
-$jobNames = { "Check", "Build", "Release", "Test", "Submit" };
+$jobNames = { "Check", "Build", "Publish", "Release", "Test", "Submit" };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -724,6 +724,7 @@ $stepNames = {
     "Download",
     "DownloadCompilationArtifacts",
     "InstallWolframEngine",
+    "Publish",
     "RestoreCachedWolframEngine",
     "Submit",
     "Test",
@@ -1360,6 +1361,8 @@ toWorkflowName0[ "check"         ] := "Check";
 toWorkflowName0[ "checkpaclet"   ] := "Check";
 toWorkflowName0[ "submit"        ] := "Submit";
 toWorkflowName0[ "submitpaclet"  ] := "Submit";
+toWorkflowName0[ "publish"       ] := "Submit";
+toWorkflowName0[ "publishpaclet" ] := "Submit";
 toWorkflowName0[ "test"          ] := "Test";
 toWorkflowName0[ "testpaclet"    ] := "Test";
 
@@ -1653,7 +1656,7 @@ normalizeJob[ "release" | "releasepaclet" ] :=
         }
     |>;
 
-normalizeJob[ "submit" | "submitpaclet" ] :=
+normalizeJob[ "submit" | "submitpaclet" | "publish" | "publishpaclet" ] :=
     "Test" -> <|
         "name"            -> "Submit",
         "runs-on"         -> $defaultRunner,
@@ -2180,7 +2183,7 @@ normalizeStep[ ___, "test"|"testpaclet" ] := <|
     |>
 |>;
 
-normalizeStep[ ___, "submit"|"submitpaclet" ] := <|
+normalizeStep[ ___, "submit"|"submitpaclet"|"publish"|"publishpaclet" ] := <|
     "name" -> "Submit",
     "id"   -> "submit-paclet-step",
     "uses" -> normalizeActionName @ $submitAction,
