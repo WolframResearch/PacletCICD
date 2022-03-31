@@ -434,29 +434,6 @@ $terminalIcon       := wxfResource[ "TerminalIcon"       ];
 $publisherTokenIcon := wxfResource[ "PublisherTokenIcon" ];
 
 (* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*wxfResource*)
-wxfResource[ name_String? StringQ ] :=
-    Enclose @ Module[ { dir, base, file },
-        dir  = ConfirmBy[ $resourceDirectory, DirectoryQ ];
-        base = StringDelete[ name, ".wxf"~~EndOfString, IgnoreCase -> True ];
-        file = ConfirmBy[ FileNameJoin @ { dir, base <> ".wxf" }, FileExistsQ ];
-        wxfResource[ name ] = Confirm @ Developer`ReadWXFFile @ file
-    ];
-
-wxfResource // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*$resourceDirectory*)
-$resourceDirectory := Enclose[
-    $resourceDirectory = ConfirmBy[
-        $thisPaclet[ "AssetLocation", "Resources" ],
-        DirectoryQ
-    ]
-];
-
-(* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*clickToCopy*)
 clickToCopy[ label_, content_String ] :=

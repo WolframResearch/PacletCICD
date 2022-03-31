@@ -320,6 +320,46 @@ getGitHubEnv[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Paclet Resources*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wlResource*)
+wlResource[ name_String? StringQ ] :=
+    Enclose @ Module[ { dir, base, file },
+        dir  = ConfirmBy[ $resourceDirectory, DirectoryQ ];
+        base = StringDelete[ name, ".wl"~~EndOfString, IgnoreCase -> True ];
+        file = ConfirmBy[ FileNameJoin @ { dir, base <> ".wl" }, FileExistsQ ];
+        wlResource[ name ] = Confirm @ Get @ file
+    ];
+
+wlResource // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wxfResource*)
+wxfResource[ name_String? StringQ ] :=
+    Enclose @ Module[ { dir, base, file },
+        dir  = ConfirmBy[ $resourceDirectory, DirectoryQ ];
+        base = StringDelete[ name, ".wxf"~~EndOfString, IgnoreCase -> True ];
+        file = ConfirmBy[ FileNameJoin @ { dir, base <> ".wxf" }, FileExistsQ ];
+        wxfResource[ name ] = Confirm @ Developer`ReadWXFFile @ file
+    ];
+
+wxfResource // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$resourceDirectory*)
+$resourceDirectory := Enclose[
+    $resourceDirectory = ConfirmBy[
+        $thisPaclet[ "AssetLocation", "Resources" ],
+        DirectoryQ
+    ]
+];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*General File Utilities*)
 
 (* ::**********************************************************************:: *)
