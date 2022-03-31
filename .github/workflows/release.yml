@@ -288,9 +288,10 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
-
-      - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        
+      # Temporarily disabled
+      # - name: Build paclet MX
+      #   run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Submit paclet
         run: wolframscript Scripts/SubmitPaclet.wls
