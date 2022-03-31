@@ -10,7 +10,6 @@ Begin[ "`Private`" ];
 (*Config*)
 $thisRepository    := "rhennigan/PacletCICD";
 $thisPacletName    := "Wolfram/PacletCICD";
-
 $thisPaclet        := $thisPaclet        = PacletObject[ $thisPacletName ];
 $thisPacletDir     := $thisPacletDir     = $thisPaclet[ "Location"       ];
 $thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version"        ];
