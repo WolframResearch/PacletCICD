@@ -194,7 +194,7 @@ scrapeAndSubmit[ nbo_NotebookObject ] :=
             dnc`ScrapeResource[
                 "Paclet",
                 nbo,
-                Interactive -> False,
+                Interactive     -> False,
                 "ClickedButton" -> "Submit"
             ],
             _ResourceObject
