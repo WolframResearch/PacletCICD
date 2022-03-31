@@ -104,7 +104,6 @@ createPublisherToken[ name_, expiration_, publisher_, rsBase_, endpoints_ ] :=
             "Name"               -> toTokenName @ name,
             "ExpirationDate"     -> toTokenExpirationDate @ expiration,
             "PublisherID"        -> $PublisherID,
-            "ResourceSystemBase" -> $ResourceSystemBase,
             "AllowedEndpoints"   -> toTokenAllowedEndpoints @ endpoints
         |>
     ];
