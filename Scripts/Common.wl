@@ -73,22 +73,37 @@ releaseID[ dir_ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*releaseURL*)
+releaseURL[ file_ ] :=
+    Enclose @ Module[ { pac, ver },
+        pac = PacletObject @ Flatten @ File @ file;
+        ver = ConfirmBy[ pac[ "Version" ], StringQ ];
+        TemplateApply[
+            "https://github.com/rhennigan/PacletCICD/releases/tag/v`1`",
+            ver
+        ]
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*updatePacletInfo*)
 updatePacletInfo[ dir_ ] := Enclose[
-    Module[ { cs, file, string, id, date, new },
+    Module[ { cs, file, string, id, date, url, new },
         cs     = ConfirmBy[ #, StringQ ] &;
         file   = cs @ FileNameJoin @ { dir, "PacletInfo.wl" };
         string = cs @ ReadString @ file;
         id     = cs @ releaseID @ dir;
         date   = cs @ DateString[ "ISODateTime", TimeZone -> 0 ];
         date   = StringTrim[ date, "Z" ] <> "Z";
+        url    = cs @ releaseURL @ file;
 
         new = cs @ StringReplace[
             string,
             {
                 "\r\n"           -> "\n",
                 "$RELEASE_ID$"   -> id,
-                "$RELEASE_DATE$" -> date
+                "$RELEASE_DATE$" -> date,
+                "$RELEASE_URL$"  -> url
             }
         ];
 

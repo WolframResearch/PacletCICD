@@ -104,8 +104,8 @@ createPublisherToken[ name_, expiration_, publisher_, rsBase_, endpoints_ ] :=
             "Name"               -> toTokenName @ name,
             "ExpirationDate"     -> toTokenExpirationDate @ expiration,
             "PublisherID"        -> $PublisherID,
-            "ResourceSystemBase" -> $ResourceSystemBase,
-            "AllowedEndpoints"   -> toTokenAllowedEndpoints @ endpoints
+            "AllowedEndpoints"   -> toTokenAllowedEndpoints @ endpoints,
+            "AcceptedVersions"   -> { 1 }
         |>
     ];
 
@@ -377,7 +377,48 @@ deletePublisherToken[ token_String ] :=
 PublisherTokens::ServerError =
 "The resource system server was unable to fulfill the request.";
 
-PublisherTokens[ ___ ] := Failure[ "NotImplemented", <| |> ];
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Options*)
+PublisherTokens // Options = {
+    PublisherID        -> All,
+    ResourceSystemBase -> Automatic
+};
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Main definition*)
+PublisherTokens[ opts: OptionsPattern[ ] ] :=
+    catchTop @ PublisherTokens[ All, opts ];
+
+PublisherTokens[ name_, opts: OptionsPattern[ ] ] :=
+    catchTop @ withRSTokenSettings[
+        getPublisherTokens[ name, OptionValue @ PublisherID ],
+        $PublisherID,
+        OptionValue @ ResourceSystemBase
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*getPublisherTokens*)
+getPublisherTokens[ name_, publisher_ ] := Enclose[
+    Module[ { tokens },
+
+        tokens = ConfirmMatch[
+            rsExecute[
+                PublisherTokens,
+                "GetPublisherToken",
+                { "Name" -> name, "PublisherID" -> publisher }
+            ],
+            { ___Association }
+        ];
+
+        (catch @ PublisherTokenObject[ #1 ] &) /@ tokens
+    ],
+    throwError[ "Failed to get publisher tokens." ] &
+];
+
+getPublisherTokens // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -790,7 +831,7 @@ rsExecute[ None, endpoint_String, params_ ] := (
     needs[ "ResourceSystemClient`" -> None ];
     rsc`ResourceSystemExecute[
         endpoint,
-        { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
+        compressParameters @ params,
         "QuietAPICalls" -> False
     ]
 );
@@ -800,7 +841,7 @@ rsExecute[ head_, endpoint_String, params_ ] :=
         needs[ "ResourceSystemClient`" -> None ];
         res = rsc`ResourceSystemExecute[
             endpoint,
-            { "ContentFormat" -> "Compressed", "Data" -> Compress @ params },
+            compressParameters @ params,
             "QuietAPICalls" -> Automatic
         ];
         If[ FailureQ @ res,
@@ -810,6 +851,20 @@ rsExecute[ head_, endpoint_String, params_ ] :=
     ];
 
 rsExecute // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*compressParameters*)
+compressParameters[ params0: KeyValuePattern @ { } ] := Enclose[
+    Module[ { params, compressed },
+        params     = Append[ params0, "AcceptedTokenVersion" -> $tokenVersion ];
+        compressed = Compress @ params;
+        { "ContentFormat" -> "Compressed", "Data" -> compressed }
+    ],
+    throwError[ "Failed to prepare parameters for ResourceSystemExecute." ] &
+];
+
+compressParameters // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

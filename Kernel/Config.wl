@@ -15,6 +15,8 @@ $thisPaclet        := $thisPaclet        = PacletObject[ $thisPacletName ];
 $thisPacletDir     := $thisPacletDir     = $thisPaclet[ "Location"       ];
 $thisPacletVersion := $thisPacletVersion = $thisPaclet[ "Version"        ];
 
+$tokenVersion = 1;
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Debug*)

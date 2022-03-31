@@ -25,6 +25,7 @@ $ContextAliases[ "sp`" ] = "System`Private`";
 $buildAction     = "rhennigan/build-paclet@latest";
 $checkAction     = "rhennigan/check-paclet@latest";
 $testAction      = "rhennigan/test-paclet@latest";
+$submitAction    = "rhennigan/submit-paclet@latest";
 $defaultBranch   = "main";
 $timeConstraint  = 10;
 $actionTarget    = "Submit";
@@ -87,22 +88,30 @@ Workflow::invname =
 Workflow::invprop =
 "`1` is not a valid Workflow property name.";
 
+Workflow::TokenSecret =
+"Publisher tokens should not be specified directly, and should instead be \
+given as a GitHubSecret.";
+
+Workflow::InvalidPublisherToken =
+"Value of option PublisherToken -> `1` should be Automatic or None.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 Workflow // Options = {
     "BuildPacletAction"      -> $buildAction,
     "CheckPacletAction"      -> $checkAction,
+    "SubmitPacletAction"     -> $submitAction,
     "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
+    "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
     "Target"                 -> $actionTarget,
     TimeConstraint           -> Infinity
 };
-(* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -317,22 +326,30 @@ WorkflowJob::invname =
 WorkflowJob::invprop =
 "`1` is not a valid WorkflowJob property name.";
 
+WorkflowJob::TokenSecret =
+"Publisher tokens should not be specified directly, and should instead be \
+given as a GitHubSecret.";
+
+WorkflowJob::InvalidPublisherToken =
+"Value of option PublisherToken -> `1` should be Automatic or None.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowJob // Options = {
     "BuildPacletAction"      -> $buildAction,
     "CheckPacletAction"      -> $checkAction,
+    "SubmitPacletAction"     -> $submitAction,
     "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
+    "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
     "Target"                 -> $actionTarget,
     TimeConstraint           -> Infinity
 };
-(* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -461,7 +478,7 @@ WorkflowJob /: MakeBoxes[ job_WorkflowJob? workflowJobQ, fmt_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$jobNames*)
-$jobNames = { "Check", "Build", "Release", "Test" };
+$jobNames = { "Check", "Build", "Publish", "Release", "Test", "Submit" };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -553,22 +570,30 @@ WorkflowStep::invname =
 WorkflowStep::invprop =
 "`1` is not a valid WorkflowStep property name.";
 
+WorkflowStep::TokenSecret =
+"Publisher tokens should not be specified directly, and should instead be \
+given as a GitHubSecret.";
+
+WorkflowStep::InvalidPublisherToken =
+"Value of option PublisherToken -> `1` should be Automatic or None.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 WorkflowStep // Options = {
     "BuildPacletAction"      -> $buildAction,
     "CheckPacletAction"      -> $checkAction,
+    "SubmitPacletAction"     -> $submitAction,
     "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
+    "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
     "Target"                 -> $actionTarget,
     TimeConstraint           -> Infinity
 };
-(* TODO: set options like WorkflowExport *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -699,7 +724,9 @@ $stepNames = {
     "Download",
     "DownloadCompilationArtifacts",
     "InstallWolframEngine",
+    "Publish",
     "RestoreCachedWolframEngine",
+    "Submit",
     "Test",
     "Upload",
     "UploadBuildArtifacts",
@@ -1258,7 +1285,7 @@ workflowFileName[ ___ ] := "workflow.yml";
 $namedWorkflows := <|
     "Release" -> <|
         "name" -> "Release",
-        "On" -> <|
+        "on" -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
         |>,
@@ -1299,6 +1326,15 @@ $namedWorkflows := <|
         "jobs" -> "Test"
     |>
     ,
+    "Submit" -> <|
+        "name" -> "Submit",
+        "on"   -> <|
+            "push"              -> <| "branches" -> { "release/*" } |>,
+            "workflow_dispatch" -> True
+        |>,
+        "jobs" -> "Submit"
+    |>
+    ,
     "Compile" -> <|
         "name" -> "Compile",
         "on"   -> <|
@@ -1323,6 +1359,10 @@ toWorkflowName0[ "build"         ] := "Build";
 toWorkflowName0[ "buildpaclet"   ] := "Build";
 toWorkflowName0[ "check"         ] := "Check";
 toWorkflowName0[ "checkpaclet"   ] := "Check";
+toWorkflowName0[ "submit"        ] := "Submit";
+toWorkflowName0[ "submitpaclet"  ] := "Submit";
+toWorkflowName0[ "publish"       ] := "Submit";
+toWorkflowName0[ "publishpaclet" ] := "Submit";
 toWorkflowName0[ "test"          ] := "Test";
 toWorkflowName0[ "testpaclet"    ] := "Test";
 
@@ -1616,6 +1656,20 @@ normalizeJob[ "release" | "releasepaclet" ] :=
         }
     |>;
 
+normalizeJob[ "submit" | "submitpaclet" | "publish" | "publishpaclet" ] :=
+    "Test" -> <|
+        "name"            -> "Submit",
+        "runs-on"         -> $defaultRunner,
+        "container"       -> $defaultJobContainer,
+        "env"             -> $defaultJobEnv,
+        "timeout-minutes" -> $timeConstraint,
+        "steps"           -> {
+            normalizeStep[ "Checkout"             ],
+            normalizeStep[ "SubmitPaclet"         ],
+            normalizeStep[ "UploadBuildArtifacts" ]
+        }
+    |>;
+
 normalizeJob[ "test" | "testpaclet" ] :=
     "Test" -> <|
         "name"            -> "Test",
@@ -1624,8 +1678,9 @@ normalizeJob[ "test" | "testpaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"   ],
-            normalizeStep[ "TestPaclet" ]
+            normalizeStep[ "Checkout"             ],
+            normalizeStep[ "TestPaclet"           ],
+            normalizeStep[ "UploadBuildArtifacts" ]
         }
     |>;
 
@@ -2128,6 +2183,17 @@ normalizeStep[ ___, "test"|"testpaclet" ] := <|
     |>
 |>;
 
+normalizeStep[ ___, "submit"|"submitpaclet"|"publish"|"publishpaclet" ] := <|
+    "name" -> "Submit",
+    "id"   -> "submit-paclet-step",
+    "uses" -> normalizeActionName @ $submitAction,
+    "with" -> <|
+        "paclet_cicd_version"  -> $latestPacletCICDVersion,
+        "definition_notebook"  -> $defNotebookPath,
+        "resource_system_base" -> $resSystemBase
+    |>
+|>;
+
 normalizeStep[ ___, "upload" ] := <|
     "name" -> "Upload",
     "id"   -> "upload-artifacts-step",
@@ -2157,7 +2223,7 @@ normalizeStep[
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
         "path"              -> "${{ env.PACLET_BUILD_DIR }}",
-        "if-no-files-found" -> "error"
+        "if-no-files-found" -> "none"
     |>
 |>;
 
@@ -2420,11 +2486,21 @@ stringJoin[ a___, { b___ }, c___ ] := stringJoin[ a, b, c ];
 (* ::Subsection::Closed:: *)
 (*withWorkflowOptions*)
 withWorkflowOptions[ s_, opts___ ] :=
-    Block[ { $wfHead = s }, withWorkflowOptions0[ s, opts ] ];
+    Function[
+        eval,
+        catchTop @ Block[
+            { $wfHead = s },
+            withWorkflowOptions0[ s, { opts }, eval ]
+        ],
+        HoldAllComplete
+    ];
 
-withWorkflowOptions0[ s_, opts___ ] := Function[
-    eval,
-    catchTop @ Block[
+withWorkflowOptions // catchUndefined;
+
+withWorkflowOptions0 // Attributes = { HoldRest };
+
+withWorkflowOptions0[ s_, { opts___ }, eval_ ] :=
+    Block[
         {
             $buildAction     = wfOpt[ s, opts, "BuildPacletAction"           ],
             $checkAction     = wfOpt[ s, opts, "CheckPacletAction"           ],
@@ -2435,12 +2511,13 @@ withWorkflowOptions0[ s_, opts___ ] := Function[
             $defNotebookPath = wfOpt[ s, opts, "DefinitionNotebookPath"      ],
             $defaultOS       = wfOpt[ s, opts, "OperatingSystem"             ],
             $defaultRunner   = wfOpt[ s, opts, "OperatingSystem" -> "Runner" ],
-            $resSystemBase   = wfOpt[ s, opts, "ResourceSystemBase"          ]
+            $resSystemBase   = wfOpt[ s, opts, "ResourceSystemBase"          ],
+            $publisherToken  = wfOpt[ s, opts, "PublisherToken"              ]
         },
         eval
-    ],
-    HoldAllComplete
-];
+    ];
+
+withWorkflowOptions0 // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -2480,13 +2557,14 @@ wfOpt[ sym_, opts___, from_String -> name_String ] :=
 (*wfOptFunc*)
 wfOptFunc[ "BuildPacletAction"      ] := toBuildPacletAction;
 wfOptFunc[ "CheckPacletAction"      ] := toCheckPacletAction;
-wfOptFunc[ "TestPacletAction"       ] := toTestPacletAction;
 wfOptFunc[ "DefaultBranch"          ] := toDefaultBranch;
 wfOptFunc[ "DefinitionNotebookPath" ] := toDefinitionNotebookPath;
 wfOptFunc[ "OperatingSystem"        ] := toDefaultOS;
+wfOptFunc[ "PublisherToken"         ] := toPublisherToken;
 wfOptFunc[ "ResourceSystemBase"     ] := toResourceSystemBase;
 wfOptFunc[ "Runner"                 ] := toDefaultRunner;
 wfOptFunc[ "Target"                 ] := toActionTarget;
+wfOptFunc[ "TestPacletAction"       ] := toTestPacletAction;
 wfOptFunc[ "TimeConstraint"         ] := toTimeConstraint;
 
 wfOptFunc[ other_   ] := throwError[ "`1` is not a valid option."   , other ];
@@ -2502,6 +2580,34 @@ toResourceSystemBase[ HoldPattern @ $ResourceSystemBase ] := $resSystemBase;
 
 toResourceSystemBase[ other_ ] :=
     wfOptFail[ "InvalidResourceSystemBase", other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toPublisherToken*)
+toPublisherToken[ Automatic       ] := $publisherToken;
+toPublisherToken[ None            ] := $noValue;
+toPublisherToken[ s_GitHubSecret  ] := s;
+toPublisherToken[ _? actualTokenQ ] := wfOptFail[ "TokenSecret" ];
+toPublisherToken[ e_              ] := wfOptFail[ "InvalidPublisherToken", e ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*actualTokenQ*)
+actualTokenQ[ expr_ ] := (
+    LoadSubPackage[ "PublisherTokens" ];
+    ! FreeQ[ Hold @ expr,
+             (_String|_ByteArray|_PublisherTokenObject)? actualTokenQ0
+      ]
+);
+
+actualTokenQ // catchUndefined;
+
+actualTokenQ0[ str_String ] := StringContainsQ[ str, s__ /; tokenStringQ @ s ];
+actualTokenQ0[ bytes_ByteArray ] := actualTokenQ0 @ ByteArrayToString @ bytes;
+actualTokenQ0[ token: HoldPattern[ _PublisherTokenObject ] ] :=
+    publisherTokenObjectQ @ Evaluate @ token;
+
+actualTokenQ0[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
