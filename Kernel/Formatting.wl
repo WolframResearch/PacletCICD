@@ -243,24 +243,6 @@ tokenC2C[ as_Association ] :=
 tokenC2C[ token_String? StringQ ] :=
     tokenC2C[ token, StringSplit[ token, "-" ] ];
 
-(* tokenC2C[ token_, { _, _, id_String, _ } ] :=
-    If[ TrueQ[ StringLength @ id > 12 ],
-        clickToCopy[
-            Style[
-                StringJoin[
-                    StringDrop[ id, -6 ],
-                    ConstantArray[ "\[Bullet]", 6 ]
-                ],
-                FontFamily -> Dynamic @ CurrentValue @ {
-                    StyleHints,
-                    "CodeFont"
-                }
-            ],
-            token
-        ],
-        $Failed
-    ]; *)
-
 tokenC2C[ token_, { _, _, id_String, _ } ] :=
     If[ TrueQ[ StringLength @ id > 12 ],
         clickToCopy[

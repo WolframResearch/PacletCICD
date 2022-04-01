@@ -132,11 +132,15 @@ importHTTPResponse[ resp_HTTPResponse ] := Enclose[
         mime = ConfirmBy[ resp[ "ContentType" ], StringQ ];
         fmts = ConfirmMatch[ MIMETypeToFormatList @ mime, { __String } ];
         If[ MemberQ[ fmts, "JSON" ],
-            Import[ resp, "RawJSON" ],
-            Import @ resp
+            Confirm @ Developer`ReadRawJSONString @ resp[ "Body" ],
+            FirstCase[
+                fmts,
+                f_ :> With[ { e = Import[ resp, f ] }, e /; ! FailureQ @ e ],
+                Import[ resp, Automatic ]
+            ]
         ]
     ],
-    Import @ resp &
+    Import[ resp, Automatic ] &
 ];
 
 importHTTPResponse // catchUndefined;

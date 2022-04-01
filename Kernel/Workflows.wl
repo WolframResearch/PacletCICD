@@ -1657,7 +1657,7 @@ normalizeJob[ "release" | "releasepaclet" ] :=
     |>;
 
 normalizeJob[ "submit" | "submitpaclet" | "publish" | "publishpaclet" ] :=
-    "Test" -> <|
+    "Submit" -> <|
         "name"            -> "Submit",
         "runs-on"         -> $defaultRunner,
         "container"       -> $defaultJobContainer,
