@@ -3,22 +3,31 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        $pacletDir = DirectoryName[ $TestFileName, 2 ]
+        $pacletDir =
+            Module[ { root, mx },
+                root = DirectoryName[ $TestFileName, 2 ];
+                mx = FileNameJoin @ { root, "MXBuild" };
+                If[ DirectoryQ @ mx, mx, root ]
+            ]
     ],
-    TestID -> "Initialize-Paclet@@Tests/Console.wlt:4,1-9,2"
+    TestID -> "Initialize-PacletObject@@Tests/Console.wlt:4,1-14,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
-    PacletDirectoryLoad @ $pacletDir,
+    Echo[ $TestFileName, "TestFileName" ];
+    PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize-Paclet-Directory@@Tests/Console.wlt:11,1-16,2"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/Console.wlt:18,1-24,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize-Needs@@Tests/Console.wlt:18,1-22,2"
+    TestID -> "Initialize-Needs@@Tests/Console.wlt:27,1-31,2"
 ]
 
 (* :!CodeAnalysis::BeginBlock:: *)
@@ -48,7 +57,7 @@ VerificationTest[
             ]
         ];,
     Null,
-    TestID -> "Definition-TraceWrites@@Tests/Console.wlt:26,1-52,2"
+    TestID -> "Definition-TraceWrites@@Tests/Console.wlt:35,1-61,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -57,25 +66,25 @@ VerificationTest[
 VerificationTest[
     Context @ ConsoleError,
     "Wolfram`PacletCICD`",
-    TestID -> "ConsoleError-Context@@Tests/Console.wlt:57,1-61,2"
+    TestID -> "ConsoleError-Context@@Tests/Console.wlt:66,1-70,2"
 ]
 
 VerificationTest[
     Context @ ConsoleWarning,
     "Wolfram`PacletCICD`",
-    TestID -> "ConsoleWarning-Context@@Tests/Console.wlt:63,1-67,2"
+    TestID -> "ConsoleWarning-Context@@Tests/Console.wlt:72,1-76,2"
 ]
 
 VerificationTest[
     Context @ ConsoleNotice,
     "Wolfram`PacletCICD`",
-    TestID -> "ConsoleNotice-Context@@Tests/Console.wlt:69,1-73,2"
+    TestID -> "ConsoleNotice-Context@@Tests/Console.wlt:78,1-82,2"
 ]
 
 VerificationTest[
     Context @ ConsoleLog,
     "Wolfram`PacletCICD`",
-    TestID -> "ConsoleLog-Context@@Tests/Console.wlt:75,1-79,2"
+    TestID -> "ConsoleLog-Context@@Tests/Console.wlt:84,1-88,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -88,7 +97,7 @@ VerificationTest[
         "Writes" -> { HoldComplete @ Print[ __, "error" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-Notebook@@Tests/Console.wlt:84,1-92,2"
+    TestID   -> "ConsoleError-Notebook@@Tests/Console.wlt:93,1-101,2"
 ]
 
 VerificationTest[
@@ -105,7 +114,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-TTY@@Tests/Console.wlt:94,1-109,2"
+    TestID   -> "ConsoleError-TTY@@Tests/Console.wlt:103,1-118,2"
 ]
 
 VerificationTest[
@@ -121,7 +130,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-GitHub@@Tests/Console.wlt:111,1-125,2"
+    TestID   -> "ConsoleError-GitHub@@Tests/Console.wlt:120,1-134,2"
 ]
 
 VerificationTest[
@@ -141,7 +150,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-GitHub-File@@Tests/Console.wlt:127,1-145,2"
+    TestID   -> "ConsoleError-GitHub-File@@Tests/Console.wlt:136,1-154,2"
 ]
 
 VerificationTest[
@@ -162,7 +171,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-GitHub-File-Line@@Tests/Console.wlt:147,1-166,2"
+    TestID   -> "ConsoleError-GitHub-File-Line@@Tests/Console.wlt:156,1-175,2"
 ]
 
 VerificationTest[
@@ -183,7 +192,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-GitHub-File-Lines@@Tests/Console.wlt:168,1-187,2"
+    TestID   -> "ConsoleError-GitHub-File-Lines@@Tests/Console.wlt:177,1-196,2"
 ]
 
 VerificationTest[
@@ -204,7 +213,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleError-GitHub-File-Lines-Columns@@Tests/Console.wlt:189,1-208,2"
+    TestID   -> "ConsoleError-GitHub-File-Lines-Columns@@Tests/Console.wlt:198,1-217,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -217,7 +226,7 @@ VerificationTest[
         "Writes" -> { HoldComplete @ Print[ __, "message text" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-Notebook@@Tests/Console.wlt:213,1-221,2"
+    TestID   -> "ConsoleWarning-Notebook@@Tests/Console.wlt:222,1-230,2"
 ]
 
 VerificationTest[
@@ -234,7 +243,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-TTY@@Tests/Console.wlt:223,1-238,2"
+    TestID   -> "ConsoleWarning-TTY@@Tests/Console.wlt:232,1-247,2"
 ]
 
 VerificationTest[
@@ -250,7 +259,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-GitHub@@Tests/Console.wlt:240,1-254,2"
+    TestID   -> "ConsoleWarning-GitHub@@Tests/Console.wlt:249,1-263,2"
 ]
 
 VerificationTest[
@@ -270,7 +279,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-GitHub-File@@Tests/Console.wlt:256,1-274,2"
+    TestID   -> "ConsoleWarning-GitHub-File@@Tests/Console.wlt:265,1-283,2"
 ]
 
 VerificationTest[
@@ -291,7 +300,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-GitHub-File-Line@@Tests/Console.wlt:276,1-295,2"
+    TestID   -> "ConsoleWarning-GitHub-File-Line@@Tests/Console.wlt:285,1-304,2"
 ]
 
 VerificationTest[
@@ -312,7 +321,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-GitHub-File-Lines@@Tests/Console.wlt:297,1-316,2"
+    TestID   -> "ConsoleWarning-GitHub-File-Lines@@Tests/Console.wlt:306,1-325,2"
 ]
 
 VerificationTest[
@@ -333,7 +342,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleWarning-GitHub-File-Lines-Columns@@Tests/Console.wlt:318,1-337,2"
+    TestID   -> "ConsoleWarning-GitHub-File-Lines-Columns@@Tests/Console.wlt:327,1-346,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -346,7 +355,7 @@ VerificationTest[
         "Writes" -> { HoldComplete @ Print[ __, "message text" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-Notebook@@Tests/Console.wlt:342,1-350,2"
+    TestID   -> "ConsoleNotice-Notebook@@Tests/Console.wlt:351,1-359,2"
 ]
 
 VerificationTest[
@@ -363,7 +372,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-TTY@@Tests/Console.wlt:352,1-367,2"
+    TestID   -> "ConsoleNotice-TTY@@Tests/Console.wlt:361,1-376,2"
 ]
 
 VerificationTest[
@@ -379,7 +388,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-GitHub@@Tests/Console.wlt:369,1-383,2"
+    TestID   -> "ConsoleNotice-GitHub@@Tests/Console.wlt:378,1-392,2"
 ]
 
 VerificationTest[
@@ -399,7 +408,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-GitHub-File@@Tests/Console.wlt:385,1-403,2"
+    TestID   -> "ConsoleNotice-GitHub-File@@Tests/Console.wlt:394,1-412,2"
 ]
 
 VerificationTest[
@@ -420,7 +429,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-GitHub-File-Line@@Tests/Console.wlt:405,1-424,2"
+    TestID   -> "ConsoleNotice-GitHub-File-Line@@Tests/Console.wlt:414,1-433,2"
 ]
 
 VerificationTest[
@@ -441,7 +450,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-GitHub-File-Lines@@Tests/Console.wlt:426,1-445,2"
+    TestID   -> "ConsoleNotice-GitHub-File-Lines@@Tests/Console.wlt:435,1-454,2"
 ]
 
 VerificationTest[
@@ -462,7 +471,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleNotice-GitHub-File-Lines-Columns@@Tests/Console.wlt:447,1-466,2"
+    TestID   -> "ConsoleNotice-GitHub-File-Lines-Columns@@Tests/Console.wlt:456,1-475,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -475,7 +484,7 @@ VerificationTest[
         "Writes" -> { HoldComplete @ Print[ "", "", "message text" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-Notebook@@Tests/Console.wlt:471,1-479,2"
+    TestID   -> "ConsoleLog-Notebook@@Tests/Console.wlt:480,1-488,2"
 ]
 
 VerificationTest[
@@ -493,7 +502,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-TTY@@Tests/Console.wlt:481,1-497,2"
+    TestID   -> "ConsoleLog-TTY@@Tests/Console.wlt:490,1-506,2"
 ]
 
 VerificationTest[
@@ -509,7 +518,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-GitHub@@Tests/Console.wlt:499,1-513,2"
+    TestID   -> "ConsoleLog-GitHub@@Tests/Console.wlt:508,1-522,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -532,7 +541,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-GitHub-File@@Tests/Console.wlt:518,1-536,2"
+    TestID   -> "ConsoleLog-GitHub-File@@Tests/Console.wlt:527,1-545,2"
 ]
 
 VerificationTest[
@@ -553,7 +562,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-GitHub-File-Line@@Tests/Console.wlt:538,1-557,2"
+    TestID   -> "ConsoleLog-GitHub-File-Line@@Tests/Console.wlt:547,1-566,2"
 ]
 
 VerificationTest[
@@ -574,7 +583,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-GitHub-File-Lines@@Tests/Console.wlt:559,1-578,2"
+    TestID   -> "ConsoleLog-GitHub-File-Lines@@Tests/Console.wlt:568,1-587,2"
 ]
 
 VerificationTest[
@@ -595,7 +604,7 @@ VerificationTest[
         }
     },
     SameTest -> MatchQ,
-    TestID   -> "ConsoleLog-GitHub-File-Lines-Columns@@Tests/Console.wlt:580,1-599,2"
+    TestID   -> "ConsoleLog-GitHub-File-Lines-Columns@@Tests/Console.wlt:589,1-608,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -616,7 +625,7 @@ VerificationTest[
         "ConsoleType" -> "GitHub"
     ],
     SameTest -> SameQ,
-    TestID   -> "ConsoleLog-GitHub-Error@@Tests/Console.wlt:604,1-620,2"
+    TestID   -> "ConsoleLog-GitHub-Error@@Tests/Console.wlt:613,1-629,2"
 ]
 
 VerificationTest[
@@ -634,7 +643,7 @@ VerificationTest[
         "ConsoleType" -> "GitHub"
     ],
     SameTest -> SameQ,
-    TestID   -> "ConsoleLog-GitHub-Warning@@Tests/Console.wlt:622,1-638,2"
+    TestID   -> "ConsoleLog-GitHub-Warning@@Tests/Console.wlt:631,1-647,2"
 ]
 
 VerificationTest[
@@ -652,7 +661,7 @@ VerificationTest[
         "ConsoleType" -> "GitHub"
     ],
     SameTest -> SameQ,
-    TestID   -> "ConsoleLog-GitHub-Notice@@Tests/Console.wlt:640,1-656,2"
+    TestID   -> "ConsoleLog-GitHub-Notice@@Tests/Console.wlt:649,1-665,2"
 ]
 
 (* :!CodeAnalysis::EndBlock:: *)

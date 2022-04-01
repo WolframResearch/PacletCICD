@@ -3,22 +3,31 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        $pacletDir = DirectoryName[ $TestFileName, 2 ]
+        $pacletDir =
+            Module[ { root, mx },
+                root = DirectoryName[ $TestFileName, 2 ];
+                mx = FileNameJoin @ { root, "MXBuild" };
+                If[ DirectoryQ @ mx, mx, root ]
+            ]
     ],
-    TestID -> "Initialize-Paclet-Directory"
+    TestID -> "Initialize-PacletObject@@Tests/MXBuild.wlt:4,1-14,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
-    PacletDirectoryLoad @ $pacletDir,
+    Echo[ $TestFileName, "TestFileName" ];
+    PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID   -> "Initialize-Paclet-Load"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/MXBuild.wlt:18,1-24,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize-Paclet-Needs"
+    TestID -> "Initialize-Paclet-Needs@@Tests/MXBuild.wlt:27,1-31,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -27,7 +36,7 @@ VerificationTest[
 VerificationTest[
     BooleanQ @ Wolfram`PacletCICD`Internal`$MX,
     True,
-    TestID -> "MX-Boolean"
+    TestID -> "MX-Boolean@@Tests/MXBuild.wlt:36,1-40,2"
 ]
 
 VerificationTest[
@@ -37,13 +46,13 @@ VerificationTest[
             True
         ],
     Null,
-    TestID -> "Define-IfMX"
+    TestID -> "Define-IfMX@@Tests/MXBuild.wlt:42,1-50,2"
 ]
 
 VerificationTest[
     DirectoryQ @ Wolfram`PacletCICD`Private`$thisPacletDir,
     True,
-    TestID -> "ThisPacletDirectory"
+    TestID -> "ThisPacletDirectory@@Tests/MXBuild.wlt:52,1-56,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -77,7 +86,7 @@ VerificationTest[
     ],
     HoldComplete[ _String, _String, _String, _String ],
     SameTest -> IfMX @ MatchQ,
-    TestID   -> "LatestActionName"
+    TestID   -> "LatestActionName@@Tests/MXBuild.wlt:61,1-90,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -95,7 +104,7 @@ VerificationTest[
     ],
     HoldComplete[ _Graphics, _Graphics, _Graphics, _Graphics ],
     SameTest -> IfMX @ MatchQ,
-    TestID   -> "WXFResource"
+    TestID   -> "WXFResource@@Tests/MXBuild.wlt:95,1-108,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -110,7 +119,7 @@ VerificationTest[
     ],
     HoldComplete @ { { _String, _String }.. },
     SameTest -> IfMX @ MatchQ,
-    TestID   -> "WLResource"
+    TestID   -> "WLResource@@Tests/MXBuild.wlt:113,1-123,2"
 ]
 
 (* ::**********************************************************************:: *)

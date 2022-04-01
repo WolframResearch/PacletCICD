@@ -3,22 +3,31 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        $pacletDir = DirectoryName[ $TestFileName, 2 ]
+        $pacletDir =
+            Module[ { root, mx },
+                root = DirectoryName[ $TestFileName, 2 ];
+                mx = FileNameJoin @ { root, "MXBuild" };
+                If[ DirectoryQ @ mx, mx, root ]
+            ]
     ],
-    TestID -> "Initialize@@Tests/Utilities.wlt:4,1-9,2"
+    TestID -> "Initialize-PacletObject@@Tests/Utilities.wlt:4,1-14,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
-    PacletDirectoryLoad @ $pacletDir,
+    Echo[ $TestFileName, "TestFileName" ];
+    PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/Utilities.wlt:11,1-16,2"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/Utilities.wlt:18,1-24,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize@@Tests/Utilities.wlt:18,1-22,2"
+    TestID -> "Initialize@@Tests/Utilities.wlt:27,1-31,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -30,13 +39,13 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:27,1-34,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:36,1-43,2"
 ]
 
 VerificationTest[
     Wolfram`PacletCICD`Private`relativePath[ "path/to/file", "path/to/file" ],
     ".",
-    TestID -> "relativePath@@Tests/Utilities.wlt:36,1-40,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:45,1-49,2"
 ]
 
 VerificationTest[
@@ -44,5 +53,5 @@ VerificationTest[
         "path/another/file"
     ],
     "../../another/file",
-    TestID -> "relativePath@@Tests/Utilities.wlt:42,1-48,2"
+    TestID -> "relativePath@@Tests/Utilities.wlt:51,1-57,2"
 ]

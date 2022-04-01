@@ -3,17 +3,26 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        $pacletDir = DirectoryName[ $TestFileName, 2 ]
+        $pacletDir =
+            Module[ { root, mx },
+                root = DirectoryName[ $TestFileName, 2 ];
+                mx = FileNameJoin @ { root, "MXBuild" };
+                If[ DirectoryQ @ mx, mx, root ]
+            ]
     ],
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:4,1-9,2"
+    TestID -> "Initialize-PacletObject@@Tests/ErrorHandling.wlt:4,1-14,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
-    PacletDirectoryLoad @ $pacletDir,
+    Echo[ $TestFileName, "TestFileName" ];
+    PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:11,1-16,2"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/ErrorHandling.wlt:18,1-24,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ];
@@ -21,7 +30,7 @@ VerificationTest[
     MessageFailure;
     ,
     Null,
-    TestID -> "Initialize@@Tests/ErrorHandling.wlt:18,1-25,2"
+    TestID -> "Initialize@@Tests/ErrorHandling.wlt:27,1-34,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -30,13 +39,13 @@ VerificationTest[
 VerificationTest[
     Context @ PacletCICD,
     "Wolfram`PacletCICD`",
-    TestID -> "PacletCICD-Context@@Tests/ErrorHandling.wlt:30,1-34,2"
+    TestID -> "PacletCICD-Context@@Tests/ErrorHandling.wlt:39,1-43,2"
 ]
 
 VerificationTest[
     Context @ MessageFailure,
     "Wolfram`PacletCICD`",
-    TestID -> "MessageFailure-Context@@Tests/ErrorHandling.wlt:36,1-40,2"
+    TestID -> "MessageFailure-Context@@Tests/ErrorHandling.wlt:45,1-49,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -62,7 +71,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::undefined },
-    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:45,1-66,2"
+    TestID -> "catchUndefined@@Tests/ErrorHandling.wlt:54,1-75,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -78,7 +87,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:71,1-82,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:80,1-91,2"
 ]
 
 VerificationTest[
@@ -97,7 +106,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:84,1-101,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:93,1-110,2"
 ]
 
 VerificationTest[
@@ -113,7 +122,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "throwError@@Tests/ErrorHandling.wlt:103,1-117,2"
+    TestID -> "throwError@@Tests/ErrorHandling.wlt:112,1-126,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -138,7 +147,7 @@ VerificationTest[
         PacletCICD::error,
         PacletCICD::warning
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:122,1-142,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:131,1-151,2"
 ]
 
 VerificationTest[
@@ -157,7 +166,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::warning },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:144,1-161,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:153,1-170,2"
 ]
 
 VerificationTest[
@@ -173,7 +182,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:163,1-177,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:172,1-186,2"
 ]
 
 VerificationTest[
@@ -191,7 +200,7 @@ VerificationTest[
         |>
     ],
     { PacletCICD::error },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:179,1-195,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:188,1-204,2"
 ]
 
 VerificationTest[
@@ -221,5 +230,5 @@ VerificationTest[
         PacletCICD::error,
         PacletCICD::error
     },
-    TestID -> "catchTop@@Tests/ErrorHandling.wlt:197,1-225,2"
+    TestID -> "catchTop@@Tests/ErrorHandling.wlt:206,1-234,2"
 ]
