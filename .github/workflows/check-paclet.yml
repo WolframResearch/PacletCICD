@@ -31,6 +31,12 @@ jobs:
 
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
+
+      - name: Build paclet MX
+        run: wolframscript Scripts/BuildPacletMX.wls
+
+      - name: Build paclet
+        run: wolframscript Scripts/BuildPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
@@ -38,6 +44,13 @@ jobs:
         with:
           name: check-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: PacletBuildArtifact
+          path: ${{ env.PACLET_BUILD_DIR }}
           if-no-files-found: error
 
   Test-Linux: 
