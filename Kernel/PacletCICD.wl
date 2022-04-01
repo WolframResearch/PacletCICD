@@ -1,6 +1,9 @@
 BeginPackage[ "Wolfram`PacletCICD`" ];
 EndPackage[ ];
 
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Declare Fully Qualified Symbol Names*)
 Wolfram`PacletCICD`$Debug;
 Wolfram`PacletCICD`$ExamplesLocation;
 Wolfram`PacletCICD`AnnotateTestIDs;
@@ -48,6 +51,9 @@ Wolfram`PacletCICD`WorkflowStep;
 Wolfram`PacletCICD`WorkflowStepQ;
 Wolfram`PacletCICD`WorkflowValue;
 
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Load Package*)
 Wolfram`PacletCICD`Internal`$MXFile =
     FileNameJoin @ {
         DirectoryName @ $InputFileName,
@@ -55,19 +61,26 @@ Wolfram`PacletCICD`Internal`$MXFile =
         "PacletCICD.mx"
     };
 
-If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ],
-    Get[ Wolfram`PacletCICD`Internal`$MXFile ],
+If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
+    ,
+    Wolfram`PacletCICD`Internal`$MX = True;
+    Get[ Wolfram`PacletCICD`Internal`$MXFile ]
+    ,
+    Wolfram`PacletCICD`Internal`$MX = False;
     Quiet[
         Block[ { $ContextPath },
-            Get[ "Wolfram`PacletCICD`Config`" ];
+            Get[ "Wolfram`PacletCICD`Config`"        ];
             Get[ "Wolfram`PacletCICD`ErrorHandling`" ];
-            Get[ "Wolfram`PacletCICD`Loading`" ];
-            Get[ "Wolfram`PacletCICD`Utilities`" ];
+            Get[ "Wolfram`PacletCICD`Loading`"       ];
+            Get[ "Wolfram`PacletCICD`Utilities`"     ];
         ],
         General::shdw
     ]
 ];
 
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Check Dependencies*)
 If[ $VersionNumber < 13.1,
     If[ StringQ @ Environment[ "GITHUB_WORKFLOW" ],
         Quiet[
