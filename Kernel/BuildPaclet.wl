@@ -136,9 +136,12 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
 
         result =
             Internal`InheritedBlock[ { $Line },
-                prdn`BuildPaclet[
-                    nbo,
-                    filterOptions[ Interactive -> False, opts ]
+                Quiet[
+                    prdn`BuildPaclet[
+                        nbo,
+                        filterOptions[ Interactive -> False, opts ]
+                    ],
+                    FileHash::noopen
                 ]
             ];
 

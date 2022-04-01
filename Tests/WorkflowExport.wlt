@@ -3,22 +3,31 @@
 (*Initialization*)
 VerificationTest[
     PacletObjectQ @ PacletObject @ File[
-        $pacletDir = DirectoryName[ $TestFileName, 2 ]
+        $pacletDir =
+            Module[ { root, mx },
+                root = DirectoryName[ $TestFileName, 2 ];
+                mx = FileNameJoin @ { root, "MXBuild", "Wolfram__PacletCICD" };
+                If[ DirectoryQ @ mx, mx, root ]
+            ]
     ],
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:4,1-9,2"
+    TestID -> "Initialize-PacletObject@@Tests/WorkflowExport.wlt:4,1-14,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
-    PacletDirectoryLoad @ $pacletDir,
+    Echo[ $TestFileName, "TestFileName" ];
+    PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:11,1-16,2"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/WorkflowExport.wlt:18,1-24,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize@@Tests/WorkflowExport.wlt:18,1-22,2"
+    TestID -> "Initialize@@Tests/WorkflowExport.wlt:27,1-31,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -27,13 +36,13 @@ VerificationTest[
 VerificationTest[
     Context @ WorkflowExport,
     "Wolfram`PacletCICD`",
-    TestID -> "WorkflowExport-Context@@Tests/WorkflowExport.wlt:27,1-31,2"
+    TestID -> "WorkflowExport-Context@@Tests/WorkflowExport.wlt:36,1-40,2"
 ]
 
 VerificationTest[
     Context @ ExampleDirectory,
     "Wolfram`PacletCICD`",
-    TestID -> "ExampleDirectory-Context@@Tests/WorkflowExport.wlt:33,1-37,2"
+    TestID -> "ExampleDirectory-Context@@Tests/WorkflowExport.wlt:42,1-46,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -46,32 +55,32 @@ VerificationTest[
     ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Check@@Tests/WorkflowExport.wlt:42,1-50,2"
+    TestID -> "WorkflowExport-Check@@Tests/WorkflowExport.wlt:51,1-59,2"
 ]
 
 VerificationTest[
     build = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Build" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Build@@Tests/WorkflowExport.wlt:52,1-57,2"
+    TestID -> "WorkflowExport-Build@@Tests/WorkflowExport.wlt:61,1-66,2"
 ]
 
 VerificationTest[
     release = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Release" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Release@@Tests/WorkflowExport.wlt:59,1-64,2"
+    TestID -> "WorkflowExport-Release@@Tests/WorkflowExport.wlt:68,1-73,2"
 ]
 
 VerificationTest[
     compile = WorkflowExport[ ExampleDirectory[ "FewIssues" ], "Compile" ],
     _File? FileExistsQ,
     SameTest -> MatchQ,
-    TestID -> "WorkflowExport-Compile@@Tests/WorkflowExport.wlt:66,1-71,2"
+    TestID -> "WorkflowExport-Compile@@Tests/WorkflowExport.wlt:75,1-80,2"
 ]
 
 VerificationTest[
     AllTrue[ Gather @ { check, build, release, compile }, Length[ # ] === 1 & ],
     True,
-    TestID -> "WorkflowExport-Uniqueness@@Tests/WorkflowExport.wlt:73,1-77,2"
+    TestID -> "WorkflowExport-Uniqueness@@Tests/WorkflowExport.wlt:82,1-86,2"
 ]

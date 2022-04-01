@@ -18,6 +18,7 @@ env:
   WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
 
 jobs:
+
   Check:
     name: Check
     runs-on: ubuntu-latest
@@ -40,8 +41,41 @@ jobs:
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
 
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: wolframresearch/wolframengine:latest
+      options: --user root
+    timeout-minutes: 10
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Build paclet MX
+        run: wolframscript Scripts/BuildPacletMX.wls
+
+      - name: Build paclet
+        run: wolframscript Scripts/BuildPaclet.wls
+      
+      - name: Upload stack data
+        if: always() && env.PACLET_STACK_HISTORY
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-paclet-stacks
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: PacletBuildArtifact
+          path: ${{ env.PACLET_BUILD_DIR }}
+          if-no-files-found: error
+
   Test-Linux: 
     name: Test-Linux
+    needs: [Build]
     runs-on: ubuntu-latest
     container: 
       image: wolframresearch/wolframengine:latest
@@ -53,10 +87,14 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v2
 
-      - name: BuildPacletMX
-        run: wolframscript Scripts/BuildPacletMX.wls
+      - name: Download MX build
+        id: download-mx-artifacts-step
+        uses: actions/download-artifact@v2
+        with: 
+          name: PacletBuildArtifact
+          path: MXBuild
 
-      - name: TestPaclet
+      - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
       
       - name: Upload stack data
@@ -77,6 +115,7 @@ jobs:
 
   Test-MacOSX: 
     name: Test-MacOSX
+    needs: [Build]
     runs-on: macos-latest
     env: 
       WOLFRAM_SYSTEM_ID: MacOSX-x86-64
@@ -104,15 +143,14 @@ jobs:
           brew install --cask wolfram-engine
           echo 'Installed Wolfram Engine.'
 
-      - name: BuildPacletMX
-        run: |
-          export PATH="${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH"
-          wolframscript -debug -verbose -script Scripts/BuildPacletMX.wls
-        env: 
-          WOLFRAMENGINE_EXECUTABLES_DIRECTORY: "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS"
-          WOLFRAMSCRIPT_KERNELPATH: "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel"
-
-      - name: TestPaclet
+      - name: Download MX build
+        id: download-mx-artifacts-step
+        uses: actions/download-artifact@v2
+        with: 
+          name: PacletBuildArtifact
+          path: MXBuild
+      
+      - name: Test paclet
         run: |
           export PATH="${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH"
           wolframscript -debug -verbose -script Scripts/TestPaclet.wls
@@ -139,6 +177,7 @@ jobs:
 
   Test-Windows: 
     name: Test-Windows
+    needs: [Build]
     runs-on: windows-latest
     env: 
       WOLFRAM_SYSTEM_ID: Windows-x86-64
@@ -189,15 +228,14 @@ jobs:
           echo 'Installed Wolfram Engine.'
           Set-Alias -Name wolframscript -Value wolfram
 
-      - name: BuildPacletMX
-        run: |
-          $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\'
-          wolfram -script Scripts/BuildPacletMX.wls
-        env: 
-          WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
-          WOLFRAMINIT: "-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+      - name: Download MX build
+        id: download-mx-artifacts-step
+        uses: actions/download-artifact@v2
+        with: 
+          name: PacletBuildArtifact
+          path: MXBuild
 
-      - name: TestPaclet
+      - name: Test paclet
         run: |
           $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\'
           wolfram -script Scripts/TestPaclet.wls
