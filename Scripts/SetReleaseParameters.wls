@@ -34,7 +34,7 @@ If[ ! FileExistsQ @ $releasePaclet,
     Exit[ 1 ]
 ];
 
-$releaseFile = FileBaseName @ $releasePaclet;
+$releaseFile = FileNameTake @ $releasePaclet;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -58,6 +58,6 @@ If[ ! StringQ @ $version && ! StringMatchQ[ $version, (DigitCharacter|".").. ],
 Wolfram`PacletCICD`Private`setOutput[ "PACLET_BUILD_DIR"  , $releaseDir    ];
 Wolfram`PacletCICD`Private`setOutput[ "PACLET_PATH"       , $releasePaclet ];
 Wolfram`PacletCICD`Private`setOutput[ "PACLET_FILE"       , $releaseFile   ];
-Wolfram`PacletCICD`Private`setOutput[ "PACLET_RELEASE_TAG", $version       ];
+Wolfram`PacletCICD`Private`setOutput[ "PACLET_RELEASE_TAG", "v"<>$version  ];
 
 (* :!CodeAnalysis::EndBlock:: *)
