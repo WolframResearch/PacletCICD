@@ -6,7 +6,7 @@ VerificationTest[
         $pacletDir =
             Module[ { root, mx },
                 root = DirectoryName[ $TestFileName, 2 ];
-                mx = FileNameJoin @ { root, "MXBuild" };
+                mx = FileNameJoin @ { root, "MXBuild", "Wolfram__PacletCICD" };
                 If[ DirectoryQ @ mx, mx, root ]
             ]
     ],
