@@ -5,6 +5,8 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Wolfram`PacletCICD`$Debug = True;
 
+(* Off[ DocumentationBuild`Utils`Localized::nokey ]; *)
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
@@ -39,8 +41,28 @@ messageHandler[ Hold[ msg_, True ] ] :=
         KeyDropFrom[ $messageHistory, drop ];
         KeyDropFrom[ $stackHistory  , drop ];
 
-        Print[ "::warning::", ToString[ Unevaluated @ msg, InputForm ] ];
+        messagePrint @ msg;
     ] ~Catch~ $tag;
+
+
+messagePrint // Attributes = { HoldFirst };
+messagePrint[ msg_MessageName, args___ ] :=
+    Print[ "::warning::",
+           ToString @ Unevaluated @ msg <> ": " <> messageString[ msg, args ]
+    ];
+
+messageString[ template_String, args___ ] :=
+    ToString[ StringForm[ template, Short /@ { args } ],
+              OutputForm,
+              PageWidth -> 80
+    ];
+
+messageString[ HoldPattern @ MessageName[ f_, tag_ ], args___ ] :=
+    With[ { template = MessageName[ General, tag ] },
+        messageString[ template, args ] /; StringQ @ template
+    ];
+
+messageString[ ___ ] := "-- Message text not found --";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
