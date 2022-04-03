@@ -5,7 +5,7 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Wolfram`PacletCICD`$Debug = True;
 
-(* Off[ DocumentationBuild`Utils`Localized::nokey ]; *)
+Off[ DocumentationBuild`Utils`Localized::nokey ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
