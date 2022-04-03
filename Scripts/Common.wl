@@ -46,10 +46,15 @@ messageHandler[ Hold[ msg_, True ] ] :=
 
 
 messagePrint // Attributes = { HoldFirst };
+
+messagePrint[ Message[ msg_, args___ ] ] :=
+    messagePrint[ msg, args ];
+
 messagePrint[ msg_MessageName, args___ ] :=
     Print[ "::warning::",
            ToString @ Unevaluated @ msg <> ": " <> messageString[ msg, args ]
     ];
+
 
 messageString[ template_String, args___ ] :=
     ToString[ StringForm[ template, Short /@ { args } ],
