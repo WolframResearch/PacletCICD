@@ -10,7 +10,7 @@ Wolfram`PacletCICD`$Debug = True;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
-$messageHistoryLength = 100;
+$messageHistoryLength = 10;
 $messageNumber        = 0;
 $messageHistory       = <| |>;
 $stackHistory         = <| |>;
@@ -25,7 +25,7 @@ $testingHeads = HoldPattern @ Alternatives[
 
 $testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
 
-messageHandler[ Hold[ msg_, True ] ] :=
+messageHandler[ Hold[ msg_, True ] ] /; $messageNumber < $messageHistoryLength :=
     StackInhibit @ Module[ { stack, keys, limit, drop },
         stack = Stack[ _ ];
         If[ MemberQ[ stack, $testStack ], Throw[ Null, $tag ] ];
@@ -57,7 +57,7 @@ messagePrint[ msg_MessageName, args___ ] :=
 
 
 messageString[ template_String, args___ ] :=
-    ToString[ StringForm[ template, Short /@ { args } ],
+    ToString[ StringForm[ template, Sequence @@ Short /@ { args } ],
               OutputForm,
               PageWidth -> 80
     ];
