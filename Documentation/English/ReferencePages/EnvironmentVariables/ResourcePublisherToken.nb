@@ -146,7 +146,12 @@ Notebook[
    ]
   ],
   Cell[
-   "RESOURCE_PUBLISHER_TOKEN",
+   TextData[
+    {
+     "RESOURCE_PUBLISHER_TOKEN ",
+     StyleBox["(Environment Variable)", "FilenameExtension"]
+    }
+   ],
    "ObjectNameAlt",
    CellID -> 2066222148
   ],
@@ -5249,7 +5254,7 @@ Notebook[
   "CreationDate" -> "04-03-2022 09:56:06",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 4, 3, 12, 22, 12.4130714`8.846454209889147},
+   {2022, 4, 3, 13, 55, 36.8497231`9.31900911975571},
    "Instant",
    "Gregorian",
    -4.
@@ -5257,7 +5262,7 @@ Notebook[
   "NotebookUUID" -> "edd64110-02b5-44c1-9fdc-4bd7c4a9c591"
  },
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (April 1, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "ProgramPageStyles.nb",

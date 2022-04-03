@@ -4464,6 +4464,61 @@ Notebook[
                        TagBox[
                         TemplateBox[
                          {
+                          "\"GitHubActionsQuickStart.nb\"",
+                          File[
+                           FileNameJoin[
+                            {
+                             NotebookDirectory[],
+                             "Documentation/English/Tutorials/GitHubActionsQuickStart.nb"
+                            }
+                           ]
+                          ]
+                         },
+                         "FileManagerFileOpenerTemplate"
+                        ],
+                        Function[
+                         Annotation[
+                          #1,
+                          DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                           3
+                          ]
+                         ]
+                        ]
+                       ],
+                       File[
+                        FileNameJoin[
+                         {
+                          NotebookDirectory[],
+                          "Documentation/English/Tutorials/GitHubActionsQuickStart.nb"
+                         }
+                        ]
+                       ],
+                       BoxID -> "FileTreePath",
+                       BaseStyle -> {"Text"}
+                      ]
+                     ],
+                     "FileManagerFile",
+                     CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
+                     CellGroupingRules -> {"SectionGrouping", 130},
+                     CellFrameLabels -> {
+                      {
+                       Cell[
+                        BoxData[TemplateBox[{}, "FileManagerNBIconTemplate"]],
+                        Background -> None
+                       ],
+                       Inherited
+                      },
+                      {Inherited, Inherited}
+                     },
+                     CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+                     CellID -> 121000345
+                    ],
+                    Cell[
+                     BoxData[
+                      InterpretationBox[
+                       TagBox[
+                        TemplateBox[
+                         {
                           "\"LicenseEntitlementsAndRepositorySecrets.nb\"",
                           File[
                            FileNameJoin[
@@ -19898,22 +19953,22 @@ Notebook[
    "DefaultContentMethod" -> "Tagged"
   },
   "SubmissionReviewData" -> {"Review" -> False},
-  "ToolsOpen" -> True,
-  "UpdatedTimestamp" -> 3857985826.0727670,
+  "ToolsOpen" -> False,
+  "UpdatedTimestamp" -> 3857985826.,
   "TemplateVersion" -> "1.5.59",
   "StatusMessage" -> "",
   "AutoUpdate" -> True,
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 4, 3, 12, 29, 41.9460647`9.375266099724959},
+   {2022, 4, 3, 16, 13, 59.2157951`9.525012393232544},
    "Instant",
    "Gregorian",
    -4.
   ],
   "NotebookUUID" -> "6d8e0782-7445-4069-99ba-30f35ae431c1",
   "PacletBuildData" -> {
-   "FileHashes" -> ByteArray["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"],
-   "LastBuiltArchive" -> "H:\\Documents\\PacletCICD\\build\\Wolfram__PacletCICD-0.19.1"
+   "FileHashes" -> ByteArray["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"],
+   "LastBuiltArchive" -> "H:\\Documents\\PacletCICD\\build\\Wolfram__PacletCICD-0.20.0"
   },
   "Openers" -> {
    "ExampleSection" -> {
