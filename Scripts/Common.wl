@@ -5,10 +5,12 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Wolfram`PacletCICD`$Debug = True;
 
+Off[ DocumentationBuild`Utils`Localized::nokey ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
-$messageHistoryLength = 100;
+$messageHistoryLength = 10;
 $messageNumber        = 0;
 $messageHistory       = <| |>;
 $stackHistory         = <| |>;
@@ -23,7 +25,7 @@ $testingHeads = HoldPattern @ Alternatives[
 
 $testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
 
-messageHandler[ Hold[ msg_, True ] ] :=
+messageHandler[ Hold[ msg_, True ] ] /; $messageNumber < $messageHistoryLength :=
     StackInhibit @ Module[ { stack, keys, limit, drop },
         stack = Stack[ _ ];
         If[ MemberQ[ stack, $testStack ], Throw[ Null, $tag ] ];
@@ -39,8 +41,33 @@ messageHandler[ Hold[ msg_, True ] ] :=
         KeyDropFrom[ $messageHistory, drop ];
         KeyDropFrom[ $stackHistory  , drop ];
 
-        Print[ "::warning::", ToString[ Unevaluated @ msg, InputForm ] ];
+        messagePrint @ msg;
     ] ~Catch~ $tag;
+
+
+messagePrint // Attributes = { HoldFirst };
+
+messagePrint[ Message[ msg_, args___ ] ] :=
+    messagePrint[ msg, args ];
+
+messagePrint[ msg_MessageName, args___ ] :=
+    Print[ "::warning::",
+           ToString @ Unevaluated @ msg <> ": " <> messageString[ msg, args ]
+    ];
+
+
+messageString[ template_String, args___ ] :=
+    ToString[ StringForm[ template, Sequence @@ Short /@ { args } ],
+              OutputForm,
+              PageWidth -> 80
+    ];
+
+messageString[ HoldPattern @ MessageName[ f_, tag_ ], args___ ] :=
+    With[ { template = MessageName[ General, tag ] },
+        messageString[ template, args ] /; StringQ @ template
+    ];
+
+messageString[ ___ ] := "-- Message text not found --";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
