@@ -9,7 +9,7 @@ on:
 env:
   GITHUB_TOKEN:                ${{ secrets.GITHUB_TOKEN }}
   RESOURCE_PUBLISHER_TOKEN:    ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
-  RESOURCE_SYSTEM_BASE:        https://www.wolframcloud.com/obj/rhennigan/api/1.0
+  RESOURCE_SYSTEM_BASE:        ${{ secrets.RESOURCE_SYSTEM_BASE }}
   TEST_CLOUD_ACCOUNT_PASSWORD: ${{ secrets.TEST_CLOUD_ACCOUNT_PASSWORD }}
   TEST_CLOUD_ACCOUNT_USER:     ${{ secrets.TEST_CLOUD_ACCOUNT_USER }}
   TEST_PUBLISHER_ID:           ${{ secrets.TEST_PUBLISHER_ID }}
