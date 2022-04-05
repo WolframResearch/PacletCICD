@@ -140,7 +140,7 @@ updatePacletInfo[ dir_ ] := Enclose[
         date   = StringTrim[ date, "Z" ] <> "Z";
         url    = cs @ releaseURL @ file;
         run    = cs @ actionURL[ ];
-        cmt    = cs @ id;
+        cmt    = cs @ commitURL @ id;
 
         new = cs @ StringReplace[
             string,
