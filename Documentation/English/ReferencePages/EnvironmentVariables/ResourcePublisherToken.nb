@@ -48,7 +48,7 @@ Notebook[
       CellID -> 468444828
      ],
      Cell[
-      "paclet:Wolfram/PacletCICD/ref/env/ResourcePublisherToken",
+      "Wolfram/PacletCICD/ref/env/ResourcePublisherToken",
       "Categorization",
       CellLabel -> "URI"
      ]
