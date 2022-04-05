@@ -166,7 +166,11 @@ Notebook[
         " \[LongDash] a string corresponding to a ",
         Cell[
          BoxData[
-          ButtonBox["PublisherTokenObject", BaseStyle -> "Link"]
+          ButtonBox[
+           "PublisherTokenObject",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+          ]
          ],
          "InlineFormula"
         ],
@@ -359,7 +363,11 @@ Notebook[
            "Create a token using ",
            Cell[
             BoxData[
-             ButtonBox["CreatePublisherToken", BaseStyle -> "Link"]
+             ButtonBox[
+              "CreatePublisherToken",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreatePublisherToken"
+             ]
             ],
             "InlineFormula"
            ],
@@ -1765,7 +1773,11 @@ Notebook[
            "Click to copy the token string from the output above, or extract it from the ",
            Cell[
             BoxData[
-             ButtonBox["PublisherTokenObject", BaseStyle -> "Link"]
+             ButtonBox[
+              "PublisherTokenObject",
+              BaseStyle -> "Link",
+              ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+             ]
             ],
             "InlineFormula"
            ],
@@ -3181,7 +3193,13 @@ Notebook[
              {
               "Obtain the value from a different GitHub secret name using ",
               Cell[
-               BoxData[ButtonBox["GitHubSecret", BaseStyle -> "Link"]],
+               BoxData[
+                ButtonBox[
+                 "GitHubSecret",
+                 BaseStyle -> "Link",
+                 ButtonData -> "paclet:Wolfram/PacletCICD/ref/GitHubSecret"
+                ]
+               ],
                "InlineFormula"
               ],
               ":"
@@ -5142,35 +5160,67 @@ Notebook[
        {
         Cell[
          BoxData[
-          ButtonBox["CreatePublisherToken", BaseStyle -> "Link"]
+          ButtonBox[
+           "CreatePublisherToken",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/CreatePublisherToken"
+          ]
          ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
         Cell[
          BoxData[
-          ButtonBox["PublisherTokenObject", BaseStyle -> "Link"]
+          ButtonBox[
+           "PublisherTokenObject",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/PublisherTokenObject"
+          ]
          ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
         Cell[
-         BoxData[ButtonBox["GitHubSecret", BaseStyle -> "Link"]],
+         BoxData[
+          ButtonBox[
+           "GitHubSecret",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/GitHubSecret"
+          ]
+         ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
         Cell[
-         BoxData[ButtonBox["Workflow", BaseStyle -> "Link"]],
+         BoxData[
+          ButtonBox[
+           "Workflow",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
+          ]
+         ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
         Cell[
-         BoxData[ButtonBox["WorkflowJob", BaseStyle -> "Link"]],
+         BoxData[
+          ButtonBox[
+           "WorkflowJob",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
+          ]
+         ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
         Cell[
-         BoxData[ButtonBox["WorkflowStep", BaseStyle -> "Link"]],
+         BoxData[
+          ButtonBox[
+           "WorkflowStep",
+           BaseStyle -> "Link",
+           ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
+          ]
+         ],
          "InlineFormula"
         ],
         " \[EmptyVerySmallSquare] ",
@@ -5182,22 +5232,11 @@ Notebook[
         Cell[
          BoxData[ButtonBox["Environment", BaseStyle -> "Link"]],
          "InlineFormula"
-        ],
-        " \[EmptyVerySmallSquare] ",
-        Cell[
-         BoxData[
-          ButtonBox[
-           "wolframscript",
-           BaseStyle -> "Link",
-           ButtonData -> "paclet:ref/program/wolframscript"
-          ]
-         ],
-         "InlineFormula"
         ]
        }
       ],
       "SeeAlso",
-      CellID -> 269437084
+      CellID -> 20580201
      ]
     },
     Open
@@ -5254,7 +5293,7 @@ Notebook[
   "CreationDate" -> "04-03-2022 09:56:06",
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" -> DateObject[
-   {2022, 4, 3, 13, 55, 36.8497231`9.31900911975571},
+   {2022, 4, 5, 16, 57, 55.666437`9.498168263780245},
    "Instant",
    "Gregorian",
    -4.
