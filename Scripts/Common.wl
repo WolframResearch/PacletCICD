@@ -194,40 +194,50 @@ commitURL[ sha_String ] :=
 releaseInfoCell[ release_, commit_, run_ ] := Enclose[
     Module[ { environment },
         environment = ConfirmBy[ Environment[ #1 ], StringQ ] &;
-        Cell[
-            TextData @ {
-                $tagIcon,
-                " ",
-                ButtonBox[
-                    FileNameTake @ release,
-                    BaseStyle -> "Hyperlink",
-                    ButtonData -> { URL @ release, None },
-                    ButtonNote -> release
-                ],
-                "         ",
-                $commitIcon,
-                " ",
-                ButtonBox[
-                    StringTake[ FileNameTake @ commit, 7 ],
-                    BaseStyle -> "Hyperlink",
-                    ButtonData -> { URL @ commit, None },
-                    ButtonNote -> commit
-                ],
-                "        ",
-                $actionIcon,
-                " ",
-                ButtonBox[
-                    StringJoin[
-                        environment[ "GITHUB_WORKFLOW" ],
-                        "/",
-                        environment[ "GITHUB_JOB" ]
-                    ],
-                    BaseStyle -> "Hyperlink",
-                    ButtonData -> { URL @ run, None },
-                    ButtonNote -> run
-                ]
-            },
-            "Text"
+        Sequence[
+            Cell[
+                TextData @ {
+                    $tagIcon,
+                    " ",
+                    ButtonBox[
+                        FileNameTake @ release,
+                        BaseStyle  -> "Hyperlink",
+                        ButtonData -> { URL @ release, None },
+                        ButtonNote -> release
+                    ]
+                },
+                "Text"
+            ],
+            Cell[
+                TextData @ {
+                    $commitIcon,
+                    " ",
+                    ButtonBox[
+                        StringTake[ FileNameTake @ commit, 7 ],
+                        BaseStyle  -> "Hyperlink",
+                        ButtonData -> { URL @ commit, None },
+                        ButtonNote -> commit
+                    ]
+                },
+                "Text"
+            ],
+            Cell[
+                TextData @ {
+                    $actionIcon,
+                    " ",
+                    ButtonBox[
+                        StringJoin[
+                            environment[ "GITHUB_WORKFLOW" ],
+                            "/",
+                            environment[ "GITHUB_JOB" ]
+                        ],
+                        BaseStyle  -> "Hyperlink",
+                        ButtonData -> { URL @ run, None },
+                        ButtonNote -> run
+                    ]
+                },
+                "Text"
+            ]
         ]
     ],
     None &
