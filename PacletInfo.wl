@@ -11,6 +11,7 @@ PacletObject[ <|
     "ReleaseID"        -> "$RELEASE_ID$",
     "ReleaseDate"      -> "$RELEASE_DATE$",
     "ReleaseURL"       -> "$RELEASE_URL$",
+    "ActionURL"        -> "$ACTION_URL$",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
         "DefinitionNotebookClient" -> ">=1.9.0",
