@@ -48,7 +48,7 @@ Notebook[
       CellID -> 468444828
      ],
      Cell[
-      "Wolfram/PacletCICD/ref/env/WolframScriptEntitlementID",
+      "Wolfram/PacletCICD/ref/envar/WolframScriptEntitlementID",
       "Categorization",
       CellLabel -> "URI"
      ]
@@ -260,7 +260,7 @@ Notebook[
                "[",
                " ",
                RowBox[
-                {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+                {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
                ],
                " ",
                "]"
@@ -334,12 +334,14 @@ Notebook[
                       {
                        "HoldPattern",
                        "[",
-                       RowBox[{"\"Prompt\"", "->", "Automatic"}],
+                       RowBox[{"\"Prompt\"", "\[Rule]", "Automatic"}],
                        "]"
                       }
                      ],
                      ":>",
-                     RowBox[{"(", RowBox[{"\"Prompt\"", "->", "False"}], ")"}]
+                     RowBox[
+                      {"(", RowBox[{"\"Prompt\"", "\[Rule]", "False"}], ")"}
+                     ]
                     }
                    ],
                    ",",

@@ -48,7 +48,7 @@ Notebook[
       CellID -> 468444828
      ],
      Cell[
-      "Wolfram/PacletCICD/ref/env/ResourcePublisherToken",
+      "Wolfram/PacletCICD/ref/envar/ResourcePublisherToken",
       "Categorization",
       CellLabel -> "URI"
      ]
@@ -246,7 +246,7 @@ Notebook[
                "[",
                " ",
                RowBox[
-                {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+                {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
                ],
                " ",
                "]"
@@ -320,12 +320,14 @@ Notebook[
                       {
                        "HoldPattern",
                        "[",
-                       RowBox[{"\"Prompt\"", "->", "Automatic"}],
+                       RowBox[{"\"Prompt\"", "\[Rule]", "Automatic"}],
                        "]"
                       }
                      ],
                      ":>",
-                     RowBox[{"(", RowBox[{"\"Prompt\"", "->", "False"}], ")"}]
+                     RowBox[
+                      {"(", RowBox[{"\"Prompt\"", "\[Rule]", "False"}], ")"}
+                     ]
                     }
                    ],
                    ",",
@@ -3228,7 +3230,7 @@ Notebook[
                       RowBox[
                        {
                         "\"PublisherToken\"",
-                        "->",
+                        "\[Rule]",
                         RowBox[{"GitHubSecret", "[", "\"MY_TOKEN\"", "]"}]
                        }
                       ]
@@ -4511,7 +4513,7 @@ Notebook[
                     RowBox[
                      {
                       "\"PublisherToken\"",
-                      "->",
+                      "\[Rule]",
                       "\"g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-bajueu8Fg7OpwRJPXPQ6mF-1\""
                      }
                     ]
@@ -4775,7 +4777,7 @@ Notebook[
             RowBox[
              {
               "\"RESOURCE_PUBLISHER_TOKEN\"",
-              "->",
+              "\[Rule]",
               "\"g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-bajueu8Fg7OpwRJPXPQ6mF-1\""
              }
             ],

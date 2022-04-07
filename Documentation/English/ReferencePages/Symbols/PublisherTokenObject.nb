@@ -582,7 +582,7 @@ Notebook[
             "[",
             " ",
             RowBox[
-             {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+             {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
             ],
             " ",
             "]"
@@ -654,12 +654,14 @@ Notebook[
                    {
                     "HoldPattern",
                     "[",
-                    RowBox[{"\"Prompt\"", "->", "Automatic"}],
+                    RowBox[{"\"Prompt\"", "\[Rule]", "Automatic"}],
                     "]"
                    }
                   ],
                   ":>",
-                  RowBox[{"(", RowBox[{"\"Prompt\"", "->", "False"}], ")"}]
+                  RowBox[
+                   {"(", RowBox[{"\"Prompt\"", "\[Rule]", "False"}], ")"}
+                  ]
                  }
                 ],
                 ",",
