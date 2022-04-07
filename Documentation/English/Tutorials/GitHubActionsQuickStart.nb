@@ -1693,7 +1693,7 @@ Notebook[
                 ButtonBox[
                  Cell["WOLFRAMSCRIPT_ENTITLEMENTID"],
                  BaseStyle -> "Link",
-                 ButtonData -> "paclet:Wolfram/PacletCICD/ref/env/WolframScriptEntitlementID"
+                 ButtonData -> "paclet:Wolfram/PacletCICD/ref/envar/WolframScriptEntitlementID"
                 ]
                ],
                "InlineFormula"
@@ -1704,7 +1704,7 @@ Notebook[
                 ButtonBox[
                  Cell["RESOURCE_PUBLISHER_TOKEN"],
                  BaseStyle -> "Link",
-                 ButtonData -> "paclet:Wolfram/PacletCICD/ref/env/ResourcePublisherToken"
+                 ButtonData -> "paclet:Wolfram/PacletCICD/ref/envar/ResourcePublisherToken"
                 ]
                ],
                "InlineFormula"
@@ -1744,7 +1744,7 @@ Notebook[
                    ButtonBox[
                     Cell["\[RightGuillemet]"],
                     BaseStyle -> "Link",
-                    ButtonData -> "paclet:Wolfram/PacletCICD/ref/env/WolframScriptEntitlementID"
+                    ButtonData -> "paclet:Wolfram/PacletCICD/ref/envar/WolframScriptEntitlementID"
                    ]
                   ],
                   "InlineFormula"
@@ -1812,7 +1812,7 @@ Notebook[
                               RowBox[
                                {
                                 "\"LicenseExpiration\"",
-                                "->",
+                                "\[Rule]",
                                 RowBox[
                                  {"Quantity", "[", RowBox[{"30", ",", "\"Minutes\""}], "]"}
                                 ]
@@ -1822,7 +1822,7 @@ Notebook[
                               RowBox[
                                {
                                 "\"EntitlementExpiration\"",
-                                "->",
+                                "\[Rule]",
                                 RowBox[
                                  {"Quantity", "[", RowBox[{"1", ",", "\"Months\""}], "]"}
                                 ]
@@ -3404,7 +3404,7 @@ Notebook[
                    ButtonBox[
                     Cell["\[RightGuillemet]"],
                     BaseStyle -> "Link",
-                    ButtonData -> "paclet:Wolfram/PacletCICD/ref/env/ResourcePublisherToken"
+                    ButtonData -> "paclet:Wolfram/PacletCICD/ref/envar/ResourcePublisherToken"
                    ]
                   ],
                   "InlineFormula"
@@ -3462,7 +3462,7 @@ Notebook[
                         "[",
                         " ",
                         RowBox[
-                         {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+                         {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
                         ],
                         " ",
                         "]"
@@ -3539,7 +3539,7 @@ Notebook[
                            {
                             "\"Example\"",
                             ",",
-                            RowBox[{"\"AllowedEndpoints\"", "->", "All"}]
+                            RowBox[{"\"AllowedEndpoints\"", "\[Rule]", "All"}]
                            }
                           ],
                           "]"

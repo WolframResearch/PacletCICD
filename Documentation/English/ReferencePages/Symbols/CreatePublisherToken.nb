@@ -604,7 +604,7 @@ Notebook[
             "[",
             " ",
             RowBox[
-             {"\"ResourceSystemClient`\"", " ", "->", " ", "None"}
+             {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
             ],
             " ",
             "]"
@@ -676,12 +676,14 @@ Notebook[
                    {
                     "HoldPattern",
                     "[",
-                    RowBox[{"\"Prompt\"", "->", "Automatic"}],
+                    RowBox[{"\"Prompt\"", "\[Rule]", "Automatic"}],
                     "]"
                    }
                   ],
                   ":>",
-                  RowBox[{"(", RowBox[{"\"Prompt\"", "->", "False"}], ")"}]
+                  RowBox[
+                   {"(", RowBox[{"\"Prompt\"", "\[Rule]", "False"}], ")"}
+                  ]
                  }
                 ],
                 ",",
@@ -6585,7 +6587,7 @@ Notebook[
                       RowBox[
                        {
                         "ExpirationDate",
-                        "->",
+                        "\[Rule]",
                         RowBox[
                          {
                           "Now",
@@ -8124,7 +8126,7 @@ Notebook[
                     RowBox[
                      {
                       "\"PublisherToken\"",
-                      "->",
+                      "\[Rule]",
                       RowBox[{"token", "[", "\"TokenString\"", "]"}]
                      }
                     ]
@@ -8175,7 +8177,7 @@ Notebook[
                     RowBox[
                      {
                       "\"PublisherToken\"",
-                      "->",
+                      "\[Rule]",
                       RowBox[{"token", "[", "\"TokenString\"", "]"}]
                      }
                     ]
@@ -8310,7 +8312,7 @@ Notebook[
                    {
                     "CreatePublisherToken",
                     "[",
-                    RowBox[{"PublisherID", "->", "\"MyPublisher\""}],
+                    RowBox[{"PublisherID", "\[Rule]", "\"MyPublisher\""}],
                     "]"
                    }
                   ]
@@ -9745,7 +9747,7 @@ Notebook[
                    {
                     "CreatePublisherToken",
                     "[",
-                    RowBox[{"PublisherID", "->", "\"MyOtherPublisher\""}],
+                    RowBox[{"PublisherID", "\[Rule]", "\"MyOtherPublisher\""}],
                     "]"
                    }
                   ]
@@ -12417,7 +12419,7 @@ Notebook[
                   RowBox[
                    {
                     "ResourceSystemBase",
-                    "->",
+                    "\[Rule]",
                     "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
                    }
                   ],
@@ -14468,7 +14470,7 @@ Notebook[
                     RowBox[
                      {
                       "\"AllowedEndpoints\"",
-                      "->",
+                      "\[Rule]",
                       RowBox[
                        {
                         "{",
@@ -15805,7 +15807,7 @@ Notebook[
                     RowBox[
                      {
                       "\"PublisherToken\"",
-                      "->",
+                      "\[Rule]",
                       RowBox[{"token", "[", "\"TokenString\"", "]"}]
                      }
                     ]
@@ -15850,7 +15852,7 @@ Notebook[
                     RowBox[
                      {
                       "\"PublisherToken\"",
-                      "->",
+                      "\[Rule]",
                       RowBox[{"token", "[", "\"TokenString\"", "]"}]
                      }
                     ]
@@ -16562,7 +16564,7 @@ Notebook[
                RowBox[
                 {
                  "\"AllowedEndpoints\"",
-                 "->",
+                 "\[Rule]",
                  RowBox[{"{", "\"DeletePublisherToken\"", "}"}]
                 }
                ],
@@ -16826,7 +16828,7 @@ Notebook[
                RowBox[
                 {
                  "\"AllowedEndpoints\"",
-                 "->",
+                 "\[Rule]",
                  RowBox[
                   {
                    "{",
