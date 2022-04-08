@@ -20721,32 +20721,10 @@ Notebook[
          CellID -> 951557313
         ],
         Cell[
-         "Additional information about limitations, issues, etc.",
+         "$RELEASE_INFO$",
          "Text",
-         CellEventActions -> {
-          Inherited,
-          {"KeyDown", "\t"} :> Replace[
-           SelectionMove[SelectedNotebook[], After, Cell];
-           NotebookFind[
-            SelectedNotebook[],
-            "TabNext",
-            Next,
-            CellTags,
-            AutoScroll -> True,
-            WrapAround -> True
-           ],
-           _NotebookSelection :> SelectionMove[
-            SelectedNotebook[],
-            All,
-            CellContents,
-            AutoScroll -> True
-           ]
-          ],
-          PassEventsDown -> False,
-          PassEventsUp -> False
-         },
-         CellTags -> {"DefaultContent", "TabNext"},
-         CellID -> 908162033
+         CellTags -> {"ReleaseInfoTag", "PacletCICDTag"},
+         CellID -> 5224211
         ]
        },
        Open
@@ -20805,7 +20783,7 @@ Notebook[
   },
   "SubmissionReviewData" -> {"Review" -> False},
   "ToolsOpen" -> False,
-  "UpdatedTimestamp" -> 3858359882.9467668,
+  "UpdatedTimestamp" -> 3858359883.,
   "TemplateVersion" -> "1.5.60",
   "StatusMessage" -> "",
   "AutoUpdate" -> True,
