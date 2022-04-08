@@ -175,13 +175,13 @@ updatePacletInfo[ dir_ ] := Enclose[
 
 updateReleaseInfoCell[ dir_, url_, cmt_, run_ ] /;
     Environment[ "GITHUB_WORKFLOW" ] === "Release" :=
-    Enclose @ Module[ { cell, nbFile, nb, rule },
+    Enclose @ Module[ { cells, nbFile, nb, rule },
 
-        cell   = ConfirmMatch[ releaseInfoCell[ url, cmt, run ], _Cell ];
+        cells  = ConfirmMatch[ releaseInfoCell[ url, cmt, run ], { __Cell } ];
         nbFile = FileNameJoin @ { dir, "ResourceDefinition.nb" };
         nb     = ConfirmMatch[ Import[ nbFile, "NB" ], _Notebook ];
         rule   = Cell[ ___, CellTags -> { ___, "ReleaseInfoTag", ___ }, ___ ] :>
-                     cell;
+                     Sequence @@ cells;
 
         Export[ nbFile, nb /. rule, "NB" ]
     ];
@@ -194,7 +194,7 @@ commitURL[ sha_String ] :=
 releaseInfoCell[ release_, commit_, run_ ] := Enclose[
     Module[ { environment },
         environment = ConfirmBy[ Environment[ #1 ], StringQ ] &;
-        Sequence[
+        {
             Cell[
                 TextData @ {
                     $tagIcon,
@@ -238,7 +238,7 @@ releaseInfoCell[ release_, commit_, run_ ] := Enclose[
                 },
                 "Text"
             ]
-        ]
+        }
     ],
     None &
 ];
