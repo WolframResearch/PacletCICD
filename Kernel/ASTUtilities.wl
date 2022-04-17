@@ -219,6 +219,9 @@ astPattern[ Verbatim[ Except ][ c_, p_ ] ] :=
 astPattern[ Verbatim[ PatternSequence ][ a___ ] ] :=
     PatternSequence @@ (astPattern /@ HoldComplete @ a);
 
+astPattern[ Verbatim[ OrderlessPatternSequence ][ a___ ] ] :=
+    OrderlessPatternSequence @@ (astPattern /@ HoldComplete @ a);
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*PatternTest*)

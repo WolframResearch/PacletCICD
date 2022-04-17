@@ -364,6 +364,12 @@ VerificationTest[
 ]
 
 VerificationTest[
+    testParse[ "{0,2,3,1,4}", { 0, OrderlessPatternSequence[ 1, 2, 3 ], 4 } ],
+    True,
+    TestID -> "TestParse-OrderlessPatternSequence-1"
+]
+
+VerificationTest[
     testParse[ "{1,1,2,2}", ASTPattern @ { x_, x_, y_, y_ } ],
     True,
     TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:366,1-370,2"
