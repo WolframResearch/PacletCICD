@@ -14,12 +14,8 @@ ClearAll[
 
 (* TODO:
     KeyValuePattern
-    Longest
     Optional
     OptionsPattern
-    OrderlessPatternSequence
-    PatternSequence
-    Shortest
 *)
 
 Begin[ "`Private`" ];
@@ -215,6 +211,12 @@ astPattern[ Verbatim[ Except ][ c_, p_ ] ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Shortest/Longest*)
+astPattern[ (h: Shortest|Longest)[ p_ ] ] := h @ astPattern @ p;
+astPattern[ (h: Shortest|Longest)[ p_, pri_ ] ] := h[ astPattern @ p, pri ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Sequence Patterns*)
 astPattern[ Verbatim[ PatternSequence ][ a___ ] ] :=
     PatternSequence @@ (astPattern /@ HoldComplete @ a);
@@ -371,8 +373,8 @@ patternSymbols0[ patt_ ] :=
     ];
 
 (* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*Subsubsubsection*)
+(* ::Subsubsection::Closed:: *)
+(*astConditionRule*)
 astConditionRule // Attributes = { HoldAllComplete };
 astConditionRule[ x_ ] :=
     HoldPattern @ x :> RuleCondition[ FromAST[ x, $ConditionHold ], True ];

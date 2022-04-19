@@ -366,13 +366,93 @@ VerificationTest[
 VerificationTest[
     testParse[ "{0,2,3,1,4}", { 0, OrderlessPatternSequence[ 1, 2, 3 ], 4 } ],
     True,
-    TestID -> "TestParse-OrderlessPatternSequence-1"
+    TestID -> "TestParse-OrderlessPatternSequence-1@@Tests/ASTUtilities.wlt:366,1-370,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { x__, Shortest[ y__ ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Shortest-1@@Tests/ASTUtilities.wlt:372,1-380,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__ ], y__ } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Shortest-2@@Tests/ASTUtilities.wlt:382,1-390,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__, 2 ], Shortest[ y__, 1 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Shortest-3@@Tests/ASTUtilities.wlt:392,1-400,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__, 1 ], Shortest[ y__, 2 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Shortest-4@@Tests/ASTUtilities.wlt:402,1-410,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { x__, Longest[ y__ ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Longest-1@@Tests/ASTUtilities.wlt:412,1-420,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__ ], y__ } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Longest-2@@Tests/ASTUtilities.wlt:422,1-430,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__, 2 ], Longest[ y__, 1 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Longest-3@@Tests/ASTUtilities.wlt:432,1-440,2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__, 1 ], Longest[ y__, 2 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Longest-4@@Tests/ASTUtilities.wlt:442,1-450,2"
 ]
 
 VerificationTest[
     testParse[ "{1,1,2,2}", ASTPattern @ { x_, x_, y_, y_ } ],
     True,
-    TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:366,1-370,2"
+    TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:452,1-456,2"
 ]
 
 VerificationTest[
@@ -381,13 +461,13 @@ VerificationTest[
         ASTPattern @ HoldPattern[ ASTPattern[ 1 ] + ASTPattern[ 1 ] ]
     ],
     True,
-    TestID -> "Nested-ASTPattern-Held@@Tests/ASTUtilities.wlt:372,1-379,2"
+    TestID -> "Nested-ASTPattern-Held@@Tests/ASTUtilities.wlt:458,1-465,2"
 ]
 
 VerificationTest[
     testParse[ "{1,1}", ASTPattern[ { x_, x_ } /; IntegerQ @ x ] ],
     True,
-    TestID -> "Reused-Bindings-Condition@@Tests/ASTUtilities.wlt:381,1-385,2"
+    TestID -> "Reused-Bindings-Condition@@Tests/ASTUtilities.wlt:467,1-471,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -407,7 +487,7 @@ VerificationTest[
         Infinity
     ],
     { "Addition" },
-    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:390,1-405,2"
+    TestID -> "FromAST-Bindings@@Tests/ASTUtilities.wlt:476,1-491,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -426,7 +506,7 @@ VerificationTest[
         ]
     ],
     True,
-    TestID -> "EquivalentNodeQ-1@@Tests/ASTUtilities.wlt:410,1-424,2"
+    TestID -> "EquivalentNodeQ-1@@Tests/ASTUtilities.wlt:496,1-510,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -435,7 +515,7 @@ VerificationTest[
 VerificationTest[
     testParse[ "{a,a,a}", ASTPattern[ { x: (_).. } /; SameQ @ x ] ],
     True,
-    TestID -> "FromAST-Sequence-1@@Tests/ASTUtilities.wlt:429,1-433,2"
+    TestID -> "FromAST-Sequence-1@@Tests/ASTUtilities.wlt:515,1-519,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -444,5 +524,5 @@ VerificationTest[
 Hold @ VerificationTest[
     testParse[ "{a,b,a,b,a,b,a,b,a,b}", { PatternSequence[ x_, y_ ].. } ],
     True,
-    TestID -> "TestParse-PatternSequence-2@@Tests/ASTUtilities.wlt:438,8-442,2"
+    TestID -> "TestParse-PatternSequence-2@@Tests/ASTUtilities.wlt:524,8-528,2"
 ]
