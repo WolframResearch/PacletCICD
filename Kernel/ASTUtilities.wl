@@ -14,12 +14,8 @@ ClearAll[
 
 (* TODO:
     KeyValuePattern
-    Longest
     Optional
     OptionsPattern
-    OrderlessPatternSequence
-    PatternSequence
-    Shortest
 *)
 
 Begin[ "`Private`" ];

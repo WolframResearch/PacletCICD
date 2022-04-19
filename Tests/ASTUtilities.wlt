@@ -370,6 +370,86 @@ VerificationTest[
 ]
 
 VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { x__, Shortest[ y__ ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Shortest-1"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__ ], y__ } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Shortest-2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__, 2 ], Shortest[ y__, 1 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Shortest-3"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Shortest[ x__, 1 ], Shortest[ y__, 2 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Shortest-4"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { x__, Longest[ y__ ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Longest-1"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__ ], y__ } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Longest-2"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__, 2 ], Longest[ y__, 1 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a, b, c, d, e, f }, { g } },
+    TestID -> "TestParse-Longest-3"
+]
+
+VerificationTest[
+    ReplaceAll[
+        testParse[ "{a,b,c,d,e,f,g}" ],
+        ASTPattern @ { Longest[ x__, 1 ], Longest[ y__, 2 ] } :>
+            FromAST @ { { x }, { y } }
+    ],
+    { { a }, { b, c, d, e, f, g } },
+    TestID -> "TestParse-Longest-4"
+]
+
+VerificationTest[
     testParse[ "{1,1,2,2}", ASTPattern @ { x_, x_, y_, y_ } ],
     True,
     TestID -> "Reused-Pattern-Bindings-1@@Tests/ASTUtilities.wlt:366,1-370,2"
