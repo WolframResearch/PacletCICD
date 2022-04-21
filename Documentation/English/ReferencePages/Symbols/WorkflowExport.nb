@@ -462,7 +462,7 @@ Notebook[
      Cell[
       BoxData[
        RowBox[
-        {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+        {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
        ]
       ],
       "Input",
@@ -732,7 +732,7 @@ Notebook[
                   }
                  ],
                  ",",
-                 "\"(* This will be flagged in the commit diff *)\nIf[a, b, b]\n<<MyPublisher`MyPaclet`AddOne`\n<<MyPublisher`MyPaclet`AddTwo`\n(* Here's another potential problem: *)\n<|a -> # + 1 &|>\n\"",
+                 "\"(* This will be flagged in the commit diff *)\nIf[a, b, b]\n<<SamplePublisher`MyPaclet`AddOne`\n<<SamplePublisher`MyPaclet`AddTwo`\n(* Here's another potential problem: *)\n<|a -> # + 1 &|>\n\"",
                  ",",
                  "\"String\""
                 }

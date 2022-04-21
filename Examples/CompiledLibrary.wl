@@ -1,6 +1,6 @@
 <|
     "Name"    -> "CompiledLibrary",
-    "Version" -> "1.1.0",
-    "Commit"  -> "aa05d146f9e1244a8d37af2f1e95da5b4f26ca8e",
-    "URL"     -> "https://github.com/rhennigan/PacletCICD-Examples-CompiledLibrary/archive/refs/tags/v1.1.0.zip"
+    "Version" -> "1.3.0",
+    "Commit"  -> "5b778319556357052a443f67d82271a40b8ac383",
+    "URL"     -> "https://github.com/rhennigan/PacletCICD-Examples-CompiledLibrary/archive/refs/tags/v1.3.0.zip"
 |>

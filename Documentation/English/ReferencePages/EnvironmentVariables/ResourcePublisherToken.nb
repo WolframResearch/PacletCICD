@@ -262,7 +262,7 @@ Notebook[
               {
                "$ResourceSystemBase",
                "=",
-               "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+               "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
               }
              ],
              ";"
@@ -270,7 +270,7 @@ Notebook[
            ],
            "\[IndentingNewLine]",
            RowBox[
-            {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+            {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
            ],
            "\[IndentingNewLine]",
            RowBox[
@@ -1458,7 +1458,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -1529,7 +1529,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -1660,7 +1660,7 @@ Notebook[
                Association[
                 "Name" -> "Example",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 4, 3, 14, 2, 29.117614`8.216730765727354},
                  "Instant",
@@ -1676,7 +1676,7 @@ Notebook[
                  "PublisherSlug",
                  "UpdateCheck"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {

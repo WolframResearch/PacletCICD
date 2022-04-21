@@ -276,7 +276,7 @@ Notebook[
               {
                "$ResourceSystemBase",
                "=",
-               "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+               "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
               }
              ],
              ";"
@@ -284,7 +284,7 @@ Notebook[
            ],
            "\[IndentingNewLine]",
            RowBox[
-            {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+            {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
            ],
            "\[IndentingNewLine]",
            RowBox[
@@ -2753,7 +2753,7 @@ Notebook[
                                                                                                  StripOnInput -> False
                                                                                                 ],
                                                                                                 StyleBox[
-                                                                                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                                                                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                                                                                  "SummaryItem",
                                                                                                  StripOnInput -> False
                                                                                                 ]
@@ -3132,7 +3132,7 @@ Notebook[
                     "with" -> Association[
                      "paclet_cicd_version" -> "0.19.1",
                      "definition_notebook" -> "./ResourceDefinition.nb",
-                     "resource_system_base" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0"
+                     "resource_system_base" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0"
                     ]
                    ],
                    Association[

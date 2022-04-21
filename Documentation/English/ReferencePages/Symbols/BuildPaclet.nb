@@ -398,7 +398,7 @@ Notebook[
      Cell[
       BoxData[
        RowBox[
-        {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+        {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
        ]
       ],
       "Input",
@@ -534,14 +534,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -635,14 +628,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -896,11 +882,7 @@ Notebook[
                                                "File",
                                                Style[
                                                 "File",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -937,11 +919,7 @@ Notebook[
                                                "Hash",
                                                Style[
                                                 "Hash",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -980,11 +958,7 @@ Notebook[
                                                "Files",
                                                Style[
                                                 "Files",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -1740,14 +1714,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -1841,14 +1808,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -1961,14 +1921,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -2034,14 +1987,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -2145,14 +2091,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -2218,14 +2157,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -2966,7 +2898,7 @@ Notebook[
                          "Issues" -> "1 fatal error",
                          "Key" -> Key[{6308105214813299588, "Submit", None}],
                          "Type" -> File,
-                         "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
+                         "MessageText" -> "Expected context: SamplePublisher`MyPaclet`",
                          "PriorityTag" -> "NotPublisherContext",
                          "Metadata" -> Association[
                           CodeParser`Source -> {{1, 14}, {1, 25}},
@@ -2982,7 +2914,7 @@ Notebook[
                               {
                                CodeParser`LeafNode[
                                 String,
-                                "\"MyPublisher`MyPaclet`\"",
+                                "\"SamplePublisher`MyPaclet`\"",
                                 Association[CodeParser`Source -> {{1, 1}, {1, 24}}]
                                ]
                               },
@@ -3000,7 +2932,7 @@ Notebook[
                             ]
                            ]
                           },
-                          "MessageParameters" -> {"MyPublisher`MyPaclet`"},
+                          "MessageParameters" -> {"SamplePublisher`MyPaclet`"},
                           "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Kernel\\AddOne.wl",
                           "Editor" -> Automatic
                          ],
@@ -3146,7 +3078,7 @@ Notebook[
                         "Issues" -> "1 fatal error",
                         "Key" -> Key[{6308105214813299588, "Submit", None}],
                         "Type" -> File,
-                        "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
+                        "MessageText" -> "Expected context: SamplePublisher`MyPaclet`",
                         "PriorityTag" -> "NotPublisherContext",
                         "Metadata" -> Association[
                          CodeParser`Source -> {{1, 14}, {1, 25}},
@@ -3162,7 +3094,7 @@ Notebook[
                              {
                               CodeParser`LeafNode[
                                String,
-                               "\"MyPublisher`MyPaclet`\"",
+                               "\"SamplePublisher`MyPaclet`\"",
                                Association[CodeParser`Source -> {{1, 1}, {1, 24}}]
                               ]
                              },
@@ -3180,7 +3112,7 @@ Notebook[
                            ]
                           ]
                          },
-                         "MessageParameters" -> {"MyPublisher`MyPaclet`"},
+                         "MessageParameters" -> {"SamplePublisher`MyPaclet`"},
                          "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Kernel\\AddOne.wl",
                          "Editor" -> Automatic
                         ],
@@ -4208,7 +4140,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -4245,14 +4177,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -4367,7 +4299,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -4396,14 +4328,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -4840,13 +4772,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -4926,11 +4852,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -4967,13 +4889,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -5036,11 +4952,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -5124,13 +5036,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -5193,11 +5099,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -5260,13 +5162,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -5346,11 +5242,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -5387,13 +5279,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -5456,11 +5342,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -5544,13 +5426,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -5613,11 +5489,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -5680,13 +5552,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -5766,11 +5632,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -5807,13 +5669,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -5876,11 +5732,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -5958,13 +5810,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -6027,11 +5873,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -6696,7 +6538,7 @@ Notebook[
                                     "InitialData" -> {
                                      Association[
                                       "Level" -> "Warning",
-                                      "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                      "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                       "Tag" -> "DocumentationWrongPacletName",
                                       "CellID" -> 268995717
                                      ],
@@ -6879,11 +6721,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6920,11 +6758,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6961,11 +6795,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -7002,11 +6832,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -7055,7 +6881,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                             "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {1, Key["Message"]},
                                               "Item",
@@ -8069,7 +7895,7 @@ Notebook[
                  {
                   Association[
                    "Level" -> "Warning",
-                   "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                   "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
                    "CellID" -> 268995717
                   ],
@@ -8189,7 +8015,7 @@ Notebook[
                   "InitialData" -> {
                    Association[
                     "Level" -> "Warning",
-                    "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     "Tag" -> "DocumentationWrongPacletName",
                     "CellID" -> 268995717
                    ],
@@ -8372,11 +8198,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -8413,11 +8235,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -8454,11 +8272,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -8495,11 +8309,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -8548,7 +8358,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                           "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {1, Key["Message"]},
                             "Item",
@@ -9794,7 +9604,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -9831,14 +9641,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -9953,7 +9763,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -9982,14 +9792,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -10426,13 +10236,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -10512,11 +10316,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -10553,13 +10353,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -10622,11 +10416,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -10710,13 +10500,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -10779,11 +10563,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -10846,13 +10626,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -10932,11 +10706,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -10973,13 +10743,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -11042,11 +10806,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -11130,13 +10890,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -11199,11 +10953,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -11266,13 +11016,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -11352,11 +11096,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -11393,13 +11133,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -11462,11 +11196,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -11544,13 +11274,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -11613,11 +11337,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -11711,14 +11431,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -11812,14 +11525,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -12073,11 +11779,7 @@ Notebook[
                                                "File",
                                                Style[
                                                 "File",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -12114,11 +11816,7 @@ Notebook[
                                                "Hash",
                                                Style[
                                                 "Hash",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -12157,11 +11855,7 @@ Notebook[
                                                "Files",
                                                Style[
                                                 "Files",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -12917,14 +12611,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -13018,14 +12705,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -13138,14 +12818,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -13211,14 +12884,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -13322,14 +12988,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -13395,14 +13054,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -13701,7 +13353,7 @@ Notebook[
                                    "InitialData" -> {
                                     Association[
                                      "Level" -> "Warning",
-                                     "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                     "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                      "Tag" -> "DocumentationWrongPacletName",
                                      "CellID" -> 268995717
                                     ],
@@ -13848,11 +13500,7 @@ Notebook[
                                                "Level",
                                                Style[
                                                 "Level",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -13889,11 +13537,7 @@ Notebook[
                                                "Message",
                                                Style[
                                                 "Message",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -13930,11 +13574,7 @@ Notebook[
                                                "Tag",
                                                Style[
                                                 "Tag",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -13971,11 +13611,7 @@ Notebook[
                                                "CellID",
                                                Style[
                                                 "CellID",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -14024,7 +13660,7 @@ Notebook[
                                          Item[
                                           Pane[
                                            Annotation[
-                                            "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                            "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                             TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                              {1, Key["Message"]},
                                              "Item",
@@ -14922,7 +14558,7 @@ Notebook[
                  {
                   Association[
                    "Level" -> "Warning",
-                   "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                   "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
                    "CellID" -> 268995717
                   ],
@@ -15266,7 +14902,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -15303,14 +14939,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -15425,7 +15061,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -15454,14 +15090,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -15898,13 +15534,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -15984,11 +15614,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -16025,13 +15651,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -16094,11 +15714,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -16182,13 +15798,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -16251,11 +15861,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -16318,13 +15924,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -16404,11 +16004,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -16445,13 +16041,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -16514,11 +16104,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -16602,13 +16188,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -16671,11 +16251,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -16738,13 +16314,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -16824,11 +16394,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -16865,13 +16431,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -16934,11 +16494,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -17016,13 +16572,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -17085,11 +16635,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -17762,7 +17308,7 @@ Notebook[
                                     "InitialData" -> {
                                      Association[
                                       "Level" -> "Warning",
-                                      "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                      "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                       "Tag" -> "DocumentationWrongPacletName",
                                       "CellID" -> 268995717
                                      ],
@@ -17909,11 +17455,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -17950,11 +17492,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -17991,11 +17529,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -18032,11 +17566,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -18085,7 +17615,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                             "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {1, Key["Message"]},
                                               "Item",
@@ -18901,7 +18431,7 @@ Notebook[
                  {
                   Association[
                    "Level" -> "Warning",
-                   "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                   "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
                    "CellID" -> 268995717
                   ],
@@ -19095,14 +18625,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -19196,14 +18719,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -19457,11 +18973,7 @@ Notebook[
                                                "File",
                                                Style[
                                                 "File",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -19498,11 +19010,7 @@ Notebook[
                                                "Hash",
                                                Style[
                                                 "Hash",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -19541,11 +19049,7 @@ Notebook[
                                                "Files",
                                                Style[
                                                 "Files",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -20301,14 +19805,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -20402,14 +19899,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -20522,14 +20012,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -20595,14 +20078,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -20706,14 +20182,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -20779,14 +20248,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -21379,14 +20841,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -21480,14 +20935,7 @@ Notebook[
                            FrameBox[
                             StyleBox[
                              "\"\[Checkmark]\"",
-                             Directive[
-                              RGBColor[
-                               0.360784,
-                               0.596078,
-                               0.380392
-                              ],
-                              25
-                             ],
+                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                              StripOnInput -> False
                             ],
                             ContentPadding -> False,
@@ -21741,11 +21189,7 @@ Notebook[
                                                   "File",
                                                   Style[
                                                    "File",
-                                                   FontColor -> RGBColor[
-                                                    0.27451,
-                                                    0.537255,
-                                                    0.792157
-                                                   ]
+                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -21782,11 +21226,7 @@ Notebook[
                                                   "Hash",
                                                   Style[
                                                    "Hash",
-                                                   FontColor -> RGBColor[
-                                                    0.27451,
-                                                    0.537255,
-                                                    0.792157
-                                                   ]
+                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -21825,11 +21265,7 @@ Notebook[
                                                   "Files",
                                                   Style[
                                                    "Files",
-                                                   FontColor -> RGBColor[
-                                                    0.27451,
-                                                    0.537255,
-                                                    0.792157
-                                                   ]
+                                                   FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                   ]
                                                  ],
                                                  "LinkHand"
@@ -22585,14 +22021,7 @@ Notebook[
                                               FrameBox[
                                                StyleBox[
                                                 "\"\[Checkmark]\"",
-                                                Directive[
-                                                 RGBColor[
-                                                  0.360784,
-                                                  0.596078,
-                                                  0.380392
-                                                 ],
-                                                 25
-                                                ],
+                                                Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                 StripOnInput -> False
                                                ],
                                                ContentPadding -> False,
@@ -22686,14 +22115,7 @@ Notebook[
                                               FrameBox[
                                                StyleBox[
                                                 "\"\[Checkmark]\"",
-                                                Directive[
-                                                 RGBColor[
-                                                  0.360784,
-                                                  0.596078,
-                                                  0.380392
-                                                 ],
-                                                 25
-                                                ],
+                                                Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                 StripOnInput -> False
                                                ],
                                                ContentPadding -> False,
@@ -22806,14 +22228,7 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[
-                                                                        RGBColor[
-                                                                         0.360784,
-                                                                         0.596078,
-                                                                         0.380392
-                                                                        ],
-                                                                        25
-                                                                       ],
+                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -22879,14 +22294,7 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[
-                                                                        RGBColor[
-                                                                         0.360784,
-                                                                         0.596078,
-                                                                         0.380392
-                                                                        ],
-                                                                        25
-                                                                       ],
+                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -22990,14 +22398,7 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[
-                                                                        RGBColor[
-                                                                         0.360784,
-                                                                         0.596078,
-                                                                         0.380392
-                                                                        ],
-                                                                        25
-                                                                       ],
+                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -23063,14 +22464,7 @@ Notebook[
                                                                      FrameBox[
                                                                       StyleBox[
                                                                        "\"\[Checkmark]\"",
-                                                                       Directive[
-                                                                        RGBColor[
-                                                                         0.360784,
-                                                                         0.596078,
-                                                                         0.380392
-                                                                        ],
-                                                                        25
-                                                                       ],
+                                                                       Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                        StripOnInput -> False
                                                                       ],
                                                                       ContentPadding -> False,
@@ -23685,14 +23079,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -23786,14 +23173,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -24047,11 +23427,7 @@ Notebook[
                                                "File",
                                                Style[
                                                 "File",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -24088,11 +23464,7 @@ Notebook[
                                                "Hash",
                                                Style[
                                                 "Hash",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -24131,11 +23503,7 @@ Notebook[
                                                "Files",
                                                Style[
                                                 "Files",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -24891,14 +24259,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -24992,14 +24353,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -25112,14 +24466,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -25185,14 +24532,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -25296,14 +24636,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -25369,14 +24702,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -25891,14 +25217,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -25992,14 +25311,7 @@ Notebook[
                         FrameBox[
                          StyleBox[
                           "\"\[Checkmark]\"",
-                          Directive[
-                           RGBColor[
-                            0.360784,
-                            0.596078,
-                            0.380392
-                           ],
-                           25
-                          ],
+                          Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                           StripOnInput -> False
                          ],
                          ContentPadding -> False,
@@ -26253,11 +25565,7 @@ Notebook[
                                                "File",
                                                Style[
                                                 "File",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -26294,11 +25602,7 @@ Notebook[
                                                "Hash",
                                                Style[
                                                 "Hash",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -26337,11 +25641,7 @@ Notebook[
                                                "Files",
                                                Style[
                                                 "Files",
-                                                FontColor -> RGBColor[
-                                                 0.27451,
-                                                 0.537255,
-                                                 0.792157
-                                                ]
+                                                FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                ]
                                               ],
                                               "LinkHand"
@@ -27097,14 +26397,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -27198,14 +26491,7 @@ Notebook[
                                            FrameBox[
                                             StyleBox[
                                              "\"\[Checkmark]\"",
-                                             Directive[
-                                              RGBColor[
-                                               0.360784,
-                                               0.596078,
-                                               0.380392
-                                              ],
-                                              25
-                                             ],
+                                             Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                              StripOnInput -> False
                                             ],
                                             ContentPadding -> False,
@@ -27318,14 +26604,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -27391,14 +26670,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -27502,14 +26774,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -27575,14 +26840,7 @@ Notebook[
                                                                   FrameBox[
                                                                    StyleBox[
                                                                     "\"\[Checkmark]\"",
-                                                                    Directive[
-                                                                     RGBColor[
-                                                                      0.360784,
-                                                                      0.596078,
-                                                                      0.380392
-                                                                     ],
-                                                                     25
-                                                                    ],
+                                                                    Directive[RGBColor[0.360784, 0.596078, 0.380392], 25],
                                                                     StripOnInput -> False
                                                                    ],
                                                                    ContentPadding -> False,
@@ -28341,11 +27599,7 @@ Notebook[
                               "File",
                               Style[
                                "File",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -28382,11 +27636,7 @@ Notebook[
                               Style["\[ThinSpace]+\[ThinSpace]", GrayLevel[0.6]],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -28396,11 +27646,7 @@ Notebook[
                                  "Hash",
                                  Style[
                                   "Hash",
-                                  FontColor -> RGBColor[
-                                   0.27451,
-                                   0.537255,
-                                   0.792157
-                                  ]
+                                  FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                  ]
                                 ],
                                 "LinkHand"
@@ -28454,11 +27700,7 @@ Notebook[
                               "Files",
                               Style[
                                "Files",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -28514,11 +27756,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -28581,11 +27819,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -28650,11 +27884,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -28719,11 +27949,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -28786,11 +28012,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29530,11 +28752,7 @@ Notebook[
                               "File",
                               Style[
                                "File",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -29571,11 +28789,7 @@ Notebook[
                               Style["\[ThinSpace]+\[ThinSpace]", GrayLevel[0.6]],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29585,11 +28799,7 @@ Notebook[
                                  "Hash",
                                  Style[
                                   "Hash",
-                                  FontColor -> RGBColor[
-                                   0.27451,
-                                   0.537255,
-                                   0.792157
-                                  ]
+                                  FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                  ]
                                 ],
                                 "LinkHand"
@@ -29643,11 +28853,7 @@ Notebook[
                               "Files",
                               Style[
                                "Files",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -29703,11 +28909,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29770,11 +28972,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29837,11 +29035,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29906,11 +29100,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -29975,11 +29165,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
@@ -30042,11 +29228,7 @@ Notebook[
                               ],
                               Style[
                                "\[ThinSpace]+\[ThinSpace]",
-                               RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              Annotation[
