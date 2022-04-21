@@ -606,7 +606,7 @@ Notebook[
         ],
         "\[IndentingNewLine]",
         RowBox[
-         {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+         {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
         ],
         "\[IndentingNewLine]",
         RowBox[
@@ -1777,7 +1777,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -2021,7 +2021,7 @@ Notebook[
                Association[
                 "Name" -> None,
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 3, 23, 21, 27, 58.685065`8.521102563286952},
                  "Instant",
@@ -2235,7 +2235,7 @@ Notebook[
                   "InitialData" -> Association[
                    "Name" -> None,
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreationDate" -> DateObject[
                     {2022, 3, 23, 21, 27, 58.685065`8.521102563286952},
                     "Instant",
@@ -2605,7 +2605,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "MyPublisher",
+                           "SamplePublisher",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {Key["PublisherID"]},
                             "Item",
@@ -3916,7 +3916,7 @@ Notebook[
                               "SummaryItemAnnotation"
                              ],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -4189,7 +4189,7 @@ Notebook[
                 ],
                 "TokenID" -> "feDt88UaAVkwtp27LTKO0e",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                 "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                 "CreationDate" -> DateObject[

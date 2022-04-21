@@ -60,8 +60,8 @@ VerificationTest[
 (*Definitions*)
 VerificationTest[
     $PublisherID;
-    $PublisherID = "MyPublisher",
-    "MyPublisher",
+    $PublisherID = "SamplePublisher",
+    "SamplePublisher",
     TestID -> "SetPublisherID@@Tests/BuildPaclet.wlt:61,1-66,2"
 ]
 

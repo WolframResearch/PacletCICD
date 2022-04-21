@@ -3486,7 +3486,7 @@ Notebook[
                     ],
                     "\[IndentingNewLine]",
                     RowBox[
-                     {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+                     {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
                     ],
                     "\[IndentingNewLine]",
                     RowBox[
@@ -4613,7 +4613,7 @@ Notebook[
                                      {
                                       TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                                       "\[InvisibleSpace]",
-                                      TagBox["\"MyPublisher\"", "SummaryItem"]
+                                      TagBox["\"SamplePublisher\"", "SummaryItem"]
                                      }
                                     ]
                                    },
@@ -4857,7 +4857,7 @@ Notebook[
                         Association[
                          "Name" -> "Example",
                          "Creator" -> "richardh-testing-1@example.com",
-                         "PublisherID" -> "MyPublisher",
+                         "PublisherID" -> "SamplePublisher",
                          "CreationDate" -> DateObject[
                           {2022, 4, 3, 19, 20, 3.067835`7.239406986214296},
                           "Instant",

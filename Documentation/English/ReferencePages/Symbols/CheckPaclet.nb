@@ -376,7 +376,7 @@ Notebook[
      Cell[
       BoxData[
        RowBox[
-        {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+        {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
        ]
       ],
       "Input",
@@ -485,13 +485,7 @@ Notebook[
                        {
                         Thickness[0.055556],
                         {
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ],
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                          FilledCurveBox[
                           {
                            {
@@ -571,11 +565,7 @@ Notebook[
                      ],
                      Annotation[#1, "Suggestion", "Tooltip"] & 
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     FrameMargins -> {{1, 1}, {0, 0}},
                     FrameStyle -> None,
                     RoundingRadius -> 8,
@@ -612,13 +602,7 @@ Notebook[
                           ]
                          ]
                         },
-                        FaceForm[
-                         RGBColor[
-                          0.490196,
-                          0.490196,
-                          0.490196
-                         ]
-                        ]
+                        FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                        ],
                        StyleBox[
                         {
@@ -681,11 +665,7 @@ Notebook[
                     ],
                     "Suggestion"
                    ],
-                   Background -> RGBColor[
-                    0.913725,
-                    0.913725,
-                    0.913725
-                   ],
+                   Background -> RGBColor[0.913725, 0.913725, 0.913725],
                    RoundingRadius -> 8,
                    FrameStyle -> None,
                    FrameMargins -> {{1, 1}, {0, 0}}
@@ -769,13 +749,7 @@ Notebook[
                         ]
                        ]
                       },
-                      FaceForm[
-                       RGBColor[
-                        0.490196,
-                        0.490196,
-                        0.490196
-                       ]
-                      ]
+                      FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                      ],
                      StyleBox[
                       {
@@ -838,11 +812,7 @@ Notebook[
                   ],
                   "Suggestion"
                  ],
-                 Background -> RGBColor[
-                  0.913725,
-                  0.913725,
-                  0.913725
-                 ],
+                 Background -> RGBColor[0.913725, 0.913725, 0.913725],
                  RoundingRadius -> 8,
                  FrameStyle -> None,
                  FrameMargins -> {{1, 1}, {0, 0}}
@@ -1019,11 +989,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1060,11 +1026,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1101,11 +1063,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1142,11 +1100,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -1997,7 +1951,7 @@ Notebook[
                          "Issues" -> "1 fatal error",
                          "Key" -> Key[{6308105214813299588, "Submit", None}],
                          "Type" -> File,
-                         "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
+                         "MessageText" -> "Expected context: SamplePublisher`MyPaclet`",
                          "PriorityTag" -> "NotPublisherContext",
                          "Metadata" -> Association[
                           CodeParser`Source -> {{1, 14}, {1, 25}},
@@ -2013,7 +1967,7 @@ Notebook[
                               {
                                CodeParser`LeafNode[
                                 String,
-                                "\"MyPublisher`MyPaclet`\"",
+                                "\"SamplePublisher`MyPaclet`\"",
                                 Association[CodeParser`Source -> {{1, 1}, {1, 24}}]
                                ]
                               },
@@ -2031,7 +1985,7 @@ Notebook[
                             ]
                            ]
                           },
-                          "MessageParameters" -> {"MyPublisher`MyPaclet`"},
+                          "MessageParameters" -> {"SamplePublisher`MyPaclet`"},
                           "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Kernel\\AddOne.wl",
                           "Editor" -> Automatic
                          ],
@@ -2177,7 +2131,7 @@ Notebook[
                         "Issues" -> "1 fatal error",
                         "Key" -> Key[{6308105214813299588, "Submit", None}],
                         "Type" -> File,
-                        "MessageText" -> "Expected context: MyPublisher`MyPaclet`",
+                        "MessageText" -> "Expected context: SamplePublisher`MyPaclet`",
                         "PriorityTag" -> "NotPublisherContext",
                         "Metadata" -> Association[
                          CodeParser`Source -> {{1, 14}, {1, 25}},
@@ -2193,7 +2147,7 @@ Notebook[
                              {
                               CodeParser`LeafNode[
                                String,
-                               "\"MyPublisher`MyPaclet`\"",
+                               "\"SamplePublisher`MyPaclet`\"",
                                Association[CodeParser`Source -> {{1, 1}, {1, 24}}]
                               ]
                              },
@@ -2211,7 +2165,7 @@ Notebook[
                            ]
                           ]
                          },
-                         "MessageParameters" -> {"MyPublisher`MyPaclet`"},
+                         "MessageParameters" -> {"SamplePublisher`MyPaclet`"},
                          "File" -> "C:\\Users\\rhennigan\\AppData\\Roaming\\Mathematica\\ApplicationData\\Wolfram\\PacletCICD\\Examples\\MoreIssues\\Kernel\\AddOne.wl",
                          "Editor" -> Automatic
                         ],
@@ -3239,7 +3193,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -3276,14 +3230,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -3398,7 +3352,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -3427,14 +3381,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -3871,13 +3825,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -3957,11 +3905,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -3998,13 +3942,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -4067,11 +4005,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4155,13 +4089,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -4224,11 +4152,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -4291,13 +4215,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -4377,11 +4295,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -4418,13 +4332,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -4487,11 +4395,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4575,13 +4479,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -4644,11 +4542,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -4711,13 +4605,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -4797,11 +4685,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -4838,13 +4722,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -4907,11 +4785,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -4989,13 +4863,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -5058,11 +4926,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -5679,7 +5543,7 @@ Notebook[
                                     "InitialData" -> {
                                      Association[
                                       "Level" -> "Warning",
-                                      "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                      "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                       "Tag" -> "DocumentationWrongPacletName",
                                       "CellID" -> 268995717
                                      ],
@@ -5862,11 +5726,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5903,11 +5763,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5944,11 +5800,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -5985,11 +5837,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -6038,7 +5886,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                             "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {1, Key["Message"]},
                                               "Item",
@@ -7048,7 +6896,7 @@ Notebook[
                  {
                   Association[
                    "Level" -> "Warning",
-                   "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                   "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
                    "CellID" -> 268995717
                   ],
@@ -7168,7 +7016,7 @@ Notebook[
                   "InitialData" -> {
                    Association[
                     "Level" -> "Warning",
-                    "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     "Tag" -> "DocumentationWrongPacletName",
                     "CellID" -> 268995717
                    ],
@@ -7351,11 +7199,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -7392,11 +7236,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -7433,11 +7273,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -7474,11 +7310,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -7527,7 +7359,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                           "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {1, Key["Message"]},
                             "Item",
@@ -8771,7 +8603,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -8808,14 +8640,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -8930,7 +8762,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -8959,14 +8791,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -9403,13 +9235,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -9489,11 +9315,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -9530,13 +9352,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -9599,11 +9415,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -9687,13 +9499,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -9756,11 +9562,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -9823,13 +9625,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -9909,11 +9705,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -9950,13 +9742,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -10019,11 +9805,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -10107,13 +9889,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -10176,11 +9952,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -10243,13 +10015,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -10329,11 +10095,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -10370,13 +10132,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -10439,11 +10195,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -10521,13 +10273,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -10590,11 +10336,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -10654,7 +10396,7 @@ Notebook[
                   "InitialData" -> {
                    Association[
                     "Level" -> "Warning",
-                    "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     "Tag" -> "DocumentationWrongPacletName",
                     "CellID" -> 268995717
                    ],
@@ -10801,11 +10543,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -10842,11 +10580,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -10883,11 +10617,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -10924,11 +10654,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -10977,7 +10703,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                           "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {1, Key["Message"]},
                             "Item",
@@ -12034,7 +11760,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -12071,14 +11797,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -12193,7 +11919,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -12222,14 +11948,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -12666,13 +12392,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -12752,11 +12472,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -12793,13 +12509,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -12862,11 +12572,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -12950,13 +12656,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -13019,11 +12719,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -13086,13 +12782,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -13172,11 +12862,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -13213,13 +12899,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -13282,11 +12962,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -13370,13 +13046,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -13439,11 +13109,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -13506,13 +13172,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -13592,11 +13252,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -13633,13 +13289,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -13702,11 +13352,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -13784,13 +13430,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -13853,11 +13493,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -14482,7 +14118,7 @@ Notebook[
                                     "InitialData" -> {
                                      Association[
                                       "Level" -> "Warning",
-                                      "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                      "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                       "Tag" -> "DocumentationWrongPacletName",
                                       "CellID" -> 268995717
                                      ],
@@ -14629,11 +14265,7 @@ Notebook[
                                                 "Level",
                                                 Style[
                                                  "Level",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -14670,11 +14302,7 @@ Notebook[
                                                 "Message",
                                                 Style[
                                                  "Message",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -14711,11 +14339,7 @@ Notebook[
                                                 "Tag",
                                                 Style[
                                                  "Tag",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -14752,11 +14376,7 @@ Notebook[
                                                 "CellID",
                                                 Style[
                                                  "CellID",
-                                                 FontColor -> RGBColor[
-                                                  0.27451,
-                                                  0.537255,
-                                                  0.792157
-                                                 ]
+                                                 FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                                                 ]
                                                ],
                                                "LinkHand"
@@ -14805,7 +14425,7 @@ Notebook[
                                           Item[
                                            Pane[
                                             Annotation[
-                                             "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                                             "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                                              TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                                               {1, Key["Message"]},
                                               "Item",
@@ -15617,7 +15237,7 @@ Notebook[
                  {
                   Association[
                    "Level" -> "Warning",
-                   "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                   "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                    "Tag" -> "DocumentationWrongPacletName",
                    "CellID" -> 268995717
                   ],
@@ -15954,7 +15574,7 @@ Notebook[
                    "\[InvisibleSpace]",
                    TemplateBox[
                     {
-                     "\"The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)\"",
+                     "\"The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)\"",
                      "\" \"",
                      ButtonBox[
                       TagBox[
@@ -15991,14 +15611,14 @@ Notebook[
                          "DocumentationNotebook" -> True,
                          "DocumentFlag" -> None,
                          "ObjectName" -> "AddOne",
-                         "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                         "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                          "Type" -> "Function",
                          "FileHash" -> 9062897167568967930,
                          "EntityType" -> "Symbol",
-                         "PacletName" -> "MyPublisher/WrongPacletName",
-                         "Context" -> "MyPublisher`MyPaclet`",
-                         "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                         "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                         "PacletName" -> "SamplePublisher/WrongPacletName",
+                         "Context" -> "SamplePublisher`MyPaclet`",
+                         "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                         "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                         ]
                        ]
                       ]),
@@ -16113,7 +15733,7 @@ Notebook[
                   ],
                   Row[
                    {
-                    "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     " ",
                     Button[
                      MouseAppearance[
@@ -16142,14 +15762,14 @@ Notebook[
                         "DocumentationNotebook" -> True,
                         "DocumentFlag" -> None,
                         "ObjectName" -> "AddOne",
-                        "FullName" -> "MyPublisher`MyPaclet`AddOne",
+                        "FullName" -> "SamplePublisher`MyPaclet`AddOne",
                         "Type" -> "Function",
                         "FileHash" -> 9062897167568967930,
                         "EntityType" -> "Symbol",
-                        "PacletName" -> "MyPublisher/WrongPacletName",
-                        "Context" -> "MyPublisher`MyPaclet`",
-                        "URI" -> "MyPublisher/MyPaclet/ref/AddOne",
-                        "ExpectedPacletName" -> "MyPublisher/MyPaclet"
+                        "PacletName" -> "SamplePublisher/WrongPacletName",
+                        "Context" -> "SamplePublisher`MyPaclet`",
+                        "URI" -> "SamplePublisher/MyPaclet/ref/AddOne",
+                        "ExpectedPacletName" -> "SamplePublisher/MyPaclet"
                        ]
                       ]
                      ],
@@ -16586,13 +16206,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -16672,11 +16286,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -16713,13 +16323,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -16782,11 +16386,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -16870,13 +16470,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -16939,11 +16533,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -17006,13 +16596,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -17092,11 +16676,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -17133,13 +16713,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -17202,11 +16776,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -17290,13 +16860,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -17359,11 +16923,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -17426,13 +16986,7 @@ Notebook[
                           {
                            Thickness[0.055556],
                            {
-                            FaceForm[
-                             RGBColor[
-                              0.490196,
-                              0.490196,
-                              0.490196
-                             ]
-                            ],
+                            FaceForm[RGBColor[0.490196, 0.490196, 0.490196]],
                             FilledCurveBox[
                              {
                               {
@@ -17512,11 +17066,7 @@ Notebook[
                         ],
                         Annotation[#1, "Suggestion", "Tooltip"] & 
                        ],
-                       Background -> RGBColor[
-                        0.913725,
-                        0.913725,
-                        0.913725
-                       ],
+                       Background -> RGBColor[0.913725, 0.913725, 0.913725],
                        FrameMargins -> {{1, 1}, {0, 0}},
                        FrameStyle -> None,
                        RoundingRadius -> 8,
@@ -17553,13 +17103,7 @@ Notebook[
                              ]
                             ]
                            },
-                           FaceForm[
-                            RGBColor[
-                             0.490196,
-                             0.490196,
-                             0.490196
-                            ]
-                           ]
+                           FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                           ],
                           StyleBox[
                            {
@@ -17622,11 +17166,7 @@ Notebook[
                        ],
                        "Suggestion"
                       ],
-                      Background -> RGBColor[
-                       0.913725,
-                       0.913725,
-                       0.913725
-                      ],
+                      Background -> RGBColor[0.913725, 0.913725, 0.913725],
                       RoundingRadius -> 8,
                       FrameStyle -> None,
                       FrameMargins -> {{1, 1}, {0, 0}}
@@ -17704,13 +17244,7 @@ Notebook[
                            ]
                           ]
                          },
-                         FaceForm[
-                          RGBColor[
-                           0.490196,
-                           0.490196,
-                           0.490196
-                          ]
-                         ]
+                         FaceForm[RGBColor[0.490196, 0.490196, 0.490196]]
                         ],
                         StyleBox[
                          {
@@ -17773,11 +17307,7 @@ Notebook[
                      ],
                      "Suggestion"
                     ],
-                    Background -> RGBColor[
-                     0.913725,
-                     0.913725,
-                     0.913725
-                    ],
+                    Background -> RGBColor[0.913725, 0.913725, 0.913725],
                     RoundingRadius -> 8,
                     FrameStyle -> None,
                     FrameMargins -> {{1, 1}, {0, 0}}
@@ -17837,7 +17367,7 @@ Notebook[
                   "InitialData" -> {
                    Association[
                     "Level" -> "Warning",
-                    "Message" -> "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                    "Message" -> "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                     "Tag" -> "DocumentationWrongPacletName",
                     "CellID" -> 268995717
                    ],
@@ -17984,11 +17514,7 @@ Notebook[
                               "Level",
                               Style[
                                "Level",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -18025,11 +17551,7 @@ Notebook[
                               "Message",
                               Style[
                                "Message",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -18066,11 +17588,7 @@ Notebook[
                               "Tag",
                               Style[
                                "Tag",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -18107,11 +17625,7 @@ Notebook[
                               "CellID",
                               Style[
                                "CellID",
-                               FontColor -> RGBColor[
-                                0.27451,
-                                0.537255,
-                                0.792157
-                               ]
+                               FontColor -> RGBColor[0.27451, 0.537255, 0.792157]
                               ]
                              ],
                              "LinkHand"
@@ -18160,7 +17674,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "The documentation metadata has an incorrect paclet name (MyPublisher/WrongPacletName)",
+                           "The documentation metadata has an incorrect paclet name (SamplePublisher/WrongPacletName)",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {1, Key["Message"]},
                             "Item",
@@ -19218,7 +18732,7 @@ Notebook[
                CellID -> 117889065
               ],
               Cell[
-               "{\n\t\"Hints\":[\n\t\t{\n\t\t\t\"CellID\":268995717,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DocumentationWrongPacletName\",\n\t\t\t\"Message\":\"The documentation metadata has an incorrect paclet name (MyPublisher\\/WrongPacletName)\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":57873694,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 fatal error\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":57873694,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"NotPublisherContext\",\n\t\t\t\"Message\":\"Expected context: MyPublisher`MyPaclet`\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":76478523,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 error\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":76478523,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DuplicateClauses\",\n\t\t\t\"Message\":\"Both branches of `If` are the same.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"SuspiciousRuleFunction\",\n\t\t\t\"Message\":\"Suspicious use of `&`.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 error and 1 warning\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DuplicateClauses\",\n\t\t\t\"Message\":\"Both branches of `If` are the same.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":935277526,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"NotCurrentPublisherID\",\n\t\t\t\"Message\":\"The paclet publisher ID does not match the current publisher ID\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":935277526,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"PacletNameHasUndeclaredPublisher\",\n\t\t\t\"Message\":\"The paclet name appears to have an undeclared publisher prefix (\\\"MyPublisher\\\")\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":319073343,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"ExampleTextLastCharacter\",\n\t\t\t\"Message\":\"Example captions should usually end in a colon when appearing before input\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":55333842,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"MultipleOutputs\",\n\t\t\t\"Message\":\"Inputs should be separated so they each generate at most a single output\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":312969925,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"PacletCreatorMismatch\",\n\t\t\t\"Message\":\"The paclet creator and the resource creator are expected to match\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":437199519,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"StringLink\",\n\t\t\t\"Message\":\"Related links should usually be given as a labeled hyperlink instead of a raw URL\"\n\t\t}\n\t]\n}",
+               "{\n\t\"Hints\":[\n\t\t{\n\t\t\t\"CellID\":268995717,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DocumentationWrongPacletName\",\n\t\t\t\"Message\":\"The documentation metadata has an incorrect paclet name (SamplePublisher\\/WrongPacletName)\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":57873694,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 fatal error\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":57873694,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"NotPublisherContext\",\n\t\t\t\"Message\":\"Expected context: SamplePublisher`MyPaclet`\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":76478523,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 error\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":76478523,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DuplicateClauses\",\n\t\t\t\"Message\":\"Both branches of `If` are the same.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"SuspiciousRuleFunction\",\n\t\t\t\"Message\":\"Suspicious use of `&`.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"CodeInspectionIssues\",\n\t\t\t\"Message\":\"CodeInspect found 1 error and 1 warning\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":351143504,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"DuplicateClauses\",\n\t\t\t\"Message\":\"Both branches of `If` are the same.\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":935277526,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"NotCurrentPublisherID\",\n\t\t\t\"Message\":\"The paclet publisher ID does not match the current publisher ID\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":935277526,\n\t\t\t\"Level\":\"Error\",\n\t\t\t\"Tag\":\"PacletNameHasUndeclaredPublisher\",\n\t\t\t\"Message\":\"The paclet name appears to have an undeclared publisher prefix (\\\"SamplePublisher\\\")\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":319073343,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"ExampleTextLastCharacter\",\n\t\t\t\"Message\":\"Example captions should usually end in a colon when appearing before input\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":55333842,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"MultipleOutputs\",\n\t\t\t\"Message\":\"Inputs should be separated so they each generate at most a single output\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":312969925,\n\t\t\t\"Level\":\"Warning\",\n\t\t\t\"Tag\":\"PacletCreatorMismatch\",\n\t\t\t\"Message\":\"The paclet creator and the resource creator are expected to match\"\n\t\t},\n\t\t{\n\t\t\t\"CellID\":437199519,\n\t\t\t\"Level\":\"Suggestion\",\n\t\t\t\"Tag\":\"StringLink\",\n\t\t\t\"Message\":\"Related links should usually be given as a labeled hyperlink instead of a raw URL\"\n\t\t}\n\t]\n}",
                "Print",
                CellLabel -> "During evaluation of In[1]:=",
                CellID -> 21828997

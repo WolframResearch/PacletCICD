@@ -628,7 +628,7 @@ Notebook[
         ],
         "\[IndentingNewLine]",
         RowBox[
-         {RowBox[{"$PublisherID", "=", "\"MyPublisher\""}], ";"}
+         {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
         ],
         "\[IndentingNewLine]",
         RowBox[
@@ -1799,7 +1799,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -2043,7 +2043,7 @@ Notebook[
                Association[
                 "Name" -> None,
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 3, 23, 20, 52, 48.201311`8.435633826595515},
                  "Instant",
@@ -2636,7 +2636,7 @@ Notebook[
                               "SummaryItemAnnotation"
                              ],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -2909,7 +2909,7 @@ Notebook[
                 ],
                 "TokenID" -> "hUxrPYCBiAcJLZdb8aUQM8",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                 "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                 "CreationDate" -> DateObject[
@@ -4055,7 +4055,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -4299,7 +4299,7 @@ Notebook[
                Association[
                 "Name" -> "MyExampleToken",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 3, 23, 20, 56, 8.294972`7.671389911362901},
                  "Instant",
@@ -5493,7 +5493,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -5737,7 +5737,7 @@ Notebook[
                Association[
                 "Name" -> "MyExampleToken",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 3, 23, 20, 56, 8.294972`7.671389911362901},
                  "Instant",
@@ -6125,7 +6125,7 @@ Notebook[
                               "SummaryItemAnnotation"
                              ],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -6398,7 +6398,7 @@ Notebook[
                 ],
                 "TokenID" -> "c6Y2TeTgNDSt9zB2EhZFQ3",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                 "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                 "CreationDate" -> DateObject[
@@ -7672,7 +7672,7 @@ Notebook[
                                {
                                 TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -7977,7 +7977,7 @@ Notebook[
                   Association[
                    "Name" -> "ExpirationExample",
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreationDate" -> DateObject[
                     {2022, 3, 23, 21, 4, 25.936695`8.166489617361794},
                     "Instant",
@@ -8312,7 +8312,7 @@ Notebook[
                    {
                     "CreatePublisherToken",
                     "[",
-                    RowBox[{"PublisherID", "\[Rule]", "\"MyPublisher\""}],
+                    RowBox[{"PublisherID", "\[Rule]", "\"SamplePublisher\""}],
                     "]"
                    }
                   ]
@@ -9375,7 +9375,7 @@ Notebook[
                                {
                                 TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -9619,7 +9619,7 @@ Notebook[
                   Association[
                    "Name" -> None,
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreationDate" -> DateObject[
                     {2022, 3, 23, 21, 9, 15.033454`7.929633758124332},
                     "Instant",
@@ -11178,7 +11178,7 @@ Notebook[
                CellID -> 188084336
               ],
               Cell[
-               BoxData["\"MyPublisher\""],
+               BoxData["\"SamplePublisher\""],
                "Output",
                CellLabel -> "Out[4]=",
                CellID -> 365144241
@@ -11479,7 +11479,7 @@ Notebook[
                                  "SummaryItemAnnotation"
                                 ],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -11752,7 +11752,7 @@ Notebook[
                    ],
                    "TokenID" -> "hBlThrXbhAVLcpGSaGAoOh",
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                    "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                    "CreationDate" -> DateObject[
@@ -13483,7 +13483,7 @@ Notebook[
                                {
                                 TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -13727,7 +13727,7 @@ Notebook[
                   Association[
                    "Name" -> None,
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreationDate" -> DateObject[
                     {2022, 3, 23, 21, 10, 54.664778`8.490282563155409},
                     "Instant",
@@ -14115,7 +14115,7 @@ Notebook[
                                  "SummaryItemAnnotation"
                                 ],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -14388,7 +14388,7 @@ Notebook[
                    ],
                    "TokenID" -> "ekKsUqQu1O2FWRviNgs1Fm",
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                    "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                    "CreationDate" -> DateObject[
@@ -15544,7 +15544,7 @@ Notebook[
                                {
                                 TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -15676,7 +15676,7 @@ Notebook[
                   Association[
                    "Name" -> None,
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreationDate" -> DateObject[
                     {2022, 3, 23, 21, 12, 57.630215`8.513225213411971},
                     "Instant",
@@ -16224,7 +16224,7 @@ Notebook[
                                  "SummaryItemAnnotation"
                                 ],
                                 "\[InvisibleSpace]",
-                                TagBox["\"MyPublisher\"", "SummaryItem"]
+                                TagBox["\"SamplePublisher\"", "SummaryItem"]
                                }
                               ]
                              },
@@ -16473,7 +16473,7 @@ Notebook[
                    ],
                    "TokenID" -> "hoJ3KsKM9rLcPaVoXqPeQ0",
                    "Creator" -> "richardh-testing-1@example.com",
-                   "PublisherID" -> "MyPublisher",
+                   "PublisherID" -> "SamplePublisher",
                    "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                    "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                    "CreationDate" -> DateObject[
@@ -17900,7 +17900,7 @@ Notebook[
                             {
                              TagBox["\"PublisherID: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -18032,7 +18032,7 @@ Notebook[
                Association[
                 "Name" -> None,
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreationDate" -> DateObject[
                  {2022, 3, 23, 21, 18, 12.889465`7.862809877455236},
                  "Instant",
@@ -18407,7 +18407,7 @@ Notebook[
                               "SummaryItemAnnotation"
                              ],
                              "\[InvisibleSpace]",
-                             TagBox["\"MyPublisher\"", "SummaryItem"]
+                             TagBox["\"SamplePublisher\"", "SummaryItem"]
                             }
                            ]
                           },
@@ -18656,7 +18656,7 @@ Notebook[
                 ],
                 "TokenID" -> "fi8syTM6Pb3l5V4ZhwfYgt",
                 "Creator" -> "richardh-testing-1@example.com",
-                "PublisherID" -> "MyPublisher",
+                "PublisherID" -> "SamplePublisher",
                 "CreatorUUID" -> "e1cda2fe-8e45-4fe2-b235-69c9d6850a5b",
                 "PublisherUUID" -> "39f6e806-fbe2-4ff5-9881-aaf48aef30ab",
                 "CreationDate" -> DateObject[
