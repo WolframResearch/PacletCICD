@@ -3478,7 +3478,7 @@ Notebook[
                        {
                         "$ResourceSystemBase",
                         "=",
-                        "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+                        "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
                        }
                       ],
                       ";"
@@ -4684,7 +4684,7 @@ Notebook[
                                       TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                       "\[InvisibleSpace]",
                                       TagBox[
-                                       "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                       "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                        "SummaryItem"
                                       ]
                                      }
@@ -4879,7 +4879,7 @@ Notebook[
                           "UpdateCheck",
                           "UserPublishers"
                          },
-                         "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                         "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                          "Version" -> 1,
                          "TokenByteArray" -> ByteArray[
                           {

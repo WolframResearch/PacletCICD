@@ -598,7 +598,7 @@ Notebook[
            {
             "$ResourceSystemBase",
             "=",
-            "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+            "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
            }
           ],
           ";"
@@ -1848,7 +1848,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -2043,7 +2043,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {
@@ -2257,7 +2257,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -2868,7 +2868,7 @@ Notebook[
                         Item[
                          Pane[
                           Annotation[
-                           "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                           "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                            TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[TypeSystem`NestedGrid`PackagePrivate`localHold[TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                             {Key["ResourceSystemBase"]},
                             "Item",
@@ -4088,7 +4088,7 @@ Notebook[
                              ],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -4213,7 +4213,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "Name" -> None,
                 "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-feDt88UaAVkwtp27LTKO0e-1"

@@ -620,7 +620,7 @@ Notebook[
            {
             "$ResourceSystemBase",
             "=",
-            "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+            "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
            }
           ],
           ";"
@@ -1870,7 +1870,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -2065,7 +2065,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {
@@ -2808,7 +2808,7 @@ Notebook[
                              ],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -2933,7 +2933,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "Name" -> None,
                 "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-hUxrPYCBiAcJLZdb8aUQM8-1"
@@ -4126,7 +4126,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -4321,7 +4321,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {
@@ -5564,7 +5564,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -5759,7 +5759,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {
@@ -6297,7 +6297,7 @@ Notebook[
                              ],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -6422,7 +6422,7 @@ Notebook[
                  "UpdateCheck",
                  "UserPublishers"
                 },
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "Name" -> "MyExampleToken",
                 "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-c6Y2TeTgNDSt9zB2EhZFQ3-1"
@@ -7804,7 +7804,7 @@ Notebook[
                                 TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -8004,7 +8004,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -9446,7 +9446,7 @@ Notebook[
                                 TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -9641,7 +9641,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -10881,7 +10881,7 @@ Notebook[
                                 TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -11076,7 +11076,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -11651,7 +11651,7 @@ Notebook[
                                 ],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -11776,7 +11776,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "Name" -> None,
                    "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-hBlThrXbhAVLcpGSaGAoOh-1"
@@ -12240,7 +12240,7 @@ Notebook[
                                 ],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -12365,7 +12365,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "Name" -> None,
                    "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-x18IuGhmSq23Ow1OfZ8lR-bLmOkjUUBpaRETvJB1qqo0-1"
@@ -12420,7 +12420,7 @@ Notebook[
                    {
                     "ResourceSystemBase",
                     "\[Rule]",
-                    "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\""
+                    "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
                    }
                   ],
                   "]"
@@ -13554,7 +13554,7 @@ Notebook[
                                 TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -13749,7 +13749,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -14287,7 +14287,7 @@ Notebook[
                                 ],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -14412,7 +14412,7 @@ Notebook[
                     "UpdateCheck",
                     "UserPublishers"
                    },
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "Name" -> None,
                    "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-ekKsUqQu1O2FWRviNgs1Fm-1"
@@ -15615,7 +15615,7 @@ Notebook[
                                 TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -15685,7 +15685,7 @@ Notebook[
                    ],
                    "ExpirationDate" -> None,
                    "AllowedEndpoints" -> {"CheckPublisherToken", "DefaultPublisher"},
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "TokenByteArray" -> ByteArray[
                     {
@@ -16372,7 +16372,7 @@ Notebook[
                                 ],
                                 "\[InvisibleSpace]",
                                 TagBox[
-                                 "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                                 "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                                  "SummaryItem"
                                 ]
                                }
@@ -16484,7 +16484,7 @@ Notebook[
                    ],
                    "ExpirationDate" -> None,
                    "AllowedEndpoints" -> {"CheckPublisherToken", "DefaultPublisher"},
-                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                   "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                    "Version" -> 1,
                    "Name" -> None,
                    "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-hoJ3KsKM9rLcPaVoXqPeQ0-1"
@@ -16582,7 +16582,7 @@ Notebook[
               {
                "CreatePublisherToken",
                "InvalidEndpoints",
-               "\"The endpoints \\!\\(\\*RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}]\\) are not valid for the resource system at https://www.wolframcloud.com/obj/rhennigan/api/1.0. Supported endpoints are \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"SubmitResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"UpdateCheck\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"UserPublishers\\\\\\\"\\\"}], \\\"}\\\"}]\\).\"",
+               "\"The endpoints \\!\\(\\*RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}]\\) are not valid for the resource system at https://www.wolframcloud.com/obj/resourcesystem/api/1.0. Supported endpoints are \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"SubmitResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"UpdateCheck\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"UserPublishers\\\\\\\"\\\"}], \\\"}\\\"}]\\).\"",
                2,
                1,
                18,
@@ -16635,7 +16635,7 @@ Notebook[
                                TagBox["\"Message: \"", "SummaryItemAnnotation"],
                                "\[InvisibleSpace]",
                                TagBox[
-                                "\"The endpoints \\!\\(\\*TagBox[RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\) are not valid for the resource system at \\!\\(\\*TagBox[\\\"\\\\\\\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\\\\\\\"\\\", Function[Short[Slot[1], 5]]]\\). Supported endpoints are \\!\\(\\*TagBox[RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"3\\\", \\\"\[RightSkeleton]\\\"}]}], \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\).\"",
+                                "\"The endpoints \\!\\(\\*TagBox[RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\) are not valid for the resource system at \\!\\(\\*TagBox[\\\"\\\\\\\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\\\\\\\"\\\", Function[Short[Slot[1], 5]]]\\). Supported endpoints are \\!\\(\\*TagBox[RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"3\\\", \\\"\[RightSkeleton]\\\"}]}], \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\).\"",
                                 "SummaryItem"
                                ]
                               }
@@ -16710,7 +16710,7 @@ Notebook[
                                TagBox["\"Message: \"", "SummaryItemAnnotation"],
                                "\[InvisibleSpace]",
                                TagBox[
-                                "\"The endpoints \\!\\(\\*TagBox[RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\) are not valid for the resource system at \\!\\(\\*TagBox[\\\"\\\\\\\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\\\\\\\"\\\", Function[Short[Slot[1], 5]]]\\). Supported endpoints are \\!\\(\\*TagBox[RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"3\\\", \\\"\[RightSkeleton]\\\"}]}], \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\).\"",
+                                "\"The endpoints \\!\\(\\*TagBox[RowBox[{\\\"{\\\", \\\"\\\\\\\"DeletePublisherToken\\\\\\\"\\\", \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\) are not valid for the resource system at \\!\\(\\*TagBox[\\\"\\\\\\\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\\\\\\\"\\\", Function[Short[Slot[1], 5]]]\\). Supported endpoints are \\!\\(\\*TagBox[RowBox[{\\\"{\\\", RowBox[{\\\"\\\\\\\"AcquireResource\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"CheckPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"DefaultPublisher\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"EditSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetPublisherToken\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"GetSubmission\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherInformation\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"PublisherSlug\\\\\\\"\\\", \\\",\\\", \\\"\\\\\\\"StageSubmissionFile\\\\\\\"\\\", \\\",\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"3\\\", \\\"\[RightSkeleton]\\\"}]}], \\\"}\\\"}], Function[Short[Slot[1], 5]]]\\).\"",
                                 "SummaryItem"
                                ]
                               }
@@ -16778,7 +16778,7 @@ Notebook[
                Association[
                 "MessageParameters" -> {
                  {"DeletePublisherToken"},
-                 "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                 "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                  {
                   "AcquireResource",
                   "CheckPublisherToken",
@@ -17971,7 +17971,7 @@ Notebook[
                              TagBox["\"ResourceSystemBase: \"", "SummaryItemAnnotation"],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -18041,7 +18041,7 @@ Notebook[
                 ],
                 "ExpirationDate" -> None,
                 "AllowedEndpoints" -> {"GetPublisherToken", "SubmitResource"},
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "TokenByteArray" -> ByteArray[
                  {
@@ -18555,7 +18555,7 @@ Notebook[
                              ],
                              "\[InvisibleSpace]",
                              TagBox[
-                              "\"https://www.wolframcloud.com/obj/rhennigan/api/1.0\"",
+                              "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\"",
                               "SummaryItem"
                              ]
                             }
@@ -18667,7 +18667,7 @@ Notebook[
                 ],
                 "ExpirationDate" -> None,
                 "AllowedEndpoints" -> {"GetPublisherToken", "SubmitResource"},
-                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/rhennigan/api/1.0",
+                "ResourceSystemBase" -> "https://www.wolframcloud.com/obj/resourcesystem/api/1.0",
                 "Version" -> 1,
                 "Name" -> None,
                 "TokenString" -> "g2fpEpHBXz5jk8mizwYQ1T-bVxyUwPclnfWuHRTqrwkVb-fi8syTM6Pb3l5V4ZhwfYgt-1"
