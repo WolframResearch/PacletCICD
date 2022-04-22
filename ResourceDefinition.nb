@@ -11722,6 +11722,7 @@ Notebook[
                             ]
                            ],
                            "FileManagerFile",
+                           "Excluded",
                            CellMargins -> {{115 + Inherited, Inherited}, {Inherited, Inherited}},
                            CellGroupingRules -> {"SectionGrouping", 150},
                            CellFrameLabels -> {
@@ -12117,6 +12118,7 @@ Notebook[
                             ]
                            ],
                            "FileManagerFile",
+                           "Excluded",
                            CellMargins -> {{115 + Inherited, Inherited}, {Inherited, Inherited}},
                            CellGroupingRules -> {"SectionGrouping", 150},
                            CellFrameLabels -> {
@@ -12836,6 +12838,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
@@ -20773,6 +20776,7 @@ Notebook[
    ]
   ]
  },
+ WindowStatusArea -> Automatic,
  DockedCells -> {
   Cell[
    BoxData[TemplateBox[{}, "MainGridTemplate"]],
@@ -20820,10 +20824,18 @@ Notebook[
   },
   "SubmissionReviewData" -> {"Review" -> False},
   "ToolsOpen" -> False,
-  "UpdatedTimestamp" -> 3859634402.6825472,
+  "UpdatedTimestamp" -> 3859634403.,
   "TemplateVersion" -> "1.5.61",
   "StatusMessage" -> "",
-  "AutoUpdate" -> True
+  "AutoUpdate" -> True,
+  "NotebookIndexQ" -> True,
+  "NotebookLastIndexed" -> DateObject[
+   {2022, 4, 22, 15, 34, 51.945046`9.468118985251278},
+   "Instant",
+   "Gregorian",
+   -4.
+  ],
+  "NotebookUUID" -> "6d8e0782-7445-4069-99ba-30f35ae431c1"
  },
  CreateCellID -> True,
  DynamicEvaluationTimeout -> 60,
