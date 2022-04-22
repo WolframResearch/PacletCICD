@@ -4,12 +4,12 @@
 
 [![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
 
-[![View notebooks](https://wolfr.am/HAAhzkRq)](https://wolfr.am/11IbYlNIW)
+[View Notebooks](Notebooks.md)
 
 # Installing PacletCICD
 
 
-## From the [Wolfram Paclet Repository](#ComingSoon)
+## From the [Wolfram Paclet Repository](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD)
 
 Using Wolfram Language version 13.0 or later:
 
