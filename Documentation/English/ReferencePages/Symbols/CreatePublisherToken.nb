@@ -594,128 +594,6 @@ Notebook[
       CellID -> 222115023
      ],
      Cell[
-      BoxData[
-       {
-        RowBox[
-         {
-          RowBox[
-           {
-            "Needs",
-            "[",
-            " ",
-            RowBox[
-             {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
-            ],
-            " ",
-            "]"
-           }
-          ],
-          ";"
-         }
-        ],
-        "\[IndentingNewLine]",
-        RowBox[
-         {
-          RowBox[
-           {
-            "$ResourceSystemBase",
-            "=",
-            "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
-           }
-          ],
-          ";"
-         }
-        ],
-        "\[IndentingNewLine]",
-        RowBox[
-         {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
-        ],
-        "\[IndentingNewLine]",
-        RowBox[
-         {
-          RowBox[
-           {
-            "CC",
-            "[",
-            " ",
-            "\"richardh-testing-1@example.com\"",
-            " ",
-            "]"
-           }
-          ],
-          ";"
-         }
-        ],
-        "\[IndentingNewLine]",
-        RowBox[
-         {
-          RowBox[
-           {
-            RowBox[
-             {
-              "DownValues",
-              "[",
-              "CloudObject`Private`hiddenOptions",
-              "]"
-             }
-            ],
-            "=",
-            RowBox[
-             {
-              "Replace",
-              "[",
-              RowBox[
-               {
-                RowBox[
-                 {"DownValues", "@", "CloudObject`Private`hiddenOptions"}
-                ],
-                ",",
-                RowBox[
-                 {
-                  RowBox[
-                   {
-                    "HoldPattern",
-                    "[",
-                    RowBox[{"\"Prompt\"", "\[Rule]", "Automatic"}],
-                    "]"
-                   }
-                  ],
-                  ":>",
-                  RowBox[
-                   {"(", RowBox[{"\"Prompt\"", "\[Rule]", "False"}], ")"}
-                  ]
-                 }
-                ],
-                ",",
-                RowBox[{"{", "3", "}"}]
-               }
-              ],
-              "]"
-             }
-            ]
-           }
-          ],
-          ";"
-         }
-        ]
-       }
-      ],
-      "Input",
-      "FutureExample",
-      CellDingbat -> Cell[
-       BoxData[
-        TooltipBox[
-         Cell["rhennigan      ", "TentativeID"],
-         "2022-01-30"
-        ]
-       ],
-       "TentativeWrapper"
-      ],
-      InitializationCell -> True,
-      CellLabel -> "In[1]:=",
-      CellID -> 150642313
-     ],
-     Cell[
       CellGroupData[
        {
         Cell[
@@ -6509,41 +6387,6 @@ Notebook[
             CellID -> 482917066
            ],
            Cell[
-            BoxData[
-             RowBox[
-              {
-               RowBox[
-                {
-                 "CC",
-                 "[",
-                 " ",
-                 "\"richardh-testing-1@example.com\"",
-                 " ",
-                 "]"
-                }
-               ],
-               ";",
-               " ",
-               RowBox[{"$Line", "=", "0"}],
-               ";"
-              }
-             ]
-            ],
-            "Input",
-            "FutureExample",
-            CellDingbat -> Cell[
-             BoxData[
-              TooltipBox[
-               Cell["rhennigan      ", "TentativeID"],
-               "2022-03-23"
-              ]
-             ],
-             "TentativeWrapper"
-            ],
-            CellLabel -> "In[1]:=",
-            CellID -> 165868853
-           ],
-           Cell[
             CellGroupData[
              {
               Cell[
@@ -8239,41 +8082,6 @@ Notebook[
             ],
             "ExampleSubsection",
             CellID -> 27618746
-           ],
-           Cell[
-            BoxData[
-             RowBox[
-              {
-               RowBox[
-                {
-                 "CC",
-                 "[",
-                 " ",
-                 "\"richardh-testing-1@example.com\"",
-                 " ",
-                 "]"
-                }
-               ],
-               ";",
-               " ",
-               RowBox[{"$Line", "=", "0"}],
-               ";"
-              }
-             ]
-            ],
-            "Input",
-            "FutureExample",
-            CellDingbat -> Cell[
-             BoxData[
-              TooltipBox[
-               Cell["rhennigan      ", "TentativeID"],
-               "2022-03-23"
-              ]
-             ],
-             "TentativeWrapper"
-            ],
-            CellLabel -> "In[1]:=",
-            CellID -> 378961684
            ],
            Cell[
             CellGroupData[
@@ -15898,41 +15706,6 @@ Notebook[
             ]
            ],
            Cell[
-            BoxData[
-             RowBox[
-              {
-               RowBox[
-                {
-                 "CC",
-                 "[",
-                 " ",
-                 "\"richardh-testing-1@example.com\"",
-                 " ",
-                 "]"
-                }
-               ],
-               ";",
-               " ",
-               RowBox[{"$Line", "=", "5"}],
-               ";"
-              }
-             ]
-            ],
-            "Input",
-            "FutureExample",
-            CellDingbat -> Cell[
-             BoxData[
-              TooltipBox[
-               Cell["rhennigan      ", "TentativeID"],
-               "2022-03-23"
-              ]
-             ],
-             "TentativeWrapper"
-            ],
-            CellLabel -> "In[7]:=",
-            CellID -> 404835061
-           ],
-           Cell[
             CellGroupData[
              {
               Cell[
@@ -18732,7 +18505,7 @@ Notebook[
   "NotebookUUID" -> "b5684c34-d84b-41ca-818b-492a52163f9a"
  },
  CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (March 19, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions -> FrontEnd`FileName[
   {"Wolfram"},
   "FunctionPageStylesExt.nb",

@@ -69,7 +69,6 @@ Notebook[
       "Title",
       CellID -> 39352885
      ],
-     Cell["XXXX", "Text", CellID -> 7559099],
      Cell[
       CellGroupData[
        {
@@ -3452,62 +3451,7 @@ Notebook[
                   CellID -> 136339060
                  ],
                  Cell[
-                  BoxData[
-                   {
-                    RowBox[
-                     {
-                      RowBox[
-                       {
-                        "Needs",
-                        "[",
-                        " ",
-                        RowBox[
-                         {"\"ResourceSystemClient`\"", " ", "\[Rule]", " ", "None"}
-                        ],
-                        " ",
-                        "]"
-                       }
-                      ],
-                      ";"
-                     }
-                    ],
-                    "\[IndentingNewLine]",
-                    RowBox[
-                     {
-                      RowBox[
-                       {
-                        "$ResourceSystemBase",
-                        "=",
-                        "\"https://www.wolframcloud.com/obj/resourcesystem/api/1.0\""
-                       }
-                      ],
-                      ";"
-                     }
-                    ],
-                    "\[IndentingNewLine]",
-                    RowBox[
-                     {RowBox[{"$PublisherID", "=", "\"SamplePublisher\""}], ";"}
-                    ],
-                    "\[IndentingNewLine]",
-                    RowBox[
-                     {
-                      RowBox[
-                       {
-                        "CC",
-                        "[",
-                        " ",
-                        "\"richardh-testing-1@example.com\"",
-                        " ",
-                        "]"
-                       }
-                      ],
-                      ";"
-                     }
-                    ],
-                    "\[IndentingNewLine]",
-                    RowBox[{RowBox[{"$Line", "=", "0"}], ";"}]
-                   }
-                  ],
+                  BoxData[RowBox[{RowBox[{"$Line", "=", "0"}], ";"}]],
                   "Input",
                   "FutureExample",
                   CellDingbat -> Cell[
@@ -5352,16 +5296,54 @@ Notebook[
      Cell[
       CellGroupData[
        {
-        Cell["Managing Workflows", "Section", CellID -> 433588691],
+        Cell[
+         "Managing Workflows",
+         "Section",
+         "FutureExample",
+         CellDingbat -> Cell[
+          BoxData[
+           TooltipBox[
+            Cell["rhennigan      ", "TentativeID"],
+            "2022-04-22"
+           ]
+          ],
+          "TentativeWrapper"
+         ],
+         CellID -> 433588691
+        ],
         Cell[
          CellGroupData[
           {
            Cell[
             "Run a Workflow On Demand",
             "Subsection",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
             CellID -> 393314366
            ],
-           Cell["XXXX", "Text", CellID -> 414698372]
+           Cell[
+            "XXXX",
+            "Text",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
+            CellID -> 414698372
+           ]
           },
           Open
          ]
@@ -5372,9 +5354,33 @@ Notebook[
            Cell[
             "Cancel a Running Workflow",
             "Subsection",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
             CellID -> 77828806
            ],
-           Cell["XXXX", "Text", CellID -> 363125130]
+           Cell[
+            "XXXX",
+            "Text",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
+            CellID -> 363125130
+           ]
           },
           Open
          ]
@@ -5385,9 +5391,33 @@ Notebook[
            Cell[
             "Restart a Workflow",
             "Subsection",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
             CellID -> 51697191
            ],
-           Cell["XXXX", "Text", CellID -> 387752366]
+           Cell[
+            "XXXX",
+            "Text",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
+            CellID -> 387752366
+           ]
           },
           Open
          ]
@@ -5398,49 +5428,32 @@ Notebook[
            Cell[
             "Remove a Workflow",
             "Subsection",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
+              ]
+             ],
+             "TentativeWrapper"
+            ],
             CellID -> 362990978
            ],
-           Cell["XXXX", "Text", CellID -> 778033091],
            Cell[
-            BoxData[
-             GridBox[
-              {
-               {"XXXX", Cell["XXXX", "TableText"]},
-               {"XXXX", Cell["XXXX", "TableText"]},
-               {"XXXX", Cell["XXXX", "TableText"]}
-              }
-             ]
-            ],
-            "DefinitionBox",
-            CellID -> 46362387
-           ],
-           Cell["XXXX.", "Caption", CellID -> 795736836],
-           Cell[
-            CellGroupData[
-             {
-              Cell["XXXX", "MathCaption", CellID -> 42832370],
-              Cell[
-               CellGroupData[
-                {
-                 Cell[
-                  BoxData["XXXX"],
-                  "Input",
-                  CellLabel -> "In[1]:=",
-                  CellID -> 297011007
-                 ],
-                 Cell[
-                  BoxData["XXXX"],
-                  "Output",
-                  CellLabel -> "Out[1]=",
-                  CellID -> 130168968
-                 ]
-                },
-                Open
-               ]
+            "XXXX",
+            "Text",
+            "FutureExample",
+            CellDingbat -> Cell[
+             BoxData[
+              TooltipBox[
+               Cell["rhennigan      ", "TentativeID"],
+               "2022-04-22"
               ]
-             },
-             Open
-            ]
+             ],
+             "TentativeWrapper"
+            ],
+            CellID -> 778033091
            ]
           },
           Open
