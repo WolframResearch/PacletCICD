@@ -157,6 +157,17 @@ SetContextLoad[ WorkflowValue          , "WorkflowValue"       ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Preloading*)
+WorkflowValue /:
+    (wfv_WorkflowValue = rhs_) /; (LoadSubPackage[ "WorkflowValue" ]; True) :=
+        wfv = rhs;
+
+WorkflowValue /:
+    (wfv_WorkflowValue := rhs_) /; (LoadSubPackage[ "WorkflowValue" ]; True) :=
+        wfv := rhs;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*Package Footer*)
 End[ ];
 EndPackage[ ];
