@@ -3,9 +3,6 @@ name: Release
 on:
   workflow_dispatch:
 
-  push:
-    branches: ["main"]
-
 env:
   GITHUB_TOKEN:                ${{ secrets.GITHUB_TOKEN }}
   RESOURCE_PUBLISHER_TOKEN:    ${{ secrets.RESOURCE_PUBLISHER_TOKEN }}
