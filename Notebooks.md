@@ -1,71 +1,46 @@
 # PacletCICD Notebooks
 
-[Documentation/English/Guides/ContinuousIntegrationAndDeployment.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FContinuousIntegrationAndDeployment.nb)
-
-[Documentation/English/Guides/CustomCICDWorkflows.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FCustomCICDWorkflows.nb)
-
-[Documentation/English/Guides/Workflows.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FWorkflows.nb)
-
-[Documentation/English/ReferencePages/EnvironmentVariables/ResourcePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FResourcePublisherToken.nb)
-
-[Documentation/English/ReferencePages/EnvironmentVariables/WolframScriptEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FWolframScriptEntitlementID.nb)
-
-[Documentation/English/ReferencePages/Symbols/$ExamplesLocation.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2F%2524ExamplesLocation.nb)
-
-[Documentation/English/ReferencePages/Symbols/AnnotateTestIDs.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FAnnotateTestIDs.nb)
-
-[Documentation/English/ReferencePages/Symbols/BuildPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FBuildPaclet.nb)
-
-[Documentation/English/ReferencePages/Symbols/CheckPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FCheckPaclet.nb)
-
-[Documentation/English/ReferencePages/Symbols/CreatePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FCreatePublisherToken.nb)
-
-[Documentation/English/ReferencePages/Symbols/DeletePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeletePublisherToken.nb)
-
-[Documentation/English/ReferencePages/Symbols/DeployPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeployPaclet.nb)
-
-[Documentation/English/ReferencePages/Symbols/DeployReleaseHandler.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeployReleaseHandler.nb)
-
-[Documentation/English/ReferencePages/Symbols/ExampleDirectory.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FExampleDirectory.nb)
-
-[Documentation/English/ReferencePages/Symbols/GitHubPacletInstall.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FGitHubPacletInstall.nb)
-
-[Documentation/English/ReferencePages/Symbols/GitHubSecret.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FGitHubSecret.nb)
-
-[Documentation/English/ReferencePages/Symbols/PacletCICD.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPacletCICD.nb)
-
-[Documentation/English/ReferencePages/Symbols/PublisherTokenObject.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPublisherTokenObject.nb)
-
-[Documentation/English/ReferencePages/Symbols/PublisherTokens.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPublisherTokens.nb)
-
-[Documentation/English/ReferencePages/Symbols/SubmitPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FSubmitPaclet.nb)
-
-[Documentation/English/ReferencePages/Symbols/TestPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FTestPaclet.nb)
-
-[Documentation/English/ReferencePages/Symbols/Workflow.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflow.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowEvaluate.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowEvaluate.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowExport.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowExport.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowJob.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowJob.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowJobQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowJobQ.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowQ.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowStep.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowStep.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowStepQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowStepQ.nb)
-
-[Documentation/English/ReferencePages/Symbols/WorkflowValue.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowValue.nb)
-
-[Documentation/English/Tutorials/GitHubActions.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FGitHubActions.nb)
-
-[Documentation/English/Tutorials/GitHubActionsQuickStart.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FGitHubActionsQuickStart.nb)
-
-[Documentation/English/Tutorials/LicenseEntitlementsAndRepositorySecrets.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FLicenseEntitlementsAndRepositorySecrets.nb)
-
-[Documentation/English/Workflows/CreateALicenseEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FWorkflows%2FCreateALicenseEntitlementID.nb)
-
-[ResourceDefinition.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FResourceDefinition.nb)
+![Directory Icon](.github/images/dir.svg) Documentation/English  
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Guides  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [ContinuousIntegrationAndDeployment.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FContinuousIntegrationAndDeployment.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CustomCICDWorkflows.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FCustomCICDWorkflows.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [Workflows.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FWorkflows.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) ReferencePages  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) EnvironmentVariables  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [ResourcePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FResourcePublisherToken.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WolframScriptEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FWolframScriptEntitlementID.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Symbols  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [$ExamplesLocation.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2F%2524ExamplesLocation.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [AnnotateTestIDs.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FAnnotateTestIDs.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [BuildPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FBuildPaclet.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CheckPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FCheckPaclet.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CreatePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FCreatePublisherToken.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [DeletePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeletePublisherToken.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [DeployPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeployPaclet.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [DeployReleaseHandler.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FDeployReleaseHandler.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [ExampleDirectory.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FExampleDirectory.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GitHubPacletInstall.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FGitHubPacletInstall.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GitHubSecret.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FGitHubSecret.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [PacletCICD.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPacletCICD.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [PublisherTokenObject.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPublisherTokenObject.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [PublisherTokens.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FPublisherTokens.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [SubmitPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FSubmitPaclet.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [TestPaclet.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FTestPaclet.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [Workflow.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflow.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowEvaluate.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowEvaluate.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowExport.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowExport.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowJob.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowJob.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowJobQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowJobQ.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowQ.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowStep.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowStep.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowStepQ.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowStepQ.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WorkflowValue.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FWorkflowValue.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Tutorials  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GitHubActions.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FGitHubActions.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GitHubActionsQuickStart.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FGitHubActionsQuickStart.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [LicenseEntitlementsAndRepositorySecrets.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FLicenseEntitlementsAndRepositorySecrets.nb)  
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Workflows  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CreateALicenseEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FWorkflows%2FCreateALicenseEntitlementID.nb)  
+![Notebook Icon](.github/images/nb.svg) [ResourceDefinition.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FResourceDefinition.nb)  
+![Directory Icon](.github/images/dir.svg) Tools  
+&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GenerateNotebooksMD.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FTools%2FGenerateNotebooksMD.nb)
