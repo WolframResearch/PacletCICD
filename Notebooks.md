@@ -41,4 +41,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [LicenseEntitlementsAndRepositorySecrets.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FLicenseEntitlementsAndRepositorySecrets.nb)  
 &nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Workflows  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CreateALicenseEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FWorkflows%2FCreateALicenseEntitlementID.nb)  
-![Notebook Icon](.github/images/nb.svg) [ResourceDefinition.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FResourceDefinition.nb)
+![Notebook Icon](.github/images/nb.svg) [ResourceDefinition.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FResourceDefinition.nb)  
+![Directory Icon](.github/images/dir.svg) Tools  
+&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GenerateNotebooksMD.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FTools%2FGenerateNotebooksMD.nb)
