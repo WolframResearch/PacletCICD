@@ -4,7 +4,7 @@
 
 [![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
 
-[View Notebooks](Notebooks.md)
+![Notebook Icon](.github/images/nb.svg) [View Notebooks](Notebooks.md)
 
 # Installing PacletCICD
 
