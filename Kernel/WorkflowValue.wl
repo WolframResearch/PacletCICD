@@ -53,10 +53,6 @@ WorkflowValue // Options = { };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
-(*Argument Patterns*)
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
 (*Main Definition*)
 WorkflowValue[ args___ ] := catchTop @ getWorkflowValue @ args;
 

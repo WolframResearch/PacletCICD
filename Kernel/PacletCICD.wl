@@ -82,17 +82,8 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
 (* ::Section::Closed:: *)
 (*Check Dependencies*)
 If[ $VersionNumber < 13.1,
-    If[ StringQ @ Environment[ "GITHUB_WORKFLOW" ],
-        Quiet[
-            PacletInstall[ "https://wolfr.am/11FhS453R" ];
-            PacletInstall[ "https://wolfr.am/11FhS4xyd" ];
-            PacletInstall[ "https://wolfr.am/11FhS4VRh" ];
-            ,
-            PacletInstall::samevers
-        ],
-        Wolfram`PacletCICD`CheckDependencies[
-            PacletObject @ File @ DirectoryName[ $InputFileName, 2 ],
-            Message -> True
-        ]
+    Wolfram`PacletCICD`CheckDependencies[
+        PacletObject @ File @ DirectoryName[ $InputFileName, 2 ],
+        Message -> True
     ]
 ];
