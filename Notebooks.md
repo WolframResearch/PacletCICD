@@ -2,9 +2,9 @@
 
 ![Notebook Icon](.github/images/nb.svg) [ResourceDefinition.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FResourceDefinition.nb)
 
-![Directory Icon](.github/images/dir.svg) Documentation/English/
+![Directory Icon](.github/images/dir.svg) Documentation/English
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Guides/
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Guides
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [ContinuousIntegrationAndDeployment.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FContinuousIntegrationAndDeployment.nb)
 
@@ -12,7 +12,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [Workflows.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FGuides%2FWorkflows.nb)
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Tutorials/
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Tutorials
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [GitHubActions.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FGitHubActions.nb)
 
@@ -20,19 +20,19 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [LicenseEntitlementsAndRepositorySecrets.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FTutorials%2FLicenseEntitlementsAndRepositorySecrets.nb)
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Workflows/
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Workflows
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [CreateALicenseEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FWorkflows%2FCreateALicenseEntitlementID.nb)
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) ReferencePages/
+&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) ReferencePages
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) EnvironmentVariables/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) EnvironmentVariables
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [ResourcePublisherToken.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FResourcePublisherToken.nb)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [WolframScriptEntitlementID.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FEnvironmentVariables%2FWolframScriptEntitlementID.nb)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Symbols/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Directory Icon](.github/images/dir.svg) Symbols
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Notebook Icon](.github/images/nb.svg) [AnnotateTestIDs.nb](https://www.wolframcloud.com/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Frhennigan%2FPacletCICD%2Fmain%2FDocumentation%2FEnglish%2FReferencePages%2FSymbols%2FAnnotateTestIDs.nb)
 
