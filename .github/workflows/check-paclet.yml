@@ -30,6 +30,9 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
+      - name: Build paclet MX
+        run: wolframscript Scripts/BuildPacletMX.wls
+
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
       

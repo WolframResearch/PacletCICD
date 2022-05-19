@@ -10808,6 +10808,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerDirectory",
+                     "Excluded",
                      CellMargins -> {{46 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 120},
                      CellFrameLabels -> {
@@ -10865,6 +10866,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
@@ -10920,6 +10922,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
@@ -10975,6 +10978,7 @@ Notebook[
                       ]
                      ],
                      "FileManagerFile",
+                     "Excluded",
                      CellMargins -> {{69 + Inherited, Inherited}, {Inherited, Inherited}},
                      CellGroupingRules -> {"SectionGrouping", 130},
                      CellFrameLabels -> {
