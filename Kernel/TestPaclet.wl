@@ -13,7 +13,7 @@ $ContextAliases[ "cp`"  ] = "CodeParser`";
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*TestPaclet*)
-TestPaclet::failures =
+TestPaclet::Failures =
 "Failures encountered while testing paclet.";
 
 (* ::**********************************************************************:: *)
@@ -53,7 +53,7 @@ testPaclet[ dir_? DirectoryQ ] :=
         files  = FileNames[ "*.wlt", dir, Infinity ];
         report = testContext @ TestReport @ files;
         annotateTestResult /@ report[ "TestResults" ];
-        makeTestResult @ report
+        makeTestResult[ dir, report ]
     ];
 
 (* ::**********************************************************************:: *)
@@ -63,10 +63,10 @@ testPaclet[ dir_? DirectoryQ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*makeTestResult*)
-makeTestResult[ report_TestReportObject ] :=
-    makeTestResult[ report, report[ "AllTestsSucceeded" ] ];
+makeTestResult[ dir_, report_TestReportObject ] :=
+    makeTestResult[ dir, report, report[ "AllTestsSucceeded" ] ];
 
-makeTestResult[ report_, True ] :=
+makeTestResult[ dir_, report_, True ] :=
     Success[ "AllTestsSucceeded",
              <|
                  "MessageTemplate"   -> "All tests successful",
@@ -75,20 +75,21 @@ makeTestResult[ report_, True ] :=
              |>
     ];
 
-makeTestResult[ report_, False ] :=
-    Module[ { export },
-        export = ExpandFileName[ "test_results.wxf" ];
+makeTestResult[ dir_, report_, False ] :=
+    Module[ { export, exported },
+        export = fileNameJoin @ { dir, "build", "test_results.wxf" };
+        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting test results: " <> export ];
-        Export[ export,
-                report,
-                "WXF",
-                PerformanceGoal -> "Size"
-        ];
-        setOutput[ "PACLET_TEST_RESULTS", export ];
+        exported = Export[ export,
+                           report,
+                           "WXF",
+                           PerformanceGoal -> "Size"
+                   ];
+        setOutput[ "PACLET_TEST_RESULTS", exported ];
         exitFailure[
-            "TestPaclet::failures",
+            "TestPaclet::Failures",
             Association[
-                "MessageTemplate"   :> TestPaclet::failures,
+                "MessageTemplate"   :> TestPaclet::Failures,
                 "MessageParameters" :> { },
                 "Result"            :> report
             ],
