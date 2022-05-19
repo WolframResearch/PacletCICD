@@ -83,9 +83,9 @@ VerificationTest[
 (* ::Subsection::Closed:: *)
 (*Named Steps*)
 VerificationTest[
-    WorkflowStepQ @ WorkflowStep[ "Checkout" ],
+    WorkflowStepQ @ WorkflowStep[ "Build" ],
     True,
-    TestID -> "WorkflowStep-Named-Checkout@@Tests/Workflows.wlt:85,1-89,2"
+    TestID -> "WorkflowStep-Named-Build@@Tests/Workflows.wlt:85,1-89,2"
 ]
 
 VerificationTest[
@@ -95,33 +95,75 @@ VerificationTest[
 ]
 
 VerificationTest[
-    WorkflowStepQ @ WorkflowStep[ "Build" ],
+    WorkflowStepQ @ WorkflowStep[ "Checkout" ],
     True,
-    TestID -> "WorkflowStep-Named-Build@@Tests/Workflows.wlt:97,1-101,2"
-]
-
-VerificationTest[
-    WorkflowStepQ @ WorkflowStep[ "Test" ],
-    True,
-    TestID -> "WorkflowStep-Named-Test@@Tests/Workflows.wlt:103,1-107,2"
-]
-
-VerificationTest[
-    WorkflowStepQ @ WorkflowStep[ "UploadBuildArtifacts" ],
-    True,
-    TestID -> "WorkflowStep-Named-UploadBuildArtifacts@@Tests/Workflows.wlt:109,1-113,2"
+    TestID -> "WorkflowStep-Named-Checkout@@Tests/Workflows.wlt:97,1-101,2"
 ]
 
 VerificationTest[
     WorkflowStepQ @ WorkflowStep[ "CreateRelease" ],
     True,
-    TestID -> "WorkflowStep-Named-CreateRelease@@Tests/Workflows.wlt:115,1-119,2"
+    TestID -> "WorkflowStep-Named-CreateRelease@@Tests/Workflows.wlt:103,1-107,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "Download" ],
+    True,
+    TestID -> "WorkflowStep-Named-Download@@Tests/Workflows.wlt:109,1-113,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "DownloadCompilationArtifacts" ],
+    True,
+    TestID -> "WorkflowStep-Named-DownloadCompilationArtifacts@@Tests/Workflows.wlt:115,1-119,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "InstallWolframEngine" ],
+    True,
+    TestID -> "WorkflowStep-Named-InstallWolframEngine@@Tests/Workflows.wlt:121,1-125,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "Publish" ],
+    True,
+    TestID -> "WorkflowStep-Named-Publish@@Tests/Workflows.wlt:127,1-131,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "RestoreCachedWolframEngine" ],
+    True,
+    TestID -> "WorkflowStep-Named-RestoreCachedWolframEngine@@Tests/Workflows.wlt:133,1-137,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "Submit" ],
+    True,
+    TestID -> "WorkflowStep-Named-Submit@@Tests/Workflows.wlt:139,1-143,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "Test" ],
+    True,
+    TestID -> "WorkflowStep-Named-Test@@Tests/Workflows.wlt:145,1-149,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "Upload" ],
+    True,
+    TestID -> "WorkflowStep-Named-Upload@@Tests/Workflows.wlt:151,1-155,2"
+]
+
+VerificationTest[
+    WorkflowStepQ @ WorkflowStep[ "UploadBuildArtifacts" ],
+    True,
+    TestID -> "WorkflowStep-Named-UploadBuildArtifacts@@Tests/Workflows.wlt:157,1-161,2"
 ]
 
 VerificationTest[
     WorkflowStepQ @ WorkflowStep[ "UploadRelease" ],
     True,
-    TestID -> "WorkflowStep-Named-UploadRelease@@Tests/Workflows.wlt:121,1-125,2"
+    TestID -> "WorkflowStep-Named-UploadRelease@@Tests/Workflows.wlt:163,1-167,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -130,7 +172,7 @@ VerificationTest[
 VerificationTest[
     WorkflowStep[ File[ "Scripts/MyWorkflowJob.wls" ] ][ "Data" ][ "run" ],
     "wolframscript Scripts/MyWorkflowJob.wls",
-    TestID -> "WorkflowStep-File@@Tests/Workflows.wlt:130,1-134,2"
+    TestID -> "WorkflowStep-File@@Tests/Workflows.wlt:172,1-176,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -146,7 +188,7 @@ VerificationTest[
             "uses" -> "actions/checkout@v2"
         |>
     ],
-    TestID -> "WorkflowStep-Checkout@@Tests/Workflows.wlt:139,1-150,2"
+    TestID -> "WorkflowStep-Checkout@@Tests/Workflows.wlt:181,1-192,2"
 ]
 
 VerificationTest[
@@ -156,13 +198,13 @@ VerificationTest[
         "id"   -> "checkout-code-step",
         "uses" -> "actions/checkout@v2"
     |>,
-    TestID -> "WorkflowStep-Checkout-Data@@Tests/Workflows.wlt:152,1-160,2"
+    TestID -> "WorkflowStep-Checkout-Data@@Tests/Workflows.wlt:194,1-202,2"
 ]
 
 VerificationTest[
     step[ "YAML" ],
     "name: Checkout\nid: checkout-code-step\nuses: actions/checkout@v2",
-    TestID -> "WorkflowStep-Checkout-YAML@@Tests/Workflows.wlt:162,1-166,2"
+    TestID -> "WorkflowStep-Checkout-YAML@@Tests/Workflows.wlt:204,1-208,2"
 ]
 
 VerificationTest[
@@ -185,13 +227,13 @@ VerificationTest[
             |>
         |>
     ],
-    TestID -> "WorkflowStep-Custom-Code@@Tests/Workflows.wlt:168,1-189,2"
+    TestID -> "WorkflowStep-Custom-Code@@Tests/Workflows.wlt:210,1-231,2"
 ]
 
 VerificationTest[
     step[ "YAML" ],
     "name: Hello-World\nrun: wolframscript -code 'Print[hello]'\nenv: \n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    TestID -> "WorkflowStep-Custom-YAML@@Tests/Workflows.wlt:191,1-195,2"
+    TestID -> "WorkflowStep-Custom-YAML@@Tests/Workflows.wlt:233,1-237,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -207,7 +249,7 @@ VerificationTest[
         TimeConstraint -> 300
     ][ "Data" ][ "timeout-minutes" ],
     5,
-    TestID -> "WorkflowStep-TimeConstraint-1@@Tests/Workflows.wlt:204,1-211,2"
+    TestID -> "WorkflowStep-TimeConstraint-1@@Tests/Workflows.wlt:246,1-253,2"
 ]
 
 VerificationTest[
@@ -216,7 +258,7 @@ VerificationTest[
         TimeConstraint -> Quantity[ 1/12, "Hours" ]
     ][ "Data" ][ "timeout-minutes" ],
     5,
-    TestID -> "WorkflowStep-TimeConstraint-2@@Tests/Workflows.wlt:213,1-220,2"
+    TestID -> "WorkflowStep-TimeConstraint-2@@Tests/Workflows.wlt:255,1-262,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -228,7 +270,7 @@ VerificationTest[
         ProcessEnvironment -> <| "MY_VAR" -> "hello" |>
     ][ "Data" ][ "env" ],
     <| "MY_VAR" -> "hello" |>,
-    TestID -> "WorkflowStep-ProcessEnvironment-1@@Tests/Workflows.wlt:225,1-232,2"
+    TestID -> "WorkflowStep-ProcessEnvironment-1@@Tests/Workflows.wlt:267,1-274,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -238,7 +280,7 @@ VerificationTest[
     WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
     "rhennigan/check-paclet@v" ~~ DigitCharacter.. ~~ ___,
     SameTest -> StringMatchQ,
-    TestID   -> "Normalize-Action-Version@@Tests/Workflows.wlt:237,1-242,2"
+    TestID   -> "Normalize-Action-Version@@Tests/Workflows.wlt:279,1-284,2"
 ]
 
 VerificationTest[
@@ -255,7 +297,7 @@ VerificationTest[
     <|
         "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
     |>,
-    TestID -> "WorkflowStep-Environment-Env@@Tests/Workflows.wlt:244,1-259,2"
+    TestID -> "WorkflowStep-Environment-Env@@Tests/Workflows.wlt:286,1-301,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -268,25 +310,37 @@ VerificationTest[
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Check" ],
     True,
-    TestID -> "WorkflowJob-Named-Check@@Tests/Workflows.wlt:268,1-272,2"
+    TestID -> "WorkflowJob-Named-Check@@Tests/Workflows.wlt:310,1-314,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Build" ],
     True,
-    TestID -> "WorkflowJob-Named-Build@@Tests/Workflows.wlt:274,1-278,2"
+    TestID -> "WorkflowJob-Named-Build@@Tests/Workflows.wlt:316,1-320,2"
+]
+
+VerificationTest[
+    WorkflowJobQ @ WorkflowJob[ "Publish" ],
+    True,
+    TestID -> "WorkflowJob-Named-Publish@@Tests/Workflows.wlt:322,1-326,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Release" ],
     True,
-    TestID -> "WorkflowJob-Named-Release@@Tests/Workflows.wlt:280,1-284,2"
+    TestID -> "WorkflowJob-Named-Release@@Tests/Workflows.wlt:328,1-332,2"
 ]
 
 VerificationTest[
     WorkflowJobQ @ WorkflowJob[ "Test" ],
     True,
-    TestID -> "WorkflowJob-Named-Test@@Tests/Workflows.wlt:286,1-290,2"
+    TestID -> "WorkflowJob-Named-Test@@Tests/Workflows.wlt:334,1-338,2"
+]
+
+VerificationTest[
+    WorkflowJobQ @ WorkflowJob[ "Submit" ],
+    True,
+    TestID -> "WorkflowJob-Named-Submit@@Tests/Workflows.wlt:340,1-344,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -305,7 +359,7 @@ VerificationTest[
             "run"  -> "wolframscript Scripts/MyWorkflowJob.wls"
         |>
     },
-    TestID -> "WorkflowJob-File@@Tests/Workflows.wlt:295,1-309,2"
+    TestID -> "WorkflowJob-File@@Tests/Workflows.wlt:349,1-363,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -318,31 +372,37 @@ VerificationTest[
 VerificationTest[
     WorkflowQ @ Workflow[ "Release" ],
     True,
-    TestID -> "Workflow-Named-Release@@Tests/Workflows.wlt:318,1-322,2"
+    TestID -> "Workflow-Named-Release@@Tests/Workflows.wlt:372,1-376,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Build" ],
     True,
-    TestID -> "Workflow-Named-Build@@Tests/Workflows.wlt:324,1-328,2"
+    TestID -> "Workflow-Named-Build@@Tests/Workflows.wlt:378,1-382,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Check" ],
     True,
-    TestID -> "Workflow-Named-Check@@Tests/Workflows.wlt:330,1-334,2"
+    TestID -> "Workflow-Named-Check@@Tests/Workflows.wlt:384,1-388,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Test" ],
     True,
-    TestID -> "Workflow-Named-Test@@Tests/Workflows.wlt:336,1-340,2"
+    TestID -> "Workflow-Named-Test@@Tests/Workflows.wlt:390,1-394,2"
+]
+
+VerificationTest[
+    WorkflowQ @ Workflow[ "Submit" ],
+    True,
+    TestID -> "Workflow-Named-Submit@@Tests/Workflows.wlt:396,1-400,2"
 ]
 
 VerificationTest[
     WorkflowQ @ Workflow[ "Compile" ],
     True,
-    TestID -> "Workflow-Named-Compile@@Tests/Workflows.wlt:342,1-346,2"
+    TestID -> "Workflow-Named-Compile@@Tests/Workflows.wlt:402,1-406,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -362,5 +422,11 @@ VerificationTest[
         "branches"
     ],
     { "test" },
-    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:351,1-366,2"
+    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:411,1-426,2"
+]
+
+VerificationTest[
+    StringContainsQ[ Workflow[ "Test" ][ "YAML" ], "env.PACLET_TEST_RESULTS" ],
+    True,
+    TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:428,1-432,2"
 ]

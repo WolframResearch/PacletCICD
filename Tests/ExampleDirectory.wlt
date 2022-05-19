@@ -123,9 +123,10 @@ VerificationTest[
         "LICENSE",
         "PacletInfo.wl",
         "README.md",
-        "ResourceDefinition.nb"
+        "ResourceDefinition.nb",
+        "Tests"
     },
-    TestID -> "ExampleDirectory-FewIssues-Files@@Tests/ExampleDirectory.wlt:118,1-129,2"
+    TestID -> "ExampleDirectory-FewIssues-Files@@Tests/ExampleDirectory.wlt:118,1-130,2"
 ]
 
 VerificationTest[
@@ -138,7 +139,7 @@ VerificationTest[
         "README.md",
         "ResourceDefinition.nb"
     },
-    TestID -> "ExampleDirectory-MoreIssues-Files@@Tests/ExampleDirectory.wlt:131,1-142,2"
+    TestID -> "ExampleDirectory-MoreIssues-Files@@Tests/ExampleDirectory.wlt:132,1-143,2"
 ]
 
 VerificationTest[
@@ -152,7 +153,7 @@ VerificationTest[
         "ResourceDefinition.nb",
         "Tests"
     },
-    TestID -> "ExampleDirectory-Sample-Files@@Tests/ExampleDirectory.wlt:144,1-156,2"
+    TestID -> "ExampleDirectory-Sample-Files@@Tests/ExampleDirectory.wlt:145,1-157,2"
 ]
 
 VerificationTest[
@@ -168,7 +169,7 @@ VerificationTest[
         "Source",
         "Tests"
     },
-    TestID -> "ExampleDirectory-AdvancedSample-Files@@Tests/ExampleDirectory.wlt:158,1-172,2"
+    TestID -> "ExampleDirectory-AdvancedSample-Files@@Tests/ExampleDirectory.wlt:159,1-173,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -182,38 +183,38 @@ VerificationTest[
     dir = ExampleDirectory[ "Sample" ],
     _File? DirectoryQ,
     SameTest -> MatchQ,
-    TestID   -> "MissingFile-Get-Sample@@Tests/ExampleDirectory.wlt:181,1-186,2"
+    TestID   -> "MissingFile-Get-Sample@@Tests/ExampleDirectory.wlt:182,1-187,2"
 ]
 
 VerificationTest[
     file = FileNameJoin @ { First @ dir, "PacletInfo.wl" },
     _? FileExistsQ,
     SameTest -> MatchQ,
-    TestID   -> "MissingFile-Get-PacletInfo@@Tests/ExampleDirectory.wlt:188,1-193,2"
+    TestID   -> "MissingFile-Get-PacletInfo@@Tests/ExampleDirectory.wlt:189,1-194,2"
 ]
 
 VerificationTest[
     hash = FileHash @ file,
     _? IntegerQ,
     SameTest -> MatchQ,
-    TestID   -> "MissingFile-Get-FileHash@@Tests/ExampleDirectory.wlt:195,1-200,2"
+    TestID   -> "MissingFile-Get-FileHash@@Tests/ExampleDirectory.wlt:196,1-201,2"
 ]
 
 VerificationTest[
     DeleteFile @ file; FileExistsQ @ file,
     False,
-    TestID -> "MissingFile-DeleteFile@@Tests/ExampleDirectory.wlt:202,1-206,2"
+    TestID -> "MissingFile-DeleteFile@@Tests/ExampleDirectory.wlt:203,1-207,2"
 ]
 
 VerificationTest[
     ExampleDirectory[ "Sample" ],
     _File? DirectoryQ,
     SameTest -> MatchQ,
-    TestID   -> "MissingFile-Restore-Directory@@Tests/ExampleDirectory.wlt:208,1-213,2"
+    TestID   -> "MissingFile-Restore-Directory@@Tests/ExampleDirectory.wlt:209,1-214,2"
 ]
 
 VerificationTest[
     FileExistsQ @ file && FileHash @ file === hash,
     True,
-    TestID   -> "MissingFile-Restore-File@@Tests/ExampleDirectory.wlt:215,1-219,2"
+    TestID   -> "MissingFile-Restore-File@@Tests/ExampleDirectory.wlt:216,1-220,2"
 ]
