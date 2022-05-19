@@ -1,6 +1,9 @@
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Header*)
+
+(* cSpell:enableCompoundWords *)
+
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
 ClearAll[
@@ -1680,7 +1683,7 @@ normalizeJob[ "test" | "testpaclet" ] :=
         "steps"           -> {
             normalizeStep[ "Checkout"             ],
             normalizeStep[ "TestPaclet"           ],
-            normalizeStep[ "UploadBuildArtifacts" ]
+            normalizeStep[ "UploadTestResults"    ]
         }
     |>;
 
@@ -2223,6 +2226,24 @@ normalizeStep[
     "uses" -> "actions/upload-artifact@v2",
     "with" -> <|
         "path"              -> "${{ env.PACLET_BUILD_DIR }}",
+        "if-no-files-found" -> "ignore"
+    |>
+|>;
+
+normalizeStep[
+    ___,
+    Alternatives[
+        "uploadtestartifacts",
+        "uploadtestresults",
+        "uploadtests"
+    ]
+] := <|
+    "name" -> "UploadTestResults",
+    "id"   -> "upload-test-results-step",
+    "if"   -> "always() && env.PACLET_TEST_RESULTS",
+    "uses" -> "actions/upload-artifact@v2",
+    "with" -> <|
+        "path"              -> "${{ env.PACLET_TEST_RESULTS }}",
         "if-no-files-found" -> "ignore"
     |>
 |>;
