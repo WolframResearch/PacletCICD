@@ -69,7 +69,7 @@ VerificationTest[
     DefinitionNotebookClient`ConsolePrint;
     suppressConsole // Attributes = { HoldFirst };
     suppressConsole[ eval_ ] :=
-        Block[ { DefinitionNotebookClient`ConsolePrint },
+        Block[ { DefinitionNotebookClient`ConsolePrint, Wolfram`PacletCICD`Private`setOutput },
             DefinitionNotebookClient`ConsolePrint // Options = {
                 "Output" -> None
             };
