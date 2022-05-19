@@ -30,7 +30,7 @@ TestPaclet // Options = {
 (* ::Subsection::Closed:: *)
 (*Main definition*)
 (* TODO: copy paclet to temp dir and auto-annotate tests with IDs *)
-TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] := ccPromptFix[
+TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
     (* TODO: do the right stuff here *)
     catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
@@ -40,7 +40,7 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] := ccPromptFix[
         ];
         testPaclet @ dir
     ]
-];
+);
 
 TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
     catchTop @ TestPaclet[ parentPacletDirectory @ file, opts ];
