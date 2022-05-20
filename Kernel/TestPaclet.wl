@@ -55,10 +55,11 @@ TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
 (* ::Subsubsection::Closed:: *)
 (*testPaclet*)
 testPaclet[ dir_? DirectoryQ, opts_Association ] :=
-    Module[ { files, as, reports },
+    Module[ { files, pacDir, as, reports },
         PacletDirectoryLoad @ dir;
         files   = FileNames[ "*.wlt", dir, Infinity ];
-        as      = Append[ opts, "PacletDirectory" -> dir ];
+        pacDir  = parentPacletDirectory @ dir;
+        as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
         makeTestResult[ dir, reports ]
     ];
@@ -70,7 +71,7 @@ testPaclet // catchUndefined;
 (*testReport*)
 testReport[ as_Association, files_List ] :=
     Enclose @ ConfirmBy[
-        Association[ (testReport[ as, #1 ] &) /@ files ],
+        generateTestSummary @ Association[ (testReport[ as, #1 ] &) /@ files ],
         AssociationQ
     ];
 
@@ -86,6 +87,97 @@ testReport[ as_Association, file_? FileExistsQ ] :=
     ];
 
 testReport // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateTestSummary*)
+generateTestSummary[ reports_Association ] := (
+    appendStepSummary @ $testSummaryHeader;
+    KeyValueMap[ generateTestSummary, reports ];
+    appendStepSummary @ $testDetailsHeader;
+    reports
+);
+
+generateTestSummary[ file_, report_TestReportObject ] :=
+    Module[ { icon, link, pass, fail, time, row, md },
+        icon = testSummaryIcon @ report;
+        link = testSummaryLink @ file;
+        pass = testSummaryPass @ report;
+        fail = testSummaryFail @ report;
+        time = testSummaryTime @ report;
+        row  = { icon, link, pass, fail, time };
+        md   = "| " <> StringRiffle[ row, " | " ] <> " |\n";
+        appendStepSummary @ md
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryTime*)
+testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
+testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ Round[ t, 0.01 ];
+testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
+testSummaryTime // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryFail*)
+testSummaryFail[ r_TestReportObject ] := ToString @ r[ "TestsFailedCount" ];
+testSummaryFail // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryPass*)
+testSummaryPass[ r_TestReportObject ] := ToString @ r[ "TestsSucceededCount" ];
+testSummaryPass // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryLink*)
+testSummaryLink[ file_ ] := Enclose[
+    Module[ { env, server, repo, sha, split, url, lbl },
+        env    = ConfirmBy[ Environment[ #1 ], StringQ ] &;
+        server = env[ "GITHUB_SERVER_URL" ];
+        repo   = env[ "GITHUB_REPOSITORY" ];
+        sha    = env[ "GITHUB_SHA" ];
+        split  = DeleteCases[ FileNameSplit @ file, "." ];
+        url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
+        lbl    = StringRiffle[ split, "/" ];
+        "[" <> lbl <> "](" <>url <> ")"
+    ],
+    file &
+];
+
+testSummaryLink // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryIcon*)
+testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ tro[ "Outcome" ];
+testSummaryIcon[ "Success" ] := "&#x2705;";
+testSummaryIcon[ "Failure" ] := "&#x274C;";
+testSummaryIcon[ _String   ] := "&#x2757;";
+testSummaryIcon // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testSummaryHeader*)
+$testSummaryHeader = "\
+# Test Results
+
+## Summary
+
+| | File | Passed | Failed | Duration |
+|-|------|--------|--------|----------|
+";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testDetailsHeader*)
+$testDetailsHeader = "\
+## Details
+
+Nothing here yet...
+";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
