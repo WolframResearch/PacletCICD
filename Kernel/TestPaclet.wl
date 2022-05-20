@@ -151,25 +151,62 @@ generateTestDetails // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*generateTestFailureDetails*)
 generateTestFailureDetails[ file_, result_TestResultObject ] :=
-    generateTestFailureDetails[ file, result, troOutcome @ result ];
+    Enclose @ Module[
+        {
+            cs, info, id, res, icon, time, mem, link,
+            input, expOut, actOut, expMsg, actMsg, md
+        },
 
-generateTestFailureDetails[ file_, result_TestResultObject, outcome_ ] :=
-    Enclose @ Module[ { cs, info, id, icon, link, hdr, md },
-        cs   = ConfirmBy[ #, StringQ ] &;
-        info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
-        id   = cs @ info[ "TestID" ];
-        icon = cs @ testSummaryIcon @ result;
-        link = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
-        hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
-        md   = collapsibleSection[ hdr, troDetails[ file, result, outcome ] ];
-        appendStepSummary @ md;
+        cs     = ConfirmBy[ #, StringQ ] &;
+        info   = ConfirmBy[ testIDInfo @ result, AssociationQ ];
+        id     = cs @ info[ "TestID" ];
+        res    = cs @ troOutcome @ result;
+        icon   = cs @ testSummaryIcon @ res;
+        time   = TextString @ stq @ result[ "TimeElapsed" ];
+        mem    = TextString @ btq @ result[ "TimeElapsed" ];
+        link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
+        input  = mmaPre @ result[ "Input" ];
+        expOut = mmaPre @ result[ "ExpectedOutput" ];
+        actOut = mmaPre @ result[ "ActualOutput" ];
+        expMsg = mmaPre @ result[ "ExpectedMessages" ];
+        actMsg = mmaPre @ result[ "ActualMessages" ];
+
+        md = TemplateApply[
+            $testResultTemplate,
+            <|
+                "Icon"             -> icon,
+                "Result"           -> res,
+                "TestID"           -> id,
+                "Duration"         -> time,
+                "Memory"           -> mem,
+                "Link"             -> link,
+                "Input"            -> input,
+                "ExpectedOutput"   -> expOut,
+                "ActualOutput"     -> actOut,
+                "ExpectedMessages" -> expMsg,
+                "ActualMessages"   -> actMsg
+            |>
+        ];
+
+        appendStepSummary @ md
     ];
 
 generateTestFailureDetails // catchUndefined;
 
+btq := btq = ResourceFunction[ "BytesToQuantity"  , "Function" ];
+stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
+rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 
+mmaPre[ HoldForm[ code_ ] ] :=
+    StringJoin[
+        "\n\n```Mathematica\n",
+        ToString @ rdf @ Unevaluated @ code,
+        "\n```\n\n"
+    ];
 
-troDetails[ file_, result_TestResultObject, "Messages" ] :=
+mmaPre[ code_ ] := mmaPre @ HoldForm @ code;
+
+(* troDetails[ file_, result_TestResultObject, "Messages" ] :=
     Module[ { in, exp, act },
         in   = collapsibleSection[ "Input", "Nothing here yet..." ];
         exp  = collapsibleSection[ "Expected messages", "Nothing here yet..." ];
@@ -178,14 +215,28 @@ troDetails[ file_, result_TestResultObject, "Messages" ] :=
     ];
 
 troDetails[ file_, result_TestResultObject, outcome_ ] :=
-    Module[ { in, exp, act },
-        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
-        exp  = collapsibleSection[ "Expected output", "Nothing here yet..." ];
-        act  = collapsibleSection[ "Actual output", "Nothing here yet..." ];
-        StringRiffle[ { in, exp, act }, "\n\n" ]
+    Module[ { res, icon },
+        res   = troOutcome @ result;
+        icon  = testSummaryIcon @ res;
+        TemplateApply[
+            $testResultTemplate,
+            <|
+                "Icon"             -> icon,
+                "Result"           -> res,
+                "TestID"           -> id,
+                "Duration"         -> time,
+                "Memory"           -> mem,
+                "Link"             -> link,
+                "Input"            -> mmaPre @ input,
+                "ExpectedOutput"   -> mmaPre @ expOut,
+                "ActualOutput"     -> mmaPre @ actOut,
+                "ExpectedMessages" -> mmaPre @ expMsg,
+                "ActualMessages"   -> mmaPre @ actMsg
+            |>
+        ]
     ];
 
-troDetails // catchUndefined;
+troDetails // catchUndefined; *)
 
 
 troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
@@ -359,7 +410,7 @@ testSummaryHeader[ reports_ ] :=
 (*$testSummaryHeader*)
 $testSummaryHeader = "
 
-# Test Results `Icon`
+# Test Results
 
 ## Summary
 
@@ -371,7 +422,7 @@ $testSummaryHeader = "
 | **Passed**      | `PassCount` (`PassRate`) |
 | **Duration**    | `Time`                   |
 
-## Tests
+## Test files
 
 | | File | Passed | Failed | Duration |
 |-|------|--------|--------|----------|
@@ -387,6 +438,47 @@ $testDetailsHeader = "
 ";
 
 $testDetailsFooter = "
+
+</details>
+
+";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testResultTemplate*)
+$testResultTemplate = "
+
+|        | Result   | TestID   | Duration   | Memory   | Link   |
+|--------|----------|----------|------------|----------|--------|
+| `Icon` | `Result` | `TestID` | `Duration` | `Memory` | `Link` |
+
+<details><summary>Input</summary>
+
+`Input`
+
+</details>
+
+<details><summary>Expected Output</summary>
+
+`ExpectedOutput`
+
+</details>
+
+<details><summary>Actual Output</summary>
+
+`ActualOutput`
+
+</details>
+
+<details><summary>Expected Messages</summary>
+
+`ExpectedMessages`
+
+</details>
+
+<details><summary>Actual Messages</summary>
+
+`ActualMessages`
 
 </details>
 
