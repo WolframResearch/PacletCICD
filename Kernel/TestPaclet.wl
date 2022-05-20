@@ -131,7 +131,7 @@ generateTestDetails[ file_, report_TestReportObject ] :=
     Module[ { link, md, results, failed },
         (* link = testSummaryLink @ file; *)
         link = file;
-        md = "<details><h3>" <> link <> "</h3>\n\n";
+        md = "<details><summary><h3>" <> link <> "</h3></summary>\n\n";
         appendStepSummary @ md;
         results = report[ "TestResults" ];
         failed  = Select[ results, #[ "Outcome" ] =!= "Success" & ];
@@ -291,7 +291,8 @@ testSummaryLink[ file_, lbl_ ] := Enclose[
         sha    = env[ "GITHUB_SHA" ];
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
-        "[" <> ToString @ lbl <> "](" <> url <> ")"
+        "[" <> ToString @ lbl <> "](" <> url <> ")";
+        "<a href=\"" <> url <> "\">" <> ToString @ lbl <> "</a>"
     ],
     file &
 ];
@@ -380,6 +381,7 @@ makeTestResult[ dir_, reports_, False ] :=
                            PerformanceGoal -> "Size"
                    ];
         setOutput[ "PACLET_TEST_RESULTS", exported ];
+        FilePrint @ Environment[ "GITHUB_STEP_SUMMARY" ];
         exitFailure[
             "TestPaclet::Failures",
             Association[
