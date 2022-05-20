@@ -153,7 +153,7 @@ generateTestFailureDetails[ file_, result_TestResultObject, outcome_ ] :=
         info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
         id   = cs @ info[ "TestID" ];
         icon = cs @ testSummaryIcon @ result;
-        link = cs @ appendLineAnchor[ testSummaryLink[ file, ":link:" ], info ];
+        link = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
         hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
         md   = collapsibleSection[ hdr, troDetails[ file, result, outcome ] ];
         appendStepSummary @ md;
@@ -179,6 +179,7 @@ troDetails[ file_, result_TestResultObject, outcome_ ] :=
         StringRiffle[ { in, exp, act }, "\n\n" ]
     ];
 
+troDetails // catchUndefined;
 
 
 troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
@@ -209,21 +210,13 @@ collapsibleSection[ lbl_, md__ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
-(*appendLineAnchor*)
-appendLineAnchor[ link_String, KeyValuePattern[ "Position" -> pos_ ] ] :=
-    appendLineAnchor[ link, pos ];
+(*lineAnchor*)
+lineAnchor[ KeyValuePattern[ "Position" -> pos_ ] ] := lineAnchor @ pos;
 
-appendLineAnchor[ link_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
-    StringJoin[
-        StringDelete[ link, ")" ~~ EndOfString ],
-        "#L",
-        ToString @ l1,
-        "-L",
-        ToString @ l2,
-        ")"
-    ];
+lineAnchor[ { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
+    "#L" <> ToString @ l1 <> "-L" <> ToString @ l2 <> ")";
 
-appendLineAnchor // catchUndefined;
+lineAnchor // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
