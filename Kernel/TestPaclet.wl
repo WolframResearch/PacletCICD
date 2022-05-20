@@ -23,6 +23,7 @@ TestPaclet // Options = {
     "AnnotateTestIDs"  -> True,
     "ConsoleType"      -> Automatic,
     "Debug"            -> False,
+    "MarkdownSummary"  -> True,
     "MemoryConstraint" -> Inherited,
     "SameTest"         -> Inherited,
     "Target"           -> "Submit",
@@ -54,6 +55,11 @@ TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*testPaclet*)
+testPaclet[ dir_, opts: KeyValuePattern[ "MarkdownSummary" -> False ] ] :=
+    Block[ { appendStepSummary },
+        testPaclet[ dir, KeyDrop[ opts, "MarkdownSummary" ] ]
+    ];
+
 testPaclet[ dir_? DirectoryQ, opts_Association ] :=
     Module[ { files, pacDir, as, reports },
         PacletDirectoryLoad @ dir;
@@ -92,7 +98,7 @@ testReport // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*generateTestSummary*)
 generateTestSummary[ reports_Association ] := (
-    appendStepSummary @ $testSummaryHeader;
+    appendStepSummary @ testSummaryHeader @ reports;
     KeyValueMap[ generateTestSummary, reports ];
     generateTestDetails @ reports;
     reports
@@ -288,8 +294,14 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        "[" <> ToString @ lbl <> "](" <> url <> ")";
-        "<a href=\"" <> url <> frag <> "\">" <> ToString @ lbl <> "</a>"
+        StringJoin[
+            "<a href=\"",
+            url,
+            frag,
+            "\" target=\"_blank\">",
+            ToString @ lbl,
+            "</a>"
+        ]
     ],
     file &
 ];
@@ -318,10 +330,42 @@ testSummaryTime // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
+(*testSummaryHeader*)
+testSummaryHeader[ reports_ ] :=
+    Module[ { files, tests, time, pass, rate, icon },
+        files = Length @ reports;
+        tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
+        time  = Round[ Total[ #[ "TimeElapsed" ] & /@ reports ], .001 ];
+        pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
+        rate  = PercentForm[ pass / tests ];
+        icon  = testSummaryIcon @ If[ pass === tests, "Success", "Failure" ];
+        TemplateApply[
+            $testSummaryHeader,
+            <|
+                "FileCount" -> files,
+                "TestCount" -> tests,
+                "PassCount" -> pass,
+                "PassRate"  -> TextString @ rate,
+                "Time"      -> TextString @ time
+            |>
+        ]
+    ];
+
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
 (*$testSummaryHeader*)
 $testSummaryHeader = "
 
-# Test Results
+# Test Results `Icon`
+
+Total files: `FileCount`
+
+Total tests: `TestCount`
+
+Passed: `PassCount` (`PassRate`)
+
+Duration: `Time`
 
 ## Summary
 
