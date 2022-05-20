@@ -199,13 +199,13 @@ rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
     If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        ToString @ Round @ sec
+        TextString @ Round @ sec
     ];
 
 timeText[ sec_ ] :=
     If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        ToString @ Round[ sec, .01 ]
+        TextString @ Round[ sec, .1 ]
     ];
 
 outcomeText[ "Messages" ] := "Message failure";
