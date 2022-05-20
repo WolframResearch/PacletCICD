@@ -242,7 +242,7 @@ collapsibleSection[ lbl_, md__ ] :=
 lineAnchor[ KeyValuePattern[ "Position" -> pos_ ] ] := lineAnchor @ pos;
 
 lineAnchor[ { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
-    "#L" <> ToString @ l1 <> "-L" <> ToString @ l2 <> ")";
+    "L" <> ToString @ l1 <> "-L" <> ToString @ l2;
 
 lineAnchor // catchUndefined;
 
