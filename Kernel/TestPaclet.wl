@@ -94,7 +94,6 @@ testReport // catchUndefined;
 generateTestSummary[ reports_Association ] := (
     appendStepSummary @ $testSummaryHeader;
     KeyValueMap[ generateTestSummary, reports ];
-    appendStepSummary @ $testDetailsHeader;
     generateTestDetails @ reports;
     reports
 );
@@ -123,6 +122,9 @@ generateTestDetails[ reports_Association ] :=
         KeyValueMap[ generateTestDetails, reports ];
         reports
     ];
+
+generateTestDetails[ file_, report_ ] /; report[ "AllTestsSucceeded" ] :=
+    Null;
 
 generateTestDetails[ file_, report_TestReportObject ] :=
     Module[ { link, md, results, failed },
@@ -159,7 +161,14 @@ appendLineAnchor[ link_String, KeyValuePattern[ "Position" -> pos_ ] ] :=
     appendLineAnchor[ link, pos ];
 
 appendLineAnchor[ link_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
-    StringJoin[ link, "#L", ToString @ l1, "-L", ToString @ l2 ];
+    StringJoin[
+        StringDelete[ link, ")" ~~ EndOfString ],
+        "#L",
+        ToString @ l1,
+        "-L",
+        ToString @ l2,
+        ")"
+    ];
 
 appendLineAnchor // catchUndefined;
 
@@ -345,7 +354,7 @@ testContext[ eval_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*annotateTestResult*)
-annotateTestResult[ report_TestReportObject ] :=
+(* annotateTestResult[ report_TestReportObject ] :=
     annotateTestResult /@ report[ "TestResults" ];
 
 annotateTestResult[
@@ -391,7 +400,7 @@ annotateTestResult[
         "Level" -> "Error",
         "SourceInformation" -> info
     ]
-);
+); *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
