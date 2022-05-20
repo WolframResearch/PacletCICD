@@ -88,7 +88,6 @@ testReport[ as_Association, file_? FileExistsQ ] :=
         opts   = filterOptions[ TestReport, rules ];
         report = testContext @ TestReport[ file, opts ];
         rel    = ConfirmBy[ relativePath[ dir, file ], StringQ ];
-        annotateTestResult @ ConfirmMatch[ report, _TestReportObject ];
         rel -> report
     ];
 
@@ -164,11 +163,11 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         time   = stq @ result[ "AbsoluteTimeUsed" ];
         mem    = btq @ result[ "MemoryUsed" ];
         link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
-        input  = mmaPre @ result[ "Input" ];
-        expOut = mmaPre @ result[ "ExpectedOutput" ];
-        actOut = mmaPre @ result[ "ActualOutput" ];
-        expMsg = mmaPre @ result[ "ExpectedMessages" ];
-        actMsg = mmaPre @ result[ "ActualMessages" ];
+        input  = codeBlock[ "Input"            , result[ "Input"            ] ];
+        expOut = codeBlock[ "Expected Output"  , result[ "ExpectedOutput"   ] ];
+        actOut = codeBlock[ "Actual Output"    , result[ "ActualOutput"     ] ];
+        expMsg = codeBlock[ "Expected Messages", result[ "ExpectedMessages" ] ];
+        actMsg = codeBlock[ "Actual Messages"  , result[ "ActualMessages"   ] ];
 
         md = TemplateApply[
             $testResultTemplate,
@@ -200,7 +199,7 @@ rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 timeText[ sec_ ] :=
     If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        TextString @ Round[ sec, .01 ]
+        TextString @ Round @ sec
     ];
 
 outcomeText[ "Messages" ] := "Message failure";
@@ -208,15 +207,6 @@ outcomeText[ "Time"     ] := "Timed out";
 outcomeText[ "Memory"   ] := "Exceeded memory limits";
 outcomeText[ outcome_   ] := outcome;
 
-
-mmaPre[ HoldForm[ code_ ] ] :=
-    StringJoin[
-        "\n\n```Mathematica\n",
-        ToString @ rdf @ Unevaluated @ code,
-        "\n```\n\n"
-    ];
-
-mmaPre[ code_ ] := mmaPre @ HoldForm @ code;
 
 
 
@@ -429,44 +419,72 @@ $testDetailsFooter = "
 (*$testResultTemplate*)
 $testResultTemplate = "
 
-<details><summary>`TestID` `Icon`</summary>
+
+----------------------------------------------------------------
+
+
+<details><summary><h4>`Icon` `TestID`</h4></summary>
 
 |        | Result   | TestID   | Duration   | Memory   | Link   |
 |--------|----------|----------|------------|----------|--------|
 | `Icon` | `Result` | `TestID` | `Duration` | `Memory` | `Link` |
 
-<details><summary>Input</summary>
-
 `Input`
-
-</details>
-
-<details><summary>Expected Output</summary>
 
 `ExpectedOutput`
 
-</details>
-
-<details><summary>Actual Output</summary>
-
 `ActualOutput`
 
-</details>
-
-<details><summary>Expected Messages</summary>
-
 `ExpectedMessages`
-
-</details>
-
-<details><summary>Actual Messages</summary>
 
 `ActualMessages`
 
 </details>
 
-</details>
+";
 
+
+
+mmaPre[ HoldForm[ code_ ] ] :=
+    StringJoin[
+        "\n\n```Mathematica\n",
+        ToString @ rdf @ Unevaluated @ code,
+        "\n```\n\n"
+    ];
+
+mmaPre[ code_ ] := mmaPre @ HoldForm @ code;
+
+
+codeBlock[ label_, code_ ] :=
+    Module[ { string, chars, lines, template },
+
+        string = mmaPre @ code;
+        chars  = StringLength @ string;
+        lines  = Length @ StringSplit[ string, "\n" ];
+
+        template = If[ TrueQ[ chars < 500 && lines < 5 ],
+                       $codeBlockTemplate,
+                       $hiddenCodeBlockTemplate
+                   ];
+
+        TemplateApply[
+            template,
+            <| "Label" -> label, "Code" -> code |>
+        ]
+    ];
+
+$codeBlockTemplate = "
+`Label`
+
+`Code`
+";
+
+$hiddenCodeBlockTemplate = "
+<details><summary>`Label`</summary>
+
+`Code`
+
+</details>
 ";
 
 (* ::**********************************************************************:: *)
@@ -535,57 +553,6 @@ testContext[ eval_ ] :=
              $ContextPath = contextPath;
         ]
     ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*annotateTestResult*)
-(* annotateTestResult[ report_TestReportObject ] :=
-    annotateTestResult /@ report[ "TestResults" ];
-
-annotateTestResult[
-    tro: TestResultObject[
-        KeyValuePattern @ {
-            "TestID" | TestID -> testID_String,
-            "Outcome"         -> "Success"
-        },
-        ___
-    ]
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[ "Test passed: " <> testID ]
-);
-
-annotateTestResult[
-    tro: TestResultObject[
-        KeyValuePattern @ {
-            "TestID" | TestID -> testID_String,
-            "Outcome"         -> outcome: Except[ "Success" ]
-        },
-        ___
-    ]
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[ "Test failed: " <> testID ];
-    annotateTestResult[ tro, testIDInfo @ testID ]
-);
-
-annotateTestResult[
-    tro_TestResultObject,
-    info: KeyValuePattern[ "TestID" -> testID_String ]
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[
-        StringJoin[
-            "Test \"",
-            testID,
-            "\" failed with outcome: \"",
-            tro[ "Outcome" ],
-            "\""
-        ],
-        "Level" -> "Error",
-        "SourceInformation" -> info
-    ]
-); *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
