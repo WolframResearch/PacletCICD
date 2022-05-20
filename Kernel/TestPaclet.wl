@@ -423,8 +423,6 @@ $testResultTemplate = "
 ----------------------------------------------------------------
 
 
-<details><summary><h4>`Icon` `TestID`</h4></summary>
-
 |        | Result   | TestID   | Duration   | Memory   | Link   |
 |--------|----------|----------|------------|----------|--------|
 | `Icon` | `Result` | `TestID` | `Duration` | `Memory` | `Link` |
@@ -438,8 +436,6 @@ $testResultTemplate = "
 `ExpectedMessages`
 
 `ActualMessages`
-
-</details>
 
 ";
 
