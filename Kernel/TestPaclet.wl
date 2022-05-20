@@ -147,37 +147,37 @@ generateTestDetails // catchUndefined;
 generateTestFailureDetails[ file_, result_TestResultObject ] :=
     generateTestFailureDetails[ file, result, troOutcome @ result ];
 
-generateTestFailureDetails[ file_, result_TestResultObject, "Failure" ] :=
-    Enclose @ Module[ { cs, info, id, icon, link, hdr, md, in, exp, act },
+generateTestFailureDetails[ file_, result_TestResultObject, outcome_ ] :=
+    Enclose @ Module[ { cs, info, id, icon, link, hdr, md },
         cs   = ConfirmBy[ #, StringQ ] &;
         info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
         id   = cs @ info[ "TestID" ];
         icon = cs @ testSummaryIcon @ result;
         link = cs @ appendLineAnchor[ testSummaryLink[ file, ":link:" ], info ];
         hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
-        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
-        exp  = collapsibleSection[ "Expected output", "Nothing here yet..." ];
-        act  = collapsibleSection[ "Actual output", "Nothing here yet..." ];
-        md   = collapsibleSection[ hdr, in, exp, act ];
-        appendStepSummary @ md;
-    ];
-
-generateTestFailureDetails[ file_, result_TestResultObject, "Messages" ] :=
-    Enclose @ Module[ { cs, info, id, icon, link, hdr, md, in, exp, act },
-        cs   = ConfirmBy[ #, StringQ ] &;
-        info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
-        id   = cs @ info[ "TestID" ];
-        icon = cs @ testSummaryIcon @ result;
-        link = cs @ appendLineAnchor[ testSummaryLink[ file, ":link:" ], info ];
-        hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
-        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
-        exp  = collapsibleSection[ "Expected messages", "Nothing here yet..." ];
-        act  = collapsibleSection[ "Actual messages", "Nothing here yet..." ];
-        md   = collapsibleSection[ hdr, in, exp, act ];
+        md   = collapsibleSection[ hdr, troDetails[ file, result, outcome ] ];
         appendStepSummary @ md;
     ];
 
 generateTestFailureDetails // catchUndefined;
+
+
+
+troDetails[ file_, result_TestResultObject, "Messages" ] :=
+    Module[ { in, exp, act },
+        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
+        exp  = collapsibleSection[ "Expected messages", "Nothing here yet..." ];
+        act  = collapsibleSection[ "Actual messages", "Nothing here yet..." ];
+        StringRiffle[ { in, exp, act }, "\n\n" ]
+    ];
+
+troDetails[ file_, result_TestResultObject, outcome_ ] :=
+    Module[ { in, exp, act },
+        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
+        exp  = collapsibleSection[ "Expected output", "Nothing here yet..." ];
+        act  = collapsibleSection[ "Actual output", "Nothing here yet..." ];
+        StringRiffle[ { in, exp, act }, "\n\n" ]
+    ];
 
 
 
@@ -283,16 +283,20 @@ testSummaryLink[ file_ ] :=
         StringRiffle[ DeleteCases[ FileNameSplit @ file, "." ], "/" ]
     ];
 
-testSummaryLink[ file_, lbl_ ] := Enclose[
-    Module[ { env, server, repo, sha, split, url },
+testSummaryLink[ file_, lbl_ ] :=
+    testSummaryLink[ file, lbl, "" ];
+
+testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
+    Module[ { env, server, repo, sha, split, url, frag },
         env    = ConfirmBy[ Environment[ #1 ], StringQ ] &;
         server = env[ "GITHUB_SERVER_URL" ];
         repo   = env[ "GITHUB_REPOSITORY" ];
         sha    = env[ "GITHUB_SHA" ];
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
+        frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
         "[" <> ToString @ lbl <> "](" <> url <> ")";
-        "<a href=\"" <> url <> "\">" <> ToString @ lbl <> "</a>"
+        "<a href=\"" <> url <> frag <> "\">" <> ToString @ lbl <> "</a>"
     ],
     file &
 ];
