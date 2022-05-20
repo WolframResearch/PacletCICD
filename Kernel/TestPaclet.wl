@@ -444,7 +444,12 @@ $testResultTemplate = "
 mmaPre[ HoldForm[ code_ ] ] :=
     StringJoin[
         "\n\n```Mathematica\n",
-        ToString @ rdf @ Unevaluated @ code,
+        TimeConstrained[ ToString @ rdf[ Unevaluated @ code,
+                                         CachePersistence -> Full
+                                    ],
+                         5,
+                         "<< " <> ToString @ ByteCount @ code <> ">>"
+        ],
         "\n```\n\n"
     ];
 

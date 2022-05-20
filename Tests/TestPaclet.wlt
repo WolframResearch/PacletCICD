@@ -112,20 +112,20 @@ VerificationTest[
 ]
 
 VerificationTest[
-    report = result[ "Result" ],
-    _TestReportObject,
+    reports = result[ "Result" ],
+    _Association? (AllTrue @ MatchQ[ _TestReportObject ]),
     SameTest -> MatchQ,
     TestID   -> "TestPaclet-Report-Sample@@Tests/TestPaclet.wlt:109,1-114,2"
 ]
 
 VerificationTest[
-    report[ "AllTestsSucceeded" ],
+    AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
     True,
     TestID -> "TestPaclet-Passed-Sample@@Tests/TestPaclet.wlt:116,1-120,2"
 ]
 
 VerificationTest[
-    Positive @ report[ "TestsSucceededCount" ],
+    Positive @ Total[ #[ "TestsSucceededCount" ] & /@ reports ],
     True,
     TestID -> "TestPaclet-Pass-Count-Sample@@Tests/TestPaclet.wlt:122,1-126,2"
 ]
@@ -155,33 +155,33 @@ VerificationTest[
 ]
 
 VerificationTest[
-    report = result[ "Result" ],
-    _TestReportObject,
+    reports = result[ "Result" ],
+    _Association? (AllTrue @ MatchQ[ _TestReportObject ]),
     SameTest -> MatchQ,
     TestID   -> "TestPaclet-Report-FewIssues@@Tests/TestPaclet.wlt:152,1-157,2"
 ]
 
 VerificationTest[
-    report[ "AllTestsSucceeded" ],
+    AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
     False,
     TestID -> "TestPaclet-Passed-FewIssues@@Tests/TestPaclet.wlt:159,1-163,2"
 ]
 
 VerificationTest[
-    Positive @ report[ "TestsSucceededCount" ],
+    Positive @ Total[ #[ "TestsSucceededCount" ] & /@ reports ],
     True,
     TestID -> "TestPaclet-Pass-Count-FewIssues@@Tests/TestPaclet.wlt:165,1-169,2"
 ]
 
 VerificationTest[
-    Positive @ report[ "TestsFailedCount" ],
+    Positive @ Total[ #[ "TestsFailedCount" ] & /@ reports ],
     True,
     TestID -> "TestPaclet-Fail-Count-FewIssues@@Tests/TestPaclet.wlt:171,1-175,2"
 ]
 
 VerificationTest[
     Union @ Cases[
-        report[ "TestsFailed" ],
+        #[ "TestsFailed" ] & /@ reports,
         tro_TestResultObject :> tro[ "TestID" ],
         Infinity
     ],
