@@ -162,8 +162,8 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         id     = cs @ info[ "TestID" ];
         res    = cs @ troOutcome @ result;
         icon   = cs @ testSummaryIcon @ res;
-        time   = TextString @ stq @ result[ "AbsoluteTimeUsed" ];
-        mem    = TextString @ btq @ result[ "MemoryUsed" ];
+        time   = stq @ result[ "AbsoluteTimeUsed" ];
+        mem    = btq @ result[ "MemoryUsed" ];
         link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
         input  = mmaPre @ result[ "Input" ];
         expOut = mmaPre @ result[ "ExpectedOutput" ];
@@ -175,10 +175,10 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
             $testResultTemplate,
             <|
                 "Icon"             -> icon,
-                "Result"           -> res,
+                "Result"           -> outcomeText @ res,
                 "TestID"           -> id,
-                "Duration"         -> time,
-                "Memory"           -> mem,
+                "Duration"         -> timeText @ time,
+                "Memory"           -> ToString @ mem,
                 "Link"             -> link,
                 "Input"            -> input,
                 "ExpectedOutput"   -> expOut,
@@ -197,6 +197,19 @@ btq := btq = ResourceFunction[ "BytesToQuantity"  , "Function" ];
 stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
 rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 
+
+timeText[ sec_ ] :=
+    If[ TrueQ[ sec >= Quantity[ 1, "Milliseconds" ] ],
+        "< 1 ms",
+        TextString @ sec
+    ];
+
+outcomeText[ "Messages" ] := "Message failure";
+outcomeText[ "Time"     ] := "Timed out";
+outcomeText[ "Memory"   ] := "Exceeded memory limits";
+outcomeText[ outcome_   ] := outcome;
+
+
 mmaPre[ HoldForm[ code_ ] ] :=
     StringJoin[
         "\n\n```Mathematica\n",
@@ -206,37 +219,6 @@ mmaPre[ HoldForm[ code_ ] ] :=
 
 mmaPre[ code_ ] := mmaPre @ HoldForm @ code;
 
-(* troDetails[ file_, result_TestResultObject, "Messages" ] :=
-    Module[ { in, exp, act },
-        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
-        exp  = collapsibleSection[ "Expected messages", "Nothing here yet..." ];
-        act  = collapsibleSection[ "Actual messages", "Nothing here yet..." ];
-        StringRiffle[ { in, exp, act }, "\n\n" ]
-    ];
-
-troDetails[ file_, result_TestResultObject, outcome_ ] :=
-    Module[ { res, icon },
-        res   = troOutcome @ result;
-        icon  = testSummaryIcon @ res;
-        TemplateApply[
-            $testResultTemplate,
-            <|
-                "Icon"             -> icon,
-                "Result"           -> res,
-                "TestID"           -> id,
-                "Duration"         -> time,
-                "Memory"           -> mem,
-                "Link"             -> link,
-                "Input"            -> mmaPre @ input,
-                "ExpectedOutput"   -> mmaPre @ expOut,
-                "ActualOutput"     -> mmaPre @ actOut,
-                "ExpectedMessages" -> mmaPre @ expMsg,
-                "ActualMessages"   -> mmaPre @ actMsg
-            |>
-        ]
-    ];
-
-troDetails // catchUndefined; *)
 
 
 troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
@@ -398,7 +380,7 @@ testSummaryHeader[ reports_ ] :=
                 "TestCount" -> tests,
                 "PassCount" -> pass,
                 "PassRate"  -> TextString @ rate,
-                "Time"      -> TextString @ time,
+                "Time"      -> timeText @ time,
                 "Result"    -> res,
                 "Icon"      -> icon
             |>
