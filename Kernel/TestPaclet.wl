@@ -346,7 +346,7 @@ testSummaryFail // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryTime*)
 testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
-testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ stq @ t;
+testSummaryTime[ HoldPattern[ t_Quantity ] ] := timeText @ stq @ t;
 testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
 testSummaryTime // catchUndefined;
 
@@ -469,7 +469,7 @@ codeBlock[ label_, code_ ] :=
 
         TemplateApply[
             template,
-            <| "Label" -> label, "Code" -> code |>
+            <| "Label" -> label, "Code" -> string |>
         ]
     ];
 
