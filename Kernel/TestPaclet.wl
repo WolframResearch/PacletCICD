@@ -134,10 +134,9 @@ generateTestDetails[ file_, report_ ] /; report[ "AllTestsSucceeded" ] :=
     Null;
 
 generateTestDetails[ file_, report_TestReportObject ] :=
-    Module[ { link, md, results, failed },
-        (* link = testSummaryLink @ file; *)
-        link = file;
-        md = "<details><summary><h3>" <> link <> "</h3></summary>\n\n";
+    Module[ { header, md, results, failed },
+        header = StringRiffle[ DeleteCases[ FileNameSplit @ file, "." ], "/" ];
+        md = "<details><summary><h3>" <> header <> "</h3></summary>\n\n";
         appendStepSummary @ md;
         results = report[ "TestResults" ];
         failed  = Select[ results, #[ "Outcome" ] =!= "Success" & ];
@@ -199,9 +198,9 @@ rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 
 
 timeText[ sec_ ] :=
-    If[ TrueQ[ sec >= Quantity[ 1, "Milliseconds" ] ],
+    If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        TextString @ sec
+        TextString @ Round[ sec, .01 ]
     ];
 
 outcomeText[ "Messages" ] := "Message failure";
@@ -430,6 +429,8 @@ $testDetailsFooter = "
 (*$testResultTemplate*)
 $testResultTemplate = "
 
+<details><summary>`TestID` `Icon`</summary>
+
 |        | Result   | TestID   | Duration   | Memory   | Link   |
 |--------|----------|----------|------------|----------|--------|
 | `Icon` | `Result` | `TestID` | `Duration` | `Memory` | `Link` |
@@ -461,6 +462,8 @@ $testResultTemplate = "
 <details><summary>Actual Messages</summary>
 
 `ActualMessages`
+
+</details>
 
 </details>
 
