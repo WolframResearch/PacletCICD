@@ -53,6 +53,7 @@ testPaclet[ dir_? DirectoryQ ] :=
         files  = FileNames[ "*.wlt", dir, Infinity ];
         report = testContext @ TestReport @ files;
         annotateTestResult /@ report[ "TestResults" ];
+        generateTestMDSummary @ report;
         makeTestResult[ dir, report ]
     ];
 
@@ -81,7 +82,7 @@ makeTestResult[ dir_, report_, False ] :=
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
-                           report,
+                           <| "report" -> report, "env" -> GetEnvironment[ ] |>, (* FIXME: revert this *)
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
