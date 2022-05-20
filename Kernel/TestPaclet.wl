@@ -95,7 +95,11 @@ testReport // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*makeTestResult*)
 makeTestResult[ dir_, reports_Association ] :=
-    makeTestResult[ dir, AllTrue[ reports, #[ "AllTestsSucceeded" ] & ] ];
+    makeTestResult[
+        dir,
+        reports,
+        AllTrue[ reports, #[ "AllTestsSucceeded" ] & ]
+    ];
 
 makeTestResult[ dir_, reports_, True ] :=
     Success[ "AllTestsSucceeded",
