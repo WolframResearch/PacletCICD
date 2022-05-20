@@ -120,6 +120,7 @@ generateTestDetails[ reports_Association ] :=
         reports,
         appendStepSummary @ $testDetailsHeader;
         KeyValueMap[ generateTestDetails, reports ];
+        appendStepSummary @ $testDetailsFooter;
         reports
     ];
 
@@ -280,7 +281,13 @@ $testSummaryHeader = "
 (*$testDetailsHeader*)
 $testDetailsHeader = "
 
-## Details
+<details><summary><h2>Details</h2></summary>
+
+";
+
+$testDetailsFooter = "
+
+</details>
 
 ";
 
