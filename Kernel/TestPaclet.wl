@@ -20,10 +20,13 @@ TestPaclet::Failures =
 (* ::Subsection::Closed:: *)
 (*Options*)
 TestPaclet // Options = {
-    "Target"          -> "Submit",
-    "Debug"           -> False,
-    "AnnotateTestIDs" -> True,
-    "ConsoleType"     -> Automatic
+    "AnnotateTestIDs"  -> True,
+    "ConsoleType"      -> Automatic,
+    "Debug"            -> False,
+    "MemoryConstraint" -> Inherited,
+    "SameTest"         -> Inherited,
+    "Target"           -> "Submit",
+    "TimeConstraint"   -> Inherited
 };
 
 (* ::**********************************************************************:: *)
@@ -39,23 +42,50 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
             If[ TrueQ @ OptionValue[ "AnnotateTestIDs" ],
                 AnnotateTestIDs[ dir, "Reparse" -> False ]
             ];
-            testPaclet @ dir
+            testPaclet[ dir, optionsAssociation[ TestPaclet, opts ] ]
         ]
     ];
 
 TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
     catchTop @ TestPaclet[ parentPacletDirectory @ file, opts ];
 
+(* TODO: find tests from PacletInfo *)
 
-testPaclet[ dir_? DirectoryQ ] :=
-    Module[ { files, report },
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testPaclet*)
+testPaclet[ dir_? DirectoryQ, opts_Association ] :=
+    Module[ { files, as, reports },
         PacletDirectoryLoad @ dir;
-        files  = FileNames[ "*.wlt", dir, Infinity ];
-        report = testContext @ TestReport @ files;
-        annotateTestResult /@ report[ "TestResults" ];
-        generateTestMDSummary @ report;
-        makeTestResult[ dir, report ]
+        files   = FileNames[ "*.wlt", dir, Infinity ];
+        as      = Append[ opts, "PacletDirectory" -> dir ];
+        reports = testReport[ as, files ];
+        makeTestResult[ dir, reports ]
     ];
+
+testPaclet // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testReport*)
+testReport[ as_Association, files_List ] :=
+    Enclose @ ConfirmBy[
+        Association[ (testReport[ as, #1 ] &) /@ files ],
+        AssociationQ
+    ];
+
+testReport[ as_Association, file_? FileExistsQ ] :=
+    Enclose @ Module[ { dir, rules, opts, report, rel },
+        dir    = ConfirmBy[ as[ "PacletDirectory" ], DirectoryQ ];
+        rules  = Sequence @@ Normal[ as, Association ];
+        opts   = filterOptions[ TestReport, rules ];
+        report = testContext @ TestReport[ file, opts ];
+        rel    = ConfirmBy[ relativePath[ dir, file ], StringQ ];
+        annotateTestResult @ ConfirmMatch[ report, _TestReportObject ];
+        rel -> report
+    ];
+
+testReport // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -64,25 +94,25 @@ testPaclet[ dir_? DirectoryQ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*makeTestResult*)
-makeTestResult[ dir_, report_TestReportObject ] :=
-    makeTestResult[ dir, report, report[ "AllTestsSucceeded" ] ];
+makeTestResult[ dir_, reports_Association ] :=
+    makeTestResult[ dir, AllTrue[ reports, #[ "AllTestsSucceeded" ] & ] ];
 
-makeTestResult[ dir_, report_, True ] :=
+makeTestResult[ dir_, reports_, True ] :=
     Success[ "AllTestsSucceeded",
              <|
                  "MessageTemplate"   -> "All tests successful",
                  "MessageParameters" -> { },
-                 "Result"            :> report
+                 "Result"            :> reports
              |>
     ];
 
-makeTestResult[ dir_, report_, False ] :=
+makeTestResult[ dir_, reports_, False ] :=
     Module[ { export, exported },
         export = fileNameJoin @ { dir, "build", "test_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
-                           <| "report" -> report, "env" -> GetEnvironment[ ] |>, (* FIXME: revert this *)
+                           <| "reports" -> reports, "env" -> GetEnvironment[ ] |>, (* FIXME: revert this *)
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
@@ -92,7 +122,7 @@ makeTestResult[ dir_, report_, False ] :=
             Association[
                 "MessageTemplate"   :> TestPaclet::Failures,
                 "MessageParameters" :> { },
-                "Result"            :> report
+                "Result"            :> reports
             ],
             1
         ]
@@ -123,6 +153,9 @@ testContext[ eval_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*annotateTestResult*)
+annotateTestResult[ report_TestReportObject ] :=
+    annotateTestResult /@ report[ "TestResults" ];
+
 annotateTestResult[
     tro: TestResultObject[
         KeyValuePattern @ {
