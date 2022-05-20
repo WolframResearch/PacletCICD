@@ -332,13 +332,14 @@ testSummaryTime // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryHeader*)
 testSummaryHeader[ reports_ ] :=
-    Module[ { files, tests, time, pass, rate, icon },
+    Module[ { files, tests, time, pass, rate, res, icon },
         files = Length @ reports;
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
         time  = Round[ Total[ #[ "TimeElapsed" ] & /@ reports ], .001 ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
         rate  = PercentForm[ pass / tests ];
-        icon  = testSummaryIcon @ If[ pass === tests, "Success", "Failure" ];
+        res   = If[ pass === tests, "Success", "Failure" ];
+        icon  = testSummaryIcon @ res;
         TemplateApply[
             $testSummaryHeader,
             <|
@@ -346,11 +347,12 @@ testSummaryHeader[ reports_ ] :=
                 "TestCount" -> tests,
                 "PassCount" -> pass,
                 "PassRate"  -> TextString @ rate,
-                "Time"      -> TextString @ time
+                "Time"      -> TextString @ time,
+                "Result"    -> res,
+                "Icon"      -> icon
             |>
         ]
     ];
-
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -359,15 +361,17 @@ $testSummaryHeader = "
 
 # Test Results `Icon`
 
-Total files: `FileCount`
-
-Total tests: `TestCount`
-
-Passed: `PassCount` (`PassRate`)
-
-Duration: `Time`
-
 ## Summary
+
+|                 |                          |
+|-----------------|--------------------------|
+| **Result**      | `Result` `Icon`          |
+| **Total files** | `FileCount`              |
+| **Total tests** | `TestCount`              |
+| **Passed**      | `PassCount` (`PassRate`) |
+| **Duration**    | `Time`                   |
+
+## Tests
 
 | | File | Passed | Failed | Duration |
 |-|------|--------|--------|----------|
