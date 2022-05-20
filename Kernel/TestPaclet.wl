@@ -162,8 +162,8 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         id     = cs @ info[ "TestID" ];
         res    = cs @ troOutcome @ result;
         icon   = cs @ testSummaryIcon @ res;
-        time   = TextString @ stq @ result[ "TimeElapsed" ];
-        mem    = TextString @ btq @ result[ "TimeElapsed" ];
+        time   = TextString @ stq @ result[ "AbsoluteTimeUsed" ];
+        mem    = TextString @ btq @ result[ "MemoryUsed" ];
         link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
         input  = mmaPre @ result[ "Input" ];
         expOut = mmaPre @ result[ "ExpectedOutput" ];
@@ -375,7 +375,7 @@ testSummaryFail // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryTime*)
 testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
-testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ Round[ t, 0.001 ];
+testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ stq @ t;
 testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
 testSummaryTime // catchUndefined;
 
@@ -386,7 +386,7 @@ testSummaryHeader[ reports_ ] :=
     Module[ { files, tests, time, pass, rate, res, icon },
         files = Length @ reports;
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
-        time  = Round[ Total[ #[ "TimeElapsed" ] & /@ reports ], .001 ];
+        time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
         rate  = PercentForm[ pass / tests ];
         res   = If[ pass === tests, "Success", "Failure" ];
