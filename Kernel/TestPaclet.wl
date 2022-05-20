@@ -199,7 +199,7 @@ rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 timeText[ sec_ ] :=
     If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        TextString @ Round @ sec
+        TextString @ Round[ sec, .01 ]
     ];
 
 outcomeText[ "Messages" ] := "Message failure";
@@ -240,6 +240,7 @@ collapsibleSection[ lbl_, md__ ] :=
 (* ::Subsubsubsection::Closed:: *)
 (*lineAnchor*)
 lineAnchor[ KeyValuePattern[ "Position" -> pos_ ] ] := lineAnchor @ pos;
+lineAnchor[ _Association ] := "";
 
 lineAnchor[ { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
     "L" <> ToString @ l1 <> "-L" <> ToString @ l2;
@@ -354,12 +355,14 @@ testSummaryTime // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryHeader*)
 testSummaryHeader[ reports_ ] :=
-    Module[ { files, tests, time, pass, rate, res, icon },
+    Module[ { files, tests, time, pass, pRate, fail, fRate, res, icon },
         files = Length @ reports;
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
         time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
-        rate  = PercentForm[ pass / tests ];
+        pRate = PercentForm[ pass / tests ];
+        fail  = tests - pass;
+        fRate = PercentForm[ fail / tests ];
         res   = If[ pass === tests, "Success", "Failure" ];
         icon  = testSummaryIcon @ res;
         TemplateApply[
@@ -368,7 +371,9 @@ testSummaryHeader[ reports_ ] :=
                 "FileCount" -> files,
                 "TestCount" -> tests,
                 "PassCount" -> pass,
-                "PassRate"  -> TextString @ rate,
+                "PassRate"  -> TextString @ pRate,
+                "FailCount" -> fail,
+                "FailRate"  -> TextString @ fRate,
                 "Time"      -> timeText @ time,
                 "Result"    -> res,
                 "Icon"      -> icon
@@ -391,6 +396,7 @@ $testSummaryHeader = "
 | **Total files** | `FileCount`              |
 | **Total tests** | `TestCount`              |
 | **Passed**      | `PassCount` (`PassRate`) |
+| **Failed**      | `FailCount` (`FailRate`) |
 | **Duration**    | `Time`                   |
 
 ## Test files
