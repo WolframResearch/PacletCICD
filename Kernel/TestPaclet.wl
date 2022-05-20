@@ -463,7 +463,7 @@ codeBlock[ label_, code_ ] :=
         chars  = StringLength @ string;
         lines  = Length @ StringSplit[ string, "\n" ];
 
-        template = If[ TrueQ[ chars < 500 && lines < 5 ],
+        template = If[ TrueQ[ chars < 1000 && lines < 10 ],
                        $codeBlockTemplate,
                        $hiddenCodeBlockTemplate
                    ];
