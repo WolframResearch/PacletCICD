@@ -513,12 +513,11 @@ makeTestResult[ dir_, reports_, False ] :=
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
-                           <| "reports" -> reports, "env" -> GetEnvironment[ ] |>, (* FIXME: revert this *)
+                           reports,
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
         setOutput[ "PACLET_TEST_RESULTS", exported ];
-        FilePrint @ Environment[ "GITHUB_STEP_SUMMARY" ];
         exitFailure[
             "TestPaclet::Failures",
             Association[
