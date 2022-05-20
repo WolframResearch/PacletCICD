@@ -129,12 +129,14 @@ generateTestDetails[ file_, report_ ] /; report[ "AllTestsSucceeded" ] :=
 
 generateTestDetails[ file_, report_TestReportObject ] :=
     Module[ { link, md, results, failed },
-        link = testSummaryLink @ file;
-        md = "### " <> link <> "\n\n";
+        (* link = testSummaryLink @ file; *)
+        link = file;
+        md = "<details><h3>" <> link <> "</h3>\n\n";
         appendStepSummary @ md;
         results = report[ "TestResults" ];
         failed  = Select[ results, #[ "Outcome" ] =!= "Success" & ];
-        (generateTestFailureDetails[ file, #1 ] &) /@ failed
+        (generateTestFailureDetails[ file, #1 ] &) /@ failed;
+        appendStepSummary[ "</details>" ]
     ];
 
 generateTestDetails // catchUndefined;
@@ -143,17 +145,67 @@ generateTestDetails // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*generateTestFailureDetails*)
 generateTestFailureDetails[ file_, result_TestResultObject ] :=
-    Enclose @ Module[ { cs, info, id, icon, link, md },
+    generateTestFailureDetails[ file, result, troOutcome @ result ];
+
+generateTestFailureDetails[ file_, result_TestResultObject, "Failure" ] :=
+    Enclose @ Module[ { cs, info, id, icon, link, hdr, md, in, exp, act },
         cs   = ConfirmBy[ #, StringQ ] &;
         info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
         id   = cs @ info[ "TestID" ];
         icon = cs @ testSummaryIcon @ result;
-        link = cs @ appendLineAnchor[ testSummaryLink[ file, id ], info ];
-        md   = "#### " <> StringRiffle[ { icon, link }, " " ] <> "\n\n";
-        appendStepSummary @ md
+        link = cs @ appendLineAnchor[ testSummaryLink[ file, ":link:" ], info ];
+        hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
+        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
+        exp  = collapsibleSection[ "Expected output", "Nothing here yet..." ];
+        act  = collapsibleSection[ "Actual output", "Nothing here yet..." ];
+        md   = collapsibleSection[ hdr, in, exp, act ];
+        appendStepSummary @ md;
+    ];
+
+generateTestFailureDetails[ file_, result_TestResultObject, "Messages" ] :=
+    Enclose @ Module[ { cs, info, id, icon, link, hdr, md, in, exp, act },
+        cs   = ConfirmBy[ #, StringQ ] &;
+        info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
+        id   = cs @ info[ "TestID" ];
+        icon = cs @ testSummaryIcon @ result;
+        link = cs @ appendLineAnchor[ testSummaryLink[ file, ":link:" ], info ];
+        hdr  = "<h4>" <> StringRiffle[ { icon, id, link }, " " ] <> "</h4>";
+        in   = collapsibleSection[ "Input", "Nothing here yet..." ];
+        exp  = collapsibleSection[ "Expected messages", "Nothing here yet..." ];
+        act  = collapsibleSection[ "Actual messages", "Nothing here yet..." ];
+        md   = collapsibleSection[ hdr, in, exp, act ];
+        appendStepSummary @ md;
     ];
 
 generateTestFailureDetails // catchUndefined;
+
+
+
+troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
+troOutcome[ tro_TestReportObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
+troOutcome[ tro_, "Success"         ] := "Success";
+troOutcome[ tro_, "MessagesFailure" ] := "Messages";
+troOutcome[ tro_, "Failure"         ] := troFailureType @ tro;
+troOutcome[ tro_, outcome_String    ] := outcome;
+troOutcome // catchUndefined;
+
+
+troFailureType[ r_TestResultObject ] := troFailureType @ r[ "ActualOutput" ];
+troFailureType[ HoldForm @ Failure[ "TimeConstrained"  , _ ] ] := "Time";
+troFailureType[ HoldForm @ Failure[ "MemoryConstrained", _ ] ] := "Memory";
+troFailureType[ ___ ] := "Failure";
+
+
+collapsibleSection[ md_ ] := "<details>" <> ToString @ md <> "</details>";
+
+collapsibleSection[ lbl_, md__ ] :=
+    StringJoin[
+        "<details><summary>",
+        ToString @ lbl,
+        "</summary>",
+        StringRiffle[ { md }, "\n\n" ],
+        "</details>"
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -212,11 +264,14 @@ testIDInfo[ ___ ] := <| |>;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*testSummaryIcon*)
-testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ tro[ "Outcome" ];
-testSummaryIcon[ tro_TestResultObject ] := testSummaryIcon @ tro[ "Outcome" ];
-testSummaryIcon[ "Success" ] := "&#x2705;";
-testSummaryIcon[ "Failure" ] := "&#x274C;";
-testSummaryIcon[ _String   ] := "&#x2757;";
+testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ troOutcome @ tro;
+testSummaryIcon[ tro_TestResultObject ] := testSummaryIcon @ troOutcome @ tro;
+testSummaryIcon[ "Success"  ] := ":white_check_mark:";
+testSummaryIcon[ "Failure"  ] := ":x:";
+testSummaryIcon[ "Time"     ] := ":hourglass:";
+testSummaryIcon[ "Memory"   ] := ":red_circle:";
+testSummaryIcon[ "Messages" ] := ":large_orange_diamond:";
+testSummaryIcon[ _String    ] := ":large_blue_circle:";
 testSummaryIcon // catchUndefined;
 
 (* ::**********************************************************************:: *)
