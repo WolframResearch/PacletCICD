@@ -196,10 +196,16 @@ stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
 rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 
 
+timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
+    If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
+        "< 1 ms",
+        ToString @ Round @ sec
+    ];
+
 timeText[ sec_ ] :=
     If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
         "< 1 ms",
-        TextString @ Round[ sec, .01 ]
+        ToString @ Round[ sec, .01 ]
     ];
 
 outcomeText[ "Messages" ] := "Message failure";
