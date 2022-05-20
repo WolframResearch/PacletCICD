@@ -95,6 +95,7 @@ generateTestSummary[ reports_Association ] := (
     appendStepSummary @ $testSummaryHeader;
     KeyValueMap[ generateTestSummary, reports ];
     appendStepSummary @ $testDetailsHeader;
+    generateTestDetails @ reports;
     reports
 );
 
@@ -110,19 +111,127 @@ generateTestSummary[ file_, report_TestReportObject ] :=
         appendStepSummary @ md
     ];
 
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*testSummaryTime*)
-testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
-testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ Round[ t, 0.01 ];
-testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
-testSummaryTime // catchUndefined;
+generateTestSummary // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*testSummaryFail*)
-testSummaryFail[ r_TestReportObject ] := ToString @ r[ "TestsFailedCount" ];
-testSummaryFail // catchUndefined;
+(*generateTestDetails*)
+generateTestDetails[ reports_Association ] :=
+    If[ AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
+        reports,
+        appendStepSummary @ $testDetailsHeader;
+        KeyValueMap[ generateTestDetails, reports ];
+        reports
+    ];
+
+generateTestDetails[ file_, report_TestReportObject ] :=
+    Module[ { link, md, results, failed },
+        link = testSummaryLink @ file;
+        md = "### " <> link <> "\n\n";
+        appendStepSummary @ md;
+        results = report[ "TestResults" ];
+        failed  = Select[ results, #[ "Outcome" ] =!= "Success" & ];
+        (generateTestFailureDetails[ file, #1 ] &) /@ failed
+    ];
+
+generateTestDetails // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateTestFailureDetails*)
+generateTestFailureDetails[ file_, result_TestResultObject ] :=
+    Enclose @ Module[ { cs, info, id, icon, link, md },
+        cs   = ConfirmBy[ #, StringQ ] &;
+        info = ConfirmBy[ testIDInfo @ result, AssociationQ ];
+        id   = cs @ info[ "TestID" ];
+        icon = cs @ testSummaryIcon @ result;
+        link = cs @ appendLineAnchor[ testSummaryLink[ file, id ], info ];
+        md   = "#### " <> StringRiffle[ { icon, link }, " " ] <> "\n\n";
+        appendStepSummary @ md
+    ];
+
+generateTestFailureDetails // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*appendLineAnchor*)
+appendLineAnchor[ link_String, KeyValuePattern[ "Position" -> pos_ ] ] :=
+    appendLineAnchor[ link, pos ];
+
+appendLineAnchor[ link_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
+    StringJoin[ link, "#L", ToString @ l1, "-L", ToString @ l2 ];
+
+appendLineAnchor // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testIDInfo*)
+testIDInfo[ result_TestResultObject ] :=
+    testIDInfo @ result[ "TestID" ];
+
+testIDInfo[ id_String ] :=
+    If[ StringFreeQ[ id, $testIDDelimiter ],
+        <| "TestID" -> id |>,
+        testIDInfo @ StringSplit[ id, $testIDDelimiter ]
+    ];
+
+testIDInfo[ { testID_String, annotation_String } ] :=
+    testIDInfo[ testID, StringSplit[ annotation, ":" ] ];
+
+testIDInfo[ testID_, { file_String, pos_String } ] :=
+    testIDInfo[ testID, file, StringSplit[ pos, "-" ] ];
+
+testIDInfo[ testID_, file_, { l1_String, l2_String } ] :=
+    testIDInfo[ testID, file, StringSplit[ l1, "," ], StringSplit[ l2, "," ] ];
+
+testIDInfo[
+    testID_String,
+    file_String,
+    p1: { _String, _String },
+    p2: { _String, _String }
+] := <|
+    "TestID"   -> testID,
+    "Scope"    -> "PacletCICD/PacletTest",
+    "File"     -> file,
+    "Type"     -> "LineColumn",
+    "Position" -> ToExpression @ { p1, p2 }
+|>;
+
+testIDInfo[ ___ ] := <| |>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryIcon*)
+testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ tro[ "Outcome" ];
+testSummaryIcon[ tro_TestResultObject ] := testSummaryIcon @ tro[ "Outcome" ];
+testSummaryIcon[ "Success" ] := "&#x2705;";
+testSummaryIcon[ "Failure" ] := "&#x274C;";
+testSummaryIcon[ _String   ] := "&#x2757;";
+testSummaryIcon // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryLink*)
+testSummaryLink[ file_ ] :=
+    testSummaryLink[
+        file,
+        StringRiffle[ DeleteCases[ FileNameSplit @ file, "." ], "/" ]
+    ];
+
+testSummaryLink[ file_, lbl_ ] := Enclose[
+    Module[ { env, server, repo, sha, split, url },
+        env    = ConfirmBy[ Environment[ #1 ], StringQ ] &;
+        server = env[ "GITHUB_SERVER_URL" ];
+        repo   = env[ "GITHUB_REPOSITORY" ];
+        sha    = env[ "GITHUB_SHA" ];
+        split  = DeleteCases[ FileNameSplit @ file, "." ];
+        url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
+        "[" <> ToString @ lbl <> "](" <> url <> ")"
+    ],
+    file &
+];
+
+testSummaryLink // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -132,36 +241,23 @@ testSummaryPass // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*testSummaryLink*)
-testSummaryLink[ file_ ] := Enclose[
-    Module[ { env, server, repo, sha, split, url, lbl },
-        env    = ConfirmBy[ Environment[ #1 ], StringQ ] &;
-        server = env[ "GITHUB_SERVER_URL" ];
-        repo   = env[ "GITHUB_REPOSITORY" ];
-        sha    = env[ "GITHUB_SHA" ];
-        split  = DeleteCases[ FileNameSplit @ file, "." ];
-        url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
-        lbl    = StringRiffle[ split, "/" ];
-        "[" <> lbl <> "](" <>url <> ")"
-    ],
-    file &
-];
-
-testSummaryLink // catchUndefined;
+(*testSummaryFail*)
+testSummaryFail[ r_TestReportObject ] := ToString @ r[ "TestsFailedCount" ];
+testSummaryFail // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*testSummaryIcon*)
-testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ tro[ "Outcome" ];
-testSummaryIcon[ "Success" ] := "&#x2705;";
-testSummaryIcon[ "Failure" ] := "&#x274C;";
-testSummaryIcon[ _String   ] := "&#x2757;";
-testSummaryIcon // catchUndefined;
+(*testSummaryTime*)
+testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
+testSummaryTime[ HoldPattern[ t_Quantity ] ] := TextString @ Round[ t, 0.001 ];
+testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
+testSummaryTime // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*$testSummaryHeader*)
-$testSummaryHeader = "\
+$testSummaryHeader = "
+
 # Test Results
 
 ## Summary
@@ -173,10 +269,10 @@ $testSummaryHeader = "\
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*$testDetailsHeader*)
-$testDetailsHeader = "\
+$testDetailsHeader = "
+
 ## Details
 
-Nothing here yet...
 ";
 
 (* ::**********************************************************************:: *)
@@ -276,38 +372,12 @@ annotateTestResult[
 ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[ "Test failed: " <> testID ];
-    annotateTestResult[ tro, testID ]
+    annotateTestResult[ tro, testIDInfo @ testID ]
 );
-
-annotateTestResult[ tro_, testID_String ] :=
-    annotateTestResult[ tro, StringSplit[ testID, $testIDDelimiter ] ];
-
-annotateTestResult[ tro_, { testID_String, annotation_String } ] :=
-    annotateTestResult[ tro, testID, StringSplit[ annotation, ":" ] ];
-
-annotateTestResult[ tro_, testID_String, { file_String, pos_String } ] :=
-    annotateTestResult[ tro, testID, file, StringSplit[ pos, "-" ] ];
-
-annotateTestResult[
-    tro_,
-    testID_String,
-    file_String,
-    { lc1_String, lc2_String }
-] :=
-    annotateTestResult[
-        tro,
-        testID,
-        file,
-        StringSplit[ lc1, "," ],
-        StringSplit[ lc2, "," ]
-    ];
 
 annotateTestResult[
     tro_TestResultObject,
-    testID_String,
-    file_String,
-    p1: { _String, _String },
-    p2: { _String, _String }
+    info: KeyValuePattern[ "TestID" -> testID_String ]
 ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
     dnc`ConsolePrint[
@@ -319,12 +389,7 @@ annotateTestResult[
             "\""
         ],
         "Level" -> "Error",
-        "SourceInformation" -> <|
-            "Scope"    -> "PacletCICD/PacletTest",
-            "File"     -> file,
-            "Type"     -> "LineColumn",
-            "Position" -> ToExpression @ { p1, p2 }
-        |>
+        "SourceInformation" -> info
     ]
 );
 
