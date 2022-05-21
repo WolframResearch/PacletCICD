@@ -17,6 +17,7 @@ $mdBoxes              = False;
 $html                 = True;
 $useFE                = True;
 $showStringCharacters = False;
+$hyperlinkAction      = "New";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -54,6 +55,12 @@ $$standardFormString = StringExpression[
     FromCharacterCode[ 63424 ]
 ];
 
+$$hlTemplates = "HyperlinkURL"|"HyperlinkTemplate";
+$$hlTemplate  = TemplateBox[ _, $$hlTemplates, ___ ];
+$$hlButton    = ButtonBox[ ___, BaseStyle -> "Hyperlink", ___ ];
+$$hyperlink   = $$hlButton | $$hlTemplate;
+$$hlAction    = "New"|"Recycled";
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ToMarkdownString*)
@@ -66,13 +73,17 @@ ToMarkdownString::StandardFormError =
 ToMarkdownString::StringConversionError =
 "Unable to convert `1` to a string.";
 
+ToMarkdownString::HyperlinkActionError =
+"`1` is not a valid value for DefaultHyperlinkAction";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
 ToMarkdownString // Options = {
-    "DateStringFormat"  :> $DateStringFormat,
-    "TimeZone"          :> $TimeZone,
-    "CharacterEncoding" -> Automatic
+    "DateStringFormat"       :> $DateStringFormat,
+    "TimeZone"               :> $TimeZone,
+    "CharacterEncoding"      -> Automatic,
+    "DefaultHyperlinkAction" -> "New"
 };
 
 (* ::**********************************************************************:: *)
@@ -182,6 +193,8 @@ makeMarkdownFromBoxes[ cell: Cell[ TextData[ text_List ], ___ ], as_ ] :=
 makeMarkdownFromBoxes[ s: (Cell|StyleBox)[ a_, ___ ], as_ ] :=
     includeStyleOptions[ makeMarkdownFromBoxes[ a, as ], s ];
 
+makeMarkdownFromBoxes[ box: $$hyperlink, as_ ] := makeMDHyperlink[ box, as ];
+
 makeMarkdownFromBoxes[ TemplateBox[ row_List, "RowDefault", ___ ], as_ ] :=
     Block[ { $inline = True },
         StringJoin[ makeMarkdownFromBoxes[ #, as ] & /@ row ]
@@ -275,6 +288,61 @@ getFontSlant[ ___ ] := "Plain";
 includeFontSlant[ s_, c_ ] := includeFontSlant[ s, c, getFontSlant @ c ];
 includeFontSlant[ str_String? StringQ, cell_, "Italic" ] := "*" <> str <> "*";
 includeFontSlant[ str_String? StringQ, cell_, fw_ ] := str;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeMDHyperlink*)
+makeMDHyperlink[
+    box: TemplateBox[ { label_, url_, ___ }, $$hlTemplates, ___ ],
+    as_
+] :=
+    Block[ { $hyperlinkAction = getHyperlinkAction[ box, as ] },
+        makeMDHyperlink[ label, url, as ]
+    ];
+
+makeMDHyperlink[ label_, { url_, _ }, as_ ] :=
+    makeMDHyperlink[ label, url, as ];
+
+makeMDHyperlink[ label_, URL[ url_ ], as_ ] :=
+    makeMDHyperlink[ label, url, as ];
+
+makeMDHyperlink[ label_, url_String, as_ ] :=
+    Module[ { str },
+        str = Block[ { $inline = True }, makeMarkdownFromBoxes[ label, as ] ];
+        If[ $hyperlinkAction === "New" && TrueQ @ $html,
+            "<a href=\"" <> url <> "\" target=\"_blank\">" <> str <> "</a>",
+            StringJoin[ "[", str, "](", url, ")" ]
+        ]
+    ];
+
+makeMDHyperlink // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getHyperlinkAction*)
+getHyperlinkAction[ _[ ___,  HyperlinkAction  -> a:$$hlAction, ___ ], _ ] := a;
+getHyperlinkAction[ _[ ___, "HyperlinkAction" -> a:$$hlAction, ___ ], _ ] := a;
+getHyperlinkAction[ _[ ___,  HyperlinkAction  :> a:$$hlAction, ___ ], _ ] := a;
+getHyperlinkAction[ _[ ___, "HyperlinkAction" :> a:$$hlAction, ___ ], _ ] := a;
+getHyperlinkAction[ TemplateBox[ a_, ___ ], b_ ] := getHyperlinkAction[ a, b ];
+
+getHyperlinkAction[ _, as_Association ] :=
+    toHyperlinkAction @ Lookup[ as, "DefaultHyperlinkAction" ];
+
+getHyperlinkAction // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toHyperlinkAction*)
+toHyperlinkAction[ Automatic       ] := "New";
+toHyperlinkAction[ act: $$hlAction ] := act;
+
+toHyperlinkAction[ other_ ] := throwMessageFailure[
+    ToMarkdownString::HyperlinkActionError,
+    other
+];
+
+toHyperlinkAction // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -391,7 +459,7 @@ cellToString1[ c_ ] :=
         slowCellToString @ c
     ];
 
-cellToString // catchUndefined;
+cellToString  // catchUndefined;
 cellToString0 // catchUndefined;
 cellToString1 // catchUndefined;
 
@@ -517,7 +585,7 @@ fasterCellToString0[ (box: $boxOperators)[ a_, b_ ] ] :=
             ],
             { a$, b$ }
         ]
-     ];
+    ];
 
 fasterCellToString0[ TemplateBox[ args_, name_String, ___ ] ] :=
     With[ { s = fasterCellToString0 @ $templateBoxRules[ name ][ args ] },

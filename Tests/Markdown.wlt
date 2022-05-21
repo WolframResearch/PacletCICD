@@ -226,7 +226,43 @@ VerificationTest[
     TestID -> "ToMarkdownString-List"
 ]
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Hyperlinks*)
+VerificationTest[
+    ToMarkdownString @ Hyperlink[ "test", "https://example.com" ],
+    "<a href=\"https://example.com\" target=\"_blank\">test</a>",
+    TestID -> "ToMarkdownString-Hyperlink-1"
+]
+
+VerificationTest[
+    ToMarkdownString @ Hyperlink[
+        "test",
+        "https://example.com",
+        HyperlinkAction -> "Recycled"
+    ],
+    "[test](https://example.com)",
+    TestID -> "ToMarkdownString-Hyperlink-2"
+]
+
+VerificationTest[
+    ToMarkdownString[
+        Hyperlink[ "test", "https://example.com" ],
+        "DefaultHyperlinkAction" -> "Recycled"
+    ],
+    "[test](https://example.com)",
+    TestID -> "ToMarkdownString-Hyperlink-3"
+]
+
+VerificationTest[
+    ToMarkdownString @ Hyperlink[ "https://example.com" ],
+    "<a href=\"https://example.com\" target=\"_blank\">https://example.com</a>",
+    TestID -> "ToMarkdownString-Hyperlink-4"
+]
+
+
 (*TODO
 
     Items
+    Superscript/Subscript
 *)
