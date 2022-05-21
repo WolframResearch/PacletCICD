@@ -366,9 +366,9 @@ testSummaryHeader[ reports_ ] :=
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
         time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
-        pRate = PercentForm[ pass / tests ];
+        pRate = percentForm[ pass / tests ];
         fail  = tests - pass;
-        fRate = PercentForm[ fail / tests ];
+        fRate = percentForm[ fail / tests ];
         res   = If[ pass === tests, "Success", "Failure" ];
         icon  = testSummaryIcon @ res;
         TemplateApply[
@@ -378,15 +378,20 @@ testSummaryHeader[ reports_ ] :=
                 "FileCount" -> files,
                 "TestCount" -> tests,
                 "PassCount" -> pass,
-                "PassRate"  -> TextString @ pRate,
+                "PassRate"  -> pRate,
                 "FailCount" -> fail,
-                "FailRate"  -> TextString @ fRate,
+                "FailRate"  -> fRate,
                 "Time"      -> timeText @ time,
                 "Result"    -> res,
                 "Icon"      -> icon
             |>
         ]
     ];
+
+
+percentForm[ 0  ] := "0%";
+percentForm[ 1  ] := "100%";
+percentForm[ p_ ] := TextString @ PercentForm @ p;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
