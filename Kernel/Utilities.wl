@@ -313,6 +313,20 @@ setOutput[ _, name_, value_ ] := (
 setOutput // catchUndefined;
 
 (* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*appendStepSummary*)
+appendStepSummary[ md_ ] :=
+    If[ TrueQ @ $gitHub, appendStepSummary[ $gitHubStepSummary, md ] ];
+
+appendStepSummary[ stream_OutputStream, md_ ] :=
+    With[ { string = ToString @ md },
+        dnc`ConsolePrint[ "Appending to summary markdown: " <> string ];
+        WriteString[ stream, string ]
+    ];
+
+appendStepSummary // catchUndefined;
+
+(* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*$gitHubEnv*)
 $gitHubEnv := getGitHubEnv[ ];
@@ -321,6 +335,16 @@ getGitHubEnv[ ] := getGitHubEnv @ Environment[ "GITHUB_ENV" ];
 getGitHubEnv[ e_String ] := getGitHubEnv @ First[ Streams @ e, OpenAppend @ e ];
 getGitHubEnv[ s_OutputStream ] := $gitHubEnv = s;
 getGitHubEnv[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*$gitHubStepSummary*)
+$gitHubStepSummary := getGitHubSS[ ];
+
+getGitHubSS[ ] := getGitHubSS @ Environment[ "GITHUB_STEP_SUMMARY" ];
+getGitHubSS[ e_String ] := getGitHubSS @ First[ Streams @ e, OpenAppend @ e ];
+getGitHubSS[ s_OutputStream ] := $gitHubStepSummary = s;
+getGitHubSS[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -701,6 +725,12 @@ filterOptions /:
     With[ { filtered = filterOptions[ sym, opts1 ] },
         sym[ args, filtered, opts2 ]
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*optionsAssociation*)
+optionsAssociation[ sym_Symbol, opts___ ] :=
+    KeyMap[ ToString, Association @ Flatten @ { Options @ sym, opts } ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

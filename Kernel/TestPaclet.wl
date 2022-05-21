@@ -20,10 +20,14 @@ TestPaclet::Failures =
 (* ::Subsection::Closed:: *)
 (*Options*)
 TestPaclet // Options = {
-    "Target"          -> "Submit",
-    "Debug"           -> False,
-    "AnnotateTestIDs" -> True,
-    "ConsoleType"     -> Automatic
+    "AnnotateTestIDs"  -> True,
+    "ConsoleType"      -> Automatic,
+    "Debug"            -> False,
+    "MarkdownSummary"  -> True,
+    "MemoryConstraint" -> Inherited,
+    "SameTest"         -> Inherited,
+    "Target"           -> "Submit",
+    "TimeConstraint"   -> Inherited
 };
 
 (* ::**********************************************************************:: *)
@@ -39,22 +43,468 @@ TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
             If[ TrueQ @ OptionValue[ "AnnotateTestIDs" ],
                 AnnotateTestIDs[ dir, "Reparse" -> False ]
             ];
-            testPaclet @ dir
+            testPaclet[ dir, optionsAssociation[ TestPaclet, opts ] ]
         ]
     ];
 
 TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
     catchTop @ TestPaclet[ parentPacletDirectory @ file, opts ];
 
+(* TODO: find tests from PacletInfo *)
 
-testPaclet[ dir_? DirectoryQ ] :=
-    Module[ { files, report },
-        PacletDirectoryLoad @ dir;
-        files  = FileNames[ "*.wlt", dir, Infinity ];
-        report = testContext @ TestReport @ files;
-        annotateTestResult /@ report[ "TestResults" ];
-        makeTestResult[ dir, report ]
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testPaclet*)
+testPaclet[ dir_, opts: KeyValuePattern[ "MarkdownSummary" -> False ] ] :=
+    Block[ { appendStepSummary },
+        testPaclet[ dir, KeyDrop[ opts, "MarkdownSummary" ] ]
     ];
+
+testPaclet[ dir_? DirectoryQ, opts_Association ] :=
+    Module[ { files, pacDir, as, reports },
+        PacletDirectoryLoad @ dir;
+        files   = FileNames[ "*.wlt", dir, Infinity ];
+        pacDir  = parentPacletDirectory @ dir;
+        as      = Append[ opts, "PacletDirectory" -> pacDir ];
+        reports = testReport[ as, files ];
+        makeTestResult[ dir, reports ]
+    ];
+
+testPaclet // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testReport*)
+testReport[ as_Association, files_List ] :=
+    Enclose @ ConfirmBy[
+        generateTestSummary @ Association[ (testReport[ as, #1 ] &) /@ files ],
+        AssociationQ
+    ];
+
+testReport[ as_Association, file_? FileExistsQ ] :=
+    Enclose @ Module[ { dir, rules, opts, report, rel },
+        dir    = ConfirmBy[ as[ "PacletDirectory" ], DirectoryQ ];
+        rules  = Sequence @@ Normal[ as, Association ];
+        opts   = filterOptions[ TestReport, rules ];
+        report = testContext @ TestReport[ file, opts ];
+        rel    = ConfirmBy[ relativePath[ dir, file ], StringQ ];
+        rel -> report
+    ];
+
+testReport // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateTestSummary*)
+generateTestSummary[ reports_Association ] := (
+    appendStepSummary @ testSummaryHeader @ reports;
+    KeyValueMap[ generateTestSummary, reports ];
+    generateTestDetails @ reports;
+    reports
+);
+
+generateTestSummary[ file_, report_TestReportObject ] :=
+    Module[ { icon, link, pass, fail, time, row, md },
+        icon = testSummaryIcon @ report;
+        link = testSummaryLink @ file;
+        pass = testSummaryPass @ report;
+        fail = testSummaryFail @ report;
+        time = testSummaryTime @ report;
+        row  = { icon, link, pass, fail, time };
+        md   = "| " <> StringRiffle[ row, " | " ] <> " |\n";
+        appendStepSummary @ md
+    ];
+
+generateTestSummary // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateTestDetails*)
+generateTestDetails[ reports_Association ] :=
+    If[ AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
+        reports,
+        appendStepSummary @ $testDetailsHeader;
+        KeyValueMap[ generateTestDetails, reports ];
+        appendStepSummary @ $testDetailsFooter;
+        reports
+    ];
+
+generateTestDetails[ file_, report_ ] /; report[ "AllTestsSucceeded" ] :=
+    Null;
+
+generateTestDetails[ file_, report_TestReportObject ] :=
+    Module[ { header, md, results, failed },
+        header = StringRiffle[ DeleteCases[ FileNameSplit @ file, "." ], "/" ];
+        md = "<details><summary><h3>" <> header <> "</h3></summary>\n\n";
+        appendStepSummary @ md;
+        results = report[ "TestResults" ];
+        failed  = Select[ results, #[ "Outcome" ] =!= "Success" & ];
+        (generateTestFailureDetails[ file, #1 ] &) /@ failed;
+        appendStepSummary[ "</details>" ]
+    ];
+
+generateTestDetails // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateTestFailureDetails*)
+generateTestFailureDetails[ file_, result_TestResultObject ] :=
+    Enclose @ Module[
+        {
+            cs, info, id, res, icon, time, mem, link,
+            input, expOut, actOut, expMsg, actMsg, md
+        },
+
+        cs     = ConfirmBy[ #, StringQ ] &;
+        info   = ConfirmBy[ testIDInfo @ result, AssociationQ ];
+        id     = cs @ info[ "TestID" ];
+        res    = cs @ troOutcome @ result;
+        icon   = cs @ testSummaryIcon @ res;
+        time   = stq @ result[ "AbsoluteTimeUsed" ];
+        mem    = btq @ result[ "MemoryUsed" ];
+        link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
+        input  = codeBlock[ "Input"            , result[ "Input"            ] ];
+        expOut = codeBlock[ "Expected Output"  , result[ "ExpectedOutput"   ] ];
+        actOut = codeBlock[ "Actual Output"    , result[ "ActualOutput"     ] ];
+        expMsg = codeBlock[ "Expected Messages", result[ "ExpectedMessages" ] ];
+        actMsg = codeBlock[ "Actual Messages"  , result[ "ActualMessages"   ] ];
+
+        md = TemplateApply[
+            $testResultTemplate,
+            <|
+                "Icon"             -> icon,
+                "Result"           -> outcomeText @ res,
+                "TestID"           -> id,
+                "Duration"         -> timeText @ time,
+                "Memory"           -> ToString @ mem,
+                "Link"             -> link,
+                "Input"            -> input,
+                "ExpectedOutput"   -> expOut,
+                "ActualOutput"     -> actOut,
+                "ExpectedMessages" -> expMsg,
+                "ActualMessages"   -> actMsg
+            |>
+        ];
+
+        appendStepSummary @ md
+    ];
+
+generateTestFailureDetails // catchUndefined;
+
+btq := btq = ResourceFunction[ "BytesToQuantity"  , "Function" ];
+stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
+rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
+
+
+timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
+    If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
+        "< 1 ms",
+        TextString @ Round @ sec
+    ];
+
+timeText[ sec_ ] :=
+    If[ TrueQ[ sec <= Quantity[ 1, "Milliseconds" ] ],
+        "< 1 ms",
+        TextString @ Round[ sec, .1 ]
+    ];
+
+outcomeText[ "Messages" ] := "Message failure";
+outcomeText[ "Time"     ] := "Timed out";
+outcomeText[ "Memory"   ] := "Exceeded memory limits";
+outcomeText[ outcome_   ] := outcome;
+
+
+
+
+troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
+troOutcome[ tro_TestReportObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
+troOutcome[ tro_, "Success"         ] := "Success";
+troOutcome[ tro_, "MessagesFailure" ] := "Messages";
+troOutcome[ tro_, "Failure"         ] := troFailureType @ tro;
+troOutcome[ tro_, outcome_String    ] := outcome;
+troOutcome // catchUndefined;
+
+
+troFailureType[ r_TestResultObject ] := troFailureType @ r[ "ActualOutput" ];
+troFailureType[ HoldForm @ Failure[ "TimeConstrained"  , _ ] ] := "Time";
+troFailureType[ HoldForm @ Failure[ "MemoryConstrained", _ ] ] := "Memory";
+troFailureType[ ___ ] := "Failure";
+
+
+collapsibleSection[ md_ ] := "<details>" <> ToString @ md <> "</details>";
+
+collapsibleSection[ lbl_, md__ ] :=
+    StringJoin[
+        "<details><summary>",
+        ToString @ lbl,
+        "</summary>",
+        StringRiffle[ { md }, "\n\n" ],
+        "</details>"
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*lineAnchor*)
+lineAnchor[ KeyValuePattern[ "Position" -> pos_ ] ] := lineAnchor @ pos;
+lineAnchor[ _Association ] := "";
+
+lineAnchor[ { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
+    "L" <> ToString @ l1 <> "-L" <> ToString @ l2;
+
+lineAnchor // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testIDInfo*)
+testIDInfo[ result_TestResultObject ] :=
+    testIDInfo @ result[ "TestID" ];
+
+testIDInfo[ id_String ] :=
+    If[ StringFreeQ[ id, $testIDDelimiter ],
+        <| "TestID" -> id |>,
+        testIDInfo @ StringSplit[ id, $testIDDelimiter ]
+    ];
+
+testIDInfo[ { testID_String, annotation_String } ] :=
+    testIDInfo[ testID, StringSplit[ annotation, ":" ] ];
+
+testIDInfo[ testID_, { file_String, pos_String } ] :=
+    testIDInfo[ testID, file, StringSplit[ pos, "-" ] ];
+
+testIDInfo[ testID_, file_, { l1_String, l2_String } ] :=
+    testIDInfo[ testID, file, StringSplit[ l1, "," ], StringSplit[ l2, "," ] ];
+
+testIDInfo[
+    testID_String,
+    file_String,
+    p1: { _String, _String },
+    p2: { _String, _String }
+] := <|
+    "TestID"   -> testID,
+    "Scope"    -> "PacletCICD/PacletTest",
+    "File"     -> file,
+    "Type"     -> "LineColumn",
+    "Position" -> ToExpression @ { p1, p2 }
+|>;
+
+testIDInfo[ ___ ] := <| |>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryIcon*)
+testSummaryIcon[ tro_TestReportObject ] := testSummaryIcon @ troOutcome @ tro;
+testSummaryIcon[ tro_TestResultObject ] := testSummaryIcon @ troOutcome @ tro;
+testSummaryIcon[ "Success"  ] := ":white_check_mark:";
+testSummaryIcon[ "Failure"  ] := ":x:";
+testSummaryIcon[ "Time"     ] := ":hourglass:";
+testSummaryIcon[ "Memory"   ] := ":red_circle:";
+testSummaryIcon[ "Messages" ] := ":large_orange_diamond:";
+testSummaryIcon[ _String    ] := ":large_blue_circle:";
+testSummaryIcon // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryLink*)
+testSummaryLink[ file_ ] :=
+    testSummaryLink[
+        file,
+        StringRiffle[ DeleteCases[ FileNameSplit @ file, "." ], "/" ]
+    ];
+
+testSummaryLink[ file_, lbl_ ] :=
+    testSummaryLink[ file, lbl, "" ];
+
+testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
+    Module[ { env, server, repo, sha, split, url, frag },
+        env    = ConfirmBy[ Environment[ #1 ], StringQ ] &;
+        server = env[ "GITHUB_SERVER_URL" ];
+        repo   = env[ "GITHUB_REPOSITORY" ];
+        sha    = env[ "GITHUB_SHA" ];
+        split  = DeleteCases[ FileNameSplit @ file, "." ];
+        url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
+        frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
+        StringJoin[
+            "<a href=\"",
+            url,
+            frag,
+            "\" target=\"_blank\">",
+            ToString @ lbl,
+            "</a>"
+        ]
+    ],
+    file &
+];
+
+testSummaryLink // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryPass*)
+testSummaryPass[ r_TestReportObject ] := ToString @ r[ "TestsSucceededCount" ];
+testSummaryPass // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryFail*)
+testSummaryFail[ r_TestReportObject ] := ToString @ r[ "TestsFailedCount" ];
+testSummaryFail // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryTime*)
+testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
+testSummaryTime[ HoldPattern[ t_Quantity ] ] := timeText @ stq @ t;
+testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
+testSummaryTime // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*testSummaryHeader*)
+testSummaryHeader[ reports_ ] :=
+    Module[ { files, tests, time, pass, pRate, fail, fRate, res, icon },
+        files = Length @ reports;
+        tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
+        time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
+        pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
+        pRate = percentForm[ pass / tests ];
+        fail  = tests - pass;
+        fRate = percentForm[ fail / tests ];
+        res   = If[ pass === tests, "Success", "Failure" ];
+        icon  = testSummaryIcon @ res;
+        TemplateApply[
+            $testSummaryHeader,
+            <|
+                "JobName"   -> Environment[ "GITHUB_JOB" ],
+                "FileCount" -> files,
+                "TestCount" -> tests,
+                "PassCount" -> pass,
+                "PassRate"  -> pRate,
+                "FailCount" -> fail,
+                "FailRate"  -> fRate,
+                "Time"      -> timeText @ time,
+                "Result"    -> res,
+                "Icon"      -> icon
+            |>
+        ]
+    ];
+
+
+percentForm[ 0  ] := "0%";
+percentForm[ 1  ] := "100%";
+percentForm[ p_ ] := TextString @ PercentForm @ Round[ p, .001 ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testSummaryHeader*)
+$testSummaryHeader = "
+
+# Test Results (`JobName`)
+
+## Summary
+
+|                 |                          |
+|-----------------|--------------------------|
+| **Result**      | `Result` `Icon`          |
+| **Total files** | `FileCount`              |
+| **Total tests** | `TestCount`              |
+| **Passed**      | `PassCount` (`PassRate`) |
+| **Failed**      | `FailCount` (`FailRate`) |
+| **Duration**    | `Time`                   |
+
+## Test files
+
+| | File | Passed | Failed | Duration |
+|-|------|--------|--------|----------|
+";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testDetailsHeader*)
+$testDetailsHeader = "
+
+<details><summary><h2>Details</h2></summary>
+
+";
+
+$testDetailsFooter = "
+
+</details>
+
+";
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$testResultTemplate*)
+$testResultTemplate = "
+
+
+----------------------------------------------------------------
+
+
+|        | Result   | TestID   | Duration   | Memory   | Link   |
+|--------|----------|----------|------------|----------|--------|
+| `Icon` | `Result` | `TestID` | `Duration` | `Memory` | `Link` |
+
+`Input`
+
+`ExpectedOutput`
+
+`ActualOutput`
+
+`ExpectedMessages`
+
+`ActualMessages`
+
+";
+
+
+
+mmaPre[ HoldForm[ code_ ] ] :=
+    StringJoin[
+        "\n\n```Mathematica\n",
+        TimeConstrained[ ToString @ rdf[ Unevaluated @ code,
+                                         CachePersistence -> Full
+                                    ],
+                         5,
+                         "<< " <> ToString @ ByteCount @ code <> ">>"
+        ],
+        "\n```\n\n"
+    ];
+
+mmaPre[ code_ ] := mmaPre @ HoldForm @ code;
+
+
+codeBlock[ label_, code_ ] :=
+    Module[ { string, chars, lines, template },
+
+        string = mmaPre @ code;
+        chars  = StringLength @ string;
+        lines  = Length @ StringSplit[ string, "\n" ];
+
+        template = If[ TrueQ[ chars < 1000 && lines < 10 ],
+                       $codeBlockTemplate,
+                       $hiddenCodeBlockTemplate
+                   ];
+
+        TemplateApply[
+            template,
+            <| "Label" -> label, "Code" -> string |>
+        ]
+    ];
+
+$codeBlockTemplate = "
+`Label`
+
+`Code`
+";
+
+$hiddenCodeBlockTemplate = "
+<details><summary>`Label`</summary>
+
+`Code`
+
+</details>
+";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -63,25 +513,29 @@ testPaclet[ dir_? DirectoryQ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*makeTestResult*)
-makeTestResult[ dir_, report_TestReportObject ] :=
-    makeTestResult[ dir, report, report[ "AllTestsSucceeded" ] ];
+makeTestResult[ dir_, reports_Association ] :=
+    makeTestResult[
+        dir,
+        reports,
+        AllTrue[ reports, #[ "AllTestsSucceeded" ] & ]
+    ];
 
-makeTestResult[ dir_, report_, True ] :=
+makeTestResult[ dir_, reports_, True ] :=
     Success[ "AllTestsSucceeded",
              <|
                  "MessageTemplate"   -> "All tests successful",
                  "MessageParameters" -> { },
-                 "Result"            :> report
+                 "Result"            :> reports
              |>
     ];
 
-makeTestResult[ dir_, report_, False ] :=
+makeTestResult[ dir_, reports_, False ] :=
     Module[ { export, exported },
         export = fileNameJoin @ { dir, "build", "test_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
-                           report,
+                           reports,
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
@@ -91,7 +545,7 @@ makeTestResult[ dir_, report_, False ] :=
             Association[
                 "MessageTemplate"   :> TestPaclet::Failures,
                 "MessageParameters" :> { },
-                "Result"            :> report
+                "Result"            :> reports
             ],
             1
         ]
@@ -118,85 +572,6 @@ testContext[ eval_ ] :=
              $ContextPath = contextPath;
         ]
     ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*annotateTestResult*)
-annotateTestResult[
-    tro: TestResultObject[
-        KeyValuePattern @ {
-            "TestID" | TestID -> testID_String,
-            "Outcome"         -> "Success"
-        },
-        ___
-    ]
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[ "Test passed: " <> testID ]
-);
-
-annotateTestResult[
-    tro: TestResultObject[
-        KeyValuePattern @ {
-            "TestID" | TestID -> testID_String,
-            "Outcome"         -> outcome: Except[ "Success" ]
-        },
-        ___
-    ]
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[ "Test failed: " <> testID ];
-    annotateTestResult[ tro, testID ]
-);
-
-annotateTestResult[ tro_, testID_String ] :=
-    annotateTestResult[ tro, StringSplit[ testID, $testIDDelimiter ] ];
-
-annotateTestResult[ tro_, { testID_String, annotation_String } ] :=
-    annotateTestResult[ tro, testID, StringSplit[ annotation, ":" ] ];
-
-annotateTestResult[ tro_, testID_String, { file_String, pos_String } ] :=
-    annotateTestResult[ tro, testID, file, StringSplit[ pos, "-" ] ];
-
-annotateTestResult[
-    tro_,
-    testID_String,
-    file_String,
-    { lc1_String, lc2_String }
-] :=
-    annotateTestResult[
-        tro,
-        testID,
-        file,
-        StringSplit[ lc1, "," ],
-        StringSplit[ lc2, "," ]
-    ];
-
-annotateTestResult[
-    tro_TestResultObject,
-    testID_String,
-    file_String,
-    p1: { _String, _String },
-    p2: { _String, _String }
-] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    dnc`ConsolePrint[
-        StringJoin[
-            "Test \"",
-            testID,
-            "\" failed with outcome: \"",
-            tro[ "Outcome" ],
-            "\""
-        ],
-        "Level" -> "Error",
-        "SourceInformation" -> <|
-            "Scope"    -> "PacletCICD/PacletTest",
-            "File"     -> file,
-            "Type"     -> "LineColumn",
-            "Position" -> ToExpression @ { p1, p2 }
-        |>
-    ]
-);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
