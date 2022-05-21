@@ -41,6 +41,11 @@ $$headingCell  = Cell[ __, $$headingStyle, ___ ];
 $$heading      = $$headingCell | StyleBox[ __, $$headingStyle, ___ ];
 $$headingLevel = First /@ (Association @@ MapIndexed[ Rule, $$headingStyle ]);
 
+$$itemStyle = "Item" | "Subitem" | "Subsubitem";
+$$itemCell  = Cell[ __, $$itemStyle, ___ ];
+$$item      = $$itemCell | StyleBox[ __, $$itemStyle, ___ ];
+$$itemLevel = First /@ (Association @@ MapIndexed[ Rule, $$itemStyle ]);
+
 $$standardFormString = StringExpression[
     FromCharacterCode[ 63425 ],
     FromCharacterCode[ 63433 ],
@@ -79,6 +84,15 @@ ToMarkdownString[ expr_, opts: OptionsPattern[ ] ] :=
         optionsAssociation[ ToMarkdownString, opts ]
     ];
 
+(* TODO:
+    Grids
+    Hyperlinks
+    Images?
+    BlockQuote
+    Numbered lists
+    ExternalEvaluate
+*)
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeMarkdown*)
@@ -86,6 +100,7 @@ makeMarkdown // Attributes = { HoldFirst };
 
 makeMarkdown[ str_String, as_ ] := mdString[ str, as ];
 
+(* TODO: this doesn't space Item cells properly *)
 makeMarkdown[ list_List, as_ ] :=
     Block[ { $inline = False },
         StringRiffle[
@@ -99,6 +114,8 @@ makeMarkdown[ expr: _Notebook|_Cell, as_ ] :=
 
 makeMarkdown[ cell: _ExpressionCell|_TextCell, as_ ] :=
     makeMarkdownFromBoxes[ First @ MakeBoxes @ cell, as ];
+
+makeMarkdown[ Delimiter, a_ ] := "***";
 
 makeMarkdown[ RawBoxes[ e_ ], a_ ] := makeMarkdownFromBoxes[ e, a ];
 makeMarkdown[ Defer[ e_ ]   , a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
@@ -135,17 +152,16 @@ toMDCharEncoding[ expr_      ] :=
 (* ::Subsection::Closed:: *)
 (*makeMarkdownFromBoxes*)
 makeMarkdownFromBoxes[ Notebook[ cells_List, ___ ], as_ ] :=
-    Block[ { $inline = False },
-        StringRiffle[ makeMarkdownFromBoxes[ #, as ] & /@ cells, "\n\n" ]
-    ];
+    makeMarkdownFromBoxList[ cells, as ];
 
 makeMarkdownFromBoxes[ Cell[ CellGroupData[ cells_List, _ ], ___ ], as_ ] :=
-    Block[ { $inline = False },
-        StringRiffle[ makeMarkdownFromBoxes[ #, as ] & /@ cells, "\n\n" ]
-    ];
+    makeMarkdownFromBoxList[ cells, as ];
 
 makeMarkdownFromBoxes[ cell: $$heading, as_ ] /; ! $inline :=
     makeMDHeading[ cell, as ];
+
+makeMarkdownFromBoxes[ cell: $$item, as_ ] /; ! $inline :=
+    makeMDItem[ cell, as ];
 
 makeMarkdownFromBoxes[ cell: $$inputCell|$$outputCell, as_ ] :=
     makeMDCodeBlock[ cell, as ];
@@ -174,6 +190,27 @@ makeMarkdownFromBoxes[ TemplateBox[ row_List, "RowDefault", ___ ], as_ ] :=
 makeMarkdownFromBoxes[ boxes_, as_ ] :=
     Block[ { $inline = True }, mdString[ cellToString @ boxes, as ] ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeMarkdownFromBoxList*)
+makeMarkdownFromBoxList[ { a___, items: Longest[ $$item.. ], b___ }, as_ ] :=
+    Enclose @ Block[ { $inline = False },
+        Module[ { cs, aStr, iStr, bStr },
+            cs   = ConfirmBy[ #1, StringQ ] &;
+            aStr = cs @ makeMarkdownFromBoxes[ { a }, as ];
+            iStr = (cs @ makeMarkdownFromBoxes[ #, as ] &) /@ { items };
+            bStr = cs @ makeMarkdownFromBoxes[ { b }, as ];
+            StringRiffle[
+                DeleteCases[ { aStr, StringRiffle[ iStr, "\n" ], bStr }, "" ],
+                "\n\n"
+            ]
+        ]
+    ];
+
+makeMarkdownFromBoxList[ cells_List, as_ ] :=
+    Block[ { $inline = False },
+        StringRiffle[ makeMarkdownFromBoxes[ #, as ] & /@ cells, "\n\n" ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -251,6 +288,23 @@ makeMDHeading[ (Cell|StyleBox)[ a_, ___, s: $$headingStyle, ___ ], as_ ] :=
         " ",
         ConfirmBy[ makeMarkdownFromBoxes[ a, as ], StringQ ]
     ];
+
+makeMDHeading // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeMDItem*)
+makeMDItem[ (Cell|StyleBox)[ a_, ___, s: $$itemStyle, ___ ], as_ ] :=
+    Enclose @ StringJoin[
+        ConstantArray[
+            "  ",
+            ConfirmBy[ Lookup[ $$itemLevel, s ], IntegerQ ] - 1
+        ],
+        "- ",
+        ConfirmBy[ makeMarkdownFromBoxes[ a, as ], StringQ ]
+    ];
+
+makeMDItem // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
