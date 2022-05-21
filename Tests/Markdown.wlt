@@ -42,4 +42,158 @@ VerificationTest[
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ToMarkdownString*)
-(*TODO*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Headings*)
+VerificationTest[
+    Map[
+        ToMarkdownString @ Cell[ "test", #1 ] &,
+        {
+            "Title",
+            "Subtitle",
+            "Section",
+            "Subsection",
+            "Subsubsection",
+            "Subsubsubsection"
+        }
+    ],
+    {
+        "# test",
+        "## test",
+        "### test",
+        "#### test",
+        "##### test",
+        "###### test"
+    },
+    TestID -> "ToMarkdownString-Headings-Cell"
+]
+
+VerificationTest[
+    Map[
+        ToMarkdownString @ Style[ "test", #1 ] &,
+        {
+            "Title",
+            "Subtitle",
+            "Section",
+            "Subsection",
+            "Subsubsection",
+            "Subsubsubsection"
+        }
+    ],
+    {
+        "# test",
+        "## test",
+        "### test",
+        "#### test",
+        "##### test",
+        "###### test"
+    },
+    TestID -> "ToMarkdownString-Headings-Style"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Style*)
+VerificationTest[
+    ToMarkdownString[ "hello" ],
+    "hello",
+    TestID -> "ToMarkdownString-String"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "hello", "Input" ],
+    "`\"hello\"`",
+    TestID -> "ToMarkdownString-Input-Style"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "hello", "Output" ],
+    "`hello`",
+    TestID -> "ToMarkdownString-Output-Style"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "hello", "Input", ShowStringCharacters -> False ],
+    "`hello`",
+    TestID -> "ToMarkdownString-Input-ShowStringCharacters"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "hello", "Output", ShowStringCharacters -> True ],
+    "`\"hello\"`",
+    TestID -> "ToMarkdownString-Output-ShowStringCharacters"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Style options*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Bold*)
+VerificationTest[
+    ToMarkdownString @ Style[ "test", FontWeight -> "Bold" ],
+    "**test**",
+    TestID -> "ToMarkdownString-Bold-1"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "test", FontSize -> 10, FontWeight -> Bold ],
+    "**test**",
+    TestID -> "ToMarkdownString-Bold-2"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "test", Bold, FontSize -> 10 ],
+    "**test**",
+    TestID -> "ToMarkdownString-Bold-3"
+]
+
+VerificationTest[
+    ToMarkdownString @ Cell[
+        TextData @ { "This is a text ", StyleBox[ "cell", Bold ], "." },
+        "Text"
+    ],
+    "This is a text **cell**.",
+    TestID -> "ToMarkdownString-Bold-4"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Italic*)
+VerificationTest[
+    ToMarkdownString @ Style[ "test", FontSlant -> "Italic" ],
+    "*test*",
+    TestID -> "ToMarkdownString-Italic-1"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "test", FontSize -> 10, FontSlant -> Italic ],
+    "*test*",
+    TestID -> "ToMarkdownString-Italic-2"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ "test", Italic, FontSize -> 10 ],
+    "*test*",
+    TestID -> "ToMarkdownString-Italic-3"
+]
+
+VerificationTest[
+    ToMarkdownString @ Cell[
+        TextData @ { "This is a text ", StyleBox[ "cell", Italic ], "." },
+        "Text"
+    ],
+    "This is a text *cell*.",
+    TestID -> "ToMarkdownString-Italic-4"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*Combined*)
+VerificationTest[
+    ToMarkdownString @ Style[ "test", Bold, FontSlant -> "Italic" ],
+    "***test***",
+    TestID -> "ToMarkdownString-BoldItalic-1"
+]
