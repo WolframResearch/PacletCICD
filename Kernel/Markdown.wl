@@ -122,7 +122,8 @@ mdString[ str_String? StringQ, as_Association ] :=
     ];
 
 $mdStringReplacements = {
-    "\[IndentingNewLine]" -> "\n"
+    "\[IndentingNewLine]" -> "\n",
+    "\n" -> "  \n"
 };
 
 toMDCharEncoding[ Automatic  ] := If[ TrueQ @ $codeBlock, "ASCII", "Unicode" ];
@@ -143,7 +144,7 @@ makeMarkdownFromBoxes[ Cell[ CellGroupData[ cells_List, _ ], ___ ], as_ ] :=
         StringRiffle[ makeMarkdownFromBoxes[ #, as ] & /@ cells, "\n\n" ]
     ];
 
-makeMarkdownFromBoxes[ cell: $$heading, as_ ] :=
+makeMarkdownFromBoxes[ cell: $$heading, as_ ] /; ! $inline :=
     makeMDHeading[ cell, as ];
 
 makeMarkdownFromBoxes[ cell: $$inputCell|$$outputCell, as_ ] :=
@@ -154,23 +155,39 @@ makeMarkdownFromBoxes[
     as_
 ] := makeMDCodeInline[ box, as ];
 
-makeMarkdownFromBoxes[ Cell[ TextData[ text_List ], ___ ], as_ ] :=
+makeMarkdownFromBoxes[ cell: Cell[ TextData[ text_List ], ___ ], as_ ] :=
     Block[ { $inline = True },
-        StringJoin[ makeMarkdownFromBoxes[ #, as ] & /@ text ]
+        includeStyleOptions[
+            StringJoin[ makeMarkdownFromBoxes[ #, as ] & /@ text ],
+            cell
+        ]
     ];
 
-makeMarkdownFromBoxes[ s: StyleBox[ a_, ___ ], as_ ] := Enclose[
-    Module[ { cs, str, fw, fs },
+makeMarkdownFromBoxes[ s: (Cell|StyleBox)[ a_, ___ ], as_ ] :=
+    includeStyleOptions[ makeMarkdownFromBoxes[ a, as ], s ];
+
+makeMarkdownFromBoxes[ TemplateBox[ row_List, "RowDefault", ___ ], as_ ] :=
+    Block[ { $inline = True },
+        StringJoin[ makeMarkdownFromBoxes[ #, as ] & /@ row ]
+    ];
+
+makeMarkdownFromBoxes[ boxes_, as_ ] :=
+    Block[ { $inline = True }, mdString[ cellToString @ boxes, as ] ];
+
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*includeStyleOptions*)
+includeStyleOptions[ str_String? StringQ, box_ ] := Enclose[
+    Module[ { cs, fw, fs },
         cs  = ConfirmBy[ #, StringQ ] &;
-        str = cs @ makeMarkdownFromBoxes[ a, as ];
-        fw  = cs @ includeFontWeight[ str, s ];
-        fs  = cs @ includeFontSlant[ fw, s ];
+        fw  = cs @ includeFontWeight[ str, box ];
+        fs  = cs @ includeFontSlant[ fw, box ];
         fs
     ]
 ];
 
-makeMarkdownFromBoxes[ boxes_, as_ ] :=
-    Block[ { $inline = True }, cellToString @ boxes ];
+includeStyleOptions // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -203,19 +220,14 @@ getStyleNames[ (Cell|StyleBox)[ _, rest___ ] ] := Cases[ { rest }, _String ];
 getStyleNames // catchUndefined;
 
 
-
 getFontWeight[ StyleBox[___, fw: Bold|Plain, ___ ] ] := ToString @ fw;
 getFontWeight[ _[ ___, FontWeight|"FontWeight" -> fw_, ___ ] ] := ToString @ fw;
 getFontWeight[ ___ ] := "Plain";
 
 
 includeFontWeight[ s_, c_ ] := includeFontWeight[ s, c, getFontWeight @ c ];
-
-includeFontWeight[ str_String? StringQ, cell_, "Bold" ] :=
-    "**" <> str <> "**";
-
-includeFontWeight[ str_String? StringQ, cell_, fw_ ] :=
-    str;
+includeFontWeight[ str_String? StringQ, cell_, "Bold" ] := "**" <> str <> "**";
+includeFontWeight[ str_String? StringQ, cell_, fw_ ] := str;
 
 
 getFontSlant[ StyleBox[___, fw: Italic|Plain, ___ ] ] := ToString @ fw;
@@ -224,12 +236,8 @@ getFontSlant[ ___ ] := "Plain";
 
 
 includeFontSlant[ s_, c_ ] := includeFontSlant[ s, c, getFontSlant @ c ];
-
-includeFontSlant[ str_String? StringQ, cell_, "Italic" ] :=
-    "*" <> str <> "*";
-
-includeFontSlant[ str_String? StringQ, cell_, fw_ ] :=
-    str;
+includeFontSlant[ str_String? StringQ, cell_, "Italic" ] := "*" <> str <> "*";
+includeFontSlant[ str_String? StringQ, cell_, fw_ ] := str;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

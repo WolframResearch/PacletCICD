@@ -92,6 +92,18 @@ VerificationTest[
     TestID -> "ToMarkdownString-Headings-Style"
 ]
 
+VerificationTest[
+    ToMarkdownString @ Row @ { a, Style[ b, "Section" ] },
+    "ab",
+    TestID -> "ToMarkdownString-Headers-Inline"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[ Row @ { a, b }, "Section" ],
+    "### ab",
+    TestID -> "ToMarkdownString-Headers-Top"
+]
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Style*)
@@ -196,4 +208,20 @@ VerificationTest[
     ToMarkdownString @ Style[ "test", Bold, FontSlant -> "Italic" ],
     "***test***",
     TestID -> "ToMarkdownString-BoldItalic-1"
+]
+
+VerificationTest[
+    ToMarkdownString @ Row @ { Style[ a, Italic ], Style[ f @ x, "Input" ] },
+    "*a*`f[x]`",
+    TestID -> "ToMarkdownString-Row"
+]
+
+VerificationTest[
+    ToMarkdownString @ {
+        Style[ "MySection", "Section" ],
+        "Here is some text",
+        ExpressionCell[ MyFunction[ x, y ], "Input" ]
+    },
+    "### MySection\n\nHere is some text\n\n```wolfram\nMyFunction[x,y]\n```",
+    TestID -> "ToMarkdownString-List"
 ]
