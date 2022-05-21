@@ -374,6 +374,7 @@ testSummaryHeader[ reports_ ] :=
         TemplateApply[
             $testSummaryHeader,
             <|
+                "JobName"   -> Environment[ "GITHUB_JOB" ],
                 "FileCount" -> files,
                 "TestCount" -> tests,
                 "PassCount" -> pass,
@@ -392,7 +393,7 @@ testSummaryHeader[ reports_ ] :=
 (*$testSummaryHeader*)
 $testSummaryHeader = "
 
-# Test Results
+# Test Results (`JobName`)
 
 ## Summary
 
