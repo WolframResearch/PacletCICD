@@ -391,7 +391,7 @@ testSummaryHeader[ reports_ ] :=
 
 percentForm[ 0  ] := "0%";
 percentForm[ 1  ] := "100%";
-percentForm[ p_ ] := TextString @ PercentForm @ p;
+percentForm[ p_ ] := TextString @ PercentForm @ Round[ p, .001 ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
