@@ -154,6 +154,7 @@ SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
 SetContextLoad[ MessageFailure         , "MessageFailure"      ];
 SetContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
 SetContextLoad[ WorkflowValue          , "WorkflowValue"       ];
+SetContextLoad[ ToMarkdownString       , "Markdown"            ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

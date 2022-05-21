@@ -41,6 +41,7 @@ Wolfram`PacletCICD`SetContextLoad;
 Wolfram`PacletCICD`SetPacletInfo;
 Wolfram`PacletCICD`SubmitPaclet;
 Wolfram`PacletCICD`TestPaclet;
+Wolfram`PacletCICD`ToMarkdownString;
 Wolfram`PacletCICD`Workflow;
 Wolfram`PacletCICD`WorkflowEvaluate;
 Wolfram`PacletCICD`WorkflowExport;
