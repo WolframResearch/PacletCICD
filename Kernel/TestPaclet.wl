@@ -160,8 +160,8 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         id     = cs @ info[ "TestID" ];
         res    = cs @ troOutcome @ result;
         icon   = cs @ testSummaryIcon @ res;
-        time   = stq @ result[ "AbsoluteTimeUsed" ];
-        mem    = btq @ result[ "MemoryUsed" ];
+        time   = SecondsToQuantity @ result[ "AbsoluteTimeUsed" ];
+        mem    = BytesToQuantity @ result[ "MemoryUsed" ];
         link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
         input  = codeBlock[ "Input"            , result[ "Input"            ] ];
         expOut = codeBlock[ "Expected Output"  , result[ "ExpectedOutput"   ] ];
@@ -190,10 +190,6 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
     ];
 
 generateTestFailureDetails // catchUndefined;
-
-btq := btq = ResourceFunction[ "BytesToQuantity"  , "Function" ];
-stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
-rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
 
 
 timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
@@ -353,7 +349,7 @@ testSummaryFail // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryTime*)
 testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
-testSummaryTime[ HoldPattern[ t_Quantity ] ] := timeText @ stq @ t;
+testSummaryTime[ t_Quantity ] := timeText @ SecondsToQuantity @ t;
 testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
 testSummaryTime // catchUndefined;
 
@@ -364,7 +360,7 @@ testSummaryHeader[ reports_ ] :=
     Module[ { files, tests, time, pass, pRate, fail, fRate, res, icon },
         files = Length @ reports;
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
-        time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
+        time  = SecondsToQuantity @ Total[ #[ "TimeElapsed" ] & /@ reports ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
         pRate = percentForm[ pass / tests ];
         fail  = tests - pass;
@@ -462,11 +458,13 @@ $testResultTemplate = "
 mmaPre[ HoldForm[ code_ ] ] :=
     StringJoin[
         "\n\n```Mathematica\n",
-        TimeConstrained[ ToString @ rdf[ Unevaluated @ code,
-                                         CachePersistence -> Full
-                                    ],
-                         5,
-                         "<< " <> ToString @ ByteCount @ code <> ">>"
+        TimeConstrained[
+            ToString @ ReadableForm[
+                Unevaluated @ code,
+                CachePersistence -> Full
+            ],
+            5,
+            "<< " <> ToString @ ByteCount @ code <> ">>"
         ],
         "\n```\n\n"
     ];
