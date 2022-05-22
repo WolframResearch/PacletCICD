@@ -112,15 +112,16 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    Module[ { res, dir, export, exported },
+    Module[ { res, data, dir, export, exported },
         needs[ "DefinitionNotebookClient`" -> None ];
         res    = ccPromptFix @ dnc`CheckDefinitionNotebook[ nb, opts ];
+        data   = dnc`HintData[ "Paclet" ];
         dir    = parentPacletDirectory @ nb;
         export = fileNameJoin @ { dir, "build", "check_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting check results: " <> export ];
         exported = Export[ export,
-                           res,
+                           <| "Result" -> res, "HintData" -> data |>,
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
