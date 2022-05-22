@@ -10,17 +10,31 @@ ClearAll[
 
 Begin[ "`Units`Private`" ];
 
+$ContextAliases[ "p`" ] = "Wolfram`PacletCICD`Private`";
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*BytesToQuantity*)
 (*https://resources.wolframcloud.com/FunctionRepository/resources/BytesToQuantity*)
 
-BytesToQuantity[ b_Integer? Negative ] := -BytesToQuantity[ -b ];
-BytesToQuantity[ b_Integer ] := Replace[ b, $btqRules ];
+BytesToQuantity // Options = { "Chop" -> False };
 
-BytesToQuantity[ q_Quantity ] :=
+BytesToQuantity[ b_, opts: OptionsPattern[ ] ] :=
+    p`catchTop @ With[ { conv = bytesToQuantity @ b },
+        If[ TrueQ @ QuantityQ @ conv,
+            If[ TrueQ @ OptionValue @ Chop, integerChop @ conv, conv ],
+            b (* TODO: error handling *)
+        ]
+    ];
+
+BytesToQuantity // p`catchUndefined;
+
+bytesToQuantity[ b_Integer? Negative ] := -bytesToQuantity[ -b ];
+bytesToQuantity[ b_Integer ] := Replace[ b, $btqRules ];
+
+bytesToQuantity[ q_Quantity ] :=
     With[ { b = Check[ UnitConvert[ q, "Bytes" ], $Failed, Quantity::compat ] },
-        BytesToQuantity @ QuantityMagnitude @ b /; ! FailureQ @ b
+        bytesToQuantity @ QuantityMagnitude @ b /; ! FailureQ @ b
     ];
 
 (* ::**********************************************************************:: *)
@@ -64,29 +78,24 @@ SecondsToQuantity::mmu =
 SecondsToQuantity // Attributes = { Listable };
 
 SecondsToQuantity // Options = {
+    "Chop"          -> False,
     "MixedUnits"    -> True,
     "MaxMixedUnits" -> Automatic
 };
 
 SecondsToQuantity[ q_Quantity, opts: OptionsPattern[ ] ] :=
-    With[ { sec = convertSeconds @ q },
-        SecondsToQuantity[ sec, opts ] /; sec =!= $fail
+    p`catchTop @ With[ { sec = convertSeconds @ q },
+        SecondsToQuantity[ sec, opts ]
     ];
 
 SecondsToQuantity[ sec: Except[ _Quantity ], OptionsPattern[ ] ] :=
-    With[
-        {
-            result = Catch[
-                secondsToQuantity[
-                    sec,
-                    TrueQ @ OptionValue[ "MixedUnits" ],
-                    OptionValue[ "MaxMixedUnits" ]
-                ],
-                $tag
-            ]
-        },
-        result /; QuantityQ @ result
+    p`catchTop @ secondsToQuantity[
+        sec,
+        TrueQ @ OptionValue[ "MixedUnits" ],
+        OptionValue[ "MaxMixedUnits" ]
     ];
+
+SecondsToQuantity // p`catchUndefined;
 
 secondsToQuantity[ sec_? Internal`SyntacticNegativeQ, mixed_, max_ ] :=
     -secondsToQuantity[ -sec, mixed, max ];
@@ -206,10 +215,7 @@ mixedUnitThresholds[ n_Integer? Positive ] := mixedUnitThresholds[ n ] =
         "Zeptoseconds"
     };
 
-mixedUnitThresholds[ ___ ] := (
-    Message[ SecondsToQuantity::mmu ];
-    Throw[ $fail, $tag ]
-);
+mixedUnitThresholds[ ___ ] := p`throwMessageFailure[ SecondsToQuantity::mmu ];
 
 $planckThreshold =
     QuantityMagnitude @ UnitConvert[
@@ -227,6 +233,22 @@ $mixedDispatch := $mixedDispatch = Dispatch @ $mixedRules;
 
 mixedDispatch[ n_ ] := mixedDispatch[ n ] =
     Dispatch @ makeRules @ mixedUnitThresholds @ n;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*integerChop*)
+integerChop[ expr_ ] := integerChop[ expr, 10^-5 ];
+
+integerChop[ expr_, delta_ ] :=
+    ReplaceAll[
+        expr,
+        n: (_Real|_Complex)? AtomQ :>
+            With[ { m = Round @ n }, m /; Chop[ m - n, delta ] === 0 ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

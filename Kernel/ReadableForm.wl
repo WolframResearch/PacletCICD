@@ -7,6 +7,7 @@ ClearAll[
 ];
 
 Begin[ "`ReadableForm`Private`" ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
@@ -14,6 +15,13 @@ $inDef = False;
 $debug = True;
 
 System`MapApply;
+
+$cachePersistence = If[ StringQ @ Environment[ "GITHUB_ACTIONS" ],
+                        Full,
+                        Automatic
+                    ];
+
+$defaultTimeoutPlaceholder = "($TimedOut (*ReadableForm time limit reached*))";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -89,20 +97,23 @@ ReadableForm // Attributes = { };
 $defaultTokens = <| "Comment" -> CommentToken |>;
 
 ReadableForm // Options = {
-    "DynamicAlignment" -> False,
-    "FormatHeads"      -> Automatic,
-    "IndentSize"       -> 4,
-    "InitialIndent"    -> 0,
-    "PrefixForm"       -> True,
-    "RealAccuracy"     -> Automatic,
-    "RelativeWidth"    -> False,
-    "StrictMode"       -> False,
-    "Tokens"           -> $defaultTokens,
-    CachePersistence   -> Automatic,
-    CharacterEncoding  -> "Unicode",
-    PageWidth          -> 80,
-    PerformanceGoal    -> "Quality",
-    Trace              -> False
+    "DynamicAlignment"   -> False,
+    "FormatHeads"        -> Automatic,
+    "IndentSize"         -> 4,
+    "InitialIndent"      -> 0,
+    "PrefixForm"         -> True,
+    "RealAccuracy"       -> Automatic,
+    "RelativeWidth"      -> False,
+    "StrictMode"         -> False,
+    "Tokens"             -> $defaultTokens,
+    CachePersistence     -> $cachePersistence,
+    CharacterEncoding    -> "Unicode",
+    PageWidth            -> 80,
+    PerformanceGoal      -> "Quality",
+    Trace                -> False,
+    TimeConstraint       -> Infinity,
+    "Hurry"              -> False,
+    "TimeoutPlaceholder" -> $defaultTimeoutPlaceholder
 };
 
 (* ::**********************************************************************:: *)
@@ -116,19 +127,22 @@ ReadableForm /:
     Format[ ReadableForm[ expr_, opts: OptionsPattern[ ] ], InputForm ] :=
         catchTop @ OutputForm @ formatDataString[
             expr,
-            OptionValue[ ReadableForm, { opts }, "IndentSize"       ],
-            OptionValue[ ReadableForm, { opts }, PageWidth          ],
-            OptionValue[ ReadableForm, { opts }, CharacterEncoding  ],
-            OptionValue[ ReadableForm, { opts }, "RelativeWidth"    ],
-            OptionValue[ ReadableForm, { opts }, "PrefixForm"       ],
-            OptionValue[ ReadableForm, { opts }, PerformanceGoal    ],
-            OptionValue[ ReadableForm, { opts }, "RealAccuracy"     ],
-            OptionValue[ ReadableForm, { opts }, "InitialIndent"    ],
-            OptionValue[ ReadableForm, { opts }, CachePersistence   ],
-            OptionValue[ ReadableForm, { opts }, "DynamicAlignment" ],
-            OptionValue[ ReadableForm, { opts }, "StrictMode"       ],
-            OptionValue[ ReadableForm, { opts }, "Tokens"           ],
-            OptionValue[ ReadableForm, { opts }, Trace              ]
+            OptionValue[ ReadableForm, { opts }, "IndentSize"         ],
+            OptionValue[ ReadableForm, { opts }, PageWidth            ],
+            OptionValue[ ReadableForm, { opts }, CharacterEncoding    ],
+            OptionValue[ ReadableForm, { opts }, "RelativeWidth"      ],
+            OptionValue[ ReadableForm, { opts }, "PrefixForm"         ],
+            OptionValue[ ReadableForm, { opts }, PerformanceGoal      ],
+            OptionValue[ ReadableForm, { opts }, "RealAccuracy"       ],
+            OptionValue[ ReadableForm, { opts }, "InitialIndent"      ],
+            OptionValue[ ReadableForm, { opts }, CachePersistence     ],
+            OptionValue[ ReadableForm, { opts }, "DynamicAlignment"   ],
+            OptionValue[ ReadableForm, { opts }, "StrictMode"         ],
+            OptionValue[ ReadableForm, { opts }, "Tokens"             ],
+            OptionValue[ ReadableForm, { opts }, Trace                ],
+            OptionValue[ ReadableForm, { opts }, TimeConstraint       ],
+            OptionValue[ ReadableForm, { opts }, "Hurry"              ],
+            OptionValue[ ReadableForm, { opts }, "TimeoutPlaceholder" ]
         ];
 
 (* ::**********************************************************************:: *)
@@ -138,19 +152,22 @@ ReadableForm /:
     Format[ ReadableForm[ expr_, opts: OptionsPattern[ ] ], OutputForm ] :=
         catchTop @ formatDataString[
             expr,
-            OptionValue[ ReadableForm, { opts }, "IndentSize"       ],
-            OptionValue[ ReadableForm, { opts }, PageWidth          ],
-            OptionValue[ ReadableForm, { opts }, CharacterEncoding  ],
-            OptionValue[ ReadableForm, { opts }, "RelativeWidth"    ],
-            OptionValue[ ReadableForm, { opts }, "PrefixForm"       ],
-            OptionValue[ ReadableForm, { opts }, PerformanceGoal    ],
-            OptionValue[ ReadableForm, { opts }, "RealAccuracy"     ],
-            OptionValue[ ReadableForm, { opts }, "InitialIndent"    ],
-            OptionValue[ ReadableForm, { opts }, CachePersistence   ],
-            OptionValue[ ReadableForm, { opts }, "DynamicAlignment" ],
-            OptionValue[ ReadableForm, { opts }, "StrictMode"       ],
-            OptionValue[ ReadableForm, { opts }, "Tokens"           ],
-            OptionValue[ ReadableForm, { opts }, Trace              ]
+            OptionValue[ ReadableForm, { opts }, "IndentSize"         ],
+            OptionValue[ ReadableForm, { opts }, PageWidth            ],
+            OptionValue[ ReadableForm, { opts }, CharacterEncoding    ],
+            OptionValue[ ReadableForm, { opts }, "RelativeWidth"      ],
+            OptionValue[ ReadableForm, { opts }, "PrefixForm"         ],
+            OptionValue[ ReadableForm, { opts }, PerformanceGoal      ],
+            OptionValue[ ReadableForm, { opts }, "RealAccuracy"       ],
+            OptionValue[ ReadableForm, { opts }, "InitialIndent"      ],
+            OptionValue[ ReadableForm, { opts }, CachePersistence     ],
+            OptionValue[ ReadableForm, { opts }, "DynamicAlignment"   ],
+            OptionValue[ ReadableForm, { opts }, "StrictMode"         ],
+            OptionValue[ ReadableForm, { opts }, "Tokens"             ],
+            OptionValue[ ReadableForm, { opts }, Trace                ],
+            OptionValue[ ReadableForm, { opts }, TimeConstraint       ],
+            OptionValue[ ReadableForm, { opts }, "Hurry"              ],
+            OptionValue[ ReadableForm, { opts }, "TimeoutPlaceholder" ]
         ];
 
 (* ::**********************************************************************:: *)
@@ -159,7 +176,10 @@ ReadableForm /:
 ReadableForm /:
     MakeBoxes[ ReadableForm[ expr_, opts: OptionsPattern[ ] ], StandardForm ] :=
         catchTop @ Module[
-            { boxes, formatNames, fSyms, $$c, n, held, dataString, newBoxes },
+            {
+                boxes, formatNames, fSyms, $$c, n, held, dataString, newBoxes,
+                $expr, $string
+            },
 
             formatNames = Cases[
                 Map[
@@ -199,22 +219,31 @@ ReadableForm /:
                 held,
                 HoldComplete[ e_ ] :> formatDataString[
                     e,
-                    OptionValue[ ReadableForm, { opts }, "IndentSize"       ],
-                    OptionValue[ ReadableForm, { opts }, PageWidth          ],
-                    OptionValue[ ReadableForm, { opts }, CharacterEncoding  ],
-                    OptionValue[ ReadableForm, { opts }, "RelativeWidth"    ],
-                    OptionValue[ ReadableForm, { opts }, "PrefixForm"       ],
-                    OptionValue[ ReadableForm, { opts }, PerformanceGoal    ],
-                    OptionValue[ ReadableForm, { opts }, "RealAccuracy"     ],
-                    OptionValue[ ReadableForm, { opts }, "InitialIndent"    ],
-                    OptionValue[ ReadableForm, { opts }, CachePersistence   ],
-                    OptionValue[ ReadableForm, { opts }, "DynamicAlignment" ],
-                    OptionValue[ ReadableForm, { opts }, "StrictMode"       ],
-                    OptionValue[ ReadableForm, { opts }, "Tokens"           ],
-                    OptionValue[ ReadableForm, { opts }, Trace              ]
+                    OptionValue[ ReadableForm, { opts }, "IndentSize"         ],
+                    OptionValue[ ReadableForm, { opts }, PageWidth            ],
+                    OptionValue[ ReadableForm, { opts }, CharacterEncoding    ],
+                    OptionValue[ ReadableForm, { opts }, "RelativeWidth"      ],
+                    OptionValue[ ReadableForm, { opts }, "PrefixForm"         ],
+                    OptionValue[ ReadableForm, { opts }, PerformanceGoal      ],
+                    OptionValue[ ReadableForm, { opts }, "RealAccuracy"       ],
+                    OptionValue[ ReadableForm, { opts }, "InitialIndent"      ],
+                    OptionValue[ ReadableForm, { opts }, CachePersistence     ],
+                    OptionValue[ ReadableForm, { opts }, "DynamicAlignment"   ],
+                    OptionValue[ ReadableForm, { opts }, "StrictMode"         ],
+                    OptionValue[ ReadableForm, { opts }, "Tokens"             ],
+                    OptionValue[ ReadableForm, { opts }, Trace                ],
+                    OptionValue[ ReadableForm, { opts }, TimeConstraint       ],
+                    OptionValue[ ReadableForm, { opts }, "Hurry"              ],
+                    OptionValue[ ReadableForm, { opts }, "TimeoutPlaceholder" ]
                 ]
             ];
 
+            $expr = Replace[
+                HoldComplete @ expr,
+                HoldComplete[ Unevaluated[ e___ ] ] :> HoldComplete @ e
+            ];
+
+            $string = dataString;
 
             boxes = StyleBox[
                 Replace[ r_List :> RowBox @ r ][
@@ -225,9 +254,14 @@ ReadableForm /:
                         ]
                 ],
                 "Input",
+                "ReadableForm",
                 ShowAutoStyles       -> True,
                 ShowStringCharacters -> True,
-                StripOnInput         -> True
+                StripOnInput         -> True,
+                TaggingRules         -> <|
+                    "Expression" :> $expr,
+                    "String"     :> $string
+                |>
             ];
 
 
@@ -386,9 +420,52 @@ cached // endDefinition;
 (*cFormat*)
 cFormat // beginDefinition;
 cFormat // Attributes = { HoldAllComplete };
-cFormat[ arg_ ] /; $fCache := cached @ trace @ format @ arg;
-cFormat[ arg_ ] := trace @ format @ arg;
+cFormat[ arg_ ] /; $hurry2 := timeout @ arg;
+cFormat[ arg_ ] /; $hurry1 := toString @ arg;
+cFormat[ arg_ ] /; $fCache := checkTime @ cached @ trace @ format @ arg;
+cFormat[ arg_ ] := checkTime @ trace @ format @ arg;
 cFormat // endDefinition;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*timeout*)
+timeout // beginDefinition;
+timeout // Attributes = { HoldAllComplete };
+timeout[ arg_ ] := With[ { t = $timeoutPlaceholder }, timeout[ arg, t ] ];
+timeout[ arg_, t_String ] := t;
+timeout[ arg_, p_ ] := With[ { s = p @ HoldComplete @ arg }, s /; StringQ @ s ];
+timeout[ _, _ ] := $defaultTimeoutPlaceholder;
+timeout // endDefinition;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkTime*)
+checkTime // beginDefinition;
+checkTime // Attributes = { HoldAllComplete };
+
+checkTime[ eval_ ] /; $checkTime :=
+    With[ { elapsed = (AbsoluteTime[ ] - $startTime) / $totalTime },
+
+        If[ $hurry && ! $hurry1 && elapsed > 0.5,
+            $hurry1        = True;
+            $fastMode      = True;
+            $prefixEnabled = False;
+            $fancyAlign    = False;
+            $retry         = False;
+        ];
+
+
+        If[ ! $hurry2 && elapsed > 0.75,
+            $hurry2    = True;
+            $checkTime = False;
+        ];
+
+        eval
+    ];
+
+checkTime[ eval_ ] := eval;
+
+checkTime // endDefinition;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -453,26 +530,38 @@ formatDataString[
     fancy_,
     strict_,
     tokens_,
-    trace_
+    trace_,
+    timeConstraint_,
+    hurry_,
+    timeoutPlaceholder_
 ] :=
     Block[
         {
-            $NumberMarks    = False,
-            $formatEncoding = enc,
-            $level          = init,
-            $indentSize     = indSize,
-            $pageWidth      = pageWidth,
-            $relativeWidth  = rel,
-            $prefixEnabled  = prefix,
-            $fastMode       = perf === "Speed",
-            $fCache         = MatchQ[ cache, Full|True ],
-            $sCache         = MatchQ[ cache, Full|Automatic|True ],
-            $fancyAlign     = TrueQ @ fancy,
-            $retry          = TrueQ @ strict,
-            $trace          = TrueQ @ trace
+            $NumberMarks        = False,
+            $formatEncoding     = enc,
+            $level              = init,
+            $indentSize         = indSize,
+            $pageWidth          = pageWidth,
+            $relativeWidth      = rel,
+            $prefixEnabled      = prefix,
+            $fastMode           = perf === "Speed",
+            $fCache             = MatchQ[ cache, Full|True ],
+            $sCache             = MatchQ[ cache, Full|Automatic|True ],
+            $fancyAlign         = TrueQ @ fancy,
+            $retry              = TrueQ @ strict,
+            $trace              = TrueQ @ trace,
+            $totalTime          = toTotalTime @ timeConstraint,
+            $startTime          = AbsoluteTime[ ],
+            $hurry1             = False,
+            $hurry2             = False,
+            $checkTime          = True,
+            $hurry              = TrueQ @ hurry,
+            $timeoutPlaceholder = timeoutPlaceholder
         },
 
         If[ TrueQ @ $trace, $traces = Internal`Bag[ ] ];
+
+        If[ $totalTime === Infinity, $checkTime = False ];
 
         indent[ ] <> StringTrim @ Apply[
             cFormat,
@@ -484,6 +573,16 @@ formatDataString[
     ];
 
 formatDataString // endDefinition;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toTotalTime*)
+toTotalTime[ q_Quantity ] :=
+    toTotalTime @ N @ QuantityMagnitude @ UnitConvert[ q, "Seconds" ];
+
+toTotalTime[ n_? Positive ] := n;
+
+toTotalTime[ ___ ] := Infinity;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -1775,7 +1874,11 @@ toString0[ expr_ ] :=
              HoldComplete[ e_ ] :>
                 ToString[ Unevaluated @ e,
                           InputForm,
-                          CharacterEncoding -> $formatEncoding
+                          CharacterEncoding -> $formatEncoding,
+                          PageWidth -> If[ TrueQ @ $hurry1,
+                                           currentLineWidth[ ],
+                                           Infinity
+                                       ]
                 ]
     ] // StringTrim;
 

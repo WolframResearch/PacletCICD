@@ -128,5 +128,5 @@ VerificationTest[
     _,
     { SecondsToQuantity::mmu },
     SameTest -> MatchQ,
-    TestID -> "SecondsToQuantity-11"
+    TestID   -> "SecondsToQuantity-11"
 ]
