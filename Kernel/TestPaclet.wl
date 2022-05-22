@@ -163,33 +163,49 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         time   = SecondsToQuantity @ result[ "AbsoluteTimeUsed" ];
         mem    = BytesToQuantity @ result[ "MemoryUsed" ];
         link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
-        input  = codeBlock[ "Input"            , result[ "Input"            ] ];
-        expOut = codeBlock[ "Expected Output"  , result[ "ExpectedOutput"   ] ];
-        actOut = codeBlock[ "Actual Output"    , result[ "ActualOutput"     ] ];
-        expMsg = codeBlock[ "Expected Messages", result[ "ExpectedMessages" ] ];
-        actMsg = codeBlock[ "Actual Messages"  , result[ "ActualMessages"   ] ];
+        input  = readableHoldForm @ result[ "Input"            ];
+        expOut = readableHoldForm @ result[ "ExpectedOutput"   ];
+        actOut = readableHoldForm @ result[ "ActualOutput"     ];
+        expMsg = readableHoldForm @ result[ "ExpectedMessages" ];
+        actMsg = readableHoldForm @ result[ "ActualMessages"   ];
 
-        md = TemplateApply[
-            $testResultTemplate,
-            <|
-                "Icon"             -> icon,
-                "Result"           -> outcomeText @ res,
-                "TestID"           -> id,
-                "Duration"         -> timeText @ time,
-                "Memory"           -> ToString @ mem,
-                "Link"             -> link,
-                "Input"            -> input,
-                "ExpectedOutput"   -> expOut,
-                "ActualOutput"     -> actOut,
-                "ExpectedMessages" -> expMsg,
-                "ActualMessages"   -> actMsg
-            |>
-        ];
+        md = ToMarkdownString @ {
+            Delimiter,
+            Grid @ {
+                {
+                    "",
+                    Style[ "Result"  , Bold ],
+                    Style[ "TestID"  , Bold ],
+                    Style[ "Duration", Bold ],
+                    Style[ "Memory"  , Bold ],
+                    Style[ "Link"    , Bold ]
+                },
+                {
+                    icon,
+                    outcomeText @ res,
+                    id,
+                    timeText @ time,
+                    ToString @ mem,
+                    link
+                }
+            },
+            Grid @ {
+                { Style[ "Input"           , Bold ], input  },
+                { Style[ "ExpectedOutput"  , Bold ], expOut },
+                { Style[ "ActualOutput"    , Bold ], actOut },
+                { Style[ "ExpectedMessages", Bold ], expMsg },
+                { Style[ "ActualMessages"  , Bold ], actMsg }
+            }
+        };
 
-        appendStepSummary @ md
+        appendStepSummary @ ConfirmBy[ md, StringQ ]
     ];
 
 generateTestFailureDetails // catchUndefined;
+
+readableHoldForm[ HoldForm[ expr_ ] ] :=
+    ReadableForm[ Unevaluated @ expr, TimeConstraint -> 3 ];
+readableHoldForm[ expr_ ] := readableHoldForm @ HoldForm @ expr;
 
 
 timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
@@ -319,14 +335,7 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        StringJoin[
-            "<a href=\"",
-            url,
-            frag,
-            "\" target=\"_blank\">",
-            ToString @ lbl,
-            "</a>"
-        ]
+        ToMarkdownString @ Hyperlink[ ":link:", url <> frag ]
     ],
     file &
 ];
