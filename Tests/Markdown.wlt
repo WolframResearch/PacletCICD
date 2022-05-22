@@ -264,15 +264,119 @@ VerificationTest[
 (* ::Subsection::Closed:: *)
 (*Grid*)
 VerificationTest[
-    ToMarkdownString @ Grid @ { { a, b, c }, { 1, 2, 3 } },
+    ToMarkdownString[ Grid @ { { a, b, c }, { 1, 2, 3 } }, "HTMLTables" -> False ],
     "| a | b | c |\n| --- | --- | --- |\n| 1 | 2 | 3 |",
     TestID -> "ToMarkdownString-Grid-1"
 ]
 
 VerificationTest[
-    ToMarkdownString[ Grid @ { { a, b, c }, { 1, 2, 3 } }, "HTMLTables" -> True ],
+    ToMarkdownString[ Grid @ { { a, b, c }, { 1, 2, 3 } } ],
     "<table><tbody><tr><td>a</td><td>b</td><td>c</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>",
     TestID -> "ToMarkdownString-Grid-2"
+]
+
+VerificationTest[
+    ToMarkdownString @ Grid @ {
+        { "Some Text", "Here is some long text\nwith a line break." },
+        {
+            "Some Code",
+            ReadableForm[
+                Hold[ Table[ i + 1, { i, 5 } ], Range[ 10 ] ],
+                PageWidth -> 30
+            ]
+        }
+    },
+    "<table><tbody><tr><td>Some Text</td><td>Here is some long text<br>with a line break.</td></tr><tr><td>Some Code</td><td><pre lang=\"wolfram\">Hold[&#10;    Table[ i + 1, { i, 5 } ],&#10;    Range[ 10 ]&#10;]</pre></td></tr></tbody></table>",
+    TestID -> "ToMarkdownString-Grid-3"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ReadableForm*)
+VerificationTest[
+    ToMarkdownString @ ReadableForm @ Hold[
+        f[ x_ ] := Table[ i + 1, { i, x } ]
+    ],
+    "`Hold[ f[ x_ ] := Table[ i + 1, { i, x } ] ]`",
+    TestID -> "ToMarkdownString-ReadableForm-1"
+]
+
+VerificationTest[
+    ToMarkdownString[
+        ReadableForm @ Hold[ f[ x_ ] := Table[ i + 1, { i, x } ] ],
+        "Inline" -> False
+    ],
+    "```wolfram\nHold[ f[ x_ ] := Table[ i + 1, { i, x } ] ]\n```",
+    TestID -> "ToMarkdownString-ReadableForm-2"
+]
+
+VerificationTest[
+    evaluated = False;
+    ToMarkdownString @ ReadableForm @ Unevaluated[ evaluated = True ],
+    "`evaluated = True`",
+    TestID -> "ToMarkdownString-ReadableForm-3"
+]
+
+VerificationTest[
+    evaluated,
+    False,
+    TestID -> "ToMarkdownString-ReadableForm-4"
+]
+
+VerificationTest[
+    ToMarkdownString @ ExpressionCell[
+        Defer[ f[ x_ ] := Table[ i + 1, { i, x } ] ],
+        "ReadableForm"
+    ],
+    "```wolfram\nf[ x_ ] := Table[ i + 1, { i, x } ]\n```",
+    TestID -> "ToMarkdownString-ReadableForm-5"
+]
+
+VerificationTest[
+    ToMarkdownString @ Style[
+        Defer[ f[ x_ ] := Table[ i + 1, { i, x } ] ],
+        "ReadableForm"
+    ],
+    "`f[ x_ ] := Table[ i + 1, { i, x } ]`",
+    TestID -> "ToMarkdownString-ReadableForm-6"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*TraditionalForm*)
+VerificationTest[
+    ToMarkdownString @ TraditionalForm @ Limit[ f @ x, x -> Infinity ],
+    "$$\\underset{x\\to \\infty }{\\text{lim}}f(x)$$",
+    TestID -> "ToMarkdownString-TraditionalForm-1"
+]
+
+VerificationTest[
+    ToMarkdownString[
+        TraditionalForm @ Limit[ f @ x, x -> Infinity ],
+        "Inline" -> True
+    ],
+    "$\\underset{x\\to \\infty }{\\text{lim}}f(x)$",
+    TestID -> "ToMarkdownString-TraditionalForm-2"
+]
+
+VerificationTest[
+    ToMarkdownString @ Row @ {
+        "Here is some inline TeX: ",
+        TraditionalForm @ Limit[ f @ x, x -> Infinity ]
+    },
+    "Here is some inline TeX: $\\underset{x\\to \\infty }{\\text{lim}}f(x)$",
+    TestID -> "ToMarkdownString-TraditionalForm-3"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Error handling*)
+VerificationTest[
+    ToMarkdownString @ Wolfram`PacletCICD`Private`$failTest,
+    Failure[ "ToMarkdownString::InternalError", _ ],
+    { ToMarkdownString::InternalError },
+    SameTest -> MatchQ,
+    TestID   -> "ToMarkdownString-FailTest"
 ]
 
 (*TODO

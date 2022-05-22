@@ -12,13 +12,14 @@ Begin[ "`Private`" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Flags*)
-$inline               = False;
+$inline               = Automatic;
 $mdBoxes              = False;
 $html                 = True;
 $useFE                = True;
 $showStringCharacters = False;
 $hyperlinkAction      = "New";
-$htmlTables           = False;
+$htmlTables           = True;
+$codeLanguage         = "wolfram";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -62,9 +63,16 @@ $$hlButton    = ButtonBox[ ___, BaseStyle -> "Hyperlink", ___ ];
 $$hyperlink   = $$hlButton | $$hlTemplate;
 $$hlAction    = "New"|"Recycled";
 
+$$rfWrapper    = (Style|ExpressionCell)[ __, "ReadableForm", ___ ];
+$$rfBox        = (StyleBox|Cell)[ __, "ReadableForm", ___ ];
+$$rfExpr       = _ReadableForm | $$rfWrapper;
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ToMarkdownString*)
+ToMarkdownString::InvalidInline =
+"`1` is not a valid setting for Inline.";
+
 ToMarkdownString::InvalidCharacterEncoding =
 "`1` is not a valid character encoding.";
 
@@ -77,6 +85,9 @@ ToMarkdownString::StringConversionError =
 ToMarkdownString::HyperlinkActionError =
 "`1` is not a valid value for DefaultHyperlinkAction";
 
+ToMarkdownString::InternalError =
+"Markdown conversion failed due to an unexpected error.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
@@ -85,7 +96,8 @@ ToMarkdownString // Options = {
     "TimeZone"               :> $TimeZone,
     "CharacterEncoding"      -> Automatic,
     "DefaultHyperlinkAction" -> "New",
-    "HTMLTables"             -> False
+    "HTMLTables"             -> $htmlTables,
+    "Inline"                 -> $inline
 };
 
 (* ::**********************************************************************:: *)
@@ -109,32 +121,70 @@ ToMarkdownString[ expr_, opts: OptionsPattern[ ] ] :=
 (* ::Subsection::Closed:: *)
 (*makeMarkdown*)
 makeMarkdown // Attributes = { HoldFirst };
+makeMarkdown[ expr_, as_Association ] :=
+    Block[ { $inline = toInlineOption @ Lookup[ as, "Inline", Automatic ] },
+        Replace[
+            makeMarkdown0[ expr, as ],
+            fail: Except[ _? StringQ ] :> throwMessageFailure[
+                ToMarkdownString::InternalError,
+                HoldForm @ expr,
+                HoldForm @ fail
+            ]
+        ]
+    ];
 
-makeMarkdown[ str_String, as_ ] := mdString[ str, as ];
+makeMarkdown // catchUndefined;
+
+
+makeMarkdown0 // Attributes = { HoldFirst };
+
+makeMarkdown0[ $failTest, as_ ] := $undefined;
+
+makeMarkdown0[ str_String, as_ ] := mdString[ str, as ];
 
 (* TODO: this doesn't space Item cells properly *)
-makeMarkdown[ list_List, as_ ] :=
+makeMarkdown0[ list_List, as_ ] :=
     Block[ { $inline = False },
         StringRiffle[
-            Cases[ Unevaluated @ list, e_ :> makeMarkdown[ e, as ] ],
+            Cases[ Unevaluated @ list, e_ :> makeMarkdown0[ e, as ] ],
             "\n\n"
         ]
     ];
 
-makeMarkdown[ expr: _Notebook|_Cell, as_ ] :=
+makeMarkdown0[ Row[ list_List, ___ ], as_ ] :=
+    Block[ { $inline = True },
+        StringJoin @ Cases[ Unevaluated @ list, e_ :> makeMarkdown0[ e, as ] ]
+    ];
+
+makeMarkdown0[ Evaluate[ expr: $$rfExpr ], as_ ] :=
+    mdReadableForm[ expr, as ];
+
+makeMarkdown0[ expr: _Notebook|_Cell, as_ ] :=
     makeMarkdownFromBoxes[ expr, as ];
 
-makeMarkdown[ cell: _ExpressionCell|_TextCell, as_ ] :=
+makeMarkdown0[ cell: _ExpressionCell|_TextCell, as_ ] :=
     makeMarkdownFromBoxes[ First @ MakeBoxes @ cell, as ];
 
-makeMarkdown[ Delimiter, a_ ] := "***";
+makeMarkdown0[ Delimiter, a_ ] := "***";
 
-makeMarkdown[ RawBoxes[ e_ ], a_ ] := makeMarkdownFromBoxes[ e, a ];
-makeMarkdown[ Defer[ e_ ]   , a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
-makeMarkdown[ HoldForm[ e_ ], a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
-makeMarkdown[ e_            , a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
+makeMarkdown0[ tr_TraditionalForm, as_ ] := makeMDTradForm[ tr, as ];
 
-makeMarkdown // catchUndefined;
+makeMarkdown0[ RawBoxes[ e_ ], a_ ] := makeMarkdownFromBoxes[ e, a ];
+makeMarkdown0[ Defer[ e_ ]   , a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
+makeMarkdown0[ HoldForm[ e_ ], a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
+makeMarkdown0[ e_            , a_ ] := makeMarkdownFromBoxes[ MakeBoxes @ e, a ];
+
+makeMarkdown0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toInlineOption*)
+toInlineOption[ Automatic ] := $inline;
+toInlineOption[ b: True|False ] := b;
+toInlineOption[ other_ ] :=
+    throwMessageFailure[ ToMarkdownString::InvalidInline, other ];
+
+toInlineOption // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -150,10 +200,16 @@ mdString[ str_String? StringQ, as_Association ] :=
         ToString[ rep, CharacterEncoding -> enc ]
     ];
 
-$mdStringReplacements = {
-    "\[IndentingNewLine]" -> "\n",
-    "\n" -> "  \n"
-};
+$mdStringReplacements :=
+    Module[ { nl, snl },
+        nl  = If[ TrueQ @ $forceHTML, "<br>", "\n" ];
+        snl = If[ TrueQ @ $forceHTML, "<br>", "  \n" ];
+        {
+            "\[IndentingNewLine]" -> nl,
+            "\n" -> snl,
+            If[ TrueQ @ $showStringCharacters, Nothing, "\\n" -> snl ]
+        }
+    ];
 
 toMDCharEncoding[ Automatic  ] := If[ TrueQ @ $codeBlock, "ASCII", "Unicode" ];
 toMDCharEncoding[ enc_String ] := enc;
@@ -169,11 +225,13 @@ makeMarkdownFromBoxes[ Notebook[ cells_List, ___ ], as_ ] :=
 makeMarkdownFromBoxes[ Cell[ CellGroupData[ cells_List, _ ], ___ ], as_ ] :=
     makeMarkdownFromBoxList[ cells, as ];
 
-makeMarkdownFromBoxes[ cell: $$heading, as_ ] /; ! $inline :=
+makeMarkdownFromBoxes[ cell: $$heading, as_ ] /; ! TrueQ @ $inline :=
     makeMDHeading[ cell, as ];
 
-makeMarkdownFromBoxes[ cell: $$item, as_ ] /; ! $inline :=
+makeMarkdownFromBoxes[ cell: $$item, as_ ] /; ! TrueQ @ $inline :=
     makeMDItem[ cell, as ];
+
+makeMarkdownFromBoxes[ box: $$rfBox, as_ ] := mdReadableForm[ box, as ];
 
 makeMarkdownFromBoxes[ cell: $$inputCell|$$outputCell, as_ ] :=
     makeMDCodeBlock[ cell, as ];
@@ -280,7 +338,13 @@ getFontWeight[ ___ ] := "Plain";
 
 
 includeFontWeight[ s_, c_ ] := includeFontWeight[ s, c, getFontWeight @ c ];
-includeFontWeight[ str_String? StringQ, cell_, "Bold" ] := "**" <> str <> "**";
+
+includeFontWeight[ str_String? StringQ, cell_, "Bold" ] :=
+    If[ TrueQ @ $forceHTML,
+        "<strong>" <> str <> "</strong>",
+        "**" <> str <> "**"
+    ];
+
 includeFontWeight[ str_String? StringQ, cell_, fw_ ] := str;
 
 
@@ -290,8 +354,66 @@ getFontSlant[ ___ ] := "Plain";
 
 
 includeFontSlant[ s_, c_ ] := includeFontSlant[ s, c, getFontSlant @ c ];
-includeFontSlant[ str_String? StringQ, cell_, "Italic" ] := "*" <> str <> "*";
+
+includeFontSlant[ str_String? StringQ, cell_, "Italic" ] :=
+    If[ TrueQ @ $forceHTML,
+        "<em>" <> str <> "</em>",
+        "*" <> str <> "*"
+    ];
+
 includeFontSlant[ str_String? StringQ, cell_, fw_ ] := str;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeMDTradForm*)
+makeMDTradForm // Attributes = { HoldFirst };
+
+makeMDTradForm[ tr_TraditionalForm, as_ ] /; $forceHTML :=
+    makeMarkdownFromBoxes[ MakeBoxes @ tr, as ];
+
+makeMDTradForm[ tr_TraditionalForm, as_ ] := Enclose[
+    Module[ { str, tex },
+        str = ConfirmBy[ ExportString[ tr, "TeXFragment" ], StringQ ];
+        tex = StringReplace[ StringTrim @ str, "\\["~~s___~~"\\]" :> s ];
+        If[ TrueQ @ $inline,
+            "$"<>tex<>"$",
+            "$$"<>tex<>"$$"
+        ]
+    ],
+    makeMarkdownFromBoxes[ MakeBoxes @ tr, as ] &
+];
+
+makeMDTradForm // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*mdReadableForm*)
+mdReadableForm // Attributes = { HoldFirst };
+
+mdReadableForm[ rf_ReadableForm, as_ ] :=
+    Block[ { $inline = Replace[ $inline, Automatic -> True ] },
+        mdCodeBlock[ ToString @ rf, as ]
+    ];
+
+mdReadableForm[ (h: Style|ExpressionCell)[ Defer[ expr_ ], a___ ], as_ ] :=
+    mdReadableForm[ h[ expr, a ], as ];
+
+mdReadableForm[ Style[ expr_, ___ ], as_ ] :=
+    Block[ { $inline = Replace[ $inline, Automatic -> True ] },
+        mdReadableForm[ ReadableForm @ Unevaluated @ expr, as ]
+    ];
+
+mdReadableForm[ ExpressionCell[ expr_, ___ ], as_ ] :=
+    Block[ { $inline = Replace[ $inline, Automatic -> False ] },
+        mdReadableForm[ ReadableForm @ Unevaluated @ expr, as ]
+    ];
+
+mdReadableForm[
+    StyleBox[ ___, TaggingRules -> KeyValuePattern[ "String" :> str_ ], ___ ],
+    as_
+] /; StringQ @ str := mdCodeBlock[ str, as ];
+
+mdReadableForm // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -302,9 +424,11 @@ makeMDGrid[ g: GridBox[ grid_, ___ ], as_ ] :=
     ];
 
 makeMDGrid[ _, grid_? MatrixQ, as_ ] /; $htmlTables :=
-    Enclose @ Module[ { tr },
-        tr = ConfirmBy[ makeMDGridRow[ #, as ], StringQ ] & /@ grid;
-        "<table><tbody>" <> tr <> "</tbody></table>"
+    Enclose @ Block[ { $forceHTML = True },
+        Module[ { tr },
+            tr = ConfirmBy[ makeMDGridRow[ #, as ], StringQ ] & /@ grid;
+            "<table><tbody>" <> tr <> "</tbody></table>"
+        ]
     ];
 
 makeMDGrid[ _, grid0_? MatrixQ, as_ ] /; Positive @ Length @ grid0 :=
@@ -442,11 +566,8 @@ makeMDCodeBlock // catchUndefined;
 (*mdCodeBlock*)
 mdCodeBlock[ string_String? StringQ, as_, lang_: "wolfram" ] :=
     With[ { md = mdString[ string, as ] },
-        If[ TrueQ @ $inline,
-            If[ StringContainsQ[ string, "`" ],
-                "`` " <> md <> " ``",
-                "`" <> md <> "`"
-            ],
+        If[ TrueQ[ $inline || $forceHTML ],
+            toInlineCodeString[ md, lang ],
             StringRiffle[
                 { "```" <> lang, md, "```" },
                 "\n"
@@ -455,6 +576,41 @@ mdCodeBlock[ string_String? StringQ, as_, lang_: "wolfram" ] :=
     ];
 
 mdCodeBlock // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*toInlineCodeString*)
+toInlineCodeString[ code_ ] := toInlineCodeString[ code, $codeLanguage ];
+
+toInlineCodeString[ code_String? inlineHTMLQ, lang_ ] :=
+    Module[ { pre, br },
+        pre = If[ StringQ @ lang, "<pre lang=\""<>lang<>"\">", "<pre>" ];
+        br  = If[ StringQ @ lang, "&#10;", "<br>" ];
+        StringJoin[
+            "<pre lang=\""<>lang<>"\">",
+            StringReplace[
+                code,
+                { "<br>" -> br, "\n" -> br, "<" -> "&lt;", ">" -> "&gt;" }
+            ],
+            "</pre>"
+        ]
+    ];
+
+toInlineCodeString[ code_String? StringQ, lang_String ?StringQ ] :=
+    If[ TrueQ @ StringContainsQ[ code, "`" ],
+        "`` " <> code <> " ``",
+        "`" <> code <> "`"
+    ];
+
+toInlineCodeString // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*inlineHTMLQ*)
+inlineHTMLQ[ code_String? StringQ ] :=
+    TrueQ[ $forceHTML || StringContainsQ[ code, "\n" ] ];
+
+inlineHTMLQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -472,10 +628,7 @@ makeMDCodeInline // catchUndefined;
 (*mdCodeInline*)
 mdCodeInline[ string_String? StringQ, as_ ] :=
     With[ { md = mdString[ string, as ] },
-        If[ StringContainsQ[ string, "`" ],
-            "`` " <> md <> " ``",
-            "`" <> md <> "`"
-        ] /; StringQ @ md
+        toInlineCodeString @ md /; StringQ @ md
     ];
 
 mdCodeInline // catchUndefined;
@@ -630,13 +783,26 @@ fasterCellToString0[ (box: $boxOperators)[ a_, b_ ] ] :=
         b$ = fasterCellToString0 @ b;
         t  = $boxOp @ box;
         If[ StringQ @ a$ && StringQ @ b$,
-            If[ TrueQ @ $html,
+            If[ TrueQ[ $html || $forceHTML ],
                 StringJoin[ a$, "<", t, ">", b$, "</", t, ">" ],
                 h = StringDelete[ ToString @ box, "Box"~~EndOfString ];
                 StringJoin[ h, "[", a$, ", ", b$, "]" ]
             ],
             { a$, b$ }
         ]
+    ];
+
+fasterCellToString0[ box: (TagBox|FormBox)[ _, TraditionalForm, ___ ] ] :=
+    Module[ { expr },
+        expr = Quiet @ ToExpression[ box, StandardForm, HoldComplete ];
+        Replace[
+            expr,
+            HoldComplete[ e_ ] :>
+                If[ TrueQ @ $showStringCharacters,
+                    ToString[ Unevaluated @ e, InputForm ],
+                    ToString @ Unevaluated @ e
+                ]
+        ] /; MatchQ[ expr, HoldComplete[ _ ] ]
     ];
 
 fasterCellToString0[ TemplateBox[ args_, name_String, ___ ] ] :=
