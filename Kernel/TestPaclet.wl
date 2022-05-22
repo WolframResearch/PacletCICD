@@ -169,8 +169,8 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         expMsg = readableHoldForm @ result[ "ExpectedMessages" ];
         actMsg = readableHoldForm @ result[ "ActualMessages"   ];
 
-        outIcon = If[ expOut =!= actOut, ":x:", "" ];
-        msgIcon = If[ expMsg =!= actMsg, ":x:", "" ];
+        outIcon = If[ expOut =!= actOut, " :x:", "" ];
+        msgIcon = If[ expMsg =!= actMsg, " :x:", "" ];
 
         md = ToMarkdownString @ {
             Delimiter,
@@ -193,11 +193,11 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
                 }
             },
             Grid @ {
-                { Style[ "Input"           , Bold ], ""     , input  },
-                { Style[ "ExpectedOutput"  , Bold ], ""     , expOut },
-                { Style[ "ActualOutput"    , Bold ], outIcon, actOut },
-                { Style[ "ExpectedMessages", Bold ], ""     , expMsg },
-                { Style[ "ActualMessages"  , Bold ], msgIcon, actMsg }
+                { Style[ "Input"                  , Bold ], input  },
+                { Style[ "ExpectedOutput"         , Bold ], expOut },
+                { Style[ "ActualOutput"<>outIcon  , Bold ], actOut },
+                { Style[ "ExpectedMessages"       , Bold ], expMsg },
+                { Style[ "ActualMessages"<>msgIcon, Bold ], actMsg }
             }
         };
 
@@ -338,7 +338,11 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        ToMarkdownString @ Hyperlink[ lbl, url <> frag ]
+        ToMarkdownString @ Hyperlink[
+            lbl,
+            url <> frag,
+            "HyperlinkAction" -> "Recycled"
+        ]
     ],
     file &
 ];
