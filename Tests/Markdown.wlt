@@ -383,3 +383,30 @@ VerificationTest[
 
     Superscript/Subscript
 *)
+
+
+VerificationTest[
+    1+1,
+    3,
+    TestID -> "FailTest"
+]
+
+VerificationTest[
+    1/0,
+    ComplexInfinity,
+    TestID -> "MessageTest"
+]
+
+VerificationTest[
+    Pause[5]; 1+1,
+    2,
+    TestID -> "TimeoutTest",
+    TimeConstraint -> 1
+]
+
+VerificationTest[
+    Range[10000]; 1+1,
+    2,
+    TestID -> "MemoryTest",
+    MemoryConstraint -> 1000
+]
