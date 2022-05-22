@@ -53,12 +53,14 @@ VerificationTest[
     Quantity[
         MixedMagnitude @ { 3, 25, 45 },
         MixedUnit @ { "Hours", "Minutes", "Seconds" }
-    ]
+    ],
+    TestID -> "SecondsToQuantity-1"
 ]
 
 VerificationTest[
     q = Quantity[ 1.2346*^8, "Seconds" ],
-    Quantity[ 1.2346*^8, "Seconds" ]
+    Quantity[ 1.2346*^8, "Seconds" ],
+    TestID -> "SecondsToQuantity-2"
 ]
 
 VerificationTest[
@@ -66,14 +68,20 @@ VerificationTest[
     Quantity[
         MixedMagnitude @ { 3, 10, 29.731 },
         MixedUnit @ { "Years", "Months", "Days" }
-    ]
+    ],
+    TestID -> "SecondsToQuantity-3"
 ]
 
-VerificationTest[ SecondsToQuantity @ f @ x, Quantity[ f @ x, "Seconds" ] ]
+VerificationTest[
+    SecondsToQuantity @ f @ x,
+    Quantity[ f @ x, "Seconds" ],
+    TestID -> "SecondsToQuantity-4"
+]
 
 VerificationTest[
     SecondsToQuantity @ Quantity[ f @ x, "Minutes" ],
-    Quantity[ 60 * f @ x, "Seconds" ]
+    Quantity[ 60 * f @ x, "Seconds" ],
+    TestID -> "SecondsToQuantity-5"
 ]
 
 VerificationTest[
@@ -81,12 +89,14 @@ VerificationTest[
     Quantity[
         MixedMagnitude @ { 3, 25, 45.679 },
         MixedUnit @ { "Hours", "Minutes", "Seconds" }
-    ]
+    ],
+    TestID -> "SecondsToQuantity-6"
 ]
 
 VerificationTest[
     SecondsToQuantity[ 12346.0, "MixedUnits" -> False ],
-    Quantity[ 3.4294, "Hours" ]
+    Quantity[ 3.4294, "Hours" ],
+    TestID -> "SecondsToQuantity-7"
 ]
 
 VerificationTest[
@@ -94,7 +104,8 @@ VerificationTest[
     Quantity[
         MixedMagnitude @ { 1, 40, 52.402 },
         MixedUnit @ { "Hours", "Minutes", "Seconds" }
-    ]
+    ],
+    TestID -> "SecondsToQuantity-8"
 ]
 
 VerificationTest[
@@ -102,17 +113,20 @@ VerificationTest[
     Quantity[
         MixedMagnitude @ { 3, 25.761 },
         MixedUnit @ { "Hours", "Minutes" }
-    ]
+    ],
+    TestID -> "SecondsToQuantity-9"
 ]
 
 VerificationTest[
     SecondsToQuantity[ 12346.0, "MaxMixedUnits" -> 1 ],
-    SecondsToQuantity[ 12346.0, "MixedUnits" -> False ]
+    SecondsToQuantity[ 12346.0, "MixedUnits" -> False ],
+    TestID -> "SecondsToQuantity-10"
 ]
 
 VerificationTest[
     SecondsToQuantity[ 12346.0, "MaxMixedUnits" -> invalid ],
     _,
     { ResourceFunction::usermessage },
-    SameTest -> MatchQ
+    SameTest -> MatchQ,
+    TestID -> "SecondsToQuantity-11"
 ]
