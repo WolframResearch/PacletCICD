@@ -152,7 +152,7 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
     Enclose @ Module[
         {
             cs, info, id, res, icon, time, mem, link,
-            input, expOut, actOut, expMsg, actMsg, md
+            input, expOut, actOut, expMsg, actMsg, outIcon, msgIcon, md
         },
 
         cs     = ConfirmBy[ #, StringQ ] &;
@@ -168,6 +168,9 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         actOut = readableHoldForm @ result[ "ActualOutput"     ];
         expMsg = readableHoldForm @ result[ "ExpectedMessages" ];
         actMsg = readableHoldForm @ result[ "ActualMessages"   ];
+
+        outIcon = If[ expOut =!= actOut, ":x:", "" ];
+        msgIcon = If[ expMsg =!= actMsg, ":x:", "" ];
 
         md = ToMarkdownString @ {
             Delimiter,
@@ -190,11 +193,11 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
                 }
             },
             Grid @ {
-                { Style[ "Input"           , Bold ], input  },
-                { Style[ "ExpectedOutput"  , Bold ], expOut },
-                { Style[ "ActualOutput"    , Bold ], actOut },
-                { Style[ "ExpectedMessages", Bold ], expMsg },
-                { Style[ "ActualMessages"  , Bold ], actMsg }
+                { Style[ "Input"           , Bold ], ""     , input  },
+                { Style[ "ExpectedOutput"  , Bold ], ""     , expOut },
+                { Style[ "ActualOutput"    , Bold ], outIcon, actOut },
+                { Style[ "ExpectedMessages", Bold ], ""     , expMsg },
+                { Style[ "ActualMessages"  , Bold ], msgIcon, actMsg }
             }
         };
 

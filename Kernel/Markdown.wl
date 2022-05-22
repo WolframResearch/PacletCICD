@@ -168,7 +168,8 @@ makeMarkdown0[ expr: _Notebook|_Cell, as_ ] :=
 makeMarkdown0[ cell: _ExpressionCell|_TextCell, as_ ] :=
     makeMarkdownFromBoxes[ First @ MakeBoxes @ cell, as ];
 
-makeMarkdown0[ Delimiter, a_ ] := "***";
+makeMarkdown0[ Delimiter, a_ ] :=
+    If[ TrueQ @ $forceHTML, "<hr>", "\n\n***\n\n" ];
 
 makeMarkdown0[ tr_TraditionalForm, as_ ] := makeMDTradForm[ tr, as ];
 
