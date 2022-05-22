@@ -5423,6 +5423,127 @@ Notebook[
                CellID -> 18221632
               ],
               Cell[
+               CellGroupData[
+                {
+                 Cell[
+                  TextData[
+                   Cell[
+                    BoxData[
+                     InterpretationBox[
+                      TagBox[
+                       ActionMenuBox[
+                        "\"64Bit\"",
+                        {
+                         "\"Open/Close Group\"" :>
+                          (SelectionMove[ParentCell[EvaluationCell[]], All, Cell];
+                          FrontEndTokenExecute[
+                           EvaluationNotebook[],
+                           "OpenCloseGroup"
+                          ]),
+                         "\"Open Directory\"" :>
+                          DefinitionNotebookClient`FileTreeOpen[
+                           ParentCell[EvaluationCell[]]
+                          ],
+                         "\"Un/Mark as Excluded\"" :>
+                          DefinitionNotebookClient`FileTreeExclusionToggle[
+                           ParentCell[EvaluationCell[]]
+                          ],
+                         "\"Copy Path to Clipboard\"" :>
+                          DefinitionNotebookClient`FileTreeCopy[
+                           ParentCell[EvaluationCell[]]
+                          ]
+                        },
+                        Appearance -> None,
+                        BaseStyle -> {"Text"}
+                       ],
+                       Function[
+                        Annotation[
+                         #1,
+                         DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                          1
+                         ]
+                        ]
+                       ]
+                      ],
+                      File[FileNameJoin[{NotebookDirectory[], "Kernel/64Bit"}]],
+                      BoxID -> "FileTreePath",
+                      BaseStyle -> {"Text"}
+                     ]
+                    ]
+                   ]
+                  ],
+                  "FileManagerDirectory",
+                  CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
+                  CellGroupingRules -> {"SectionGrouping", 110},
+                  CellFrameLabels -> {
+                   {
+                    Cell[
+                     BoxData[
+                      TemplateBox[{}, "FileManagerDirectoryIconTemplate"]
+                     ],
+                     Background -> None
+                    ],
+                    Inherited
+                   },
+                   {Inherited, Inherited}
+                  },
+                  CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+                  CellID -> 149325039
+                 ],
+                 Cell[
+                  BoxData[
+                   InterpretationBox[
+                    TagBox[
+                     TemplateBox[
+                      {
+                       "\"PacletCICD.mx\"",
+                       File[
+                        FileNameJoin[
+                         {NotebookDirectory[], "Kernel/64Bit/PacletCICD.mx"}
+                        ]
+                       ]
+                      },
+                      "FileManagerFileOpenerTemplate"
+                     ],
+                     Function[
+                      Annotation[
+                       #1,
+                       DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
+                        2
+                       ]
+                      ]
+                     ]
+                    ],
+                    File[
+                     FileNameJoin[
+                      {NotebookDirectory[], "Kernel/64Bit/PacletCICD.mx"}
+                     ]
+                    ],
+                    BoxID -> "FileTreePath",
+                    BaseStyle -> {"Text"}
+                   ]
+                  ],
+                  "FileManagerFile",
+                  CellMargins -> {{46 + Inherited, Inherited}, {Inherited, Inherited}},
+                  CellGroupingRules -> {"SectionGrouping", 120},
+                  CellFrameLabels -> {
+                   {
+                    Cell[
+                     BoxData[TemplateBox[{}, "FileManagerWLIconTemplate"]],
+                     Background -> None
+                    ],
+                    Inherited
+                   },
+                   {Inherited, Inherited}
+                  },
+                  CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
+                  CellID -> 376528221
+                 ]
+                },
+                Closed
+               ]
+              ],
+              Cell[
                BoxData[
                 InterpretationBox[
                  TagBox[
