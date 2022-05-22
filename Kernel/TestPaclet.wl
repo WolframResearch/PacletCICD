@@ -106,7 +106,7 @@ generateTestSummary[ reports_Association ] := (
 generateTestSummary[ file_, report_TestReportObject ] :=
     Module[ { icon, link, pass, fail, time, row, md },
         icon = testSummaryIcon @ report;
-        link = testSummaryLink @ file;
+        link = ToMarkdownString @ testSummaryLink @ file;
         pass = testSummaryPass @ report;
         fail = testSummaryFail @ report;
         time = testSummaryTime @ report;
@@ -162,7 +162,7 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         icon   = cs @ testSummaryIcon @ res;
         time   = SecondsToQuantity @ result[ "AbsoluteTimeUsed" ];
         mem    = BytesToQuantity @ result[ "MemoryUsed" ];
-        link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
+        link   = testSummaryLink[ file, ":link:", lineAnchor @ info ];
         input  = readableHoldForm @ result[ "Input"            ];
         expOut = readableHoldForm @ result[ "ExpectedOutput"   ];
         actOut = readableHoldForm @ result[ "ActualOutput"     ];
@@ -338,11 +338,7 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        ToMarkdownString @ Hyperlink[
-            lbl,
-            url <> frag,
-            "HyperlinkAction" -> "Recycled"
-        ]
+        Hyperlink[ lbl, url <> frag, "HyperlinkAction" -> "Recycled" ]
     ],
     file &
 ];
