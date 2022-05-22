@@ -18,6 +18,7 @@ $html                 = True;
 $useFE                = True;
 $showStringCharacters = False;
 $hyperlinkAction      = "New";
+$htmlTables           = False;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -83,7 +84,8 @@ ToMarkdownString // Options = {
     "DateStringFormat"       :> $DateStringFormat,
     "TimeZone"               :> $TimeZone,
     "CharacterEncoding"      -> Automatic,
-    "DefaultHyperlinkAction" -> "New"
+    "DefaultHyperlinkAction" -> "New",
+    "HTMLTables"             -> False
 };
 
 (* ::**********************************************************************:: *)
@@ -96,8 +98,7 @@ ToMarkdownString[ expr_, opts: OptionsPattern[ ] ] :=
     ];
 
 (* TODO:
-    Grids
-    Hyperlinks
+    OpenerView
     Images?
     BlockQuote
     Numbered lists
@@ -195,6 +196,9 @@ makeMarkdownFromBoxes[ s: (Cell|StyleBox)[ a_, ___ ], as_ ] :=
 
 makeMarkdownFromBoxes[ box: $$hyperlink, as_ ] := makeMDHyperlink[ box, as ];
 
+makeMarkdownFromBoxes[ TagBox[ box_GridBox, _ ], as_ ] := makeMDGrid[ box, as ];
+makeMarkdownFromBoxes[ box_GridBox, as_ ] := makeMDGrid[ box, as ];
+
 makeMarkdownFromBoxes[ TemplateBox[ row_List, "RowDefault", ___ ], as_ ] :=
     Block[ { $inline = True },
         StringJoin[ makeMarkdownFromBoxes[ #, as ] & /@ row ]
@@ -288,6 +292,54 @@ getFontSlant[ ___ ] := "Plain";
 includeFontSlant[ s_, c_ ] := includeFontSlant[ s, c, getFontSlant @ c ];
 includeFontSlant[ str_String? StringQ, cell_, "Italic" ] := "*" <> str <> "*";
 includeFontSlant[ str_String? StringQ, cell_, fw_ ] := str;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*makeMDGrid*)
+makeMDGrid[ g: GridBox[ grid_, ___ ], as_ ] :=
+    Block[ { $inline = True, $htmlTables = Lookup[ as, "HTMLTables" ] },
+        makeMDGrid[ g, grid, as ]
+    ];
+
+makeMDGrid[ _, grid_? MatrixQ, as_ ] /; $htmlTables :=
+    Enclose @ Module[ { tr },
+        tr = ConfirmBy[ makeMDGridRow[ #, as ], StringQ ] & /@ grid;
+        "<table><tbody>" <> tr <> "</tbody></table>"
+    ];
+
+makeMDGrid[ _, grid0_? MatrixQ, as_ ] /; Positive @ Length @ grid0 :=
+    Enclose @ Module[ { cs, width, grid, header, rows, sep, tr },
+        cs     = ConfirmBy[ #, StringQ ] &;
+        width  = Last @ Dimensions @ grid0;
+        grid   = If[ Length @ grid0 === 1,
+                     Prepend[ grid0,
+                              ConstantArray[ "", width ]
+                     ],
+                     grid0
+                 ];
+        header = cs @ makeMDGridRow[ First @ grid, as ];
+        sep    = cs @ makeMDGridRow[ ConstantArray[ "---", width ], as ];
+        rows   = (cs @ makeMDGridRow[ #1, as ] &) /@ Rest @ grid;
+        StringRiffle[ Flatten @ { header, sep, rows }, "\n" ]
+    ];
+
+makeMDGrid // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*makeMDGridRow*)
+makeMDGridRow[ row_List, as_ ] /; $htmlTables :=
+    Enclose @ Module[ { str, td },
+        str = ConfirmBy[ makeMarkdownFromBoxes[ #1, as ], StringQ ] & /@ row;
+        td = ("<td>" <> #1 <> "</td>" &) /@ str;
+        "<tr>" <> td <> "</tr>"
+    ];
+
+makeMDGridRow[ row_List, as_ ] :=
+    Enclose @ Module[ { str },
+        str = ConfirmBy[ makeMarkdownFromBoxes[ #1, as ], StringQ ] & /@ row;
+        "| " <> StringRiffle[ str, " | " ] <> " |"
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

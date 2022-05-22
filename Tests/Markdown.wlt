@@ -260,9 +260,22 @@ VerificationTest[
     TestID -> "ToMarkdownString-Hyperlink-4"
 ]
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Grid*)
+VerificationTest[
+    ToMarkdownString @ Grid @ { { a, b, c }, { 1, 2, 3 } },
+    "| a | b | c |\n| --- | --- | --- |\n| 1 | 2 | 3 |",
+    TestID -> "ToMarkdownString-Grid-1"
+]
+
+VerificationTest[
+    ToMarkdownString[ Grid @ { { a, b, c }, { 1, 2, 3 } }, "HTMLTables" -> True ],
+    "<table><tbody><tr><td>a</td><td>b</td><td>c</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>",
+    TestID -> "ToMarkdownString-Grid-2"
+]
 
 (*TODO
 
-    Items
     Superscript/Subscript
 *)
