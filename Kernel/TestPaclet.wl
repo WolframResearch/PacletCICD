@@ -335,7 +335,7 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        ToMarkdownString @ Hyperlink[ ":link:", url <> frag ]
+        ToMarkdownString @ Hyperlink[ lbl, url <> frag ]
     ],
     file &
 ];
