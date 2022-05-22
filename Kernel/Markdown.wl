@@ -156,6 +156,9 @@ makeMarkdown0[ Row[ list_List, ___ ], as_ ] :=
         StringJoin @ Cases[ Unevaluated @ list, e_ :> makeMarkdown0[ e, as ] ]
     ];
 
+makeMarkdown0[ opener: OpenerView[ { _, _ }, ___ ], as_ ] /; $openerView :=
+    mdOpenerView[ opener, as ];
+
 makeMarkdown0[ Evaluate[ expr: $$rfExpr ], as_ ] :=
     mdReadableForm[ expr, as ];
 
@@ -387,6 +390,37 @@ makeMDTradForm // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*mdOpenerView*)
+mdOpenerView // Attributes = { HoldFirst };
+
+mdOpenerView[ OpenerView[ { lbl_, body_ }, ___ ], as_ ] /; $openerView :=
+    Enclose @ Block[ { $inline = False },
+        Module[ { lbl$, body$ },
+            lbl$  = ConfirmBy[ mdOpenerLabel[ lbl , as ], StringQ ];
+            body$ = ConfirmBy[ makeMarkdown[ body , as ], StringQ ];
+            StringJoin[
+                "<details><summary>",
+                lbl$,
+                "</summary>\n\n",
+                body$,
+                "\n\n</details>"
+            ]
+        ]
+    ];
+
+mdOpenerView // catchUndefined;
+
+
+mdOpenerLabel // Attributes = { HoldFirst };
+mdOpenerLabel[ lbl_, as_ ] :=
+    Block[ { $forceHTML = True }, makeMarkdown[ lbl , as ] ];
+
+mdOpenerLabel // catchUndefined;
+
+$openerView := MatchQ[ $inline, Automatic|True ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*mdReadableForm*)
 mdReadableForm // Attributes = { HoldFirst };
 
@@ -524,13 +558,14 @@ toHyperlinkAction // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*makeMDHeading*)
 makeMDHeading[ (Cell|StyleBox)[ a_, ___, s: $$headingStyle, ___ ], as_ ] :=
-    Enclose @ StringJoin[
-        ConstantArray[
-            "#",
-            ConfirmBy[ Lookup[ $$headingLevel, s ], IntegerQ ]
-        ],
-        " ",
-        ConfirmBy[ makeMarkdownFromBoxes[ a, as ], StringQ ]
+    Enclose @ Module[ { lvl, md, tag },
+        lvl = ConfirmBy[ Lookup[ $$headingLevel, s ], IntegerQ ];
+        md  = ConfirmBy[ makeMarkdownFromBoxes[ a, as ], StringQ ];
+        If[ TrueQ @ $forceHTML,
+            tag = "h" <> ToString @ lvl;
+            "<"<>tag<>">"<>md<>"</"<>tag<>">",
+            ConstantArray[ "#", lvl ] <> " " <> md
+        ]
     ];
 
 makeMDHeading // catchUndefined;
@@ -893,8 +928,11 @@ $cellToStringReplacementRules := $cellToStringReplacementRules =
 (* ::Subsection::Closed:: *)
 (*slowCellToString*)
 slowCellToString[ cell_ ] /; $useFE :=
-    UsingFrontEnd @ Module[ { plain, string },
-        plain = Quiet @ FrontEndExecute @ ExportPacket[ cell, "PlainText" ];
+    Module[ { plain, string },
+        plain = UsingFrontEnd @ Quiet @ FrontEndExecute @ ExportPacket[
+            cell,
+            "PlainText"
+        ];
 
         string = Replace[
             plain,

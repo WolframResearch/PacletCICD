@@ -370,6 +370,24 @@ VerificationTest[
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*OpenerView*)
+VerificationTest[
+    ToMarkdownString @ OpenerView @ { "label", "content" },
+    "<details><summary>label</summary>\n\ncontent\n\n</details>",
+    TestID -> "ToMarkdownString-OpenerView-1"
+]
+
+VerificationTest[
+    ToMarkdownString @ OpenerView @ {
+        Style[ "label", "Section" ],
+        ReadableForm @ Hold[ f[ x_ ] := Table[ i + 1, { i, x } ] ]
+    },
+    "<details><summary><h3>label</h3></summary>\n\n```wolfram\nHold[ f[ x_ ] := Table[ i + 1, { i, x } ] ]\n```\n\n</details>",
+    TestID -> "ToMarkdownString-OpenerView-2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Error handling*)
 VerificationTest[
     ToMarkdownString @ Wolfram`PacletCICD`Private`$failTest,
