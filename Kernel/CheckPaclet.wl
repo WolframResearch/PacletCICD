@@ -122,7 +122,6 @@ checkPaclet[ nb_, opts___ ] :=
         dir    = parentPacletDirectory @ nb;
         export = fileNameJoin @ { dir, "build", "check_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        ConsoleNotice[ "Exporting check results: " <> export ];
         exported = Export[ export,
                            data,
                            "WXF",
@@ -150,7 +149,7 @@ generateCheckReport[ KeyValuePattern @ {
         job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
         head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
-        title = Style[ "Check Results (" <> job <> ")", "Section" ];
+        title = Style[ "Definition Notebook (" <> job <> ")", "Section" ];
         grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
         appendStepSummary @ md

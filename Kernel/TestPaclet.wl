@@ -544,7 +544,6 @@ makeTestResult[ dir_, reports_, False ] :=
     Module[ { export, exported },
         export = fileNameJoin @ { dir, "build", "test_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
                            reports,
                            "WXF",

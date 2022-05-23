@@ -206,7 +206,7 @@ mdString[ str_String? StringQ, as_Association ] :=
 
 $mdStringReplacements :=
     Module[ { nl, snl },
-        nl  = If[ TrueQ @ $forceHTML, "<br>", "\n" ];
+        nl  = If[ TrueQ @ $forceHTML, "<br>",   "\n" ];
         snl = If[ TrueQ @ $forceHTML, "<br>", "  \n" ];
         {
             "\[IndentingNewLine]" -> nl,
