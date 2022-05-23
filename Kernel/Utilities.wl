@@ -345,6 +345,8 @@ ghCommitFileURL[ file_, { l1_Integer, l2_Integer } ] := Enclose[
     None &
 ];
 
+ghCommitFileURL[ file_ ] := None;
+
 ghCommitFileURL // catchUndefined;
 
 (* ::**********************************************************************:: *)
