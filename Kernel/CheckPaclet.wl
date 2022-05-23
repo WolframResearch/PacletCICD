@@ -138,17 +138,16 @@ generateCheckReport[ KeyValuePattern @ {
     "HintData" -> hints_,
     "File"     -> file_
 } ] :=
-    Enclose @ Module[ { job, index, url, row, head, grid },
+    Enclose @ Module[ { job, index, url, row, head, title, grid, md },
         job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
         url   = ghCommitFileURL[ file, Lookup[ index, #[ "CellID" ] ] ] &;
         row   = Append[ Lookup[ #1, { "CellID", "Level", "Tag" } ], url @ # ] &;
         head  = Style[ #, Bold ] & /@ { "CellID", "Level", "Tag", "Link" };
+        title = Style[ "Check Results (" <> job <> ")", "Title" ];
         grid  = Grid @ Prepend[ row /@ hints, head ];
-        ToMarkdownString @ {
-            Style[ "Check Results (" <> job <> ")", "Title" ],
-            grid
-        }
+        md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
+        appendStepSummary @ md
     ];
 
 generateCheckReport // catchUndefined;
