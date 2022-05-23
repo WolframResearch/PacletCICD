@@ -112,25 +112,32 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    ccPromptFix @ Module[ { res, hints, data, dir, export, exported },
+    ccPromptFix @ Module[ { res, hints, data, exported },
         needs[ "DefinitionNotebookClient`" -> None ];
-        res    = dnc`CheckDefinitionNotebook[ nb, opts ];
-        hints  = dnc`HintData[ "Paclet",
-                               { "Tag", "Level", "Message", "CellID" }
-                 ];
-        data   = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
-        dir    = parentPacletDirectory @ nb;
-        export = fileNameJoin @ { dir, "build", "check_results.wxf" };
-        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        exported = Export[ export,
-                           data,
-                           "WXF",
-                           PerformanceGoal -> "Size"
-                   ];
-        setOutput[ "PACLET_CHECK_RESULTS", exported ];
-        EchoEvaluation @ generateCheckReport @ data;
+        res   = dnc`CheckDefinitionNotebook[ nb, opts ];
+        hints = dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ];
+        data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
+        exported = exportCheckResults[ nb, data ];
+        generateCheckReport @ data;
         checkExit @ res
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*exportCheckResults*)
+exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
+
+exportCheckResults[ nb_, data_Association ] :=
+    Module[ { dir, export, exported },
+        dir = parentPacletDirectory @ nb;
+        export = fileNameJoin @ { dir, "build", "check_results.wxf" };
+        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
+        exported = Export[ export, data, "WXF", PerformanceGoal -> "Size" ];
+        setOutput[ "PACLET_CHECK_RESULTS", exported ];
+        exported
+    ];
+
+exportCheckResults // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
