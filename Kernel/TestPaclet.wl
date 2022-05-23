@@ -407,10 +407,6 @@ percentForm[ p_ ] := TextString @ PercentForm @ Round[ p, .001 ];
 (*$testSummaryHeader*)
 $testSummaryHeader = "
 
-# Test Results (`JobName`)
-
-## Summary
-
 |                 |                          |
 |-----------------|--------------------------|
 | **Result**      | `Result` `Icon`          |
@@ -420,7 +416,7 @@ $testSummaryHeader = "
 | **Failed**      | `FailCount` (`FailRate`) |
 | **Duration**    | `Time`                   |
 
-## Test files
+### Test files
 
 | | File | Passed | Failed | Duration |
 |-|------|--------|--------|----------|
@@ -431,7 +427,7 @@ $testSummaryHeader = "
 (*$testDetailsHeader*)
 $testDetailsHeader = "
 
-<details><summary><h2>Details</h2></summary>
+<details><summary><h3>Details</h3></summary>
 
 ";
 
