@@ -69,14 +69,19 @@ VerificationTest[
     DefinitionNotebookClient`ConsolePrint;
     suppressConsole // Attributes = { HoldFirst };
     suppressConsole[ eval_ ] :=
-        Block[ { DefinitionNotebookClient`ConsolePrint },
+        Block[
+            {
+                DefinitionNotebookClient`ConsolePrint,
+                Wolfram`PacletCICD`Private`setOutput,
+                Wolfram`PacletCICD`Private`appendStepSummary
+            },
             DefinitionNotebookClient`ConsolePrint // Options = {
                 "Output" -> None
             };
             Wolfram`PacletCICD`Private`noExit @ eval
         ],
     Null,
-    TestID -> "SuppressConsole-Definition@@Tests/BuildPaclet.wlt:68,1-80,2"
+    TestID -> "SuppressConsole-Definition@@Tests/BuildPaclet.wlt:68,1-85,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -89,14 +94,14 @@ VerificationTest[
     ],
     { },
     SameTest -> MatchQ,
-    TestID   -> "Empty-Build-Directory@@Tests/BuildPaclet.wlt:85,1-93,2"
+    TestID   -> "Empty-Build-Directory@@Tests/BuildPaclet.wlt:90,1-98,2"
 ]
 
 VerificationTest[
     suppressConsole @ BuildPaclet @ ExampleDirectory[ "FewIssues" ],
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:95,1-100,2"
+    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:100,1-105,2"
 ]
 
 VerificationTest[
@@ -106,7 +111,7 @@ VerificationTest[
     ],
     { _ },
     SameTest -> MatchQ,
-    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:102,1-110,2"
+    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:107,1-115,2"
 ]
 
 VerificationTest[
@@ -117,7 +122,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:112,1-121,2"
+    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:117,1-126,2"
 ]
 
 VerificationTest[
@@ -127,7 +132,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:123,1-131,2"
+    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:128,1-136,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -150,7 +155,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints@@Tests/BuildPaclet.wlt:140,1-154,2"
+    TestID   -> "BuildPaclet-DisabledHints@@Tests/BuildPaclet.wlt:145,1-159,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -166,7 +171,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:159,1-170,2"
+    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:164,1-175,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -176,11 +181,11 @@ VerificationTest[
     ResetExampleDirectory @ All,
     { __Success },
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:175,1-180,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:180,1-185,2"
 ]
 
 VerificationTest[
     $PublisherID = None,
     None,
-    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:182,1-186,2"
+    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:187,1-191,2"
 ]

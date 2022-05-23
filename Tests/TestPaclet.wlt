@@ -81,7 +81,7 @@ VerificationTest[
             Wolfram`PacletCICD`Private`noExit @ eval
         ],
     Null,
-    TestID -> "SuppressConsole-Definition@@Tests/TestPaclet.wlt:68,1-80,2"
+    TestID -> "SuppressConsole-Definition@@Tests/TestPaclet.wlt:68,1-85,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -98,7 +98,7 @@ VerificationTest[
     ],
     { },
     SameTest -> MatchQ,
-    TestID   -> "Empty-Build-Directory-Sample@@Tests/TestPaclet.wlt:89,1-97,2"
+    TestID   -> "Empty-Build-Directory-Sample@@Tests/TestPaclet.wlt:94,1-102,2"
 ]
 
 VerificationTest[
@@ -108,26 +108,26 @@ VerificationTest[
     ],
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "TestPaclet-Sample@@Tests/TestPaclet.wlt:99,1-107,2"
+    TestID   -> "TestPaclet-Sample@@Tests/TestPaclet.wlt:104,1-112,2"
 ]
 
 VerificationTest[
     reports = result[ "Result" ],
     _Association? (AllTrue @ MatchQ[ _TestReportObject ]),
     SameTest -> MatchQ,
-    TestID   -> "TestPaclet-Report-Sample@@Tests/TestPaclet.wlt:109,1-114,2"
+    TestID   -> "TestPaclet-Report-Sample@@Tests/TestPaclet.wlt:114,1-119,2"
 ]
 
 VerificationTest[
     AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
     True,
-    TestID -> "TestPaclet-Passed-Sample@@Tests/TestPaclet.wlt:116,1-120,2"
+    TestID -> "TestPaclet-Passed-Sample@@Tests/TestPaclet.wlt:121,1-125,2"
 ]
 
 VerificationTest[
     Positive @ Total[ #[ "TestsSucceededCount" ] & /@ reports ],
     True,
-    TestID -> "TestPaclet-Pass-Count-Sample@@Tests/TestPaclet.wlt:122,1-126,2"
+    TestID -> "TestPaclet-Pass-Count-Sample@@Tests/TestPaclet.wlt:127,1-131,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -140,7 +140,7 @@ VerificationTest[
     ],
     { },
     SameTest -> MatchQ,
-    TestID   -> "Empty-Build-Directory-FewIssues@@Tests/TestPaclet.wlt:131,1-139,2"
+    TestID   -> "Empty-Build-Directory-FewIssues@@Tests/TestPaclet.wlt:136,1-144,2"
 ]
 
 VerificationTest[
@@ -151,32 +151,32 @@ VerificationTest[
     _Failure,
     { TestPaclet::Failures },
     SameTest -> MatchQ,
-    TestID   -> "TestPaclet-FewIssues@@Tests/TestPaclet.wlt:141,1-150,2"
+    TestID   -> "TestPaclet-FewIssues@@Tests/TestPaclet.wlt:146,1-155,2"
 ]
 
 VerificationTest[
     reports = result[ "Result" ],
     _Association? (AllTrue @ MatchQ[ _TestReportObject ]),
     SameTest -> MatchQ,
-    TestID   -> "TestPaclet-Report-FewIssues@@Tests/TestPaclet.wlt:152,1-157,2"
+    TestID   -> "TestPaclet-Report-FewIssues@@Tests/TestPaclet.wlt:157,1-162,2"
 ]
 
 VerificationTest[
     AllTrue[ reports, #[ "AllTestsSucceeded" ] & ],
     False,
-    TestID -> "TestPaclet-Passed-FewIssues@@Tests/TestPaclet.wlt:159,1-163,2"
+    TestID -> "TestPaclet-Passed-FewIssues@@Tests/TestPaclet.wlt:164,1-168,2"
 ]
 
 VerificationTest[
     Positive @ Total[ #[ "TestsSucceededCount" ] & /@ reports ],
     True,
-    TestID -> "TestPaclet-Pass-Count-FewIssues@@Tests/TestPaclet.wlt:165,1-169,2"
+    TestID -> "TestPaclet-Pass-Count-FewIssues@@Tests/TestPaclet.wlt:170,1-174,2"
 ]
 
 VerificationTest[
     Positive @ Total[ #[ "TestsFailedCount" ] & /@ reports ],
     True,
-    TestID -> "TestPaclet-Fail-Count-FewIssues@@Tests/TestPaclet.wlt:171,1-175,2"
+    TestID -> "TestPaclet-Fail-Count-FewIssues@@Tests/TestPaclet.wlt:176,1-180,2"
 ]
 
 VerificationTest[
@@ -186,7 +186,7 @@ VerificationTest[
         Infinity
     ],
     { "Addition", "AddOne-2" },
-    TestID -> "TestPaclet-Failed-TestIDs-FewIssues@@Tests/TestPaclet.wlt:177,1-185,2"
+    TestID -> "TestPaclet-Failed-TestIDs-FewIssues@@Tests/TestPaclet.wlt:182,1-190,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -196,5 +196,5 @@ VerificationTest[
     ResetExampleDirectory @ All,
     { __Success },
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/TestPaclet.wlt:190,1-195,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/TestPaclet.wlt:195,1-200,2"
 ]
