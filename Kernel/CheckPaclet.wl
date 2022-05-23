@@ -115,7 +115,9 @@ checkPaclet[ nb_, opts___ ] :=
     ccPromptFix @ Module[ { res, hints, data, dir, export, exported },
         needs[ "DefinitionNotebookClient`" -> None ];
         res    = dnc`CheckDefinitionNotebook[ nb, opts ];
-        hints  = dnc`HintData[ "Paclet" ];
+        hints  = dnc`HintData[ "Paclet",
+                               { "Tag", "Level", "Message", "CellID" }
+                 ];
         data   = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
         dir    = parentPacletDirectory @ nb;
         export = fileNameJoin @ { dir, "build", "check_results.wxf" };
@@ -138,19 +140,36 @@ generateCheckReport[ KeyValuePattern @ {
     "HintData" -> hints_,
     "File"     -> file_
 } ] :=
-    Enclose @ Module[ { job, index, url, row, head, title, grid, md },
+    Enclose @ Module[ { job, index, head, title, grid, md },
         job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
-        url   = ghCommitFileURL[ file, Lookup[ index, #[ "CellID" ] ] ] &;
-        row   = Append[ Lookup[ #1, { "CellID", "Level", "Tag" } ], url @ # ] &;
-        head  = Style[ #, Bold ] & /@ { "CellID", "Level", "Tag", "Link" };
+        head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
         title = Style[ "Check Results (" <> job <> ")", "Title" ];
-        grid  = Grid @ Prepend[ row /@ hints, head ];
+        grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
         appendStepSummary @ md
     ];
 
 generateCheckReport // catchUndefined;
+
+
+reportHintRow[ file_, index_ ][ hint_Association ] :=
+    Enclose @ Module[ { lookup, level, tag, msg, id, pos, url, link },
+        lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
+        level  = hintIcon @ lookup[ "Level" ];
+        tag    = lookup[ "Tag" ];
+        msg    = lookup[ "Message" ];
+        id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
+        pos    = Lookup[ index, id ];
+        url    = ghCommitFileURL[ file, pos ];
+        link   = Hyperlink[ ":link:", url ];
+        { level, tag, msg, link }
+    ];
+
+hintIcon[ "Error"      ] := ":x: Error";
+hintIcon[ "Warning"    ] := ":red_circle: Warning";
+hintIcon[ "Suggestion" ] := ":large_blue_circle: Suggestion";
+hintIcon[ other_       ] := other;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
