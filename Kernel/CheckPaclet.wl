@@ -112,22 +112,46 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    Module[ { res, data, dir, export, exported },
+    ccPromptFix @ Module[ { res, hints, data, dir, export, exported },
         needs[ "DefinitionNotebookClient`" -> None ];
-        res    = ccPromptFix @ dnc`CheckDefinitionNotebook[ nb, opts ];
-        data   = dnc`HintData[ "Paclet" ];
+        res    = dnc`CheckDefinitionNotebook[ nb, opts ];
+        hints  = dnc`HintData[ "Paclet" ];
+        data   = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
         dir    = parentPacletDirectory @ nb;
         export = fileNameJoin @ { dir, "build", "check_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
         ConsoleNotice[ "Exporting check results: " <> export ];
         exported = Export[ export,
-                           <| "Result" -> res, "HintData" -> data |>,
+                           data,
                            "WXF",
                            PerformanceGoal -> "Size"
                    ];
         setOutput[ "PACLET_CHECK_RESULTS", exported ];
-        ccPromptFix @ checkExit @ res
+        EchoEvaluation @ generateCheckReport @ data;
+        checkExit @ res
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateCheckReport*)
+generateCheckReport[ KeyValuePattern @ {
+    "HintData" -> hints_,
+    "File"     -> file_
+} ] :=
+    Enclose @ Module[ { job, index, url, row, head, grid },
+        job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
+        index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
+        url   = ghCommitFileURL[ file, Lookup[ index, #[ "CellID" ] ] ] &;
+        row   = Append[ Lookup[ #1, { "CellID", "Level", "Tag" } ], url @ # ] &;
+        head  = Style[ #, Bold ] & /@ { "CellID", "Level", "Tag", "Link" };
+        grid  = Grid @ Prepend[ row /@ hints, head ];
+        ToMarkdownString @ {
+            Style[ "Check Results (" <> job <> ")", "Title" ],
+            grid
+        }
+    ];
+
+generateCheckReport // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
