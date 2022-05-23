@@ -213,7 +213,7 @@ $mdStringReplacements :=
             "\n" -> snl,
             If[ TrueQ @ $showStringCharacters,
                 Nothing,
-                { "\\n" -> snl, "\\\"" -> "\"" }
+                Sequence @@ { "\\n" -> snl, "\\\"" -> "\"" }
             ]
         }
     ];
