@@ -111,10 +111,77 @@ e: CheckPaclet[ ___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
-checkPaclet[ nb_, opts___ ] := (
-    needs[ "DefinitionNotebookClient`" -> None ];
-    ccPromptFix @ checkExit @ dnc`CheckDefinitionNotebook[ nb, opts ]
-);
+checkPaclet[ nb_, opts___ ] :=
+    ccPromptFix @ Module[ { res, hints, data, exported },
+        needs[ "DefinitionNotebookClient`" -> None ];
+        res   = dnc`CheckDefinitionNotebook[ nb, opts ];
+        hints = dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ];
+        data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
+        exported = exportCheckResults[ nb, data ];
+        generateCheckReport @ data;
+        checkExit @ res
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*exportCheckResults*)
+exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
+
+exportCheckResults[ nb_, data_Association ] :=
+    Module[ { dir, export, exported },
+        dir = parentPacletDirectory @ nb;
+        export = fileNameJoin @ { dir, "build", "check_results.wxf" };
+        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
+        exported = Export[ export, data, "WXF", PerformanceGoal -> "Size" ];
+        setOutput[ "PACLET_CHECK_RESULTS", exported ];
+        exported
+    ];
+
+exportCheckResults // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*generateCheckReport*)
+generateCheckReport[ KeyValuePattern[ "HintData" -> { } ] ] :=
+    appendStepSummary @ ToMarkdownString @ {
+        Style[ "Check paclet results", "Section" ],
+        ":white_check_mark: No issues found."
+    };
+
+generateCheckReport[ KeyValuePattern @ {
+    "HintData" -> hints_,
+    "File"     -> file_
+} ] :=
+    Enclose @ Module[ { job, index, head, title, grid, md },
+        job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
+        index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
+        head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
+        title = Style[ "Definition Notebook (" <> job <> ")", "Section" ];
+        grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
+        md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
+        appendStepSummary @ md
+    ];
+
+generateCheckReport // catchUndefined;
+
+
+reportHintRow[ file_, index_ ][ hint_Association ] :=
+    Enclose @ Module[ { lookup, level, tag, msg, id, pos, url, link },
+        lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
+        level  = hintIcon @ lookup[ "Level" ];
+        tag    = lookup[ "Tag" ];
+        msg    = Style[ lookup[ "Message" ], "Text" ];
+        id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
+        pos    = Lookup[ index, id ];
+        url    = ghCommitFileURL[ file, pos ];
+        link   = Hyperlink[ ":link:", url ];
+        { level, tag, msg, link }
+    ];
+
+hintIcon[ "Error"      ] := ":x: Error";
+hintIcon[ "Warning"    ] := ":warning: Warning";
+hintIcon[ "Suggestion" ] := ":grey_question: Suggestion";
+hintIcon[ other_       ] := other;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

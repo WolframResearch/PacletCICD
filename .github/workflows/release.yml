@@ -25,6 +25,9 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
+      - name: Build paclet MX
+        run: wolframscript Scripts/BuildPacletMX.wls
+
       - name: Check paclet
         run: wolframscript Scripts/CheckPaclet.wls
       
@@ -34,6 +37,14 @@ jobs:
         with:
           name: check-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+      
+      - name: Upload check results
+        if: always() && env.PACLET_CHECK_RESULTS
+        uses: actions/upload-artifact@v2
+        with:
+          name: check-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
+          path: ${{ env.PACLET_CHECK_RESULTS }}
           if-no-files-found: error
 
   Build:

@@ -106,7 +106,7 @@ generateTestSummary[ reports_Association ] := (
 generateTestSummary[ file_, report_TestReportObject ] :=
     Module[ { icon, link, pass, fail, time, row, md },
         icon = testSummaryIcon @ report;
-        link = testSummaryLink @ file;
+        link = ToMarkdownString @ testSummaryLink @ file;
         pass = testSummaryPass @ report;
         fail = testSummaryFail @ report;
         time = testSummaryTime @ report;
@@ -152,7 +152,7 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
     Enclose @ Module[
         {
             cs, info, id, res, icon, time, mem, link,
-            input, expOut, actOut, expMsg, actMsg, md
+            input, expOut, actOut, expMsg, actMsg, outIcon, msgIcon, md
         },
 
         cs     = ConfirmBy[ #, StringQ ] &;
@@ -160,40 +160,56 @@ generateTestFailureDetails[ file_, result_TestResultObject ] :=
         id     = cs @ info[ "TestID" ];
         res    = cs @ troOutcome @ result;
         icon   = cs @ testSummaryIcon @ res;
-        time   = stq @ result[ "AbsoluteTimeUsed" ];
-        mem    = btq @ result[ "MemoryUsed" ];
-        link   = cs @ testSummaryLink[ file, ":link:", lineAnchor @ info ];
-        input  = codeBlock[ "Input"            , result[ "Input"            ] ];
-        expOut = codeBlock[ "Expected Output"  , result[ "ExpectedOutput"   ] ];
-        actOut = codeBlock[ "Actual Output"    , result[ "ActualOutput"     ] ];
-        expMsg = codeBlock[ "Expected Messages", result[ "ExpectedMessages" ] ];
-        actMsg = codeBlock[ "Actual Messages"  , result[ "ActualMessages"   ] ];
+        time   = SecondsToQuantity @ result[ "AbsoluteTimeUsed" ];
+        mem    = BytesToQuantity @ result[ "MemoryUsed" ];
+        link   = testSummaryLink[ file, ":link:", lineAnchor @ info ];
+        link   = Hyperlink[ ":link:", ghCommitFileURL[ file, info ] ];
+        input  = readableHoldForm @ result[ "Input"            ];
+        expOut = readableHoldForm @ result[ "ExpectedOutput"   ];
+        actOut = readableHoldForm @ result[ "ActualOutput"     ];
+        expMsg = readableHoldForm @ result[ "ExpectedMessages" ];
+        actMsg = readableHoldForm @ result[ "ActualMessages"   ];
 
-        md = TemplateApply[
-            $testResultTemplate,
-            <|
-                "Icon"             -> icon,
-                "Result"           -> outcomeText @ res,
-                "TestID"           -> id,
-                "Duration"         -> timeText @ time,
-                "Memory"           -> ToString @ mem,
-                "Link"             -> link,
-                "Input"            -> input,
-                "ExpectedOutput"   -> expOut,
-                "ActualOutput"     -> actOut,
-                "ExpectedMessages" -> expMsg,
-                "ActualMessages"   -> actMsg
-            |>
-        ];
+        outIcon = If[ expOut =!= actOut, " :x:", "" ];
+        msgIcon = If[ expMsg =!= actMsg, " :x:", "" ];
 
-        appendStepSummary @ md
+        md = ToMarkdownString @ {
+            Delimiter,
+            Grid @ {
+                {
+                    "",
+                    Style[ "Result"  , Bold ],
+                    Style[ "TestID"  , Bold ],
+                    Style[ "Duration", Bold ],
+                    Style[ "Memory"  , Bold ],
+                    Style[ "Link"    , Bold ]
+                },
+                {
+                    icon,
+                    outcomeText @ res,
+                    id,
+                    timeText @ time,
+                    ToString @ mem,
+                    link
+                }
+            },
+            Grid @ {
+                { Style[ "Input"                  , Bold ], input  },
+                { Style[ "ExpectedOutput"         , Bold ], expOut },
+                { Style[ "ActualOutput"<>outIcon  , Bold ], actOut },
+                { Style[ "ExpectedMessages"       , Bold ], expMsg },
+                { Style[ "ActualMessages"<>msgIcon, Bold ], actMsg }
+            }
+        };
+
+        appendStepSummary @ ConfirmBy[ md, StringQ ]
     ];
 
 generateTestFailureDetails // catchUndefined;
 
-btq := btq = ResourceFunction[ "BytesToQuantity"  , "Function" ];
-stq := stq = ResourceFunction[ "SecondsToQuantity", "Function" ];
-rdf := rdf = ResourceFunction[ "ReadableForm"     , "Function" ];
+readableHoldForm[ HoldForm[ expr_ ] ] :=
+    ReadableForm[ Unevaluated @ expr, TimeConstraint -> 3 ];
+readableHoldForm[ expr_ ] := readableHoldForm @ HoldForm @ expr;
 
 
 timeText[ sec: Quantity[ _MixedMagnitude, _ ] ] :=
@@ -323,14 +339,7 @@ testSummaryLink[ file_, lbl_, anchor_ ] := Enclose[
         split  = DeleteCases[ FileNameSplit @ file, "." ];
         url    = URLBuild @ Flatten @ { server, repo, "blob", sha, split };
         frag   = If[ StringQ @ anchor && anchor =!= "", "#"<>anchor, "" ];
-        StringJoin[
-            "<a href=\"",
-            url,
-            frag,
-            "\" target=\"_blank\">",
-            ToString @ lbl,
-            "</a>"
-        ]
+        Hyperlink[ lbl, url <> frag, "HyperlinkAction" -> "Recycled" ]
     ],
     file &
 ];
@@ -353,7 +362,7 @@ testSummaryFail // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*testSummaryTime*)
 testSummaryTime[ r_TestReportObject ] := testSummaryTime @ r[ "TimeElapsed" ];
-testSummaryTime[ HoldPattern[ t_Quantity ] ] := timeText @ stq @ t;
+testSummaryTime[ t_Quantity ] := timeText @ SecondsToQuantity @ t;
 testSummaryTime[ s_? NumberQ ] := testSummaryTime @ Quantity[ s, "Seconds" ];
 testSummaryTime // catchUndefined;
 
@@ -364,7 +373,7 @@ testSummaryHeader[ reports_ ] :=
     Module[ { files, tests, time, pass, pRate, fail, fRate, res, icon },
         files = Length @ reports;
         tests = Total[ Length[ #[ "TestResults" ] ] & /@ reports ];
-        time  = stq @ Total[ #[ "TimeElapsed" ] & /@ reports ];
+        time  = SecondsToQuantity @ Total[ #[ "TimeElapsed" ] & /@ reports ];
         pass  = Total[ #[ "TestsSucceededCount" ] & /@ reports ];
         pRate = percentForm[ pass / tests ];
         fail  = tests - pass;
@@ -398,10 +407,6 @@ percentForm[ p_ ] := TextString @ PercentForm @ Round[ p, .001 ];
 (*$testSummaryHeader*)
 $testSummaryHeader = "
 
-# Test Results (`JobName`)
-
-## Summary
-
 |                 |                          |
 |-----------------|--------------------------|
 | **Result**      | `Result` `Icon`          |
@@ -411,7 +416,7 @@ $testSummaryHeader = "
 | **Failed**      | `FailCount` (`FailRate`) |
 | **Duration**    | `Time`                   |
 
-## Test files
+### Test files
 
 | | File | Passed | Failed | Duration |
 |-|------|--------|--------|----------|
@@ -422,7 +427,7 @@ $testSummaryHeader = "
 (*$testDetailsHeader*)
 $testDetailsHeader = "
 
-<details><summary><h2>Details</h2></summary>
+<details><summary><h3>Details</h3></summary>
 
 ";
 
@@ -462,11 +467,13 @@ $testResultTemplate = "
 mmaPre[ HoldForm[ code_ ] ] :=
     StringJoin[
         "\n\n```Mathematica\n",
-        TimeConstrained[ ToString @ rdf[ Unevaluated @ code,
-                                         CachePersistence -> Full
-                                    ],
-                         5,
-                         "<< " <> ToString @ ByteCount @ code <> ">>"
+        TimeConstrained[
+            ToString @ ReadableForm[
+                Unevaluated @ code,
+                CachePersistence -> Full
+            ],
+            5,
+            "<< " <> ToString @ ByteCount @ code <> ">>"
         ],
         "\n```\n\n"
     ];
@@ -533,7 +540,6 @@ makeTestResult[ dir_, reports_, False ] :=
     Module[ { export, exported },
         export = fileNameJoin @ { dir, "build", "test_results.wxf" };
         GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        ConsoleNotice[ "Exporting test results: " <> export ];
         exported = Export[ export,
                            reports,
                            "WXF",

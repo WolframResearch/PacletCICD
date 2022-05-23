@@ -6,6 +6,7 @@ BeginPackage[ "Wolfram`PacletCICD`" ];
 Begin[ "`Private`" ];
 
 $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
+$ContextAliases[ "cp`"  ] = "CodeParser`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -85,6 +86,46 @@ findDefinitionNotebook[ dir_? DirectoryQ, _ ] :=
     ];
 
 findDefinitionNotebook // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*notebookCellIDIndex*)
+notebookCellIDIndex[ file_ ] := notebookCellIDIndex[ file, "LineColumn" ];
+
+notebookCellIDIndex[ file_? FileExistsQ, type_ ] :=
+    Module[ { ast, assoc },
+        Needs[ "CodeParser`" -> None ];
+        ast = cp`CodeParse[ Flatten @ File @ file, "SourceConvention" -> type ];
+
+        assoc = Association @ Cases[
+            ast,
+            ASTPattern[
+                cell: Cell[ ___, CellID -> id_Integer, ___ ],
+                KeyValuePattern[ cp`Source -> src_ ]
+            ] :> (
+                FromAST @ id -> <|
+                    "Position"   -> src,
+                    "Expression" -> FromAST @ cell
+                |>
+            ),
+            Infinity
+        ];
+
+        (notebookCellIDIndex[ file, type ] = assoc) /; AssociationQ @ assoc
+    ];
+
+notebookCellIDIndex // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*simpleCellExpression*)
+simpleCellExpression[ Cell[ a___, CellID -> id_, b___ ] ] :=
+    Append[ simpleCellExpression @ Cell[ a, b ], CellID -> id ];
+
+simpleCellExpression[ Cell[ a_, style___String, Except[ _String ]... ] ] :=
+    Cell[ a, style ];
+
+simpleCellExpression // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -259,6 +300,54 @@ $gitHubEnvironmentData := Enclose[
         ]
 ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$ghCommitRootURL*)
+$ghCommitRootURL := $ghCommitRootURL = Enclose[
+    Module[ { env, server, repo, sha },
+        env    = ConfirmBy[ Environment[ # ], StringQ ] &;
+        server = env[ "GITHUB_SERVER_URL" ];
+        repo   = env[ "GITHUB_REPOSITORY" ];
+        sha    = env[ "GITHUB_SHA" ];
+        URLBuild @ Flatten @ { server, repo, "blob", sha }
+    ],
+    None &
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghCommitFileURL*)
+ghCommitFileURL[ file_? FileExistsQ ] := ghCommitFileURL[ file ] = Enclose[
+    Module[ { base, ws, rel, split, url },
+        base  = ConfirmBy[ $ghCommitRootURL, StringQ ];
+        ws    = ConfirmBy[ Environment[ "GITHUB_WORKSPACE" ], StringQ ];
+        rel   = ConfirmBy[ relativePath[ ws, file ], StringQ ];
+        split = DeleteCases[ FileNameSplit @ rel, "." ];
+        url   = ConfirmBy[ URLBuild @ Flatten @ { base, split }, StringQ ];
+        StringTrim[ url, "/" ]
+    ],
+    None &
+];
+
+ghCommitFileURL[ file_, KeyValuePattern[ "Position" -> pos_ ] ] :=
+    ghCommitFileURL[ file, pos ];
+
+ghCommitFileURL[ file_, _Association ] := ghCommitFileURL @ file;
+
+ghCommitFileURL[ file_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
+    ghCommitFileURL[ file, { l1, l2 } ];
+
+ghCommitFileURL[ file_, { l1_Integer, l2_Integer } ] := Enclose[
+    Module[ { url },
+        url = ConfirmBy[ ghCommitFileURL @ file, StringQ ];
+        url <> "#L" <> ToString @ l1 <> "-L" <> ToString @ l2
+    ],
+    None &
+];
+
+ghCommitFileURL[ file_ ] := None;
+
+ghCommitFileURL // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

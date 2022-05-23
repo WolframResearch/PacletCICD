@@ -142,6 +142,12 @@ SetContextLoad[ SetPacletInfo    , "PacletInformation" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*Units*)
+SetContextLoad[ SecondsToQuantity, "Units" ];
+SetContextLoad[ BytesToQuantity  , "Units" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
 SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
@@ -154,6 +160,8 @@ SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
 SetContextLoad[ MessageFailure         , "MessageFailure"      ];
 SetContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
 SetContextLoad[ WorkflowValue          , "WorkflowValue"       ];
+SetContextLoad[ ToMarkdownString       , "Markdown"            ];
+SetContextLoad[ ReadableForm           , "ReadableForm"        ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
