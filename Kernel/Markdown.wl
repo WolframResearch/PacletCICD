@@ -211,7 +211,10 @@ $mdStringReplacements :=
         {
             "\[IndentingNewLine]" -> nl,
             "\n" -> snl,
-            If[ TrueQ @ $showStringCharacters, Nothing, "\\n" -> snl ]
+            If[ TrueQ @ $showStringCharacters,
+                Nothing,
+                { "\\n" -> snl, "\\\"" -> "\"" }
+            ]
         }
     ];
 

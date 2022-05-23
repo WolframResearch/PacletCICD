@@ -136,6 +136,12 @@ checkPaclet[ nb_, opts___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*generateCheckReport*)
+generateCheckReport[ KeyValuePattern[ "HintData" -> { } ] ] :=
+    appendStepSummary @ ToMarkdownString @ {
+        Style[ "Check paclet results", "Section" ],
+        ":white_check_mark: No issues found."
+    };
+
 generateCheckReport[ KeyValuePattern @ {
     "HintData" -> hints_,
     "File"     -> file_
@@ -144,7 +150,7 @@ generateCheckReport[ KeyValuePattern @ {
         job   = ConfirmBy[ Environment[ "GITHUB_JOB" ], StringQ ];
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
         head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
-        title = Style[ "Check Results (" <> job <> ")", "Title" ];
+        title = Style[ "Check Results (" <> job <> ")", "Section" ];
         grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
         appendStepSummary @ md
@@ -158,7 +164,7 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
         level  = hintIcon @ lookup[ "Level" ];
         tag    = lookup[ "Tag" ];
-        msg    = lookup[ "Message" ];
+        msg    = Style[ lookup[ "Message" ], "Text" ];
         id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos    = Lookup[ index, id ];
         url    = ghCommitFileURL[ file, pos ];
@@ -167,8 +173,8 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
     ];
 
 hintIcon[ "Error"      ] := ":x: Error";
-hintIcon[ "Warning"    ] := ":red_circle: Warning";
-hintIcon[ "Suggestion" ] := ":large_blue_circle: Suggestion";
+hintIcon[ "Warning"    ] := ":warning: Warning";
+hintIcon[ "Suggestion" ] := ":grey_question: Suggestion";
 hintIcon[ other_       ] := other;
 
 (* ::**********************************************************************:: *)
