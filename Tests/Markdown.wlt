@@ -401,30 +401,3 @@ VerificationTest[
 
     Superscript/Subscript
 *)
-
-
-VerificationTest[
-    1+1,
-    3,
-    TestID -> "FailTest@@Tests/Markdown.wlt:406,1-410,2"
-]
-
-VerificationTest[
-    1/0,
-    ComplexInfinity,
-    TestID -> "MessageTest@@Tests/Markdown.wlt:412,1-416,2"
-]
-
-VerificationTest[
-    Pause[5]; 1+1,
-    2,
-    TestID -> "TimeoutTest@@Tests/Markdown.wlt:418,1-423,2",
-    TimeConstraint -> 1
-]
-
-VerificationTest[
-    Range[10000]; 1+1,
-    2,
-    TestID -> "MemoryTest@@Tests/Markdown.wlt:425,1-430,2",
-    MemoryConstraint -> 1000
-]
