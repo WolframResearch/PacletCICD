@@ -34,6 +34,7 @@ CheckPaclet // Options = {
     "Target"           -> "Submit",
     "DisabledHints"    -> Automatic,
     "FailureCondition" -> "Error"
+    (* TODO: MarkdownSummary option *)
 };
 
 (* ::**********************************************************************:: *)
@@ -70,8 +71,6 @@ CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
         "Format"           -> toCheckFormat @ fmt,
         "FailureCondition" -> OptionValue[ "FailureCondition" ]
     ];
-
-(* TODO: save as JSON to build dir so it gets included in build artifacts *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

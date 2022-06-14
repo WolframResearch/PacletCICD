@@ -110,7 +110,6 @@ ToMarkdownString[ expr_, opts: OptionsPattern[ ] ] :=
     ];
 
 (* TODO:
-    OpenerView
     Images?
     BlockQuote
     Numbered lists
