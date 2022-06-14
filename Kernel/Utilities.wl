@@ -410,10 +410,20 @@ appendStepSummary[ md_ ] :=
 appendStepSummary[ stream_OutputStream, md_ ] :=
     With[ { string = ToString @ md },
         dnc`ConsolePrint[ "Appending to summary markdown: " <> string ];
-        WriteString[ stream, string ]
+        If[ StringEndsQ[ string, "\n" ],
+            WriteString[ stream, string ],
+            WriteString[ stream, string, "\n" ]
+        ]
     ];
 
 appendStepSummary // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*autoTrueWhenGH*)
+autoTrueWhenGH[ Automatic ] := TrueQ @ $gitHub;
+autoTrueWhenGH[ other_    ] := TrueQ @ other;
+autoTrueWhenGH // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)

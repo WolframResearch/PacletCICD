@@ -74,7 +74,7 @@ SetContextLoad[ sym_Symbol, context_String ] :=
 BuildMX[ ] := (
     LoadSubPackages[ ];
     GeneralUtilities`EnsureDirectory @ DirectoryName @ $MXFile;
-    DumpSave[ $MXFile, Evaluate @ Contexts[ "Wolfram`PacletCICD`*" ] ];
+    DumpSave[ $MXFile, "Wolfram`PacletCICD`", "SymbolAttributes" -> False ];
     $MXFile
 );
 
