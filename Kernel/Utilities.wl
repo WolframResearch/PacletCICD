@@ -410,7 +410,10 @@ appendStepSummary[ md_ ] :=
 appendStepSummary[ stream_OutputStream, md_ ] :=
     With[ { string = ToString @ md },
         dnc`ConsolePrint[ "Appending to summary markdown: " <> string ];
-        WriteString[ stream, string, "\n" ]
+        If[ StringEndsQ[ string, "\n" ],
+            WriteString[ stream, string ],
+            WriteString[ stream, string, "\n" ]
+        ]
     ];
 
 appendStepSummary // catchUndefined;
