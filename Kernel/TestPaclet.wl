@@ -37,10 +37,9 @@ TestPaclet // Options = {
 TestPaclet[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
     catchTop @ ccPromptFix[
         needs[ "DefinitionNotebookClient`" -> None ];
-        (* TODO: do the right stuff here *)
         catchTop @ Internal`InheritedBlock[ { dnc`$ConsoleType },
             dnc`$ConsoleType = OptionValue[ "ConsoleType" ];
-            If[ TrueQ @ OptionValue[ "AnnotateTestIDs" ],
+            If[ autoTrueWhenGH @ OptionValue[ "AnnotateTestIDs" ],
                 AnnotateTestIDs[ dir, "Reparse" -> False ]
             ];
             testPaclet[ dir, optionsAssociation[ TestPaclet, opts ] ]
@@ -55,8 +54,8 @@ TestPaclet[ file_File? defNBQ, opts: OptionsPattern[ ] ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*testPaclet*)
-testPaclet[ dir_, opts: KeyValuePattern[ "MarkdownSummary" -> False ] ] :=
-    Block[ { appendStepSummary },
+testPaclet[ dir_, opts: KeyValuePattern[ "MarkdownSummary" -> mds_ ] ] :=
+    Block[ { $markdownSummary = autoTrueWhenGH @ mds },
         testPaclet[ dir, KeyDrop[ opts, "MarkdownSummary" ] ]
     ];
 
@@ -96,7 +95,7 @@ testReport // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*generateTestSummary*)
-generateTestSummary[ reports_Association ] := (
+generateTestSummary[ reports_Association ] /; $markdownSummary := (
     appendStepSummary @ testSummaryHeader @ reports;
     KeyValueMap[ generateTestSummary, reports ];
     generateTestDetails @ reports;
@@ -114,6 +113,8 @@ generateTestSummary[ file_, report_TestReportObject ] :=
         md   = "| " <> StringRiffle[ row, " | " ] <> " |\n";
         appendStepSummary @ md
     ];
+
+generateTestSummary[ reports_ ] := reports;
 
 generateTestSummary // catchUndefined;
 
