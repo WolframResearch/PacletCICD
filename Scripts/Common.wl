@@ -328,6 +328,11 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
         ];
 
+        Print @ Select[
+            SystemInformation[ "Kernel", "AllFilesLoaded" ],
+            StringContainsQ[ "DefinitionNotebookClient" | "PacletResource" ]
+        ];
+
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
             ,
             Print[ "::error::" <> full <> " not defined" ];
