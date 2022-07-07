@@ -6,6 +6,7 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 Wolfram`PacletCICD`$Debug = True;
 
 Off[ DocumentationBuild`Utils`Localized::nokey ];
+Off[ PacletInstall::samevers ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
