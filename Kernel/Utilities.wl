@@ -92,6 +92,11 @@ findDefinitionNotebook // catchUndefined;
 (*notebookCellIDIndex*)
 notebookCellIDIndex[ file_ ] := notebookCellIDIndex[ file, "LineColumn" ];
 
+(* Disable lint for KeyValuePattern/PatternSequence, since ASTPattern evaluates
+   to something else:
+*)
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::KernelBug:: *)
 notebookCellIDIndex[ file_? FileExistsQ, type_ ] :=
     Module[ { ast, assoc },
         Needs[ "CodeParser`" -> None ];
@@ -113,6 +118,7 @@ notebookCellIDIndex[ file_? FileExistsQ, type_ ] :=
 
         (notebookCellIDIndex[ file, type ] = assoc) /; AssociationQ @ assoc
     ];
+(* :!CodeAnalysis::EndBlock:: *)
 
 notebookCellIDIndex // catchUndefined;
 

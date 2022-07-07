@@ -351,8 +351,8 @@ setOutput := Wolfram`PacletCICD`Private`setOutput;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Install test paclets*)
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.12.0.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-0.13.0.paclet"           ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.13.0.paclet" ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.1.0.paclet"            ];
 PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/ResourceSystemClient-1.25.0.paclet"     ];
 
 (* ::**********************************************************************:: *)

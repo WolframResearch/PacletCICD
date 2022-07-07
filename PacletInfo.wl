@@ -14,9 +14,9 @@ PacletObject[ <|
     "ActionURL"        -> "$ACTION_URL$",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
-        "DefinitionNotebookClient" -> ">=1.10.0",
-        "PacletResource"           -> ">=0.11.0",
-        "ResourceSystemClient"     -> ">=1.24.0"
+        "DefinitionNotebookClient" -> ">=1.13.0",
+        "PacletResource"           -> ">=1.1.0",
+        "ResourceSystemClient"     -> ">=1.25.0"
     },
     "Extensions"       -> {
         {
