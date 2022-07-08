@@ -149,13 +149,31 @@ VerificationTest[
         "DisabledHints" -> {
             Inherited,
             "CodeInspectionIssues",
+            "CodeInspectionFileIssue/*",
             "PublisherUpdateNotAllowed",
             "NotPublisherContext"
         }
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints@@Tests/BuildPaclet.wlt:145,1-159,2"
+    TestID   -> "BuildPaclet-DisabledHints-1@@Tests/BuildPaclet.wlt:145,1-160,2"
+]
+
+VerificationTest[
+    suppressConsole @ BuildPaclet[
+        ExampleDirectory[ "MoreIssues" ],
+        "Check"         -> True,
+        "DisabledHints" -> {
+            Inherited,
+            "CodeInspectionIssues",
+            "CodeInspectionFileIssue",
+            "PublisherUpdateNotAllowed",
+            "NotPublisherContext"
+        }
+    ],
+    Success[ "PacletBuild", _ ],
+    SameTest -> MatchQ,
+    TestID   -> "BuildPaclet-DisabledHints-2@@Tests/BuildPaclet.wlt:162,1-177,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -165,13 +183,17 @@ VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
         "Check"            -> True,
-        "DisabledHints"    -> { Inherited, "CodeInspectionIssues" },
+        "DisabledHints"    -> {
+            Inherited,
+            "CodeInspectionIssues",
+            "CodeInspectionFileIssue"
+        },
         "FailureCondition" -> { "Warning", "Error" }
     ],
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:164,1-175,2"
+    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:182,1-197,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -181,11 +203,11 @@ VerificationTest[
     ResetExampleDirectory @ All,
     { __Success },
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:180,1-185,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:202,1-207,2"
 ]
 
 VerificationTest[
     $PublisherID = None,
     None,
-    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:187,1-191,2"
+    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:209,1-213,2"
 ]

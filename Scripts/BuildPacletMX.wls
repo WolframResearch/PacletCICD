@@ -30,7 +30,7 @@ LoadSubPackage[ "Workflows" ];
 
 Print[ "Caching values for normalizeActionName:" ];
 Scan[
-    Echo @* Wolfram`PacletCICD`Private`normalizeActionName,
+    Wolfram`PacletCICD`Private`normalizeActionName,
     {
         "rhennigan/build-paclet@latest",
         "rhennigan/check-paclet@latest",
@@ -44,7 +44,7 @@ Scan[
 (*wlResource*)
 Print[ "Caching values for wlResource:" ];
 Block[ { Wolfram`PacletCICD`Private`$resourceDirectory = $resDir },
-    Scan[ Echo @* Wolfram`PacletCICD`Private`wlResource @* FileBaseName ,
+    Scan[ Wolfram`PacletCICD`Private`wlResource @* FileBaseName ,
           FileNames[ "*.wl", $resDir ]
     ]
 ];
@@ -54,7 +54,7 @@ Block[ { Wolfram`PacletCICD`Private`$resourceDirectory = $resDir },
 (*wxfResource*)
 Print[ "Caching values for wxfResource:" ];
 Block[ { Wolfram`PacletCICD`Private`$resourceDirectory = $resDir },
-    Scan[ Echo @* Wolfram`PacletCICD`Private`wxfResource @* FileBaseName ,
+    Scan[ Wolfram`PacletCICD`Private`wxfResource @* FileBaseName ,
           FileNames[ "*.wxf", $resDir ]
     ]
 ];
@@ -66,7 +66,7 @@ LoadSubPackage[ "Formatting" ];
 
 Print[ "Caching values for actionIcon:" ];
 Scan[
-    Echo @* Wolfram`PacletCICD`Private`actionIcon,
+    Wolfram`PacletCICD`Private`actionIcon,
     {
         "actions/cache",
         "actions/checkout",
