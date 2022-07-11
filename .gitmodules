@@ -1,0 +1,19 @@
+[submodule "PacletCICD-Examples-AdvancedSample"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-AdvancedSample
+  url = https://github.com/rhennigan/PacletCICD-Examples-AdvancedSample.git
+
+[submodule "PacletCICD-Examples-CompiledLibrary"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-CompiledLibrary
+  url = https://github.com/rhennigan/PacletCICD-Examples-CompiledLibrary.git
+
+[submodule "PacletCICD-Examples-FewIssues"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-FewIssues
+  url = https://github.com/rhennigan/PacletCICD-Examples-FewIssues.git
+
+[submodule "PacletCICD-Examples-MoreIssues"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-MoreIssues
+  url = https://github.com/rhennigan/PacletCICD-Examples-MoreIssues.git
+
+[submodule "PacletCICD-Examples-Sample"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-Sample
+  url = https://github.com/rhennigan/PacletCICD-Examples-Sample.git
