@@ -1,0 +1,35 @@
+[submodule "Actions/build-paclet"] 
+  path = Actions/build-paclet
+  url = https://github.com/rhennigan/build-paclet.git
+
+[submodule "Actions/check-paclet"] 
+  path = Actions/check-paclet
+  url = https://github.com/rhennigan/check-paclet.git
+
+[submodule "Actions/submit-paclet"] 
+  path = Actions/submit-paclet
+  url = https://github.com/rhennigan/submit-paclet.git
+
+[submodule "Actions/test-paclet"] 
+  path = Actions/test-paclet
+  url = https://github.com/rhennigan/test-paclet.git
+
+[submodule "Examples/AdvancedSample"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-AdvancedSample
+  url = https://github.com/rhennigan/PacletCICD-Examples-AdvancedSample.git
+
+[submodule "Examples/CompiledLibrary"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-CompiledLibrary
+  url = https://github.com/rhennigan/PacletCICD-Examples-CompiledLibrary.git
+
+[submodule "Examples/FewIssues"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-FewIssues
+  url = https://github.com/rhennigan/PacletCICD-Examples-FewIssues.git
+
+[submodule "Examples/MoreIssues"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-MoreIssues
+  url = https://github.com/rhennigan/PacletCICD-Examples-MoreIssues.git
+
+[submodule "Examples/Sample"] 
+  path = PacletCICD-Examples/PacletCICD-Examples-Sample
+  url = https://github.com/rhennigan/PacletCICD-Examples-Sample.git

@@ -2147,7 +2147,7 @@ normalizeSteps[ steps_List ] := normalizeStep /@ steps;
 normalizeStep[ ___, "checkout"|"checkoutcode" ] := <|
     "name" -> "Checkout",
     "id"   -> "checkout-code-step",
-    "uses" -> "actions/checkout@v2"
+    "uses" -> "actions/checkout@v3"
 |>;
 
 normalizeStep[ ___, "check"|"checkpaclet" ] := <|

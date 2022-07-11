@@ -6,6 +6,7 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 Wolfram`PacletCICD`$Debug = True;
 
 Off[ DocumentationBuild`Utils`Localized::nokey ];
+Off[ PacletInstall::samevers ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -326,6 +327,11 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             ];
             EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
             EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
+        ];
+
+        Print @ Select[
+            SystemInformation[ "Kernel", "AllFilesLoaded" ],
+            StringContainsQ[ "DefinitionNotebookClient" | "PacletResource" ]
         ];
 
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
