@@ -360,7 +360,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    Pause[ 3 ];
+    Pause[ 10 ];
     withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
     True,
     TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:362,1-367,2"

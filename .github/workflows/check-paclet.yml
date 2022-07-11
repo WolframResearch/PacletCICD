@@ -34,7 +34,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build paclet MX
         run: wolframscript Scripts/BuildPacletMX.wls
@@ -67,7 +67,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build paclet MX
         run: wolframscript Scripts/BuildPacletMX.wls
@@ -102,7 +102,7 @@ jobs:
     steps: 
       - name: Checkout
         id: checkout-code-step
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download MX build
         id: download-mx-artifacts-step
@@ -144,7 +144,7 @@ jobs:
     steps: 
       - name: Checkout
         id: checkout-code-step
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
@@ -206,7 +206,7 @@ jobs:
     steps: 
       - name: Checkout
         id: checkout-code-step
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
