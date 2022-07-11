@@ -5,14 +5,6 @@
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*Install test paclets*)
-Off[ PacletInstall::samevers ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.13.0.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.1.0.paclet"            ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/ResourceSystemClient-1.25.0.paclet"     ];
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
 (*Initialization*)
 $pacDir = DirectoryName[ $InputFileName, 2 ];
 $resDir = FileNameJoin @ { $pacDir, "Resources" };
