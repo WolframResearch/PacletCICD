@@ -351,13 +351,6 @@ setOutput := Wolfram`PacletCICD`Private`setOutput;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*Install test paclets*)
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.13.0.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.1.0.paclet"            ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/ResourceSystemClient-1.25.0.paclet"     ];
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
 (*Setup*)
 $pacDir = DirectoryName[ $InputFileName, 2 ];
 Print[ "Paclet Directory: ", $pacDir ];
