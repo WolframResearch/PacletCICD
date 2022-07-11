@@ -185,7 +185,7 @@ VerificationTest[
         <|
             "name" -> "Checkout",
             "id"   -> "checkout-code-step",
-            "uses" -> "actions/checkout@v2"
+            "uses" -> "actions/checkout@v3"
         |>
     ],
     TestID -> "WorkflowStep-Checkout@@Tests/Workflows.wlt:181,1-192,2"
@@ -196,14 +196,14 @@ VerificationTest[
     <|
         "name" -> "Checkout",
         "id"   -> "checkout-code-step",
-        "uses" -> "actions/checkout@v2"
+        "uses" -> "actions/checkout@v3"
     |>,
     TestID -> "WorkflowStep-Checkout-Data@@Tests/Workflows.wlt:194,1-202,2"
 ]
 
 VerificationTest[
     step[ "YAML" ],
-    "name: Checkout\nid: checkout-code-step\nuses: actions/checkout@v2",
+    "name: Checkout\nid: checkout-code-step\nuses: actions/checkout@v3",
     TestID -> "WorkflowStep-Checkout-YAML@@Tests/Workflows.wlt:204,1-208,2"
 ]
 
@@ -352,7 +352,7 @@ VerificationTest[
         <|
             "name" -> "Checkout",
             "id"   -> "checkout-code-step",
-            "uses" -> "actions/checkout@v2"
+            "uses" -> "actions/checkout@v3"
         |>,
         <|
             "name" -> "MyWorkflowJob",
