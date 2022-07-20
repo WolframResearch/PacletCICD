@@ -9,6 +9,7 @@ Begin[ "`Private`" ];
 
 $ContextAliases[ "dnc`"  ] = "DefinitionNotebookClient`";
 $ContextAliases[ "prdn`" ] = "PacletResource`DefinitionNotebook`";
+$ContextAliases[ "pt`"   ] = "PacletTools`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -133,6 +134,7 @@ buildPaclet[ file_File, opts___ ] :=
 buildPaclet[ nbo_NotebookObject, opts___ ] :=
     Module[ { result },
         needs[ "PacletResource`DefinitionNotebook`" -> None ];
+        pacletToolsMessageFix[ ];
 
         result =
             Internal`InheritedBlock[ { $Line },
@@ -141,7 +143,10 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
                         nbo,
                         filterOptions[ Interactive -> False, opts ]
                     ],
-                    FileHash::noopen
+                    {
+                        FileHash::noopen,
+                        DocumentationBuild`DocumentationBuild::warning
+                    }
                 ]
             ];
 
@@ -262,6 +267,20 @@ checkPacArchiveExtension[ archive_? FileExistsQ ] :=
     ];
 
 checkPacArchiveExtension[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*pacletToolsMessageFix*)
+pacletToolsMessageFix[ ] := pacletToolsMessageFix[ ] = (
+    needs[ "PacletTools`" -> None ];
+    needs[ "PacletResource`DefinitionNotebook`" -> None ];
+    If[ ! KeyExistsQ[ Options @ pt`PacletBuild, OverwriteTarget ],
+        prdn`BuildPaclet // Options = DeleteCases[
+            Options @ prdn`BuildPaclet,
+            OverwriteTarget -> _
+        ]
+    ]
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
