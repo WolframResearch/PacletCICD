@@ -267,6 +267,7 @@ pacletToolsMessageFix[ eval_ ] := (
     needs[ "PacletTools`" -> None ];
     needs[ "PacletResource`DefinitionNotebook`" -> None ];
     Internal`InheritedBlock[ { pt`PacletBuild, $Line },
+        Unprotect @ pt`PacletBuild;
         pt`PacletBuild // Options = DeleteDuplicates @ Append[
             Options @ pt`PacletBuild,
             OverwriteTarget -> Automatic
