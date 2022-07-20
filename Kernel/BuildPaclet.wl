@@ -129,30 +129,18 @@ buildPaclet[ file_File, opts___ ] :=
         ]
     ];
 
-(* :!CodeAnalysis::BeginBlock:: *)
-(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+
 buildPaclet[ nbo_NotebookObject, opts___ ] :=
     Module[ { result },
         needs[ "PacletResource`DefinitionNotebook`" -> None ];
-        pacletToolsMessageFix[ ];
 
-        result =
-            Internal`InheritedBlock[ { $Line },
-                Quiet[
-                    prdn`BuildPaclet[
-                        nbo,
-                        filterOptions[ Interactive -> False, opts ]
-                    ],
-                    {
-                        FileHash::noopen,
-                        DocumentationBuild`DocumentationBuild::warning
-                    }
-                ]
-            ];
+        result = pacletToolsMessageFix @ prdn`BuildPaclet[
+            nbo,
+            filterOptions[ Interactive -> False, opts ]
+        ];
 
         setGHBuildOutput @ result
     ];
-(* :!CodeAnalysis::EndBlock:: *)
 
 buildPaclet // catchUndefined;
 
@@ -271,18 +259,28 @@ checkPacArchiveExtension[ ___ ] := $Failed;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*pacletToolsMessageFix*)
-pacletToolsMessageFix[ ] := pacletToolsMessageFix[ ] = (
+pacletToolsMessageFix // Attributes = { HoldFirst };
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
+pacletToolsMessageFix[ eval_ ] := (
     needs[ "PacletTools`" -> None ];
     needs[ "PacletResource`DefinitionNotebook`" -> None ];
-    If[ And[ KeyExistsQ[ Options @ prdn`BuildPaclet, OverwriteTarget ],
-             ! KeyExistsQ[ Options @ pt`PacletBuild, OverwriteTarget ]
-        ],
-        Options @ pt`PacletBuild = Append[
+    Internal`InheritedBlock[ { pt`PacletBuild, $Line },
+        pt`PacletBuild // Options = DeleteDuplicates @ Append[
             Options @ pt`PacletBuild,
             OverwriteTarget -> Automatic
+        ];
+        Quiet[
+            eval,
+            {
+                FileHash::noopen,
+                DocumentationBuild`DocumentationBuild::warning
+            }
         ]
     ]
 );
+(* :!CodeAnalysis::EndBlock:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
