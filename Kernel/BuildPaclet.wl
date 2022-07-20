@@ -274,10 +274,12 @@ checkPacArchiveExtension[ ___ ] := $Failed;
 pacletToolsMessageFix[ ] := pacletToolsMessageFix[ ] = (
     needs[ "PacletTools`" -> None ];
     needs[ "PacletResource`DefinitionNotebook`" -> None ];
-    If[ ! KeyExistsQ[ Options @ pt`PacletBuild, OverwriteTarget ],
-        prdn`BuildPaclet // Options = DeleteCases[
-            Options @ prdn`BuildPaclet,
-            OverwriteTarget -> _
+    If[ And[ KeyExistsQ[ Options @ prdn`BuildPaclet, OverwriteTarget ],
+             ! KeyExistsQ[ Options @ pt`PacletBuild, OverwriteTarget ]
+        ],
+        Options @ pt`PacletBuild = Append[
+            Options @ pt`PacletBuild,
+            OverwriteTarget -> Automatic
         ]
     ]
 );
