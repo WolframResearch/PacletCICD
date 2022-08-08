@@ -1,6 +1,6 @@
 <|
     "Name"    -> "Sample",
-    "Version" -> "1.4.0",
-    "Commit"  -> "64d4052b66f07e2e3796470f5e5d3c23cc95ba51",
-    "URL"     -> "https://github.com/rhennigan/PacletCICD-Examples-Sample/archive/refs/tags/v1.4.0.zip"
+    "Version" -> "1.5.0",
+    "Commit"  -> "1461ac319bbc42707001df7038f4dc2cb07971ba",
+    "URL"     -> "https://github.com/WolframResearch/PacletCICD-Examples-Sample/archive/refs/tags/v1.5.0.zip"
 |>

@@ -107,7 +107,7 @@ releaseURL[ file_ ] :=
         pac = PacletObject @ Flatten @ File @ file;
         ver = ConfirmBy[ pac[ "Version" ], StringQ ];
         TemplateApply[
-            "https://github.com/rhennigan/PacletCICD/releases/tag/v`1`",
+            "https://github.com/WolframResearch/PacletCICD/releases/tag/v`1`",
             ver
         ]
     ];
@@ -189,7 +189,7 @@ updateReleaseInfoCell[ dir_, url_, cmt_, run_ ] /;
 
 
 commitURL[ sha_String ] :=
-    URLBuild @ { "https://github.com/rhennigan/PacletCICD/commit", sha };
+    URLBuild @ { "https://github.com/WolframResearch/PacletCICD/commit", sha };
 
 
 releaseInfoCell[ release_, commit_, run_ ] := Enclose[

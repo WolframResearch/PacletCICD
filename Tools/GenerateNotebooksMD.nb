@@ -92,7 +92,7 @@ Notebook[
                       "{",
                       RowBox[
                        {
-                        "\"https://raw.githubusercontent.com/rhennigan/PacletCICD/main\"",
+                        "\"https://raw.githubusercontent.com/WolframResearch/PacletCICD/main\"",
                         ",",
                         "path"
                        }

@@ -2,7 +2,7 @@
 
 ********************************************************************************
 
-[![Check Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/rhennigan/PacletCICD/actions/workflows/release.yml)
+[![Check Paclet](https://github.com/WolframResearch/PacletCICD/actions/workflows/check-paclet.yml/badge.svg)](https://github.com/WolframResearch/PacletCICD/actions/workflows/check-paclet.yml) [![Release Paclet](https://github.com/WolframResearch/PacletCICD/actions/workflows/release.yml/badge.svg)](https://github.com/WolframResearch/PacletCICD/actions/workflows/release.yml)
 
 ![Notebook Icon](.github/images/nb.svg) [View Notebooks](Notebooks.md)
 
@@ -22,11 +22,11 @@ PacletInstall[ResourceObject["Wolfram/PacletCICD"]]
 Using Wolfram Language version 12.0 or later:
 
 ```Mathematica
-ResourceFunction["GitHubInstall"]["rhennigan", "PacletCICD"]
+ResourceFunction["GitHubInstall"]["WolframResearch", "PacletCICD"]
 ```
 
 ## From Github
-The PacletCICD release comes in the form of a `.paclet` file, which contains the entire package and its documentation. Download the latest release from the [GitHub repo's releases page](https://github.com/rhennigan/PacletCICD/releases). To install, run the following command in the Wolfram Language:
+The PacletCICD release comes in the form of a `.paclet` file, which contains the entire package and its documentation. Download the latest release from the [GitHub repo's releases page](https://github.com/WolframResearch/PacletCICD/releases). To install, run the following command in the Wolfram Language:
 
 ```Mathematica
 PacletInstall["/full/path/to/PacletCICD.paclet"]

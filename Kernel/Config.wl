@@ -8,7 +8,7 @@ Begin[ "`Private`" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Config*)
-$thisRepository    := "rhennigan/PacletCICD";
+$thisRepository    := "WolframResearch/PacletCICD";
 $thisPacletName    := "Wolfram/PacletCICD";
 $thisPaclet        := $thisPaclet        = PacletObject[ $thisPacletName ];
 $thisPacletDir     := $thisPacletDir     = $thisPaclet[ "Location"       ];

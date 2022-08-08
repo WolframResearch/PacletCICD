@@ -3068,7 +3068,7 @@ Notebook[
                                                                                             StripOnInput -> False
                                                                                            ],
                                                                                            StyleBox[
-                                                                                            "\"rhennigan/submit-paclet@v1.7.1\"",
+                                                                                            "\"WolframResearch/submit-paclet@v1.7.1\"",
                                                                                             "SummaryItem",
                                                                                             StripOnInput -> False
                                                                                            ]
@@ -3502,7 +3502,7 @@ Notebook[
                    <|
                     "name" -> "Submit",
                     "id" -> "submit-paclet-step",
-                    "uses" -> "rhennigan/submit-paclet@v1.7.1",
+                    "uses" -> "WolframResearch/submit-paclet@v1.7.1",
                     "with" -> <|
                      "paclet_cicd_version" -> "0.29.2",
                      "definition_notebook" -> "./ResourceDefinition.nb",
