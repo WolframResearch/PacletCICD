@@ -512,6 +512,7 @@ Notebook[
    ]
   ]
  },
+ ScreenStyleEnvironment -> "FutureObject",
  WindowStatusArea -> Automatic,
  TaggingRules -> <|
   "InformationPopupMenuItemAdded" -> True,
@@ -532,5 +533,6 @@ Notebook[
    {"Wolfram"},
    "FunctionPageStylesExt.nb",
    CharacterEncoding -> "UTF-8"
-  ]
+  ],
+ ExpressionUUID -> "bb87e81b-f9b9-41e2-ba91-3cfbfa53acf0"
 ]
