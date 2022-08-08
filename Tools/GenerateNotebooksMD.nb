@@ -1,9 +1,17 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* Created By: SaveReadableNotebook *)
+(* https://resources.wolframcloud.com/FunctionRepository/resources/SaveReadableNotebook *)
+
 Notebook[
  {
   Cell[
    BoxData[RowBox[{RowBox[{"$depth", "=", "0"}], ";"}]],
    "Input",
-   CellLabel -> "In[92]:="
+   CellLabel -> "In[5]:="
   ],
   Cell[
    BoxData[
@@ -46,7 +54,7 @@ Notebook[
     }
    ],
    "Input",
-   CellLabel -> "In[93]:="
+   CellLabel -> "In[6]:="
   ],
   Cell[
    BoxData[
@@ -114,7 +122,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[96]:="
+   CellLabel -> "In[9]:="
   ],
   Cell[
    BoxData[
@@ -147,7 +155,7 @@ Notebook[
     }
    ],
    "Input",
-   CellLabel -> "In[97]:="
+   CellLabel -> "In[10]:="
   ],
   Cell[
    BoxData[
@@ -244,7 +252,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[99]:="
+   CellLabel -> "In[12]:="
   ],
   Cell[
    BoxData[
@@ -362,7 +370,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[100]:="
+   CellLabel -> "In[13]:="
   ],
   Cell[
    BoxData[
@@ -427,7 +435,7 @@ Notebook[
     }
    ],
    "Input",
-   CellLabel -> "In[101]:="
+   CellLabel -> "In[14]:="
   ],
   Cell[
    BoxData[
@@ -584,7 +592,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[104]:="
+   CellLabel -> "In[17]:="
   ],
   Cell[
    BoxData[
@@ -884,7 +892,7 @@ Notebook[
     }
    ],
    "Input",
-   CellLabel -> "In[105]:="
+   CellLabel -> "In[18]:="
   ],
   Cell[
    BoxData[
@@ -944,7 +952,7 @@ Notebook[
     }
    ],
    "Input",
-   CellLabel -> "In[111]:="
+   CellLabel -> "In[24]:="
   ],
   Cell[
    BoxData[
@@ -1000,7 +1008,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[113]:="
+   CellLabel -> "In[26]:="
   ],
   Cell[
    BoxData[
@@ -1041,7 +1049,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[114]:="
+   CellLabel -> "In[27]:="
   ],
   Cell[
    CellGroupData[
@@ -1051,12 +1059,12 @@ Notebook[
        RowBox[{"exportMarkdown", "[", "\"PacletCICD\"", "]"}]
       ],
       "Input",
-      CellLabel -> "In[115]:="
+      CellLabel -> "In[28]:="
      ],
      Cell[
       BoxData["\"PacletCICD\\\\Notebooks.md\""],
       "Output",
-      CellLabel -> "Out[115]="
+      CellLabel -> "Out[28]="
      ]
     },
     Open
@@ -1094,7 +1102,7 @@ Notebook[
     ]
    ],
    "Input",
-   CellLabel -> "In[90]:="
+   CellLabel -> "In[29]:="
   ],
   Cell[
    CellGroupData[
@@ -1102,7 +1110,7 @@ Notebook[
      Cell[
       BoxData[RowBox[{"Keys", "@", "icons"}]],
       "Input",
-      CellLabel -> "In[91]:="
+      CellLabel -> "In[30]:="
      ],
      Cell[
       BoxData[
@@ -1161,7 +1169,7 @@ Notebook[
        ]
       ],
       "Output",
-      CellLabel -> "Out[91]="
+      CellLabel -> "Out[30]="
      ]
     },
     Open
@@ -1187,7 +1195,7 @@ Notebook[
                "{",
                RowBox[
                 {
-                 "root",
+                 "\"PacletCICD\"",
                  ",",
                  "\".github\"",
                  ",",
@@ -1238,12 +1246,12 @@ Notebook[
        ]
       ],
       "Input",
-      CellLabel -> "In[74]:="
+      CellLabel -> "In[31]:="
      ],
      Cell[
       BoxData["\"PacletCICD\\\\.github\\\\images\\\\dir.svg\""],
       "Output",
-      CellLabel -> "Out[74]="
+      CellLabel -> "Out[31]="
      ]
     },
     Open
@@ -1269,7 +1277,7 @@ Notebook[
                "{",
                RowBox[
                 {
-                 "root",
+                 "\"PacletCICD\"",
                  ",",
                  "\".github\"",
                  ",",
@@ -1320,12 +1328,12 @@ Notebook[
        ]
       ],
       "Input",
-      CellLabel -> "In[68]:="
+      CellLabel -> "In[32]:="
      ],
      Cell[
       BoxData["\"PacletCICD\\\\.github\\\\images\\\\nb.svg\""],
       "Output",
-      CellLabel -> "Out[68]="
+      CellLabel -> "Out[32]="
      ]
     },
     Open
@@ -1336,15 +1344,16 @@ Notebook[
  TaggingRules -> {
   "InformationPopupMenuItemAdded" -> True,
   "NotebookIndexQ" -> True,
-  "NotebookLastIndexed" -> DateObject[
-   {2022, 5, 4, 20, 9, 53.5123075`9.481028523157093},
-   "Instant",
-   "Gregorian",
-   -4.
-  ],
+  "NotebookLastIndexed" ->
+   DateObject[
+    {2022, 5, 4, 20, 9, 53.512},
+    "Instant",
+    "Gregorian",
+    -4.0
+   ],
   "NotebookUUID" -> "c0c290f8-ea3d-43cb-b44b-01594fe11919"
  },
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (May 3, 2022)",
+ FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (August 6, 2022)",
  StyleDefinitions -> "Default.nb",
  ExpressionUUID -> "782f8a2c-a76b-482f-a297-afb27cd04dd9"
 ]

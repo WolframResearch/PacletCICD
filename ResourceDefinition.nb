@@ -3774,7 +3774,6 @@ Notebook[
                          ]
                         ],
                         "FileManagerFile",
-                        "Excluded",
                         CellMargins -> {{92 + Inherited, Inherited}, {Inherited, Inherited}},
                         CellGroupingRules -> {"SectionGrouping", 140},
                         CellFrameLabels -> {
@@ -22040,7 +22039,7 @@ Notebook[
    "PacletName" -> "PacletResource"
   },
   "SubmissionReviewData" -> {"Review" -> False},
-  "ToolsOpen" -> False,
+  "ToolsOpen" -> True,
   "UpdatedTimestamp" -> 3.8662*^9,
   "TemplateVersion" -> "1.5.68",
   "StatusMessage" -> "",
@@ -22049,7 +22048,7 @@ Notebook[
   "NotebookIndexQ" -> True,
   "NotebookLastIndexed" ->
    DateObject[
-    {2022, 7, 7, 11, 18, 37.095},
+    {2022, 8, 8, 8, 42, 0.52971},
     "Instant",
     "Gregorian",
     -4.0
@@ -22058,7 +22057,7 @@ Notebook[
  },
  CreateCellID -> True,
  DynamicEvaluationTimeout -> 60,
- FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (July 6, 2022)",
+ FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (August 6, 2022)",
  StyleDefinitions ->
   Notebook[
    {
@@ -33984,7 +33983,7 @@ Notebook[
     ]
    },
    Visible -> False,
-   FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (July 6, 2022)",
+   FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (August 6, 2022)",
    StyleDefinitions -> "PrivateStylesheetFormatting.nb"
   ],
  ExpressionUUID -> "6d8e0782-7445-4069-99ba-30f35ae431c1"

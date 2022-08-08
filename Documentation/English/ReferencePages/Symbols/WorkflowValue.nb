@@ -1,111 +1,17 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* Created By: SaveReadableNotebook *)
+(* https://resources.wolframcloud.com/FunctionRepository/resources/SaveReadableNotebook *)
+
 Notebook[
  {
   Cell[
-   TextData[
-    {
-     "New in: ",
-     Cell["", "HistoryData", CellTags -> "New"],
-     " | Modified in: ",
-     Cell[" ", "HistoryData", CellTags -> "Modified"],
-     " | Obsolete in: ",
-     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
-     " | Excised in: ",
-     Cell[" ", "HistoryData", CellTags -> "Excised"]
-    }
-   ],
-   "History",
-   CellID -> 492834634
-  ],
-  Cell[
-   "Created by: rhennigan on 02-21-2022 15:38:50",
-   "AuthorDate",
-   CellID -> 318503352
-  ],
-  Cell[
    CellGroupData[
     {
-     Cell[
-      "Categorization",
-      "CategorizationSection",
-      CellID -> 412351208
-     ],
-     Cell[
-      "Symbol",
-      "Categorization",
-      CellLabel -> "Entity Type",
-      CellID -> 242652211
-     ],
-     Cell[
-      "Wolfram/PacletCICD",
-      "Categorization",
-      CellLabel -> "Paclet Name",
-      CellID -> 443529169
-     ],
-     Cell[
-      "Wolfram`PacletCICD`",
-      "Categorization",
-      CellLabel -> "Context",
-      CellID -> 451060973
-     ],
-     Cell[
-      "Wolfram/PacletCICD/ref/WorkflowValue",
-      "Categorization",
-      CellLabel -> "URI",
-      CellID -> 315977962
-     ]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell["Keywords", "KeywordsSection", CellID -> 96724102],
-     Cell["XXXX", "Keywords", CellID -> 284628193]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell[
-      "Syntax Templates",
-      "TemplatesSection",
-      CellID -> 5987180
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Additional Function Template",
-      CellID -> 372770837
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Arguments Pattern",
-      CellID -> 141694260
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Local Variables",
-      CellID -> 51668958
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Color Equal Signs",
-      CellID -> 64967823
-     ]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell["WorkflowValue", "ObjectName", CellID -> 188049422],
+     Cell["WorkflowValue", "ObjectName", CellID -> 440013644],
      Cell[
       TextData[
        {
@@ -163,94 +69,7 @@ Notebook[
        }
       ],
       "Usage",
-      CellID -> 580762396
-     ],
-     Cell[
-      TextData[
-       {
-        "Some possible values for ",
-        Cell[BoxData[StyleBox["scope", "TI"]], "InlineFormula"],
-        " are:"
-       }
-      ],
-      "Notes",
-      CellID -> 363229871
-     ],
-     Cell[
-      BoxData[
-       GridBox[
-        {
-         {
-          Cell["      ", "ModInfo"],
-          "\"Step\"",
-          Cell[
-           TextData[
-            {
-             "the current ",
-             Cell[
-              BoxData[
-               ButtonBox[
-                "WorkflowStep",
-                BaseStyle -> "Link",
-                ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowStep"
-               ]
-              ],
-              "InlineFormula"
-             ]
-            }
-           ],
-           "TableText"
-          ]
-         },
-         {
-          Cell["      ", "ModInfo"],
-          "\"Job\"",
-          Cell[
-           TextData[
-            {
-             "the current ",
-             Cell[
-              BoxData[
-               ButtonBox[
-                "WorkflowJob",
-                BaseStyle -> "Link",
-                ButtonData -> "paclet:Wolfram/PacletCICD/ref/WorkflowJob"
-               ]
-              ],
-              "InlineFormula"
-             ]
-            }
-           ],
-           "TableText"
-          ]
-         },
-         {
-          Cell["      ", "ModInfo"],
-          "\"Workflow\"",
-          Cell[
-           TextData[
-            {
-             "the current ",
-             Cell[
-              BoxData[
-               ButtonBox[
-                "Workflow",
-                BaseStyle -> "Link",
-                ButtonData -> "paclet:Wolfram/PacletCICD/ref/Workflow"
-               ]
-              ],
-              "InlineFormula"
-             ]
-            }
-           ],
-           "TableText"
-          ]
-         }
-        }
-       ]
-      ],
-      "2ColumnTableMod",
-      CellID -> 30974870
+      CellID -> 108247565
      ]
     },
     Open
@@ -259,7 +78,34 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 28921901],
+     Cell[
+      TextData[
+       {
+        "Tech Notes",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "TechNotes",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell["Insert links to related tech notes.", "MoreInfoText"],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "TechNotesSection",
+      CellID -> 429378331
+     ],
      Cell["XXXX", "Tutorials", CellID -> 18177986]
     },
     Open
@@ -269,22 +115,35 @@ Notebook[
    CellGroupData[
     {
      Cell[
-      "Related Demonstrations",
-      "RelatedDemonstrationsSection",
-      CellID -> 160700447
-     ],
-     Cell["XXXX", "RelatedDemonstrations", CellID -> 197796540]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell[
-      "Related Links",
+      TextData[
+       {
+        "Related Links",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "RelatedLinks",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Insert links to any related page, including web pages.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
       "RelatedLinksSection",
-      CellID -> 241450235
+      CellID -> 125882563
      ],
      Cell["XXXX", "RelatedLinks", CellID -> 147449141]
     },
@@ -294,7 +153,37 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["See Also", "SeeAlsoSection", CellID -> 175434481],
+     Cell[
+      TextData[
+       {
+        "See Also",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "SeeAlso",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Insert links to any related reference (function) pages. Type a space, a period and then another space between function names. Then click the palette's Inline Listing Toggle button.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "SeeAlsoSection",
+      CellID -> 193225470
+     ],
      Cell[
       TextData[
        {
@@ -356,7 +245,7 @@ Notebook[
      Cell[
       "Related Guides",
       "MoreAboutSection",
-      CellID -> 451714690
+      CellID -> 263569330
      ],
      Cell[
       TextData[
@@ -374,12 +263,60 @@ Notebook[
    ]
   ],
   Cell[
+   CellGroupData[
+    {
+     Cell[
+      TextData[
+       {
+        "Examples Initialization",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "ExamplesInitialization",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Input that is to be evaluated before any examples are run, e.g. Needs[\[Ellipsis]].",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "ExamplesInitializationSection",
+      CellID -> 462645252
+     ],
+     Cell[
+      BoxData[
+       RowBox[{"Needs", "[", "\"Wolfram`PacletCICD`\"", "]"}]
+      ],
+      "ExampleInitialization",
+      CellID -> 9225029
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
    BoxData[
     InterpretationBox[
      GridBox[
       {
        {
-        StyleBox["Examples", "PrimaryExamplesSection"],
+        StyleBox[
+         RowBox[{"Basic", " ", "Examples"}],
+         "PrimaryExamplesSection"
+        ],
         ButtonBox[
          RowBox[
           {
@@ -395,27 +332,51 @@ Notebook[
       }
      ],
      $Line = 0;
-     Null
     ]
    ],
    "PrimaryExamplesSection",
-   CellID -> 366820896
+   CellID -> 330435858
   ],
   Cell[
    CellGroupData[
     {
      Cell[
-      "More Examples",
+      TextData[
+       {
+        "More Examples",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "MoreExamples",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Extended examples in standardized sections.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
       "ExtendedExamplesSection",
       CellTags -> "ExtendedExamples",
-      CellID -> 473491807
+      CellID -> 55686900
      ],
      Cell[
       BoxData[
        InterpretationBox[
         Cell["Scope", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -426,7 +387,6 @@ Notebook[
        InterpretationBox[
         Cell["Generalizations & Extensions", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -440,7 +400,6 @@ Notebook[
           InterpretationBox[
            Cell["Options", "ExampleSection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSection",
@@ -451,7 +410,6 @@ Notebook[
           InterpretationBox[
            Cell["XXXX", "ExampleSubsection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSubsection",
@@ -462,7 +420,6 @@ Notebook[
           InterpretationBox[
            Cell["XXXX", "ExampleSubsection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSubsection",
@@ -477,7 +434,6 @@ Notebook[
        InterpretationBox[
         Cell["Applications", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -488,7 +444,6 @@ Notebook[
        InterpretationBox[
         Cell["Properties & Relations", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -499,7 +454,6 @@ Notebook[
        InterpretationBox[
         Cell["Possible Issues", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -510,7 +464,6 @@ Notebook[
        InterpretationBox[
         Cell["Interactive Examples", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -521,11 +474,139 @@ Notebook[
        InterpretationBox[
         Cell["Neat Examples", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
       CellID -> 56427106
+     ]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Metadata", "MetadataSection", CellID -> 247090787],
+     Cell[
+      TextData[
+       {
+        "New in: ",
+        Cell["", "HistoryData", CellTags -> "New"],
+        " | Modified in: ",
+        Cell[" ", "HistoryData", CellTags -> "Modified"],
+        " | Obsolete in: ",
+        Cell[" ", "HistoryData", CellTags -> "Obsolete"]
+       }
+      ],
+      "History",
+      CellID -> 291267017
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         TextData[
+          {
+           "Categorization",
+           Cell[
+            BoxData[
+             TemplateBox[
+              {
+               "Metadata",
+               Cell[
+                BoxData[
+                 FrameBox[
+                  Cell[
+                   "Metadata such as page URI, context, and type of documentation page.",
+                   "MoreInfoText"
+                  ],
+                  BaseStyle -> "IFrameBox"
+                 ]
+                ],
+                "MoreInfoTextOuter"
+               ]
+              },
+              "MoreInfoOpenerButtonTemplate"
+             ]
+            ]
+           ]
+          }
+         ],
+         "CategorizationSection",
+         CellID -> 194433104
+        ],
+        Cell[
+         "Symbol",
+         "Categorization",
+         CellLabel -> "Entity Type",
+         CellID -> 260136114
+        ],
+        Cell[
+         "Wolfram/PacletCICD",
+         "Categorization",
+         CellLabel -> "Paclet Name",
+         CellID -> 339809992
+        ],
+        Cell[
+         "Wolfram`PacletCICD`",
+         "Categorization",
+         CellLabel -> "Context",
+         CellID -> 568899056
+        ],
+        Cell[
+         "Wolfram/PacletCICD/ref/WorkflowValue",
+         "Categorization",
+         CellLabel -> "URI",
+         CellID -> 281625639
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell["Keywords", "KeywordsSection", CellID -> 334967452],
+        Cell["XXXX", "Keywords", CellID -> 284628193]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Syntax Templates",
+         "TemplatesSection",
+         CellID -> 137518001
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Additional Function Template",
+         CellID -> 173870313
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Arguments Pattern",
+         CellID -> 46565389
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Local Variables",
+         CellID -> 313042118
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Color Equal Signs",
+         CellID -> 223536884
+        ]
+       },
+       Open
+      ]
      ]
     },
     Open
@@ -535,23 +616,22 @@ Notebook[
  WindowStatusArea -> Automatic,
  TaggingRules -> <|
   "InformationPopupMenuItemAdded" -> True,
-  "Author" -> "rhennigan",
-  "CreationDate" -> "02-21-2022 15:38:50",
+  "Paclet" -> "Wolfram/PacletCICD",
   "NotebookIndexQ" -> True,
-  "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 21, 17, 55, 40.3105015`9.357993081271307},
-   "Instant",
-   "Gregorian",
-   -5.
-  ],
-  "NotebookUUID" -> "23065368-a4c0-460f-bc92-5562f7b3106e"
+  "NotebookLastIndexed" ->
+   DateObject[
+    {2022, 8, 8, 8, 21, 57.662},
+    "Instant",
+    "Gregorian",
+    -4.0
+   ],
+  "NotebookUUID" -> "194ae1c5-9ea2-4080-a831-eb062d86a9b8"
  |>,
- CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
- StyleDefinitions -> FrontEnd`FileName[
-  {"Wolfram"},
-  "FunctionPageStylesExt.nb",
-  CharacterEncoding -> "UTF-8"
- ],
- ExpressionUUID -> "23065368-a4c0-460f-bc92-5562f7b3106e"
+ FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (August 6, 2022)",
+ StyleDefinitions ->
+  FrontEnd`FileName[
+   {"Wolfram"},
+   "FunctionPageStylesExt.nb",
+   CharacterEncoding -> "UTF-8"
+  ]
 ]

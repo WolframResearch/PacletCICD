@@ -1,114 +1,20 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* Created By: SaveReadableNotebook *)
+(* https://resources.wolframcloud.com/FunctionRepository/resources/SaveReadableNotebook *)
+
 Notebook[
  {
-  Cell[
-   TextData[
-    {
-     "New in: ",
-     Cell["", "HistoryData", CellTags -> "New"],
-     " | Modified in: ",
-     Cell[" ", "HistoryData", CellTags -> "Modified"],
-     " | Obsolete in: ",
-     Cell[" ", "HistoryData", CellTags -> "Obsolete"],
-     " | Excised in: ",
-     Cell[" ", "HistoryData", CellTags -> "Excised"]
-    }
-   ],
-   "History",
-   CellID -> 523191634
-  ],
-  Cell[
-   "Created by: rhennigan on 03-23-2022 15:45:17",
-   "AuthorDate",
-   CellID -> 97767031
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell[
-      "Categorization",
-      "CategorizationSection",
-      CellID -> 656728268
-     ],
-     Cell[
-      "Symbol",
-      "Categorization",
-      CellLabel -> "Entity Type",
-      CellID -> 104902495
-     ],
-     Cell[
-      "Wolfram/PacletCICD",
-      "Categorization",
-      CellLabel -> "Paclet Name",
-      CellID -> 85567392
-     ],
-     Cell[
-      "Wolfram`PacletCICD`",
-      "Categorization",
-      CellLabel -> "Context",
-      CellID -> 15399279
-     ],
-     Cell[
-      "Wolfram/PacletCICD/ref/DeletePublisherToken",
-      "Categorization",
-      CellLabel -> "URI",
-      CellID -> 437618978
-     ]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell["Keywords", "KeywordsSection", CellID -> 197714],
-     Cell["XXXX", "Keywords", CellID -> 108344058]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell[
-      "Syntax Templates",
-      "TemplatesSection",
-      CellID -> 943052485
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Additional Function Template",
-      CellID -> 62862964
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Arguments Pattern",
-      CellID -> 87960392
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Local Variables",
-      CellID -> 315407662
-     ],
-     Cell[
-      BoxData[""],
-      "Template",
-      CellLabel -> "Color Equal Signs",
-      CellID -> 176181552
-     ]
-    },
-    Open
-   ]
-  ],
   Cell[
    CellGroupData[
     {
      Cell[
       "DeletePublisherToken",
       "ObjectName",
-      CellID -> 89961167
+      CellID -> 440013644
      ],
      Cell[
       TextData[
@@ -122,9 +28,8 @@ Notebook[
        }
       ],
       "Usage",
-      CellID -> 233705298
-     ],
-     Cell["XXXX", "Notes", CellID -> 306119061]
+      CellID -> 108247565
+     ]
     },
     Open
    ]
@@ -132,7 +37,34 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["Tech Notes", "TechNotesSection", CellID -> 247037662],
+     Cell[
+      TextData[
+       {
+        "Tech Notes",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "TechNotes",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell["Insert links to related tech notes.", "MoreInfoText"],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "TechNotesSection",
+      CellID -> 429378331
+     ],
      Cell["XXXX", "Tutorials", CellID -> 360203976]
     },
     Open
@@ -142,22 +74,35 @@ Notebook[
    CellGroupData[
     {
      Cell[
-      "Related Demonstrations",
-      "RelatedDemonstrationsSection",
-      CellID -> 508208569
-     ],
-     Cell["XXXX", "RelatedDemonstrations", CellID -> 184280243]
-    },
-    Open
-   ]
-  ],
-  Cell[
-   CellGroupData[
-    {
-     Cell[
-      "Related Links",
+      TextData[
+       {
+        "Related Links",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "RelatedLinks",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Insert links to any related page, including web pages.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
       "RelatedLinksSection",
-      CellID -> 635292446
+      CellID -> 125882563
      ],
      Cell["XXXX", "RelatedLinks", CellID -> 714673730]
     },
@@ -167,7 +112,37 @@ Notebook[
   Cell[
    CellGroupData[
     {
-     Cell["See Also", "SeeAlsoSection", CellID -> 433819847],
+     Cell[
+      TextData[
+       {
+        "See Also",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "SeeAlso",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Insert links to any related reference (function) pages. Type a space, a period and then another space between function names. Then click the palette's Inline Listing Toggle button.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "SeeAlsoSection",
+      CellID -> 193225470
+     ],
      Cell["XXXX", "SeeAlso", CellID -> 110820939]
     },
     Open
@@ -179,9 +154,54 @@ Notebook[
      Cell[
       "Related Guides",
       "MoreAboutSection",
-      CellID -> 183188142
+      CellID -> 263569330
      ],
      Cell["XXXX", "MoreAbout", CellID -> 142981389]
+    },
+    Open
+   ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell[
+      TextData[
+       {
+        "Examples Initialization",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "ExamplesInitialization",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Input that is to be evaluated before any examples are run, e.g. Needs[\[Ellipsis]].",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
+      "ExamplesInitializationSection",
+      CellID -> 462645252
+     ],
+     Cell[
+      BoxData[
+       RowBox[{"Needs", "[", "\"Wolfram`PacletCICD`\"", "]"}]
+      ],
+      "ExampleInitialization",
+      CellID -> 9225029
+     ]
     },
     Open
    ]
@@ -192,7 +212,10 @@ Notebook[
      GridBox[
       {
        {
-        StyleBox["Examples", "PrimaryExamplesSection"],
+        StyleBox[
+         RowBox[{"Basic", " ", "Examples"}],
+         "PrimaryExamplesSection"
+        ],
         ButtonBox[
          RowBox[
           {
@@ -208,27 +231,51 @@ Notebook[
       }
      ],
      $Line = 0;
-     Null
     ]
    ],
    "PrimaryExamplesSection",
-   CellID -> 703350111
+   CellID -> 330435858
   ],
   Cell[
    CellGroupData[
     {
      Cell[
-      "More Examples",
+      TextData[
+       {
+        "More Examples",
+        Cell[
+         BoxData[
+          TemplateBox[
+           {
+            "MoreExamples",
+            Cell[
+             BoxData[
+              FrameBox[
+               Cell[
+                "Extended examples in standardized sections.",
+                "MoreInfoText"
+               ],
+               BaseStyle -> "IFrameBox"
+              ]
+             ],
+             "MoreInfoTextOuter"
+            ]
+           },
+           "MoreInfoOpenerButtonTemplate"
+          ]
+         ]
+        ]
+       }
+      ],
       "ExtendedExamplesSection",
       CellTags -> "ExtendedExamples",
-      CellID -> 212647822
+      CellID -> 55686900
      ],
      Cell[
       BoxData[
        InterpretationBox[
         Cell["Scope", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -239,7 +286,6 @@ Notebook[
        InterpretationBox[
         Cell["Generalizations & Extensions", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -253,7 +299,6 @@ Notebook[
           InterpretationBox[
            Cell["Options", "ExampleSection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSection",
@@ -264,7 +309,6 @@ Notebook[
           InterpretationBox[
            Cell["XXXX", "ExampleSubsection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSubsection",
@@ -275,7 +319,6 @@ Notebook[
           InterpretationBox[
            Cell["XXXX", "ExampleSubsection"],
            $Line = 0;
-           Null
           ]
          ],
          "ExampleSubsection",
@@ -290,7 +333,6 @@ Notebook[
        InterpretationBox[
         Cell["Applications", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -301,7 +343,6 @@ Notebook[
        InterpretationBox[
         Cell["Properties & Relations", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -312,7 +353,6 @@ Notebook[
        InterpretationBox[
         Cell["Possible Issues", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -323,7 +363,6 @@ Notebook[
        InterpretationBox[
         Cell["Interactive Examples", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -334,7 +373,6 @@ Notebook[
        InterpretationBox[
         Cell["Neat Examples", "ExampleSection"],
         $Line = 0;
-        Null
        ]
       ],
       "ExampleSection",
@@ -343,29 +381,158 @@ Notebook[
     },
     Open
    ]
+  ],
+  Cell[
+   CellGroupData[
+    {
+     Cell["Metadata", "MetadataSection", CellID -> 247090787],
+     Cell[
+      TextData[
+       {
+        "New in: ",
+        Cell["", "HistoryData", CellTags -> "New"],
+        " | Modified in: ",
+        Cell[" ", "HistoryData", CellTags -> "Modified"],
+        " | Obsolete in: ",
+        Cell[" ", "HistoryData", CellTags -> "Obsolete"]
+       }
+      ],
+      "History",
+      CellID -> 291267017
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         TextData[
+          {
+           "Categorization",
+           Cell[
+            BoxData[
+             TemplateBox[
+              {
+               "Metadata",
+               Cell[
+                BoxData[
+                 FrameBox[
+                  Cell[
+                   "Metadata such as page URI, context, and type of documentation page.",
+                   "MoreInfoText"
+                  ],
+                  BaseStyle -> "IFrameBox"
+                 ]
+                ],
+                "MoreInfoTextOuter"
+               ]
+              },
+              "MoreInfoOpenerButtonTemplate"
+             ]
+            ]
+           ]
+          }
+         ],
+         "CategorizationSection",
+         CellID -> 194433104
+        ],
+        Cell[
+         "Symbol",
+         "Categorization",
+         CellLabel -> "Entity Type",
+         CellID -> 260136114
+        ],
+        Cell[
+         "Wolfram/PacletCICD",
+         "Categorization",
+         CellLabel -> "Paclet Name",
+         CellID -> 339809992
+        ],
+        Cell[
+         "Wolfram`PacletCICD`",
+         "Categorization",
+         CellLabel -> "Context",
+         CellID -> 568899056
+        ],
+        Cell[
+         "Wolfram/PacletCICD/ref/DeletePublisherToken",
+         "Categorization",
+         CellLabel -> "URI",
+         CellID -> 281625639
+        ]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell["Keywords", "KeywordsSection", CellID -> 334967452],
+        Cell["XXXX", "Keywords", CellID -> 108344058]
+       },
+       Open
+      ]
+     ],
+     Cell[
+      CellGroupData[
+       {
+        Cell[
+         "Syntax Templates",
+         "TemplatesSection",
+         CellID -> 137518001
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Additional Function Template",
+         CellID -> 173870313
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Arguments Pattern",
+         CellID -> 46565389
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Local Variables",
+         CellID -> 313042118
+        ],
+        Cell[
+         BoxData[""],
+         "Template",
+         CellLabel -> "Color Equal Signs",
+         CellID -> 223536884
+        ]
+       },
+       Open
+      ]
+     ]
+    },
+    Open
+   ]
   ]
  },
  ScreenStyleEnvironment -> "FutureObject",
  WindowStatusArea -> Automatic,
- TaggingRules -> {
+ TaggingRules -> <|
   "InformationPopupMenuItemAdded" -> True,
-  "Author" -> "rhennigan",
-  "CreationDate" -> "03-23-2022 15:45:17",
+  "Paclet" -> "Wolfram/PacletCICD",
   "NotebookIndexQ" -> True,
-  "NotebookLastIndexed" -> DateObject[
-   {2022, 3, 23, 15, 53, 1.02378`7.762781627592655},
-   "Instant",
-   "Gregorian",
-   -4.
+  "NotebookLastIndexed" ->
+   DateObject[
+    {2022, 8, 8, 8, 21, 57.662},
+    "Instant",
+    "Gregorian",
+    -4.0
+   ],
+  "NotebookUUID" -> "194ae1c5-9ea2-4080-a831-eb062d86a9b8"
+ |>,
+ FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (August 6, 2022)",
+ StyleDefinitions ->
+  FrontEnd`FileName[
+   {"Wolfram"},
+   "FunctionPageStylesExt.nb",
+   CharacterEncoding -> "UTF-8"
   ],
-  "NotebookUUID" -> "42b08676-7fdb-4f10-bbd2-0ceea0226e1c"
- },
- CellContext -> "Global`",
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (March 19, 2022)",
- StyleDefinitions -> FrontEnd`FileName[
-  {"Wolfram"},
-  "FunctionPageStylesExt.nb",
-  CharacterEncoding -> "UTF-8"
- ],
- ExpressionUUID -> "42b08676-7fdb-4f10-bbd2-0ceea0226e1c"
+ ExpressionUUID -> "b1e41b68-206c-4b0d-b611-d65739c64ec6"
 ]
