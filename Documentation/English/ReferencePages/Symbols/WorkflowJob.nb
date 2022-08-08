@@ -1060,7 +1060,7 @@ Notebook[
                                                                     StripOnInput -> False
                                                                    ],
                                                                    StyleBox[
-                                                                    "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                    "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                     "SummaryItem",
                                                                     StripOnInput -> False
                                                                    ]
@@ -1433,7 +1433,7 @@ Notebook[
                  <|
                   "name" -> "Build",
                   "id" -> "build-paclet-step",
-                  "uses" -> "rhennigan/build-paclet@v1.5.0",
+                  "uses" -> "WolframResearch/build-paclet@v1.5.0",
                   "with" -> <|
                    "target" -> "Submit",
                    "paclet_cicd_version" -> "0.10.5",
@@ -1869,8 +1869,8 @@ Notebook[
                                   TagBox[
                                    TemplateBox[
                                     {
-                                     "\"rhennigan/build-paclet\"",
-                                     "https://github.com/rhennigan/build-paclet"
+                                     "\"WolframResearch/build-paclet\"",
+                                     "https://github.com/WolframResearch/build-paclet"
                                     },
                                     "HyperlinkURL"
                                    ],
@@ -1958,8 +1958,8 @@ Notebook[
                                   TagBox[
                                    TemplateBox[
                                     {
-                                     "\"rhennigan/build-paclet\"",
-                                     "https://github.com/rhennigan/build-paclet"
+                                     "\"WolframResearch/build-paclet\"",
+                                     "https://github.com/WolframResearch/build-paclet"
                                     },
                                     "HyperlinkURL"
                                    ],
@@ -2032,7 +2032,7 @@ Notebook[
                                                 StripOnInput -> False
                                                ],
                                                StyleBox[
-                                                "\"rhennigan/build-paclet@v1.5.0\"",
+                                                "\"WolframResearch/build-paclet@v1.5.0\"",
                                                 "SummaryItem",
                                                 StripOnInput -> False
                                                ]
@@ -2183,7 +2183,7 @@ Notebook[
                    <|
                     "name" -> "build-paclet-step",
                     "id" -> "build-paclet-step",
-                    "uses" -> "rhennigan/build-paclet@v1.5.0",
+                    "uses" -> "WolframResearch/build-paclet@v1.5.0",
                     "with" -> <|
                      "target" -> "Submit",
                      "paclet_cicd_version" -> "0.10.5",
@@ -2709,7 +2709,7 @@ Notebook[
                             {
                              "\"uses\"",
                              "\[Rule]",
-                             "\"rhennigan/build-paclet@v1.5.0\""
+                             "\"WolframResearch/build-paclet@v1.5.0\""
                             }
                            ],
                            ",",
@@ -2824,7 +2824,7 @@ Notebook[
            ],
            Cell[
             BoxData[
-             "\"name: Build\\nruns-on: ubuntu-latest\\ncontainer: \\n  image: wolframresearch/wolframengine:latest\\n  options: --user root\\nenv: \\n  WOLFRAM_SYSTEM_ID: Linux-x86-64\\n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\\ntimeout-minutes: 10\\nsteps: \\n- name: Checkout\\n  id: checkout-code-step\\n  uses: actions/checkout@v2\\n- name: Build\\n  id: build-paclet-step\\n  uses: rhennigan/build-paclet@v1.5.0\\n  with: \\n    target: Submit\\n    paclet_cicd_version: 0.10.5\\n    definition_notebook: ./ResourceDefinition.nb\\n- name: UploadArtifact\\n  id: upload-build-artifacts-step\\n  uses: actions/upload-artifact@v2\\n  with: \\n    path: ${{ env.BUILD_DIR }}\\n    if-no-files-found: error\""
+             "\"name: Build\\nruns-on: ubuntu-latest\\ncontainer: \\n  image: wolframresearch/wolframengine:latest\\n  options: --user root\\nenv: \\n  WOLFRAM_SYSTEM_ID: Linux-x86-64\\n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\\ntimeout-minutes: 10\\nsteps: \\n- name: Checkout\\n  id: checkout-code-step\\n  uses: actions/checkout@v2\\n- name: Build\\n  id: build-paclet-step\\n  uses: WolframResearch/build-paclet@v1.5.0\\n  with: \\n    target: Submit\\n    paclet_cicd_version: 0.10.5\\n    definition_notebook: ./ResourceDefinition.nb\\n- name: UploadArtifact\\n  id: upload-build-artifacts-step\\n  uses: actions/upload-artifact@v2\\n  with: \\n    path: ${{ env.BUILD_DIR }}\\n    if-no-files-found: error\""
             ],
             "Output",
             CellLabel -> "Out[4]=",
@@ -5014,7 +5014,7 @@ Notebook[
                                                                         StripOnInput -> False
                                                                        ],
                                                                        StyleBox[
-                                                                        "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                        "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                         "SummaryItem",
                                                                         StripOnInput -> False
                                                                        ]
@@ -5233,7 +5233,7 @@ Notebook[
                      <|
                       "name" -> "Check",
                       "id" -> "check-paclet-step",
-                      "uses" -> "rhennigan/check-paclet@v1.5.0",
+                      "uses" -> "WolframResearch/check-paclet@v1.5.0",
                       "with" -> <|
                        "target" -> "Submit",
                        "paclet_cicd_version" -> "0.10.5",
@@ -5789,7 +5789,7 @@ Notebook[
                                                                         StripOnInput -> False
                                                                        ],
                                                                        StyleBox[
-                                                                        "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                        "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                         "SummaryItem",
                                                                         StripOnInput -> False
                                                                        ]
@@ -6162,7 +6162,7 @@ Notebook[
                      <|
                       "name" -> "Build",
                       "id" -> "build-paclet-step",
-                      "uses" -> "rhennigan/build-paclet@v1.5.0",
+                      "uses" -> "WolframResearch/build-paclet@v1.5.0",
                       "with" -> <|
                        "target" -> "Submit",
                        "paclet_cicd_version" -> "0.10.5",
@@ -6731,7 +6731,7 @@ Notebook[
                                                                         StripOnInput -> False
                                                                        ],
                                                                        StyleBox[
-                                                                        "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                        "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                         "SummaryItem",
                                                                         StripOnInput -> False
                                                                        ]
@@ -7574,7 +7574,7 @@ Notebook[
                      <|
                       "name" -> "Build",
                       "id" -> "build-paclet-step",
-                      "uses" -> "rhennigan/build-paclet@v1.5.0",
+                      "uses" -> "WolframResearch/build-paclet@v1.5.0",
                       "with" -> <|
                        "target" -> "Submit",
                        "paclet_cicd_version" -> "0.10.5",
@@ -8167,7 +8167,7 @@ Notebook[
                                                                         StripOnInput -> False
                                                                        ],
                                                                        StyleBox[
-                                                                        "\"rhennigan/test-paclet@v1.1.0\"",
+                                                                        "\"WolframResearch/test-paclet@v1.1.0\"",
                                                                         "SummaryItem",
                                                                         StripOnInput -> False
                                                                        ]
@@ -8386,7 +8386,7 @@ Notebook[
                      <|
                       "name" -> "Test",
                       "id" -> "test-paclet-step",
-                      "uses" -> "rhennigan/test-paclet@v1.1.0",
+                      "uses" -> "WolframResearch/test-paclet@v1.1.0",
                       "with" -> <|
                        "target" -> "Submit",
                        "paclet_cicd_version" -> "0.10.5",
@@ -9195,7 +9195,7 @@ Notebook[
                                                                                             StripOnInput -> False
                                                                                            ],
                                                                                            StyleBox[
-                                                                                            "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                                            "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                                             "SummaryItem",
                                                                                             StripOnInput -> False
                                                                                            ]
@@ -9711,7 +9711,7 @@ Notebook[
                                                                                             StripOnInput -> False
                                                                                            ],
                                                                                            StyleBox[
-                                                                                            "\"rhennigan/test-paclet@v1.1.0\"",
+                                                                                            "\"WolframResearch/test-paclet@v1.1.0\"",
                                                                                             "SummaryItem",
                                                                                             StripOnInput -> False
                                                                                            ]
@@ -10239,7 +10239,7 @@ Notebook[
                                                                                             StripOnInput -> False
                                                                                            ],
                                                                                            StyleBox[
-                                                                                            "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                                            "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                                             "SummaryItem",
                                                                                             StripOnInput -> False
                                                                                            ]
@@ -11138,7 +11138,7 @@ Notebook[
                    <|
                     "name" -> "Check",
                     "id" -> "check-paclet-step",
-                    "uses" -> "rhennigan/check-paclet@v1.5.0",
+                    "uses" -> "WolframResearch/check-paclet@v1.5.0",
                     "with" -> <|
                      "target" -> "Submit",
                      "paclet_cicd_version" -> "0.10.5",
@@ -11167,7 +11167,7 @@ Notebook[
                    <|
                     "name" -> "Test",
                     "id" -> "test-paclet-step",
-                    "uses" -> "rhennigan/test-paclet@v1.1.0",
+                    "uses" -> "WolframResearch/test-paclet@v1.1.0",
                     "with" -> <|
                      "target" -> "Submit",
                      "paclet_cicd_version" -> "0.10.5",
@@ -11197,7 +11197,7 @@ Notebook[
                    <|
                     "name" -> "Build",
                     "id" -> "build-paclet-step",
-                    "uses" -> "rhennigan/build-paclet@v1.5.0",
+                    "uses" -> "WolframResearch/build-paclet@v1.5.0",
                     "with" -> <|
                      "target" -> "Submit",
                      "paclet_cicd_version" -> "0.10.5",
@@ -11816,7 +11816,7 @@ Notebook[
                                                                           StripOnInput -> False
                                                                          ],
                                                                          StyleBox[
-                                                                          "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                          "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                           "SummaryItem",
                                                                           StripOnInput -> False
                                                                          ]
@@ -12042,7 +12042,7 @@ Notebook[
                        <|
                         "name" -> "Check",
                         "id" -> "check-paclet-step",
-                        "uses" -> "rhennigan/check-paclet@v1.5.0",
+                        "uses" -> "WolframResearch/check-paclet@v1.5.0",
                         "with" -> <|
                          "target" -> "Submit",
                          "paclet_cicd_version" -> "0.10.5",
@@ -12597,7 +12597,7 @@ Notebook[
                                                                           StripOnInput -> False
                                                                          ],
                                                                          StyleBox[
-                                                                          "\"rhennigan/test-paclet@v1.1.0\"",
+                                                                          "\"WolframResearch/test-paclet@v1.1.0\"",
                                                                           "SummaryItem",
                                                                           StripOnInput -> False
                                                                          ]
@@ -12823,7 +12823,7 @@ Notebook[
                        <|
                         "name" -> "Test",
                         "id" -> "test-paclet-step",
-                        "uses" -> "rhennigan/test-paclet@v1.1.0",
+                        "uses" -> "WolframResearch/test-paclet@v1.1.0",
                         "with" -> <|
                          "target" -> "Submit",
                          "paclet_cicd_version" -> "0.10.5",
@@ -13390,7 +13390,7 @@ Notebook[
                                                                           StripOnInput -> False
                                                                          ],
                                                                          StyleBox[
-                                                                          "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                          "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                           "SummaryItem",
                                                                           StripOnInput -> False
                                                                          ]
@@ -14241,7 +14241,7 @@ Notebook[
                        <|
                         "name" -> "Build",
                         "id" -> "build-paclet-step",
-                        "uses" -> "rhennigan/build-paclet@v1.5.0",
+                        "uses" -> "WolframResearch/build-paclet@v1.5.0",
                         "with" -> <|
                          "target" -> "Submit",
                          "paclet_cicd_version" -> "0.10.5",
@@ -14900,7 +14900,7 @@ Notebook[
                                                                     StripOnInput -> False
                                                                    ],
                                                                    StyleBox[
-                                                                    "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                    "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                     "SummaryItem",
                                                                     StripOnInput -> False
                                                                    ]
@@ -15751,7 +15751,7 @@ Notebook[
                  <|
                   "name" -> "Build",
                   "id" -> "build-paclet-step",
-                  "uses" -> "rhennigan/build-paclet@v1.5.0",
+                  "uses" -> "WolframResearch/build-paclet@v1.5.0",
                   "with" -> <|
                    "target" -> "Submit",
                    "paclet_cicd_version" -> "0.10.5",
@@ -16211,8 +16211,8 @@ Notebook[
                                   TagBox[
                                    TemplateBox[
                                     {
-                                     "\"rhennigan/build-paclet\"",
-                                     "https://github.com/rhennigan/build-paclet"
+                                     "\"WolframResearch/build-paclet\"",
+                                     "https://github.com/WolframResearch/build-paclet"
                                     },
                                     "HyperlinkURL"
                                    ],
@@ -16300,8 +16300,8 @@ Notebook[
                                   TagBox[
                                    TemplateBox[
                                     {
-                                     "\"rhennigan/build-paclet\"",
-                                     "https://github.com/rhennigan/build-paclet"
+                                     "\"WolframResearch/build-paclet\"",
+                                     "https://github.com/WolframResearch/build-paclet"
                                     },
                                     "HyperlinkURL"
                                    ],
@@ -16374,7 +16374,7 @@ Notebook[
                                                 StripOnInput -> False
                                                ],
                                                StyleBox[
-                                                "\"rhennigan/build-paclet@v1.5.0\"",
+                                                "\"WolframResearch/build-paclet@v1.5.0\"",
                                                 "SummaryItem",
                                                 StripOnInput -> False
                                                ]
@@ -16525,7 +16525,7 @@ Notebook[
                    <|
                     "name" -> "build-paclet-step",
                     "id" -> "build-paclet-step",
-                    "uses" -> "rhennigan/build-paclet@v1.5.0",
+                    "uses" -> "WolframResearch/build-paclet@v1.5.0",
                     "with" -> <|
                      "target" -> "Submit",
                      "paclet_cicd_version" -> "0.10.5",
@@ -18474,7 +18474,7 @@ Notebook[
                                                                        StripOnInput -> False
                                                                       ],
                                                                       StyleBox[
-                                                                       "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                       "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                        "SummaryItem",
                                                                        StripOnInput -> False
                                                                       ]
@@ -18847,7 +18847,7 @@ Notebook[
                     <|
                      "name" -> "Build",
                      "id" -> "build-paclet-step",
-                     "uses" -> "rhennigan/build-paclet@v1.5.0",
+                     "uses" -> "WolframResearch/build-paclet@v1.5.0",
                      "with" -> <|
                       "target" -> "Submit",
                       "paclet_cicd_version" -> "0.10.5",
@@ -19535,7 +19535,7 @@ Notebook[
                                                                           StripOnInput -> False
                                                                          ],
                                                                          StyleBox[
-                                                                          "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                          "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                           "SummaryItem",
                                                                           StripOnInput -> False
                                                                          ]
@@ -19754,7 +19754,7 @@ Notebook[
                        <|
                         "name" -> "Check",
                         "id" -> "check-paclet-step",
-                        "uses" -> "rhennigan/check-paclet@v1.5.0",
+                        "uses" -> "WolframResearch/check-paclet@v1.5.0",
                         "with" -> <|
                          "target" -> "Submit",
                          "paclet_cicd_version" -> "0.10.5",
@@ -20424,7 +20424,7 @@ Notebook[
                                                                        StripOnInput -> False
                                                                       ],
                                                                       StyleBox[
-                                                                       "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                       "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                        "SummaryItem",
                                                                        StripOnInput -> False
                                                                       ]
@@ -20644,7 +20644,7 @@ Notebook[
                     <|
                      "name" -> "Check",
                      "id" -> "check-paclet-step",
-                     "uses" -> "rhennigan/check-paclet@v1.5.0",
+                     "uses" -> "WolframResearch/check-paclet@v1.5.0",
                      "with" -> <|
                       "target" -> "Submit",
                       "paclet_cicd_version" -> "0.10.5",
@@ -21366,7 +21366,7 @@ Notebook[
                                                                           StripOnInput -> False
                                                                          ],
                                                                          StyleBox[
-                                                                          "\"rhennigan/check-paclet@v1.5.0\"",
+                                                                          "\"WolframResearch/check-paclet@v1.5.0\"",
                                                                           "SummaryItem",
                                                                           StripOnInput -> False
                                                                          ]
@@ -21585,7 +21585,7 @@ Notebook[
                        <|
                         "name" -> "Check",
                         "id" -> "check-paclet-step",
-                        "uses" -> "rhennigan/check-paclet@v1.5.0",
+                        "uses" -> "WolframResearch/check-paclet@v1.5.0",
                         "with" -> <|
                          "target" -> "Submit",
                          "paclet_cicd_version" -> "0.10.5",
@@ -29848,7 +29848,7 @@ Notebook[
                                                                                                StripOnInput -> False
                                                                                               ],
                                                                                               StyleBox[
-                                                                                               "\"rhennigan/build-paclet@v1.5.0\"",
+                                                                                               "\"WolframResearch/build-paclet@v1.5.0\"",
                                                                                                "SummaryItem",
                                                                                                StripOnInput -> False
                                                                                               ]
@@ -30384,7 +30384,7 @@ Notebook[
                       <|
                        "name" -> "Build",
                        "id" -> "build-paclet-step",
-                       "uses" -> "rhennigan/build-paclet@v1.5.0",
+                       "uses" -> "WolframResearch/build-paclet@v1.5.0",
                        "with" -> <|
                         "target" -> "Submit",
                         "paclet_cicd_version" -> "0.10.5",

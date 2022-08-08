@@ -62,23 +62,23 @@ VerificationTest[
     ReplaceAll[
         HoldComplete[
             Wolfram`PacletCICD`Private`latestActionName[
-                "rhennigan/build-paclet@latest",
-                "rhennigan",
+                "WolframResearch/build-paclet@latest",
+                "WolframResearch",
                 "build-paclet"
             ],
             Wolfram`PacletCICD`Private`latestActionName[
-                "rhennigan/check-paclet@latest",
-                "rhennigan",
+                "WolframResearch/check-paclet@latest",
+                "WolframResearch",
                 "check-paclet"
             ],
             Wolfram`PacletCICD`Private`latestActionName[
-                "rhennigan/submit-paclet@latest",
-                "rhennigan",
+                "WolframResearch/submit-paclet@latest",
+                "WolframResearch",
                 "submit-paclet"
             ],
             Wolfram`PacletCICD`Private`latestActionName[
-                "rhennigan/test-paclet@latest",
-                "rhennigan",
+                "WolframResearch/test-paclet@latest",
+                "WolframResearch",
                 "test-paclet"
             ]
         ],

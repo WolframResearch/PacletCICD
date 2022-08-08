@@ -3,7 +3,7 @@ PacletObject[ <|
     "Description"      -> "Continuous integration and deployment for Wolfram Language paclets",
     "Creator"          -> "Richard Hennigan <richardh@wolfram.com>",
     "URL"              -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
-    "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+    "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
     "Version"          -> "0.30.1",

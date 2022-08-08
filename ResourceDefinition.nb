@@ -16186,7 +16186,7 @@ Notebook[
                      "Description" -> "CI/CD utilities for Wolfram Language Paclets",
                      "Creator" -> "Richard Hennigan <richardh@wolfram.com>",
                      "URL" -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
-                     "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+                     "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
                      "License" -> "MIT",
                      "PublisherID" -> "Wolfram",
                      "Version" -> "0.4.0",
@@ -17886,7 +17886,7 @@ Notebook[
                   "Description" -> "Continuous integration and deployment for Wolfram Language Paclets",
                   "Creator" -> "Richard Hennigan <richardh@wolfram.com>",
                   "URL" -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
-                  "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+                  "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
                   "License" -> "MIT",
                   "PublisherID" -> "Wolfram",
                   "Version" -> "0.5.0",
@@ -17985,7 +17985,7 @@ Notebook[
                  {
                   RowBox[{"ResourceFunction", "[", "\"GitHubInstall\"", "]"}],
                   "[",
-                  RowBox[{"\"rhennigan\"", ",", "\"PacletCICD\""}],
+                  RowBox[{"\"WolframResearch\"", ",", "\"PacletCICD\""}],
                   "]"
                  }
                 ]
@@ -18279,7 +18279,7 @@ Notebook[
                   "Description" -> "CI/CD utilities for Wolfram Language Paclets",
                   "Creator" -> "Richard Hennigan <richardh@wolfram.com>",
                   "URL" -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
-                  "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+                  "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
                   "License" -> "MIT",
                   "PublisherID" -> "Wolfram",
                   "Version" -> "0.4.0",
@@ -18345,10 +18345,12 @@ Notebook[
                "releases page",
                BaseStyle -> "Hyperlink",
                ButtonData -> {
-                URL["https://github.com/rhennigan/PacletCICD/releases"],
+                URL[
+                 "https://github.com/WolframResearch/PacletCICD/releases"
+                ],
                 None
                },
-               ButtonNote -> "https://github.com/rhennigan/PacletCICD/releases"
+               ButtonNote -> "https://github.com/WolframResearch/PacletCICD/releases"
               ],
               ":"
              }
@@ -18365,7 +18367,7 @@ Notebook[
                  {
                   "PacletInstall",
                   "[",
-                  "\"https://github.com/rhennigan/PacletCICD/releases/download/v0.4.0/Wolfram__PacletCICD-0.4.0.paclet\"",
+                  "\"https://github.com/WolframResearch/PacletCICD/releases/download/v0.4.0/Wolfram__PacletCICD-0.4.0.paclet\"",
                   "]"
                  }
                 ]
@@ -18659,7 +18661,7 @@ Notebook[
                   "Description" -> "CI/CD utilities for Wolfram Language Paclets",
                   "Creator" -> "Richard Hennigan <richardh@wolfram.com>",
                   "URL" -> "https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/PacletCICD",
-                  "SourceControlURL" -> "https://github.com/rhennigan/PacletCICD",
+                  "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
                   "License" -> "MIT",
                   "PublisherID" -> "Wolfram",
                   "Version" -> "0.4.0",
@@ -18745,11 +18747,11 @@ Notebook[
                BaseStyle -> "Hyperlink",
                ButtonData -> {
                 URL[
-                 "https://github.com/rhennigan/PacletCICD/blob/main/LICENSE"
+                 "https://github.com/WolframResearch/PacletCICD/blob/main/LICENSE"
                 ],
                 None
                },
-               ButtonNote -> "https://github.com/rhennigan/PacletCICD/blob/main/LICENSE"
+               ButtonNote -> "https://github.com/WolframResearch/PacletCICD/blob/main/LICENSE"
               ],
               " for details."
              }
@@ -18912,7 +18914,7 @@ Notebook[
             CellID -> 221376991
            ],
            Cell[
-            "https://github.com/rhennigan/PacletCICD",
+            "https://github.com/WolframResearch/PacletCICD",
             "Text",
             CellID -> 2526550
            ]

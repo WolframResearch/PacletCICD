@@ -278,7 +278,7 @@ VerificationTest[
 (*Regression Tests*)
 VerificationTest[
     WorkflowStep[ "Check" ][ "Data" ][ "uses" ],
-    "rhennigan/check-paclet@v" ~~ DigitCharacter.. ~~ ___,
+    "WolframResearch/check-paclet@v" ~~ DigitCharacter.. ~~ ___,
     SameTest -> StringMatchQ,
     TestID   -> "Normalize-Action-Version@@Tests/Workflows.wlt:279,1-284,2"
 ]

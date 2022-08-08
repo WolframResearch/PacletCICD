@@ -24,10 +24,10 @@ Print[ "Caching values for normalizeActionName:" ];
 Scan[
     Wolfram`PacletCICD`Private`normalizeActionName,
     {
-        "rhennigan/build-paclet@latest",
-        "rhennigan/check-paclet@latest",
-        "rhennigan/submit-paclet@latest",
-        "rhennigan/test-paclet@latest"
+        "WolframResearch/build-paclet@latest",
+        "WolframResearch/check-paclet@latest",
+        "WolframResearch/submit-paclet@latest",
+        "WolframResearch/test-paclet@latest"
     }
 ];
 
@@ -66,10 +66,10 @@ Scan[
         "actions/download-artifact",
         "actions/upload-artifact",
         "actions/upload-release-asset",
-        "rhennigan/build-paclet",
-        "rhennigan/check-paclet",
-        "rhennigan/submit-paclet",
-        "rhennigan/test-paclet"
+        "WolframResearch/build-paclet",
+        "WolframResearch/check-paclet",
+        "WolframResearch/submit-paclet",
+        "WolframResearch/test-paclet"
     }
 ];
 

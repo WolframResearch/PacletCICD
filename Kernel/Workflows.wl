@@ -25,10 +25,10 @@ $ContextAliases[ "sp`" ] = "System`Private`";
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Defaults*)
-$buildAction     = "rhennigan/build-paclet@latest";
-$checkAction     = "rhennigan/check-paclet@latest";
-$testAction      = "rhennigan/test-paclet@latest";
-$submitAction    = "rhennigan/submit-paclet@latest";
+$buildAction     = "WolframResearch/build-paclet@latest";
+$checkAction     = "WolframResearch/check-paclet@latest";
+$testAction      = "WolframResearch/test-paclet@latest";
+$submitAction    = "WolframResearch/submit-paclet@latest";
 $defaultBranch   = "main";
 $timeConstraint  = 10;
 $actionTarget    = "Submit";
