@@ -220,7 +220,6 @@ $exampleNames :=
 $$exampleInfo = KeyValuePattern @ {
     "Name"    -> _String? StringQ,
     "Version" -> _String? StringQ,
-    "Commit"  -> _String? StringQ,
     "URL"     -> _String? StringQ
 };
 
