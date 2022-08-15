@@ -5,8 +5,9 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Wolfram`PacletCICD`$Debug = True;
 
-Off[ DocumentationBuild`Utils`Localized::nokey ];
-Off[ PacletInstall::samevers ];
+Off[ DocumentationBuild`Utils`Localized::nokey                ];
+Off[ DocumentationBuild`Info`GetNotebookHistoryData::notfound ];
+Off[ PacletInstall::samevers                                  ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
