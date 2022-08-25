@@ -12,6 +12,10 @@ Off[ PacletInstall::samevers                                  ];
 PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.1.paclet" ];
 PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.1.paclet"            ];
 
+EchoEvaluation @ Select[ $LoadedFiles, StringContainsQ[ "DefinitionNotebookClient"|"PacletResource" ] ];
+EchoEvaluation @ FindFile[ "DefinitionNotebookClient`" ];
+EchoEvaluation @ FindFile[ "PacletResource`"           ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
