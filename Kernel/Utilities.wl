@@ -24,7 +24,7 @@ withDNCSettings[ { type_, tgt_ }, eval_ ] := (
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
-        eval
+        adjacentCellHack @ eval
     ]
 );
 
@@ -925,6 +925,73 @@ ccPromptFix // catchUndefined;
 disableCloudConnect // Attributes = { HoldFirst };
 disableCloudConnect[ eval_ ] := ccPromptFix[ eval, True ];
 disableCloudConnect // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*adjacentCellHack*)
+adjacentCellHack // Attributes = { HoldFirst };
+adjacentCellHack[ eval_ ] :=
+    If[ MatchQ[ dnc`$ConsoleType, "TTY"|"GitHub" ],
+        (* workaround for bug(427434) *)
+        Block[ { adjacentCellHack = #1 & }, adjacentCellHack0 @ eval ],
+        eval
+    ];
+
+adjacentCellHack0 // Attributes = { HoldFirst };
+adjacentCellHack0[ eval_ ] :=
+    Internal`InheritedBlock[ { PreviousCell, NextCell },
+        Unprotect[ PreviousCell, NextCell ];
+        PrependTo[
+            DownValues @ PreviousCell,
+            HoldPattern[ PreviousCell[ a___ ] /; ! TrueQ @ $prevCellHack ] :>
+                Block[ { $prevCellHack = True }, consolePrevCell @ a ]
+        ];
+        PrependTo[
+            DownValues @ NextCell,
+            HoldPattern[ NextCell[ a___ ] /; ! TrueQ @ $nextCellHack ] :>
+                Block[ { $nextCellHack = True }, consoleNextCell @ a ]
+        ];
+        Protect[ PreviousCell, NextCell ];
+        eval
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*consoleNextCell*)
+consoleNextCell[ args___ ] := consoleNextCell0 @ args;
+
+consoleNextCell0[ cell_CellObject ] :=
+    consoleNextCell0[ ParentNotebook @ cell, cell ];
+
+consoleNextCell0[ nbo_NotebookObject, cell_CellObject ] :=
+    Replace[ Cells @ nbo,
+             {
+                { ___, cell, next_, ___ } :> next,
+                ___ :> $Failed
+             }
+    ];
+
+consoleNextCell0[ other___ ] :=
+    Replace[ NextCell @ other, Except[ _CellObject ] -> $Failed ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*consolePrevCell*)
+consolePrevCell[ args___ ] := consolePrevCell0 @ args;
+
+consolePrevCell0[ cell_CellObject ] :=
+    consolePrevCell0[ ParentNotebook @ cell, cell ];
+
+consolePrevCell0[ nbo_NotebookObject, cell_CellObject ] :=
+    Replace[ Cells @ nbo,
+             {
+                { ___, prev_, cell, ___ } :> prev,
+                ___ :> $Failed
+             }
+    ];
+
+consolePrevCell0[ other___ ] :=
+    Replace[ PreviousCell @ other, Except[ _CellObject ] -> $Failed ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
