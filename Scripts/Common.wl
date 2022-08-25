@@ -9,8 +9,8 @@ Off[ DocumentationBuild`Utils`Localized::nokey                ];
 Off[ DocumentationBuild`Info`GetNotebookHistoryData::notfound ];
 Off[ PacletInstall::samevers                                  ];
 
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.1.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.1.paclet"            ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.2.paclet" ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.2.paclet"            ];
 
 EchoEvaluation @ Select[ $LoadedFiles, StringContainsQ[ "DefinitionNotebookClient"|"PacletResource" ] ];
 EchoEvaluation @ FindFile[ "DefinitionNotebookClient`" ];

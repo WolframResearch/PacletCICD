@@ -33,7 +33,8 @@ CheckPaclet::unknown =
 CheckPaclet // Options = {
     "Target"           -> "Submit",
     "DisabledHints"    -> Automatic,
-    "FailureCondition" -> "Error"
+    "FailureCondition" -> "Error",
+    "UpdateNotebook"   -> True
     (* TODO: MarkdownSummary option *)
 };
 
