@@ -33,8 +33,7 @@ CheckPaclet::unknown =
 CheckPaclet // Options = {
     "Target"           -> "Submit",
     "DisabledHints"    -> Automatic,
-    "FailureCondition" -> "Error",
-    "UpdateNotebook"   -> True
+    "FailureCondition" -> "Error"
     (* TODO: MarkdownSummary option *)
 };
 
@@ -70,8 +69,7 @@ CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
         "ConsoleType"      -> Automatic,
         "ClickedButton"    -> OptionValue[ "Target" ],
         "Format"           -> toCheckFormat @ fmt,
-        "FailureCondition" -> OptionValue[ "FailureCondition" ],
-        "UpdateNotebook"   -> OptionValue[ "UpdateNotebook" ]
+        "FailureCondition" -> OptionValue[ "FailureCondition" ]
     ];
 
 (* ::**********************************************************************:: *)
