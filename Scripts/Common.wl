@@ -8,9 +8,12 @@ Wolfram`PacletCICD`$Debug = True;
 Off[ DocumentationBuild`Utils`Localized::nokey                ];
 Off[ DocumentationBuild`Info`GetNotebookHistoryData::notfound ];
 Off[ PacletInstall::samevers                                  ];
+Off[ DocumentationBuild`Utils`CreateInputForm::str            ];
+Off[ DocumentationBuild`Utils`CreateInputForm::err            ];
+Off[ General::shdw                                            ];
 
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.2.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.2.paclet"            ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.3.paclet" ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.3.paclet"            ];
 
 EchoEvaluation @ Select[ $LoadedFiles, StringContainsQ[ "DefinitionNotebookClient"|"PacletResource" ] ];
 EchoEvaluation @ FindFile[ "DefinitionNotebookClient`" ];

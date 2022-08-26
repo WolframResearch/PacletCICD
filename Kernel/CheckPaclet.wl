@@ -70,7 +70,8 @@ CheckPaclet[ file_File? defNBQ, fmt: $$cpFMT, opts: $$cpOpts ] :=
         "ConsoleType"      -> Automatic,
         "ClickedButton"    -> OptionValue[ "Target" ],
         "Format"           -> toCheckFormat @ fmt,
-        "FailureCondition" -> OptionValue[ "FailureCondition" ]
+        "FailureCondition" -> OptionValue[ "FailureCondition" ],
+        "UpdateNotebook"   -> OptionValue[ "UpdateNotebook" ]
     ];
 
 (* ::**********************************************************************:: *)
