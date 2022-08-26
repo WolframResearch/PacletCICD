@@ -12,8 +12,8 @@ Off[ DocumentationBuild`Utils`CreateInputForm::str            ];
 Off[ DocumentationBuild`Utils`CreateInputForm::err            ];
 Off[ General::shdw                                            ];
 
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.4.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.4.paclet"            ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.16.5.paclet" ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.3.5.paclet"            ];
 
 EchoEvaluation @ Select[ $LoadedFiles, StringContainsQ[ "DefinitionNotebookClient"|"PacletResource" ] ];
 EchoEvaluation @ FindFile[ "DefinitionNotebookClient`" ];
