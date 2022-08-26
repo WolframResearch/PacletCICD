@@ -339,6 +339,7 @@ ghCommitFileURL[ file_, KeyValuePattern[ "Position" -> pos_ ] ] :=
     ghCommitFileURL[ file, pos ];
 
 ghCommitFileURL[ file_, _Association ] := ghCommitFileURL @ file;
+ghCommitFileURL[ file_, _Missing     ] := ghCommitFileURL @ file;
 
 ghCommitFileURL[ file_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
     ghCommitFileURL[ file, { l1, l2 } ];
