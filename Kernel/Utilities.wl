@@ -24,7 +24,7 @@ withDNCSettings[ { type_, tgt_ }, eval_ ] := (
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
-        adjacentCellHack @ eval
+        eval
     ]
 );
 
@@ -926,6 +926,78 @@ ccPromptFix // catchUndefined;
 disableCloudConnect // Attributes = { HoldFirst };
 disableCloudConnect[ eval_ ] := ccPromptFix[ eval, True ];
 disableCloudConnect // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*usingFrontEnd*)
+usingFrontEnd // Attributes = { HoldFirst };
+usingFrontEnd[ eval_ ] :=
+    Block[ { usingFrontEnd = UsingFrontEnd },
+        UsingFrontEnd @ usingFrontEnd0 @ eval
+    ];
+
+(* workaround for bug(427434) *)
+usingFrontEnd0 // Attributes = { HoldFirst };
+
+usingFrontEnd0[ eval_ ] /; DownValues @ FE`Evaluate === { } :=
+    Internal`InheritedBlock[ { FE`Evaluate },
+        Unprotect @ FE`Evaluate;
+        FE`Evaluate // Attributes = { HoldFirst };
+        FE`Evaluate[ e_ ] := MathLink`CallFrontEndHeld @ FrontEnd`Value @ e;
+        FE`Evaluate[ e_, h_ ] :=
+            With[ { fe = $ParentLink },
+                LinkWriteHeld[ fe, Hold @ FrontEnd`Value @ e ];
+                LinkRead[ fe, h ]
+            ];
+
+        eval
+    ];
+
+usingFrontEnd0[ eval_ ] := eval;
+
+
+(* usingFrontEnd0[ eval_ ] :=
+    Module[ { loaded, file },
+
+        loaded = Select[
+            $LoadedFiles,
+            Function[
+                MatchQ[
+                    FileNameTake[ #1 ],
+                    "GetFEKernelInit.tr" | "FEKernelInit.mx"
+                ]
+            ]
+        ];
+
+        If[ loaded === { },
+
+            file =
+                SelectFirst[
+                    {
+                        FileNameJoin @ {
+                            $InstallationDirectory,
+                            "SystemFiles",
+                            "Kernel",
+                            "SystemResources",
+                            ToString @ $SystemWordLength <> "Bit",
+                            "FEKernelInit.mx"
+                        },
+                        FileNameJoin @ {
+                            $InstallationDirectory,
+                            "SystemFiles",
+                            "FrontEnd",
+                            "TextResources",
+                            "GetFEKernelInit.tr"
+                        }
+                    },
+                    FileExistsQ
+                ];
+
+            If[ FileExistsQ @ file, Get @ file ]
+        ];
+
+        eval
+    ]; *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

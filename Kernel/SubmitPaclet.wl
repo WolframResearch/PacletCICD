@@ -61,7 +61,7 @@ SubmitPaclet[ dir_File? DirectoryQ, opts: $$spOpts ] :=
     catchTop @ SubmitPaclet[ findDefinitionNotebook @ dir, opts ];
 
 SubmitPaclet[ file_File? defNBQ, opts: $$spOpts ] :=
-    catchTop @ UsingFrontEnd @ withDNCSettings[
+    catchTop @ usingFrontEnd @ withDNCSettings[
         { OptionValue @ ConsoleType, "Submit" },
         needs[ "ResourceSystemClient`" -> None ];
         Block[

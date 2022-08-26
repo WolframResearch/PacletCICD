@@ -56,7 +56,7 @@ BuildPaclet[ dir_File? DirectoryQ, opts: $$bpOpts ] :=
     catchTop @ BuildPaclet[ findDefinitionNotebook @ dir, opts ];
 
 BuildPaclet[ file_File? defNBQ, opts: $$bpOpts ] :=
-    catchTop @ UsingFrontEnd @ withDNCSettings[
+    catchTop @ usingFrontEnd @ withDNCSettings[
         { OptionValue[ "ConsoleType" ], OptionValue[ "Target" ] },
         Module[ { checked, built },
 
