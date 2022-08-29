@@ -12,6 +12,9 @@ Off[ DocumentationBuild`Utils`Localized::nokey                ];
 Off[ General::shdw                                            ];
 Off[ PacletInstall::samevers                                  ];
 
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.17.0.paclet" ];
+PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.4.0.paclet"            ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
