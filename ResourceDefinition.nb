@@ -42,7 +42,6 @@ Notebook[
          "PacletDirectoryChooser",
          TaggingRules -> {
           "PacletDirectoryType" -> "Notebook",
-          "PacletDirectory" -> "H:\\Documents\\PacletCICD",
           "Refreshing" -> False
          },
          CellTags -> "PacletManifestPanel",
@@ -13850,59 +13849,6 @@ Notebook[
                 },
                 Closed
                ]
-              ],
-              Cell[
-               BoxData[
-                InterpretationBox[
-                 TagBox[
-                  TemplateBox[
-                   {
-                    "\"SamplePublisher__SamplePaclet-1.6.0.paclet\"",
-                    FileNameJoin[
-                     {
-                      NotebookDirectory[],
-                      "PacletCICD-Examples",
-                      "SamplePublisher__SamplePaclet-1.6.0.paclet"
-                     }
-                    ]
-                   },
-                   "FileManagerFileOpenerTemplate"
-                  ],
-                  Function[
-                   Annotation[
-                    #1,
-                    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[
-                     1
-                    ]
-                   ]
-                  ]
-                 ],
-                 FileNameJoin[
-                  {
-                   NotebookDirectory[],
-                   "PacletCICD-Examples",
-                   "SamplePublisher__SamplePaclet-1.6.0.paclet"
-                  }
-                 ],
-                 BoxID -> "FileTreePath",
-                 BaseStyle -> {"Text"}
-                ]
-               ],
-               "FileManagerFile",
-               CellMargins -> {{23 + Inherited, Inherited}, {Inherited, Inherited}},
-               CellGroupingRules -> {"SectionGrouping", 110},
-               CellFrameLabels -> {
-                {
-                 Cell[
-                  BoxData[TemplateBox[{}, "FileManagerUnknownIconTemplate"]],
-                  Background -> None
-                 ],
-                 Inherited
-                },
-                {Inherited, Inherited}
-               },
-               CellTags -> {"FileManagerCell", "FileManager-PacletFiles"},
-               CellID -> 392996620
               ]
              },
              Closed
