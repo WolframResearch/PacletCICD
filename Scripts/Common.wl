@@ -359,6 +359,7 @@ setOutput := Wolfram`PacletCICD`Private`setOutput;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Temporary Debugging*)
+PacletInstall /@ { "ResourceSystemClient", "DefinitionNotebookClient", "PacletResource" };
 Needs[ "PacletResource`DefinitionNotebook`" -> None ];
 
 PacletResource`DefinitionNotebook`Private`getPacletInfoCellData[ args___ ] /; ! TrueQ @ $debugging :=
