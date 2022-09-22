@@ -30,6 +30,11 @@ $testingHeads = HoldPattern @ Alternatives[
 
 $testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
 
+messageHandler[
+    Hold @ Message[ Wolfram`PacletCICD`TestPaclet::Failures, ___ ],
+    _
+] := Null;
+
 messageHandler[ Hold[ msg_, True ] ] /; $messageNumber < $messageHistoryLength :=
     StackInhibit @ Module[ { stack, keys, limit, drop },
         stack = Stack[ _ ];
