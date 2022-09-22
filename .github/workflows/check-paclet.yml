@@ -111,14 +111,6 @@ jobs:
 
       - name: Test paclet
         run: wolframscript Scripts/TestPaclet.wls
-
-      - name: Upload debug data
-        if: always() && env.PACLET_DEBUG_DATA
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_DEBUG_DATA }}
-          if-no-files-found: error
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY

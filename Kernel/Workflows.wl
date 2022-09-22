@@ -106,7 +106,7 @@ Workflow::InvalidPublisherToken =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
-Workflow // Options ={
+Workflow // Options = {
     "BuildPacletAction"      -> $buildAction,
     "CancelInProgress"       -> False,
     "CheckPacletAction"      -> $checkAction,
