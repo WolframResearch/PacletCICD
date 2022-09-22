@@ -21,6 +21,7 @@ withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
+    hiddenDirectoryFix[ ];
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
@@ -36,6 +37,7 @@ withDNCSettings // catchUndefined;
 withConsoleType // Attributes = { HoldRest };
 withConsoleType[ type_, eval_ ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
+    hiddenDirectoryFix[ ];
     Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = type;
         eval
@@ -954,6 +956,22 @@ usingFrontEnd0[ eval_ ] /; DownValues @ FE`Evaluate === { } :=
     ];
 
 usingFrontEnd0[ eval_ ] := eval;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*hiddenDirectoryFix*)
+hiddenDirectoryFix[ ] := hiddenDirectoryFix[ ] = (
+    needs[ "DefinitionNotebookClient`" -> None ];
+    SubValues[ DefinitionNotebookClient`TemplateCells`PackagePrivate`expandDir ] =
+        ReplaceAll[
+            SubValues @ DefinitionNotebookClient`TemplateCells`PackagePrivate`expandDir,
+            HoldPattern @ Select[ FileNames[ "*", a_ ], ! StringMatchQ[ #1, b_ ] & ] :>
+                Select[
+                    FileNames[ "*", a ],
+                    ! StringMatchQ[ FileNameTake[ #1 ], b ] &
+                ]
+        ];
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

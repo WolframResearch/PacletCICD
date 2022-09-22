@@ -113,6 +113,7 @@ e: CheckPaclet[ ___ ] :=
 checkPaclet[ nb_, opts___ ] :=
     ccPromptFix @ Module[ { res, hints, data, exported },
         needs[ "DefinitionNotebookClient`" -> None ];
+        hiddenDirectoryFix[ ];
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
         hints = dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ];
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;

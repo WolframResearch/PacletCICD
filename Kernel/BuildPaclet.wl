@@ -197,6 +197,7 @@ combineBuildResult // catchUndefined;
 openNotebookAndBuild[ file_, opts___ ] :=
     Module[ { nbo },
         needs[ "DefinitionNotebookClient`" -> None ];
+        hiddenDirectoryFix[ ];
         WithCleanup[
             dnc`BeginConsoleGroup[ "BuildPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,

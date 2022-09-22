@@ -141,6 +141,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
 openNotebookAndSubmit[ file_, opts___ ] :=
     Module[ { nbo },
         needs[ "DefinitionNotebookClient`" -> None ];
+        hiddenDirectoryFix[ ];
         WithCleanup[
             dnc`BeginConsoleGroup[ "SubmitPaclet" ];
             nbo = dnc`OpenTemporaryNotebook @ file,
