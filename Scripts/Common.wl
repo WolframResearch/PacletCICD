@@ -12,9 +12,6 @@ Off[ DocumentationBuild`Utils`Localized::nokey                ];
 Off[ General::shdw                                            ];
 Off[ PacletInstall::samevers                                  ];
 
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.17.0.paclet" ];
-PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.4.0.paclet"            ];
-
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialization*)
@@ -136,7 +133,7 @@ actionURL[ ] := Enclose[
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*updatePacletInfo*)
-updatePacletInfo[ dir_ ] := Enclose[
+updatePacletInfo[ dir_ ] /; StringQ @ Environment[ "GITHUB_ACTION" ] := Enclose[
     Module[
         { cs, file, string, id, date, url, run, cmt, new },
 
@@ -332,13 +329,8 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
                 "WXF",
                 PerformanceGoal -> "Size"
             ];
-            EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
-            EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
-        ];
-
-        Print @ Select[
-            SystemInformation[ "Kernel", "AllFilesLoaded" ],
-            StringContainsQ[ "DefinitionNotebookClient" | "PacletResource" ]
+            setOutput[ "PACLET_STACK_HISTORY", stacks    ];
+            setOutput[ "PACLET_STACK_NAME"   , stackName ];
         ];
 
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]

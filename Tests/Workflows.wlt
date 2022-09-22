@@ -232,7 +232,7 @@ VerificationTest[
 
 VerificationTest[
     step[ "YAML" ],
-    "name: Hello-World\nrun: wolframscript -code 'Print[hello]'\nenv: \n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "name: Hello-World\nenv: \n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\nrun: wolframscript -code 'Print[hello]'",
     TestID -> "WorkflowStep-Custom-YAML@@Tests/Workflows.wlt:233,1-237,2"
 ]
 

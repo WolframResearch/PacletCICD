@@ -65,6 +65,8 @@ VerificationTest[
     TestID -> "SetPublisherID@@Tests/BuildPaclet.wlt:61,1-66,2"
 ]
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 VerificationTest[
     DefinitionNotebookClient`ConsolePrint;
     suppressConsole // Attributes = { HoldFirst };
@@ -72,8 +74,11 @@ VerificationTest[
         Block[
             {
                 DefinitionNotebookClient`ConsolePrint,
+                DefinitionNotebookClient`BeginConsoleGroup,
+                DefinitionNotebookClient`EndConsoleGroup,
                 Wolfram`PacletCICD`Private`setOutput,
-                Wolfram`PacletCICD`Private`appendStepSummary
+                Wolfram`PacletCICD`Private`appendStepSummary,
+                Print = Null &
             },
             DefinitionNotebookClient`ConsolePrint // Options = {
                 "Output" -> None
@@ -81,8 +86,9 @@ VerificationTest[
             Wolfram`PacletCICD`Private`noExit @ eval
         ],
     Null,
-    TestID -> "SuppressConsole-Definition@@Tests/BuildPaclet.wlt:68,1-85,2"
+    TestID -> "SuppressConsole-Definition@@Tests/BuildPaclet.wlt:70,1-90,2"
 ]
+(* :!CodeAnalysis::EndBlock:: *)
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -94,14 +100,14 @@ VerificationTest[
     ],
     { },
     SameTest -> MatchQ,
-    TestID   -> "Empty-Build-Directory@@Tests/BuildPaclet.wlt:90,1-98,2"
+    TestID   -> "Empty-Build-Directory@@Tests/BuildPaclet.wlt:96,1-104,2"
 ]
 
 VerificationTest[
     suppressConsole @ BuildPaclet @ ExampleDirectory[ "FewIssues" ],
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:100,1-105,2"
+    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:106,1-111,2"
 ]
 
 VerificationTest[
@@ -111,7 +117,7 @@ VerificationTest[
     ],
     { _ },
     SameTest -> MatchQ,
-    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:107,1-115,2"
+    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:113,1-121,2"
 ]
 
 VerificationTest[
@@ -122,7 +128,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:117,1-126,2"
+    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:123,1-132,2"
 ]
 
 VerificationTest[
@@ -132,7 +138,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:128,1-136,2"
+    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:134,1-142,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -156,7 +162,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints-1@@Tests/BuildPaclet.wlt:145,1-160,2"
+    TestID   -> "BuildPaclet-DisabledHints-1@@Tests/BuildPaclet.wlt:151,1-166,2"
 ]
 
 VerificationTest[
@@ -173,7 +179,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints-2@@Tests/BuildPaclet.wlt:162,1-177,2"
+    TestID   -> "BuildPaclet-DisabledHints-2@@Tests/BuildPaclet.wlt:168,1-183,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -193,7 +199,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:182,1-197,2"
+    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:188,1-203,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -203,11 +209,11 @@ VerificationTest[
     ResetExampleDirectory @ All,
     { __Success },
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:202,1-207,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:208,1-213,2"
 ]
 
 VerificationTest[
     $PublisherID = None,
     None,
-    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:209,1-213,2"
+    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:215,1-219,2"
 ]

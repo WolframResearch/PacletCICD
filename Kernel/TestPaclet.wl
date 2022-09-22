@@ -60,13 +60,13 @@ testPaclet[ dir_, opts: KeyValuePattern[ "MarkdownSummary" -> mds_ ] ] :=
     ];
 
 testPaclet[ dir_? DirectoryQ, opts_Association ] :=
-    Module[ { files, pacDir, as, reports },
-        PacletDirectoryLoad @ dir;
+    Module[ { pacDir, files, as, reports },
+        pacDir  = parentPacletDirectory[ dir, dir ];
+        PacletDirectoryLoad @ pacDir;
         files   = FileNames[ "*.wlt", dir, Infinity ];
-        pacDir  = parentPacletDirectory @ dir;
         as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
-        makeTestResult[ dir, reports ]
+        makeTestResult[ pacDir, reports ]
     ];
 
 testPaclet // catchUndefined;

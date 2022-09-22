@@ -507,11 +507,11 @@ nonEmptyDirectoryQ[ ___ ] := False;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*parentPacletDirectory*)
-parentPacletDirectory[ file_ ] := Enclose[
+parentPacletDirectory[ file_, default_: None ] := Enclose[
     Module[ { expanded, dir, parent },
         expanded = ConfirmBy[ ExpandFileName @ file, StringQ ];
-        parent = parentPacletDirectory0 @ expanded;
-        ConfirmMatch[ parent, None | _?DirectoryQ ]
+        parent = parentPacletDirectory0[ expanded, default ];
+        ConfirmMatch[ parent, default | _?DirectoryQ ]
     ],
     throwError[
         "Cannot determine parent paclet directory of `1`.",
@@ -521,10 +521,10 @@ parentPacletDirectory[ file_ ] := Enclose[
 
 parentPacletDirectory // catchUndefined;
 
-parentPacletDirectory0[ file_ ] :=
+parentPacletDirectory0[ file_, default_ ] :=
     Quiet[ SelectFirst[ FixedPointList[ DirectoryName, file, 50 ],
                         pacletDirectoryQ,
-                        None
+                        default
            ],
            PacletManager`CreatePaclet::badarg
     ];

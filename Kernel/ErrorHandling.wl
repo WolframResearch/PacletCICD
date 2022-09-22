@@ -222,9 +222,6 @@ throwError[ template_, a___ ] :=
 (*exitFailure*)
 exitFailure // Attributes = { HoldFirst };
 
-(* :!CodeAnalysis::BeginBlock:: *)
-(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
-
 exitFailure[ msg_MessageName, code_, result_ ] := (
     If[ $EvaluationEnvironment === "Script"
         ,
@@ -234,7 +231,7 @@ exitFailure[ msg_MessageName, code_, result_ ] := (
                 "Level" -> "Error"
             ]
         ];
-        Print @ result
+        printShort @ result
     ];
     exitOr[ code, throwMessageFailure[ msg, result ] ]
 );
@@ -250,8 +247,8 @@ exitFailure[ fail_Failure, code_Integer: 1 ] := (
         ];
         With[ { res = fail[ "Result" ] },
             If[ MissingQ @ res,
-                Print @ fail,
-                Print @ res
+                printShort @ fail,
+                printShort @ res
             ]
         ]
     ];
@@ -263,7 +260,27 @@ exitFailure[ tag_String, as_Association, code_Integer: 1 ] :=
 
 exitFailure // catchUndefined;
 
-(* :!CodeAnalysis::EndBlock:: *)
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*printShort*)
+printShort[ expr_     ] := printShort[ Unevaluated @ expr, 5 ];
+printShort[ expr_, h_ ] := printShort[ Unevaluated @ expr, h, Automatic ];
+
+printShort[ expr_, h_, Automatic ] :=
+    printShort[ Unevaluated @ expr, h, consoleWidth[ ] ];
+
+printShort[ expr_, h_, w_ ] :=
+    ConsoleLog @ StringReplace[
+        ToString[ Unevaluated @ Short[ expr, h ], PageWidth -> w ],
+        "\r\n" -> "\n"
+    ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*consoleWidth*)
+consoleWidth[ ] := consoleWidth @ Terminal`ConsoleSize[ ];
+consoleWidth[ { _, w_Integer } ] := w;
+consoleWidth[ ___ ] := 80;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
