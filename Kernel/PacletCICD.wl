@@ -35,7 +35,7 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Check Dependencies*)
-If[ $VersionNumber < 13.1,
+If[ $VersionNumber < 13.2,
     Wolfram`PacletCICD`CheckDependencies[
         PacletObject @ File @ DirectoryName[ $InputFileName, 2 ],
         Message -> True

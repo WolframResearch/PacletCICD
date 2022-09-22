@@ -932,7 +932,7 @@ $cellToStringReplacementRules := $cellToStringReplacementRules =
 (*slowCellToString*)
 slowCellToString[ cell_ ] /; $useFE :=
     Module[ { plain, string },
-        plain = UsingFrontEnd @ Quiet @ FrontEndExecute @ ExportPacket[
+        plain = UsingFrontEnd @ Quiet @ FrontEndExecute @ FrontEnd`ExportPacket[
             cell,
             "PlainText"
         ];

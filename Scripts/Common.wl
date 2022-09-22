@@ -5,8 +5,11 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Wolfram`PacletCICD`$Debug = True;
 
-Off[ DocumentationBuild`Utils`Localized::nokey                ];
 Off[ DocumentationBuild`Info`GetNotebookHistoryData::notfound ];
+Off[ DocumentationBuild`Utils`CreateInputForm::err            ];
+Off[ DocumentationBuild`Utils`CreateInputForm::str            ];
+Off[ DocumentationBuild`Utils`Localized::nokey                ];
+Off[ General::shdw                                            ];
 Off[ PacletInstall::samevers                                  ];
 
 (* ::**********************************************************************:: *)
@@ -26,6 +29,11 @@ $testingHeads = HoldPattern @ Alternatives[
 ];
 
 $testStack = With[ { h = $testingHeads }, HoldForm[ h[ ___ ] ] ];
+
+messageHandler[
+    Hold @ Message[ Wolfram`PacletCICD`TestPaclet::Failures, ___ ],
+    _
+] := Null;
 
 messageHandler[ Hold[ msg_, True ] ] /; $messageNumber < $messageHistoryLength :=
     StackInhibit @ Module[ { stack, keys, limit, drop },
@@ -130,7 +138,7 @@ actionURL[ ] := Enclose[
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*updatePacletInfo*)
-updatePacletInfo[ dir_ ] := Enclose[
+updatePacletInfo[ dir_ ] /; StringQ @ Environment[ "GITHUB_ACTION" ] := Enclose[
     Module[
         { cs, file, string, id, date, url, run, cmt, new },
 
@@ -326,13 +334,8 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
                 "WXF",
                 PerformanceGoal -> "Size"
             ];
-            EchoEvaluation @ setOutput[ "PACLET_STACK_HISTORY", stacks    ];
-            EchoEvaluation @ setOutput[ "PACLET_STACK_NAME"   , stackName ];
-        ];
-
-        Print @ Select[
-            SystemInformation[ "Kernel", "AllFilesLoaded" ],
-            StringContainsQ[ "DefinitionNotebookClient" | "PacletResource" ]
+            setOutput[ "PACLET_STACK_HISTORY", stacks     ];
+            setOutput[ "PACLET_STACK_NAME"   , stackName  ];
         ];
 
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]

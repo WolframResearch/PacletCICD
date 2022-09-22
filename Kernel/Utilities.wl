@@ -21,6 +21,7 @@ withDNCSettings // Attributes = { HoldRest };
 
 withDNCSettings[ { type_, tgt_ }, eval_ ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
+    hiddenDirectoryFix[ ];
     Internal`InheritedBlock[ { dnc`$ConsoleType, dnc`$ClickedButton },
         dnc`$ConsoleType = type;
         dnc`$ClickedButton = tgt;
@@ -36,6 +37,7 @@ withDNCSettings // catchUndefined;
 withConsoleType // Attributes = { HoldRest };
 withConsoleType[ type_, eval_ ] := (
     needs[ "DefinitionNotebookClient`" -> None ];
+    hiddenDirectoryFix[ ];
     Internal`InheritedBlock[ { dnc`$ConsoleType },
         dnc`$ConsoleType = type;
         eval
@@ -339,6 +341,7 @@ ghCommitFileURL[ file_, KeyValuePattern[ "Position" -> pos_ ] ] :=
     ghCommitFileURL[ file, pos ];
 
 ghCommitFileURL[ file_, _Association ] := ghCommitFileURL @ file;
+ghCommitFileURL[ file_, _Missing     ] := ghCommitFileURL @ file;
 
 ghCommitFileURL[ file_, { { l1_Integer, _ }, { l2_Integer, _ } } ] :=
     ghCommitFileURL[ file, { l1, l2 } ];
@@ -506,11 +509,11 @@ nonEmptyDirectoryQ[ ___ ] := False;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*parentPacletDirectory*)
-parentPacletDirectory[ file_ ] := Enclose[
+parentPacletDirectory[ file_, default_: None ] := Enclose[
     Module[ { expanded, dir, parent },
         expanded = ConfirmBy[ ExpandFileName @ file, StringQ ];
-        parent = parentPacletDirectory0 @ expanded;
-        ConfirmMatch[ parent, None | _?DirectoryQ ]
+        parent = parentPacletDirectory0[ expanded, default ];
+        ConfirmMatch[ parent, default | _?DirectoryQ ]
     ],
     throwError[
         "Cannot determine parent paclet directory of `1`.",
@@ -520,10 +523,10 @@ parentPacletDirectory[ file_ ] := Enclose[
 
 parentPacletDirectory // catchUndefined;
 
-parentPacletDirectory0[ file_ ] :=
+parentPacletDirectory0[ file_, default_ ] :=
     Quiet[ SelectFirst[ FixedPointList[ DirectoryName, file, 50 ],
                         pacletDirectoryQ,
-                        None
+                        default
            ],
            PacletManager`CreatePaclet::badarg
     ];
@@ -925,6 +928,50 @@ ccPromptFix // catchUndefined;
 disableCloudConnect // Attributes = { HoldFirst };
 disableCloudConnect[ eval_ ] := ccPromptFix[ eval, True ];
 disableCloudConnect // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*usingFrontEnd*)
+usingFrontEnd // Attributes = { HoldFirst };
+usingFrontEnd[ eval_ ] :=
+    Block[ { usingFrontEnd = UsingFrontEnd },
+        UsingFrontEnd @ usingFrontEnd0 @ eval
+    ];
+
+(* workaround for bug(427434) *)
+usingFrontEnd0 // Attributes = { HoldFirst };
+
+usingFrontEnd0[ eval_ ] /; DownValues @ FE`Evaluate === { } :=
+    Internal`InheritedBlock[ { FE`Evaluate },
+        Unprotect @ FE`Evaluate;
+        FE`Evaluate // Attributes = { HoldFirst };
+        FE`Evaluate[ e_ ] := MathLink`CallFrontEndHeld @ FrontEnd`Value @ e;
+        FE`Evaluate[ e_, h_ ] :=
+            With[ { fe = $ParentLink },
+                LinkWriteHeld[ fe, Hold @ FrontEnd`Value @ e ];
+                LinkRead[ fe, h ]
+            ];
+
+        eval
+    ];
+
+usingFrontEnd0[ eval_ ] := eval;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*hiddenDirectoryFix*)
+hiddenDirectoryFix[ ] := hiddenDirectoryFix[ ] = (
+    needs[ "DefinitionNotebookClient`" -> None ];
+    SubValues[ DefinitionNotebookClient`TemplateCells`PackagePrivate`expandDir ] =
+        ReplaceAll[
+            SubValues @ DefinitionNotebookClient`TemplateCells`PackagePrivate`expandDir,
+            HoldPattern @ Select[ FileNames[ "*", a_ ], ! StringMatchQ[ #1, b_ ] & ] :>
+                Select[
+                    FileNames[ "*", a ],
+                    ! StringMatchQ[ FileNameTake[ #1 ], b ] &
+                ]
+        ];
+);
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

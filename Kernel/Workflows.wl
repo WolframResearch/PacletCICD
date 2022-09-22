@@ -38,6 +38,11 @@ $defaultRunner   = "ubuntu-latest";
 $resSystemBase   = "https://www.wolframcloud.com/obj/resourcesystem/api/1.0";
 $publisherToken  = GitHubSecret[ "RESOURCE_PUBLISHER_TOKEN" ];
 
+$defaultConcurrency = <|
+    "group"              -> "${{ github.ref }}",
+    "cancel-in-progress" -> True
+|>;
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*WorkflowEvaluate*)
@@ -103,16 +108,17 @@ Workflow::InvalidPublisherToken =
 (*Options*)
 Workflow // Options = {
     "BuildPacletAction"      -> $buildAction,
+    "CancelInProgress"       -> False,
     "CheckPacletAction"      -> $checkAction,
-    "SubmitPacletAction"     -> $submitAction,
-    "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
+    "SubmitPacletAction"     -> $submitAction,
     "Target"                 -> $actionTarget,
+    "TestPacletAction"       -> $testAction,
     TimeConstraint           -> Infinity
 };
 
@@ -222,24 +228,56 @@ workflowQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*$genericWFProperties*)
+$genericWFProperties = { "Data", "Dataset", "Name", "Properties", "YAML" };
+$$wfProp = Alternatives @@ $genericWFProperties;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*genericWFProperty*)
-genericWFProperty[ _[ _, data_ ], "Data"    ] := data;
-genericWFProperty[ _[ _, data_ ], "Dataset" ] := Dataset @ data;
-genericWFProperty[ _[ name_, _ ], "Name"    ] := name;
-genericWFProperty[ _[ _, data_ ], "YAML"    ] := toYAMLString @ data;
+genericWFProperty[ _[ _, data_ ], "Data"       ] := data;
+genericWFProperty[ _[ _, data_ ], "Dataset"    ] := Dataset @ data;
+genericWFProperty[ _[ name_, _ ], "Name"       ] := name;
+genericWFProperty[ _[ _, data_ ], "YAML"       ] := toYAMLString @ data;
+genericWFProperty[ wf_          , "Properties" ] := wfProperties @ wf;
 genericWFProperty // catchUndefined;
 
-$$wfProp = Alternatives[ "Data", "Dataset", "Name", "YAML" ];
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wfProperties*)
+wfProperties[ _Workflow     ] := wfProperties0 @ $workflowProperties;
+wfProperties[ _WorkflowJob  ] := wfProperties0 @ $workflowJobProperties;
+wfProperties[ _WorkflowStep ] := wfProperties0 @ $workflowStepProperties;
+wfProperties // catchUndefined;
+
+wfProperties0[ props: { ___String } ] := Union[ props, $genericWFProperties ];
+wfProperties0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$workflowProperties*)
+$workflowProperties := $workflowProperties = Union[
+    $workflowProperties0,
+    $workflowJobProperties
+];
+
+$workflowProperties0 = { "JobGraph", "Jobs", "Properties" };
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowProperty*)
 workflowProperty[ wf_, prop: $$wfProp ] := genericWFProperty[ wf, prop ];
-workflowProperty[ wf_, "Jobs" ] := getWorkflowJobs @ wf;
-workflowProperty[ wf_, "JobGraph" ] := jobGraph @ wf;
+workflowProperty[ wf_, "Jobs"         ] := getWorkflowJobs @ wf;
+workflowProperty[ wf_, "JobGraph"     ] := jobGraph @ wf;
 
-workflowProperty[ _, prop_ ] :=
-    throwMessageFailure[ Workflow::invprop, prop ];
+workflowProperty[ wf_, props_List ] :=
+    AssociationMap[ workflowProperty[ wf, # ] &, props ];
+
+workflowProperty[ wf_, prop_ ] :=
+    If[ MemberQ[ $workflowJobProperties, prop ],
+        getInnerJobProperties[ wf, prop ],
+        throwMessageFailure[ Workflow::invprop, prop ]
+    ];
 
 workflowProperty // catchUndefined;
 
@@ -253,7 +291,21 @@ getWorkflowJobs[ wf_? workflowQ ] :=
         ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
     ];
 
+getWorkflowJobs // catchUndefined;
+
 (* TODO: envInherit *)
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getInnerJobProperties*)
+getInnerJobProperties[ wf_? workflowQ, prop_ ] :=
+    Enclose @ Module[ { jobs },
+        jobs = ConfirmBy[ getWorkflowJobs @ wf, AssociationQ ];
+        ConfirmAssert @ AllTrue[ jobs, workflowJobQ ];
+        workflowJobProperty[ #, prop ] & /@ jobs
+    ];
+
+getInnerJobProperties // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -261,7 +313,7 @@ getWorkflowJobs[ wf_? workflowQ ] :=
 jobGraph[ wf_? workflowQ ] :=
     Enclose @ Module[ { jobs, needs, vertices, edges },
         jobs = ConfirmBy[ getWorkflowJobs @ wf, AllTrue @ workflowJobQ ];
-        needs = ConfirmBy[ (Slot[ 1 ][ "Needs" ] &) /@ jobs, AssociationQ ];
+        needs = ConfirmBy[ (#[ "Needs" ] &) /@ jobs, AssociationQ ];
         vertices = Keys @ needs;
         edges = Flatten[ Thread /@ Normal @ DeleteCases[ needs, None ] ];
         Graph[
@@ -270,6 +322,8 @@ jobGraph[ wf_? workflowQ ] :=
             VertexLabels -> Placed[ "Name", Center, graphLabel ]
         ]
     ];
+
+jobGraph // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
@@ -309,16 +363,41 @@ makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
         as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
         data = merger @ { as1, as2 };
-        Join[ KeyTake[ data, Keys @ as2 ], data ]
+        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowData[ name_String, custom_Association ] :=
     makeWorkflowData @ Prepend[ custom, "name" -> name ];
 
 makeWorkflowData[ custom_Association ] :=
-    Enclose @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+    Enclose @ wfKeySort @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
 
 makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*wfKeySort*)
+wfKeySort[ as_Association ] := Join[
+    KeyTake[ as, $wfTopKeys ],
+    KeySort @ as,
+    KeyTake[ as, $wfBottomKeys ]
+];
+
+$wfTopKeys = {
+    "name",
+    "needs",
+    "id",
+    "uses",
+    "on",
+    "concurrency",
+    "runs-on",
+    "container",
+    "env",
+    "timeout-minutes",
+    "with"
+};
+
+$wfBottomKeys = { "jobs", "steps" };
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -341,16 +420,17 @@ WorkflowJob::InvalidPublisherToken =
 (*Options*)
 WorkflowJob // Options = {
     "BuildPacletAction"      -> $buildAction,
+    "CancelInProgress"       -> False,
     "CheckPacletAction"      -> $checkAction,
-    "SubmitPacletAction"     -> $submitAction,
-    "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
+    "SubmitPacletAction"     -> $submitAction,
     "Target"                 -> $actionTarget,
+    "TestPacletAction"       -> $testAction,
     TimeConstraint           -> Infinity
 };
 
@@ -460,7 +540,11 @@ WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
     ];
 
 WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
-    WorkflowJob[ WorkflowJob[ steps, opts ], as, opts ];
+    WorkflowJob[
+        WorkflowJob[ steps, opts ],
+        Prepend[ as, "Steps" -> steps ],
+        opts
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -500,6 +584,16 @@ workflowJobQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*$workflowJobProperties*)
+$workflowJobProperties := $workflowJobProperties = Union[
+    $workflowJobProperties0,
+    $workflowStepProperties
+];
+
+$workflowJobProperties0 = { "Steps", "Needs" };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*workflowJobProperty*)
 workflowJobProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
 
@@ -514,10 +608,26 @@ workflowJobProperty[ job_, "Steps" ] :=
         WorkflowStep[ #, OperatingSystem -> os ] & /@ steps
     ];
 
-workflowJobProperty[ _, prop_ ] :=
-    throwMessageFailure[ WorkflowJob::invprop, prop ];
+workflowJobProperty[ job_, props_List ] :=
+    AssociationMap[ workflowJobProperty[ job, # ] &, props ];
+
+workflowJobProperty[ job_, prop_ ] :=
+    If[ MemberQ[ $workflowStepProperties, prop ],
+        getInnerStepProperties[ job, prop ],
+        throwMessageFailure[ WorkflowJob::invprop, prop ]
+    ];
 
 workflowJobProperty // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getInnerStepProperties*)
+getInnerStepProperties[ job_? workflowJobQ, prop_ ] :=
+    Enclose @ Module[ { steps },
+        steps = ConfirmBy[ workflowJobProperty[ job, "Steps" ], ListQ ];
+        ConfirmAssert @ AllTrue[ steps, workflowStepQ ];
+        workflowStepProperty[ #, prop ] & /@ steps
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -528,7 +638,7 @@ makeWorkflowJobData[ name_String? jobNameQ, as_Association ] :=
         as1  = ConfirmBy[ Last @ rule, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML[ "jobs", name, as ], AssociationQ ];
         data = merger @ { as1, as2 };
-        Join[ KeyTake[ data, Keys @ as2 ], data ]
+        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowJobData[ name_String, custom_Association ] :=
@@ -538,7 +648,7 @@ makeWorkflowJobData[ custom_Association ] :=
     Enclose @ Module[ { rule, data, id },
         rule = ConfirmMatch[ normalizeJob @ custom, _ -> _ ];
         data = ConfirmBy[ Last @ rule, AssociationQ ];
-        data
+        wfKeySort @ data
     ];
 
 makeWorkflowJobData // catchUndefined;
@@ -585,16 +695,17 @@ WorkflowStep::InvalidPublisherToken =
 (*Options*)
 WorkflowStep // Options = {
     "BuildPacletAction"      -> $buildAction,
+    "CancelInProgress"       -> False,
     "CheckPacletAction"      -> $checkAction,
-    "SubmitPacletAction"     -> $submitAction,
-    "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
+    "SubmitPacletAction"     -> $submitAction,
     "Target"                 -> $actionTarget,
+    "TestPacletAction"       -> $testAction,
     TimeConstraint           -> Infinity
 };
 
@@ -753,6 +864,11 @@ workflowStepQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*$workflowStepProperties*)
+$workflowStepProperties = { "Action", "ActionURL", "ActionLink", "Command" };
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*workflowStepProperty*)
 workflowStepProperty[ job_, prop: $$wfProp ] := genericWFProperty[ job, prop ];
 
@@ -808,14 +924,14 @@ makeWorkflowStepData[ name_String? stepNameQ, as_Association ] :=
         as1  = ConfirmBy[ normalizeStep @ name, AssociationQ ];
         as2  = ConfirmBy[ normalizeStep @ as, AssociationQ ];
         data = merger @ { as1, as2 };
-        Join[ KeyTake[ data, Keys @ as2 ], data ]
+        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowStepData[ name_String, custom_Association ] :=
     makeWorkflowStepData @ Prepend[ custom, "name" -> name ];
 
 makeWorkflowStepData[ custom_Association ] :=
-    Enclose @ ConfirmBy[ normalizeStep @ custom, AssociationQ ];
+    Enclose @ wfKeySort @ ConfirmBy[ normalizeStep @ custom, AssociationQ ];
 
 makeWorkflowStepData // catchUndefined;
 
@@ -902,14 +1018,15 @@ WorkflowExport::target =
 (*Options*)
 WorkflowExport // Options = {
     "BuildPacletAction"      -> $buildAction,
+    "CancelInProgress"       -> True,
     "CheckPacletAction"      -> $checkAction,
-    "TestPacletAction"       -> $testAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     ResourceSystemBase       -> Automatic,
     "Target"                 -> $actionTarget,
+    "TestPacletAction"       -> $testAction,
     TimeConstraint           -> Infinity
 };
 
@@ -968,7 +1085,7 @@ workflowExport0[ name_String ] :=
 
 workflowExport0[ spec_Association ] :=
     Module[ { workflow },
-        workflow = normalizeForYAML @ spec;
+        workflow = DeleteCases[ normalizeForYAML @ spec, None, Infinity ];
         If[ TrueQ @ validValueQ @ workflow,
             workflow,
             throwMessageFailure[ WorkflowExport::invspec, spec ]
@@ -1287,8 +1404,10 @@ workflowFileName[ ___ ] := "workflow.yml";
 (*$namedWorkflows*)
 $namedWorkflows := <|
     "Release" -> <|
-        "name" -> "Release",
-        "on" -> <|
+        "name"        -> "Release",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
         |>,
@@ -1300,8 +1419,10 @@ $namedWorkflows := <|
     |>
     ,
     "Build" -> <|
-        "name" -> "Build",
-        "on"   -> <|
+        "name"        -> "Build",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
             "workflow_dispatch" -> True
@@ -1310,8 +1431,10 @@ $namedWorkflows := <|
     |>
     ,
     "Check" -> <|
-        "name" -> "Check",
-        "on"   -> <|
+        "name"        -> "Check",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
             "workflow_dispatch" -> True
@@ -1320,8 +1443,10 @@ $namedWorkflows := <|
     |>
     ,
     "Test" -> <|
-        "name" -> "Test",
-        "on"   -> <|
+        "name"        -> "Test",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
             "workflow_dispatch" -> True
@@ -1330,8 +1455,10 @@ $namedWorkflows := <|
     |>
     ,
     "Submit" -> <|
-        "name" -> "Submit",
-        "on"   -> <|
+        "name"        -> "Submit",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
         |>,
@@ -1339,8 +1466,10 @@ $namedWorkflows := <|
     |>
     ,
     "Compile" -> <|
-        "name" -> "Compile",
-        "on"   -> <|
+        "name"        -> "Compile",
+        "concurrency" -> $concurrency,
+        "env"         -> $defaultJobEnv,
+        "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
             "workflow_dispatch" -> True
@@ -1348,6 +1477,12 @@ $namedWorkflows := <|
         "jobs" -> "Compile"
     |>
 |>;
+
+
+$concurrency := If[ TrueQ @ $cancelInProgress, $defaultConcurrency, None ];
+
+(* TODO: support scheduling (check `resolveTimespec` in CloudObject) *)
+
 
 toWorkflowName[ name_String ] :=
     Module[ { lc, wf },
@@ -1601,6 +1736,9 @@ normalizeForYAML[ keys___, key_String -> value_? validValueQ ] :=
 
 normalizeForYAML[ keys___, key_ -> val_ ] :=
     throwError[ "Invalid value `1` (`2`)", val, keySeqDocLink[ keys, key ] ];
+
+normalizeForYAML[ keys___, value_? validValueQ ] :=
+    value;
 
 normalizeForYAML // catchUndefined;
 
@@ -2417,7 +2555,7 @@ toYAMLString0[ as_Association ] :=
 toYAMLString0[ key_String, as_Association ] :=
     stringJoin[ toYAMLKey @ key, "\n", descend @ toYAMLString0 @ as ];
 
-toYAMLString0[ key_String, vals_List ] :=
+toYAMLString0[ key_String, vals: { Except[ _Association ]... } ] :=
     Module[ { strs, str },
         strs = toYAMLString0 /@ vals;
         str  = StringRiffle[ strs, ", " ];
@@ -2461,7 +2599,12 @@ toYAMLString0 // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*checkMultilineString*)
-checkMultilineString[ str_String ] /; StringFreeQ[ str, "\n" ] := str;
+checkMultilineString[ str_String ] /; StringFreeQ[ str, "\n" ] :=
+    If[ StringContainsQ[ str, Verbatim[ "*" ] ],
+        "'"<>str<>"'",
+        str
+    ];
+
 checkMultilineString[ str_String ] :=
     Module[ { lines },
         lines = StringSplit[ str, "\r\n" | "\n" ];
@@ -2523,17 +2666,18 @@ withWorkflowOptions0 // Attributes = { HoldRest };
 withWorkflowOptions0[ s_, { opts___ }, eval_ ] :=
     Block[
         {
-            $buildAction     = wfOpt[ s, opts, "BuildPacletAction"           ],
-            $checkAction     = wfOpt[ s, opts, "CheckPacletAction"           ],
-            $testAction      = wfOpt[ s, opts, "TestPacletAction"            ],
-            $defaultBranch   = wfOpt[ s, opts, "DefaultBranch"               ],
-            $timeConstraint  = wfOpt[ s, opts, "TimeConstraint"              ],
-            $actionTarget    = wfOpt[ s, opts, "Target"                      ],
-            $defNotebookPath = wfOpt[ s, opts, "DefinitionNotebookPath"      ],
-            $defaultOS       = wfOpt[ s, opts, "OperatingSystem"             ],
-            $defaultRunner   = wfOpt[ s, opts, "OperatingSystem" -> "Runner" ],
-            $resSystemBase   = wfOpt[ s, opts, "ResourceSystemBase"          ],
-            $publisherToken  = wfOpt[ s, opts, "PublisherToken"              ]
+            $actionTarget     = wfOpt[ s, opts, "Target"                      ],
+            $buildAction      = wfOpt[ s, opts, "BuildPacletAction"           ],
+            $cancelInProgress = wfOpt[ s, opts, "CancelInProgress"            ],
+            $checkAction      = wfOpt[ s, opts, "CheckPacletAction"           ],
+            $defaultBranch    = wfOpt[ s, opts, "DefaultBranch"               ],
+            $defaultOS        = wfOpt[ s, opts, "OperatingSystem"             ],
+            $defaultRunner    = wfOpt[ s, opts, "OperatingSystem" -> "Runner" ],
+            $defNotebookPath  = wfOpt[ s, opts, "DefinitionNotebookPath"      ],
+            $publisherToken   = wfOpt[ s, opts, "PublisherToken"              ],
+            $resSystemBase    = wfOpt[ s, opts, "ResourceSystemBase"          ],
+            $testAction       = wfOpt[ s, opts, "TestPacletAction"            ],
+            $timeConstraint   = wfOpt[ s, opts, "TimeConstraint"              ]
         },
         eval
     ];
@@ -2577,6 +2721,7 @@ wfOpt[ sym_, opts___, from_String -> name_String ] :=
 (* ::Subsubsection::Closed:: *)
 (*wfOptFunc*)
 wfOptFunc[ "BuildPacletAction"      ] := toBuildPacletAction;
+wfOptFunc[ "CancelInProgress"       ] := toCancelInProgress;
 wfOptFunc[ "CheckPacletAction"      ] := toCheckPacletAction;
 wfOptFunc[ "DefaultBranch"          ] := toDefaultBranch;
 wfOptFunc[ "DefinitionNotebookPath" ] := toDefinitionNotebookPath;
@@ -2590,6 +2735,12 @@ wfOptFunc[ "TimeConstraint"         ] := toTimeConstraint;
 
 wfOptFunc[ other_   ] := throwError[ "`1` is not a valid option."   , other ];
 wfOptFunc[ other___ ] := throwError[ "An unexpected error occurred.", other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toCancelInProgress*)
+toCancelInProgress[ bool: True|False ] := bool;
+toCancelInProgress[ other_ ] := wfOptFail[ "InvalidCancelInProgress", other ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

@@ -7,6 +7,9 @@
 (* ::Section::Closed:: *)
 (*Initialization*)
 $pacDir = DirectoryName[ $InputFileName, 2 ];
+$mxDir = FileNameJoin @ { $pacDir, "Kernel", ToString @ $SystemWordLength <> "Bit" };
+If[ DirectoryQ @ $mxDir, DeleteDirectory[ $mxDir, DeleteContents -> True ] ];
+
 $resDir = FileNameJoin @ { $pacDir, "Resources" };
 PacletDirectoryLoad @ $pacDir;
 Get[ "Wolfram`PacletCICD`" ];

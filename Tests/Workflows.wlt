@@ -232,7 +232,7 @@ VerificationTest[
 
 VerificationTest[
     step[ "YAML" ],
-    "name: Hello-World\nrun: wolframscript -code 'Print[hello]'\nenv: \n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "name: Hello-World\nenv: \n  WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\nrun: wolframscript -code 'Print[hello]'",
     TestID -> "WorkflowStep-Custom-YAML@@Tests/Workflows.wlt:233,1-237,2"
 ]
 
@@ -406,6 +406,109 @@ VerificationTest[
 ]
 
 (* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Properties*)
+VerificationTest[
+    Workflow[ "Release" ][ "Properties" ],
+    {
+        OrderlessPatternSequence[
+            "Action",
+            "ActionLink",
+            "ActionURL",
+            "Command",
+            "Data",
+            "Dataset",
+            "JobGraph",
+            "Jobs",
+            "Name",
+            "Needs",
+            "Properties",
+            "Steps",
+            "YAML",
+            ___String
+        ]
+    },
+    SameTest -> MatchQ,
+    TestID   -> "Workflow-Properties@@Tests/Workflows.wlt:411,1-433,2"
+]
+
+VerificationTest[
+    WorkflowJob[ "Release" ][ "Properties" ],
+    {
+        OrderlessPatternSequence[
+            "Action",
+            "ActionLink",
+            "ActionURL",
+            "Command",
+            "Data",
+            "Dataset",
+            "Name",
+            "Needs",
+            "Properties",
+            "Steps",
+            "YAML",
+            ___String
+        ]
+    },
+    SameTest -> MatchQ,
+    TestID   -> "WorkflowJob-Properties@@Tests/Workflows.wlt:435,1-455,2"
+]
+
+VerificationTest[
+    WorkflowStep[ "Build" ][ "Properties" ],
+    {
+        OrderlessPatternSequence[
+            "Action",
+            "ActionLink",
+            "ActionURL",
+            "Command",
+            "Data",
+            "Dataset",
+            "Name",
+            "Properties",
+            "YAML",
+            ___String
+        ]
+    },
+    SameTest -> MatchQ,
+    TestID   -> "WorkflowStep-Properties@@Tests/Workflows.wlt:457,1-475,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Job Properties*)
+VerificationTest[
+    Workflow[ "Release" ][ "Steps" ],
+    _Association? (AllTrue @ AllTrue @ WorkflowStepQ),
+    SameTest -> MatchQ,
+    TestID   -> "Workflow-Job-Properties-1@@Tests/Workflows.wlt:480,1-485,2"
+]
+
+VerificationTest[
+    Workflow[ "Release" ][ "Needs" ],
+    _Association? (AllTrue @ MatchQ[ None | _String | { ___String } ]),
+    SameTest -> MatchQ,
+    TestID   -> "Workflow-Job-Properties-2@@Tests/Workflows.wlt:487,1-492,2"
+]
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Step Properties*)
+VerificationTest[
+    Workflow[ "Release" ][ "Action" ],
+    _Association? (AllTrue @ MatchQ @ { __String }),
+    SameTest -> MatchQ,
+    TestID   -> "Workflow-Step-Properties-1@@Tests/Workflows.wlt:497,1-502,2"
+]
+
+VerificationTest[
+    WorkflowJob[ "Release" ][ "Action" ],
+    { __String },
+    SameTest -> MatchQ,
+    TestID   -> "Workflow-Step-Properties-2@@Tests/Workflows.wlt:504,1-509,2"
+]
+
+(* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Regression Tests*)
 VerificationTest[
@@ -422,11 +525,11 @@ VerificationTest[
         "branches"
     ],
     { "test" },
-    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:411,1-426,2"
+    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:514,1-529,2"
 ]
 
 VerificationTest[
     StringContainsQ[ Workflow[ "Test" ][ "YAML" ], "env.PACLET_TEST_RESULTS" ],
     True,
-    TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:428,1-432,2"
+    TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:531,1-535,2"
 ]
