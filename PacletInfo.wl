@@ -16,7 +16,7 @@ PacletObject[ <|
     "Dependencies"     -> {
         "DefinitionNotebookClient" -> ">=1.17.0",
         "PacletResource"           -> ">=1.4.0",
-        "ResourceSystemClient"     -> ">=1.25.0"
+        "ResourceSystemClient"     -> ">=1.24.1"
     },
     "Extensions"       -> {
         {
