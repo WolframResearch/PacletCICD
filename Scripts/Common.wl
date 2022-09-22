@@ -334,8 +334,11 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
                 "WXF",
                 PerformanceGoal -> "Size"
             ];
-            setOutput[ "PACLET_STACK_HISTORY", stacks    ];
-            setOutput[ "PACLET_STACK_NAME"   , stackName ];
+            setOutput[ "PACLET_STACK_HISTORY", stacks     ];
+            setOutput[ "PACLET_STACK_NAME"   , stackName  ];
+            If[ FileExistsQ @ $debugData,
+                setOutput[ "PACLET_DEBUG_DATA", $debugData ]
+            ];
         ];
 
         If[ MatchQ[ Head @ result, HoldPattern @ sym ]
@@ -352,6 +355,73 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
 
 noExit    := Wolfram`PacletCICD`Private`noExit;
 setOutput := Wolfram`PacletCICD`Private`setOutput;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*Temporary Debugging*)
+Needs[ "PacletResource`DefinitionNotebook`" -> None ];
+
+PacletResource`DefinitionNotebook`Private`getPacletInfoCellData[ args___ ] /; ! TrueQ @ $debugging :=
+    Block[ { $debugging = True, $debugBag, res },
+        $debugBag = Internal`Bag[ ];
+        res = PacletResource`DefinitionNotebook`Private`getPacletInfoCellData @ args;
+        If[ ! IntegerQ @ res[ "CellID" ],
+            $debugData = Export[
+                ExpandFileName[ "debugging.wxf" ],
+                Internal`BagPart[ $debugBag, All ]
+            ]
+        ];
+        res
+    ];
+
+PacletResource`DefinitionNotebook`Private`getPacletInfoCellData[
+    as: KeyValuePattern[
+        "Metadata" ->
+            md: KeyValuePattern @ {
+                "PacletDirectory" -> dir_? DirectoryQ,
+                "FileManagerData" -> files_
+            }
+    ]
+] :=
+    Enclose @ Module[ { paclet, loc, file, sel, id },
+        Internal`StuffBag[ $debugBag, "as" -> as ];
+        Internal`StuffBag[ $debugBag, "md" -> md ];
+        paclet = ConfirmBy[ PacletObject @ dir, PacletObjectQ ];
+        Internal`StuffBag[ $debugBag, "paclet" -> paclet ];
+        loc = paclet[ "Location" ];
+        Internal`StuffBag[ $debugBag, "loc" -> loc ];
+
+        file =
+            ConfirmBy[
+                PacletResource`DefinitionNotebook`Private`pacletInfoFile @ loc,
+                FileExistsQ
+            ];
+        Internal`StuffBag[ $debugBag, "file" -> file ];
+
+        sel =
+            SelectFirst[
+                files,
+                Function[
+                    PacletResource`DefinitionNotebook`Private`sameFileQ[
+                        #File,
+                        file
+                    ]
+                ]
+            ];
+        Internal`StuffBag[ $debugBag, "sel" -> sel ];
+
+        id = sel[ "CellID" ];
+        Internal`StuffBag[ $debugBag, "id" -> id ];
+
+        If[ sel[ "Excluded" ],
+            DefinitionNotebookClient`CollectHint[ id, "PacletInfoExcluded" ];
+            DefinitionNotebookClient`ScrapeAbort[ ]
+        ];
+
+        <| "CellID" -> id, "PacletObject" -> paclet |>
+    ];
+
+$debugBag = Internal`Bag[ ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
