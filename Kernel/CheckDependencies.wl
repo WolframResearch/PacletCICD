@@ -82,6 +82,9 @@ installOwnDependencies[ ] := installOwnDependencies[ ] =
         ]
     ];
 
+(* Temporary for CodeInspector test: *)
+<| a -> # + 1 & |>
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*returnDependencies*)
