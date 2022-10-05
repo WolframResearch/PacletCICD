@@ -11,6 +11,16 @@ $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Config*)
+$releaseURL = "https://github.com/WolframResearch/PacletCICD/releases/download";
+
+$releasesToInstall = {
+    "DefinitionNotebookClient-1.17.2",
+    "PacletResource-1.5.1"
+};
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*CheckDependencies*)
 
 (* ::**********************************************************************:: *)
@@ -39,6 +49,7 @@ CheckDependencies::Missing =
 CheckDependencies[ pac_PacletObject, opts: OptionsPattern[ ] ] :=
     catchTop @ Block[ { $dependencyRules },
         Module[ { checked },
+            installOwnDependencies[ ];
             $dependencyRules = Internal`Bag[ ];
             checkDependencies @ pac;
             checked = Internal`BagPart[ $dependencyRules, All ];
@@ -60,6 +71,16 @@ CheckDependencies[ id_, opts: OptionsPattern[ ] ] :=
     ];
 
 CheckDependencies // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*installOwnDependencies*)
+installOwnDependencies[ ] := installOwnDependencies[ ] =
+    If[ $VersionNumber < 13.2 && DirectoryQ @ Environment[ "GITHUB_WORKSPACE" ],
+        Scan[ PacletInstall @ URLBuild @ { $releaseURL, #1, #1 <> ".paclet" } &,
+              $releasesToInstall
+        ]
+    ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
