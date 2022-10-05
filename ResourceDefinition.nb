@@ -22130,7 +22130,7 @@ Notebook[
  },
  CreateCellID -> True,
  DynamicEvaluationTimeout -> 60,
- FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (June 16, 2022)",
+ FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
  StyleDefinitions ->
   Notebook[
    {
@@ -37310,7 +37310,7 @@ Notebook[
     ]
    },
    Visible -> False,
-   FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (June 16, 2022)",
+   FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (January 26, 2022)",
    StyleDefinitions -> "PrivateStylesheetFormatting.nb"
   ],
  ExpressionUUID -> "6d8e0782-7445-4069-99ba-30f35ae431c1"
