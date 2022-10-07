@@ -406,6 +406,21 @@ VerificationTest[
 ]
 
 (* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*Regression Tests*)
+VerificationTest[
+    Workflow[ "Submit" ][ "Data" ],
+    Workflow[ "Submit", <| |> ][ "Data" ],
+    TestID -> "Workflow-Idempotent-1@@Tests/Workflows.wlt:411,1-415,2"
+]
+
+VerificationTest[
+    Workflow[ "Submit" ][ "Data" ],
+    Workflow[ Workflow[ "Submit" ], <| |> ][ "Data" ],
+    TestID -> "Workflow-Idempotent-2@@Tests/Workflows.wlt:417,1-421,2"
+]
+
+(* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Properties*)
 VerificationTest[
@@ -429,7 +444,7 @@ VerificationTest[
         ]
     },
     SameTest -> MatchQ,
-    TestID   -> "Workflow-Properties@@Tests/Workflows.wlt:411,1-433,2"
+    TestID   -> "Workflow-Properties@@Tests/Workflows.wlt:426,1-448,2"
 ]
 
 VerificationTest[
@@ -451,7 +466,7 @@ VerificationTest[
         ]
     },
     SameTest -> MatchQ,
-    TestID   -> "WorkflowJob-Properties@@Tests/Workflows.wlt:435,1-455,2"
+    TestID   -> "WorkflowJob-Properties@@Tests/Workflows.wlt:450,1-470,2"
 ]
 
 VerificationTest[
@@ -471,7 +486,7 @@ VerificationTest[
         ]
     },
     SameTest -> MatchQ,
-    TestID   -> "WorkflowStep-Properties@@Tests/Workflows.wlt:457,1-475,2"
+    TestID   -> "WorkflowStep-Properties@@Tests/Workflows.wlt:472,1-490,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -481,14 +496,14 @@ VerificationTest[
     Workflow[ "Release" ][ "Steps" ],
     _Association? (AllTrue @ AllTrue @ WorkflowStepQ),
     SameTest -> MatchQ,
-    TestID   -> "Workflow-Job-Properties-1@@Tests/Workflows.wlt:480,1-485,2"
+    TestID   -> "Workflow-Job-Properties-1@@Tests/Workflows.wlt:495,1-500,2"
 ]
 
 VerificationTest[
     Workflow[ "Release" ][ "Needs" ],
     _Association? (AllTrue @ MatchQ[ None | _String | { ___String } ]),
     SameTest -> MatchQ,
-    TestID   -> "Workflow-Job-Properties-2@@Tests/Workflows.wlt:487,1-492,2"
+    TestID   -> "Workflow-Job-Properties-2@@Tests/Workflows.wlt:502,1-507,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -498,14 +513,14 @@ VerificationTest[
     Workflow[ "Release" ][ "Action" ],
     _Association? (AllTrue @ MatchQ @ { __String }),
     SameTest -> MatchQ,
-    TestID   -> "Workflow-Step-Properties-1@@Tests/Workflows.wlt:497,1-502,2"
+    TestID   -> "Workflow-Step-Properties-1@@Tests/Workflows.wlt:512,1-517,2"
 ]
 
 VerificationTest[
     WorkflowJob[ "Release" ][ "Action" ],
     { __String },
     SameTest -> MatchQ,
-    TestID   -> "Workflow-Step-Properties-2@@Tests/Workflows.wlt:504,1-509,2"
+    TestID   -> "Workflow-Step-Properties-2@@Tests/Workflows.wlt:519,1-524,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -525,11 +540,11 @@ VerificationTest[
         "branches"
     ],
     { "test" },
-    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:514,1-529,2"
+    TestID -> "Workflow-PullRequest-Underscore@@Tests/Workflows.wlt:529,1-544,2"
 ]
 
 VerificationTest[
     StringContainsQ[ Workflow[ "Test" ][ "YAML" ], "env.PACLET_TEST_RESULTS" ],
     True,
-    TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:531,1-535,2"
+    TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:546,1-550,2"
 ]

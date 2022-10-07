@@ -30,7 +30,7 @@ $checkAction     = "WolframResearch/check-paclet@latest";
 $testAction      = "WolframResearch/test-paclet@latest";
 $submitAction    = "WolframResearch/submit-paclet@latest";
 $defaultBranch   = "main";
-$timeConstraint  = 10;
+$timeConstraint  = Infinity;
 $actionTarget    = "Submit";
 $defNotebookPath = "./ResourceDefinition.nb";
 $defaultOS       = "Linux-x86-64";
@@ -1018,13 +1018,15 @@ WorkflowExport::target =
 (*Options*)
 WorkflowExport // Options = {
     "BuildPacletAction"      -> $buildAction,
-    "CancelInProgress"       -> True,
+    "CancelInProgress"       -> False,
     "CheckPacletAction"      -> $checkAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
+    "PublisherToken"         -> Automatic,
     ResourceSystemBase       -> Automatic,
+    "SubmitPacletAction"     -> $submitAction,
     "Target"                 -> $actionTarget,
     "TestPacletAction"       -> $testAction,
     TimeConstraint           -> Infinity
@@ -1034,65 +1036,7 @@ WorkflowExport // Options = {
 (* ::Subsection::Closed:: *)
 (*Main definition*)
 WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
-    catchTop @ Module[ { workflow },
-        workflow = workflowExport[
-            spec,
-            toDefNBLocation @ pac,
-            toDefaultBranch @ OptionValue[ "DefaultBranch" ],
-            toTimeConstraint @ OptionValue[ TimeConstraint ],
-            toBuildPacletAction @ OptionValue[ "BuildPacletAction" ],
-            toCheckPacletAction @ OptionValue[ "CheckPacletAction" ],
-            toActionTarget @ OptionValue[ "Target" ]
-        ];
-        exportWorkflow[ pac, workflow ]
-    ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*workflowExport*)
-workflowExport[
-    spec_,
-    defNotebookLocation_,
-    branch_,
-    timeConstraint_,
-    buildPacletAction_,
-    checkPacletAction_,
-    actionTarget_
-] :=
-    Block[
-        {
-            $defaultBranch   = branch,
-            $timeConstraint  = timeConstraint,
-            $buildAction     = buildPacletAction,
-            $checkAction     = checkPacletAction,
-            $defNotebookPath = defNotebookLocation,
-            $actionTarget    = actionTarget
-        },
-        workflowExport0 @ spec
-    ];
-
-workflowExport // catchUndefined;
-
-
-workflowExport0[ wf_Workflow? workflowQ ] := workflowExport0 @ wf[ "Data" ];
-
-workflowExport0[ name_String ] :=
-    workflowExport0 @ Lookup[
-        $namedWorkflows,
-        toWorkflowName @ name,
-        throwMessageFailure[ WorkflowExport::wfname, name ]
-    ];
-
-workflowExport0[ spec_Association ] :=
-    Module[ { workflow },
-        workflow = DeleteCases[ normalizeForYAML @ spec, None, Infinity ];
-        If[ TrueQ @ validValueQ @ workflow,
-            workflow,
-            throwMessageFailure[ WorkflowExport::invspec, spec ]
-        ]
-    ];
-
-workflowExport0 // catchUndefined;
+    catchTop @ exportWorkflow[ pac, Workflow[ spec, <| |>, opts ] ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1388,6 +1332,9 @@ toWorkFlowDir // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*workflowFileName*)
+workflowFileName[ wf_Workflow ] :=
+    workflowFileName @ wf[ "Name" ];
+
 workflowFileName[ KeyValuePattern[ "name" -> name_String ] ] :=
     workflowFileName @ name;
 
@@ -2519,6 +2466,8 @@ $workflowSchema := $workflowSchema =
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*toYAMLString*)
+toYAMLString[ wf_Workflow? WorkflowQ ] := wf[ "YAML" ];
+
 toYAMLString[ expr0_ ] := Enclose[ \
     Module[ { expr, string, lines },
         expr   = <| "YAML" -> expr0 |>;

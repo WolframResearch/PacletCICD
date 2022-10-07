@@ -12,11 +12,13 @@ $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Config*)
-$releaseURL = "https://github.com/WolframResearch/PacletCICD/releases/download";
+(* $releaseURL = "https://github.com/WolframResearch/PacletCICD/releases/download"; *)
+(* FIXME: this is temporary for development *)
+$releaseURL = "https://www.wolframcloud.com/obj/rhennigan/Paclets";
 
 $releasesToInstall = {
-    "DefinitionNotebookClient-1.17.2",
-    "PacletResource-1.5.1"
+    "DefinitionNotebookClient-1.18.0",
+    "PacletResource-1.6.0"
 };
 
 (* ::**********************************************************************:: *)
