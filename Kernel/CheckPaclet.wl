@@ -162,9 +162,6 @@ generateCheckReport[ KeyValuePattern @ {
         title = Style[ "Definition Notebook (" <> job <> ")", "Section" ];
         grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
-
-        Message[ PacletCICD::error, <|"job"->job,"index"->index,"head"->head,"title"->title,"grid"->grid,"md"->md|> ];
-
         appendStepSummary @ md
     ];
 
