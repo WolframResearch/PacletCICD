@@ -176,6 +176,7 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
         msg    = Style[ lookup[ "Message" ], "Text" ];
         id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos    = Lookup[ index, id ];
+        Print[ "hint: ", hint ];
         url    = ghCommitFileURL[ file, pos ];
         link   = Hyperlink[ ":link:", url ];
         { level, tag, msg, link }
