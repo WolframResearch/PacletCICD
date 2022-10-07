@@ -115,12 +115,15 @@ checkPaclet[ nb_, opts___ ] :=
         needs[ "DefinitionNotebookClient`" -> None ];
         hiddenDirectoryFix[ ];
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
-        hints = dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ];
+        hints = withConsoleType[ Automatic, dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ] ];
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
         exported = exportCheckResults[ nb, data ];
         generateCheckReport @ data;
         checkExit @ res
     ];
+
+(* FIXME: temporary stuff: *)
+<| a -> # + 1 & |>
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
