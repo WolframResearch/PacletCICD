@@ -11,18 +11,6 @@ $ContextAliases[ "dnc`" ] = "DefinitionNotebookClient`";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
-(*Config*)
-(* $releaseURL = "https://github.com/WolframResearch/PacletCICD/releases/download"; *)
-(* FIXME: this is temporary for development *)
-$releaseURL = "https://www.wolframcloud.com/obj/rhennigan/Paclets";
-
-$releasesToInstall = {
-    "DefinitionNotebookClient-1.18.0",
-    "PacletResource-1.6.0"
-};
-
-(* ::**********************************************************************:: *)
-(* ::Section::Closed:: *)
 (*CheckDependencies*)
 
 (* ::**********************************************************************:: *)
@@ -51,7 +39,6 @@ CheckDependencies::Missing =
 CheckDependencies[ pac_PacletObject, opts: OptionsPattern[ ] ] :=
     catchTop @ Block[ { $dependencyRules },
         Module[ { checked },
-            installOwnDependencies[ ];
             $dependencyRules = Internal`Bag[ ];
             checkDependencies @ pac;
             checked = Internal`BagPart[ $dependencyRules, All ];
@@ -73,16 +60,6 @@ CheckDependencies[ id_, opts: OptionsPattern[ ] ] :=
     ];
 
 CheckDependencies // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsection::Closed:: *)
-(*installOwnDependencies*)
-installOwnDependencies[ ] := installOwnDependencies[ ] =
-    EchoEvaluation @ If[ $VersionNumber < 13.2 && DirectoryQ @ Environment[ "GITHUB_WORKSPACE" ],
-        Map[ EchoEvaluation @ PacletInstall @ URLBuild @ { $releaseURL, #1, #1 <> ".paclet" } &,
-              $releasesToInstall
-        ]
-    ];
 
 (* Temporary for CodeInspector test: *)
 <| a -> # + 1 & |>
