@@ -61,9 +61,6 @@ CheckDependencies[ id_, opts: OptionsPattern[ ] ] :=
 
 CheckDependencies // catchUndefined;
 
-(* Temporary for CodeInspector test: *)
-<| a -> # + 1 & |>
-
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*returnDependencies*)

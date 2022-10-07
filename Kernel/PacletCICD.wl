@@ -10,8 +10,12 @@ EndPackage[ ];
 (* $releaseURL = "https://github.com/WolframResearch/PacletCICD/releases/download"; *)
 
 If[ $VersionNumber < 13.2 && DirectoryQ @ Environment[ "GITHUB_WORKSPACE" ],
-    EchoEvaluation @ PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.18.0.paclet" ];
-    EchoEvaluation @ PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.6.0.paclet"            ];
+    Quiet[
+        PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.18.0.paclet" ];
+        PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.6.0.paclet"            ];
+        ,
+        PacletInstall::samevers
+    ]
 ];
 
 (* ::**********************************************************************:: *)
