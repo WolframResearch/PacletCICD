@@ -42,7 +42,6 @@ Notebook[
          "PacletDirectoryChooser",
          TaggingRules -> {
           "PacletDirectoryType" -> "Notebook",
-          "PacletDirectory" -> "H:\\Documents\\PacletCICD",
           "Refreshing" -> False
          },
          CellTags -> "PacletManifestPanel",
