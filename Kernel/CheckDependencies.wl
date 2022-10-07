@@ -78,8 +78,8 @@ CheckDependencies // catchUndefined;
 (* ::Subsection::Closed:: *)
 (*installOwnDependencies*)
 installOwnDependencies[ ] := installOwnDependencies[ ] =
-    If[ $VersionNumber < 13.2 && DirectoryQ @ Environment[ "GITHUB_WORKSPACE" ],
-        Scan[ PacletInstall @ URLBuild @ { $releaseURL, #1, #1 <> ".paclet" } &,
+    EchoEvaluation @ If[ $VersionNumber < 13.2 && DirectoryQ @ Environment[ "GITHUB_WORKSPACE" ],
+        Map[ EchoEvaluation @ PacletInstall @ URLBuild @ { $releaseURL, #1, #1 <> ".paclet" } &,
               $releasesToInstall
         ]
     ];
