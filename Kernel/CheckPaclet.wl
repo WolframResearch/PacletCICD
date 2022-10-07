@@ -115,7 +115,7 @@ checkPaclet[ nb_, opts___ ] :=
         needs[ "DefinitionNotebookClient`" -> None ];
         hiddenDirectoryFix[ ];
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
-        hints = withConsoleType[ Automatic, dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ] ];
+        hints = $checkHintData;
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
         exported = exportCheckResults[ nb, data ];
         generateCheckReport @ data;
@@ -124,6 +124,17 @@ checkPaclet[ nb_, opts___ ] :=
 
 (* FIXME: temporary stuff: *)
 <| a -> # + 1 & |>
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$checkHintData*)
+$checkHintData := withConsoleType[
+    Automatic,
+    DeleteMissing /@ dnc`HintData[
+        "Paclet",
+        { "Tag", "Level", "MessageText", "CellID", "SourcePosition" }
+    ]
+];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -167,8 +178,10 @@ generateCheckReport[ KeyValuePattern @ {
 
 generateCheckReport // catchUndefined;
 
-
-reportHintRow[ file_, index_ ][ hint_Association ] :=
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*reportHintRow*)
+(* reportHintRow[ file_, index_ ][ hint_Association ] :=
     Enclose @ Module[ { lookup, level, tag, msg, id, pos, url, link },
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
         level  = hintIcon @ lookup[ "Level" ];
@@ -177,15 +190,48 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
         id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos    = Lookup[ index, id ];
         Print[ "hint: ", hint ];
-        url    = ghCommitFileURL[ file, pos ];
+        url    = ghCommitFileURL[ file, hint ];
+        If[ url === None, url = ghCommitFileURL[ file, pos ] ];
+        link   = Hyperlink[ ":link:", url ];
+        { level, tag, msg, link }
+    ]; *)
+
+reportHintRow[ file_, index_ ][ hint_Association ] :=
+    Enclose @ Module[ { lookup, level, tag, msg, url, link },
+        lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
+        level  = hintIcon @ lookup[ "Level" ];
+        tag    = lookup[ "Tag" ];
+        msg    = Style[ lookup[ "Message" ], "Text" ];
+        url    = sourceFileURL[ file, index, hint ];
         link   = Hyperlink[ ":link:", url ];
         { level, tag, msg, link }
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*sourceFileURL*)
+sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
+    With[ { url = ghCommitFileURL @ hint },
+        url /; StringQ @ url
+    ];
+
+sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
+    Enclose @ Module[ { id, pos },
+        id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
+        pos = Lookup[ cellIndex, id ];
+        ghCommitFileURL[ nbFile, pos ]
+    ];
+
+sourceFileURL // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*hintIcon*)
 hintIcon[ "Error"      ] := ":x: Error";
 hintIcon[ "Warning"    ] := ":warning: Warning";
 hintIcon[ "Suggestion" ] := ":grey_question: Suggestion";
 hintIcon[ other_       ] := other;
+hintIcon // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

@@ -337,8 +337,19 @@ ghCommitFileURL[ file_? FileExistsQ ] := ghCommitFileURL[ file ] = Enclose[
     None &
 ];
 
+ghCommitFileURL[ file_, KeyValuePattern[ "SourceInformation" -> src_ ] ] :=
+    ghCommitFileURL[ file, src ];
+
+ghCommitFileURL[ _, KeyValuePattern @ { "File" -> f_, "Position" -> p_ } ] :=
+    ghCommitFileURL[ f, p ];
+
 ghCommitFileURL[ file_, KeyValuePattern[ "Position" -> pos_ ] ] :=
     ghCommitFileURL[ file, pos ];
+
+ghCommitFileURL[
+    file_,
+    { KeyValuePattern[ "Line" -> l1_ ], KeyValuePattern[ "Line" -> l2_ ] }
+] := ghCommitFileURL[ file, { l1, l2 } ];
 
 ghCommitFileURL[ file_, _Association ] := ghCommitFileURL @ file;
 ghCommitFileURL[ file_, _Missing     ] := ghCommitFileURL @ file;
@@ -354,7 +365,14 @@ ghCommitFileURL[ file_, { l1_Integer, l2_Integer } ] := Enclose[
     None &
 ];
 
+ghCommitFileURL[ KeyValuePattern[ "SourceInformation" -> src_ ] ] :=
+    ghCommitFileURL @ src;
+
+ghCommitFileURL[ KeyValuePattern @ { "File" -> f_, "Position" -> p_ } ] :=
+    ghCommitFileURL[ f, p ];
+
 ghCommitFileURL[ file_ ] := None;
+ghCommitFileURL[ file_, _ ] := None;
 
 ghCommitFileURL // catchUndefined;
 
