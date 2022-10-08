@@ -3,7 +3,6 @@
 (*Declare Fully Qualified Symbol Names*)
 Wolfram`PacletCICD`$Debug;
 Wolfram`PacletCICD`$ExamplesLocation;
-Wolfram`PacletCICD`$WorkflowValueLocation;
 Wolfram`PacletCICD`$WorkflowValueScope;
 Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`ASTCondition;
@@ -30,6 +29,7 @@ Wolfram`PacletCICD`FormattingHelper;
 Wolfram`PacletCICD`FromAST;
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`GitHubSecret;
+Wolfram`PacletCICD`InitializeWorkflowValues;
 Wolfram`PacletCICD`LoadSubPackage;
 Wolfram`PacletCICD`MessageFailure;
 Wolfram`PacletCICD`PacletCICD;
