@@ -365,7 +365,7 @@ ghCommitFileURL[ file_, { l1_Integer, l2_Integer } ] := Enclose[
     None &
 ];
 
-ghCommitFileURL[ KeyValuePattern[ "SourceInformation" -> src_ ] ] :=
+ghCommitFileURL[ KeyValuePattern[ "SourcePosition" -> src_ ] ] :=
     ghCommitFileURL @ src;
 
 ghCommitFileURL[ KeyValuePattern @ { "File" -> f_, "Position" -> p_ } ] :=
