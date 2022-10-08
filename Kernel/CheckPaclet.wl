@@ -201,7 +201,7 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
         level  = hintIcon @ lookup[ "Level" ];
         tag    = lookup[ "Tag" ];
-        msg    = Style[ lookup[ "Message" ], "Text" ];
+        msg    = Style[ lookup[ "MessageText" ], "Text" ];
         url    = sourceFileURL[ file, index, hint ];
         link   = Hyperlink[ ":link:", url ];
         { level, tag, msg, link }
