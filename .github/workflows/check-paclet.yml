@@ -109,7 +109,6 @@ jobs:
           if-no-files-found: error
 
   Test-Linux: 
-    if: ${{ false }}  # disable for now
     name: Test-Linux
     needs: [Build]
     runs-on: ubuntu-latest
