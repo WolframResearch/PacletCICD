@@ -212,17 +212,25 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
 (*sourceFileURL*)
 sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
     With[ { url = ghCommitFileURL @ hint },
+        PutAppend[ $debugLogFile, <| "hint" -> hint, "url" -> url |> ];
         url /; StringQ @ url
     ];
 
 sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
-    Enclose @ Module[ { id, pos },
+    Enclose @ Module[ { id, pos, url },
         id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos = Lookup[ cellIndex, id ];
-        ghCommitFileURL[ nbFile, pos ]
+        url = ghCommitFileURL[ nbFile, pos ];
+        PutAppend[ $debugLogFile, <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |> ];
+        url
     ];
 
 sourceFileURL // catchUndefined;
+
+$debugLogFile = FileNameJoin @ {
+    GeneralUtilities`EnsureDirectory[ "build" ],
+    "log.wl"
+};
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
