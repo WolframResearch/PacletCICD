@@ -153,6 +153,15 @@ jobs:
           name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_TEST_RESULTS }}
           if-no-files-found: error
+      
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v2
+        with:
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
+          if-no-files-found: error
 
   Test-MacOSX: 
     if: ${{ false }}  # disable for now
