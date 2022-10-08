@@ -47,7 +47,9 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialize Workflow Values*)
-EchoEvaluation @ Wolfram`PacletCICD`InitializeWorkflowValues[ ];
+If[ StringQ @ Environment[ "GITHUB_WORKFLOW" ],
+    Wolfram`PacletCICD`InitializeWorkflowValues[ ]
+];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
