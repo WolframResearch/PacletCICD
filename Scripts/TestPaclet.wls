@@ -9,4 +9,9 @@ checkResult @ Wolfram`PacletCICD`TestPaclet[
     "AnnotateTestIDs" -> True
 ];
 
+Wolfram`PacletCICD`$WorkflowValueScope = "Workflow";
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "MachineName" ] = $MachineName;
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "SystemID"    ] = $SystemID;
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "Job"         ] = Environment[ "GITHUB_JOB" ];
+
 EndPackage[ ];

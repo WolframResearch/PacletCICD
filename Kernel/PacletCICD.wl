@@ -46,6 +46,11 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
+(*Initialize Workflow Values*)
+Wolfram`PacletCICD`InitializeWorkflowValues[ ];
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
 (*Check Dependencies*)
 If[ $VersionNumber < 13.2,
     Wolfram`PacletCICD`CheckDependencies[

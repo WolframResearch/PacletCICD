@@ -10,8 +10,9 @@ checkResult @ Wolfram`PacletCICD`BuildPaclet[
     "Target"     -> "Submit"
 ];
 
- Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "MachineName" ] = $MachineName;
- Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "SystemID"    ] = $SystemID;
- Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "Timestamp"   ] = Now;
+Wolfram`PacletCICD`$WorkflowValueScope = "Workflow";
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "MachineName" ] = $MachineName;
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "SystemID"    ] = $SystemID;
+Wolfram`PacletCICD`WorkflowValue[ "TestValue" ][ "Job"         ] = Environment[ "GITHUB_JOB" ];
 
 EndPackage[ ];

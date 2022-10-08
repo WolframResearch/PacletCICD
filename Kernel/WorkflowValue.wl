@@ -8,7 +8,11 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-WorkflowValue // ClearAll;
+ClearAll[
+    $WorkflowValueScope,
+    InitializeWorkflowValues,
+    WorkflowValue
+];
 
 Begin[ "`Private`" ];
 
@@ -23,11 +27,44 @@ $wfRoot   := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Workflow" };
 $jobRoot  := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Job"      };
 $stepRoot := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Step"     };
 
+$wfDownloadLocation := ExpandFileName[ ".paclet-workflow-values" ];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Argument Patterns*)
 $$wfScope    = "Workflow"|"Job"|"Step";
 $$appendable = _List | _Association? AssociationQ;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*InitializeWorkflowValues*)
+InitializeWorkflowValues[ ] :=
+    InitializeWorkflowValues @ $wfDownloadLocation;
+
+InitializeWorkflowValues[ src_? DirectoryQ ] :=
+    Module[ { files },
+        files = FileNames[ "*.wxf", src, Infinity ];
+        importDownloadedWFV[ src, # ] & /@ files
+    ];
+
+InitializeWorkflowValues[ ___ ] := Missing[ "NotAvailable" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*importDownloadedWFV*)
+importDownloadedWFV[ src_, file_ ] :=
+    CopyFile[
+        file,
+        ExpandFileName @ FileNameJoin @ { $wfRoot, relativePath[ src, file ] },
+        OverwriteTarget -> True
+    ];
+
+importDownloadedWFV // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*$WorkflowValueScope*)
+$WorkflowValueScope = "Job";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -97,7 +134,7 @@ WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ a___ ], v_ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$defaultScope*)
-$defaultScope = "Job";
+$defaultScope := $WorkflowValueScope;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -272,19 +309,8 @@ initialWorkflowValue // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*encodeWFVName*)
-encodeWFVName[ name_String ] := $jobPrefix <> URLEncode @ name <> ".wxf";
+encodeWFVName[ name_String ] := URLEncode @ name <> ".wxf";
 encodeWFVName // catchUndefined;
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*$jobPrefix*)
-$jobPrefix := Replace[
-    Environment[ "GITHUB_JOB" ],
-    {
-        job: Except[ "", _String ] :> job <> "_",
-        _ :> ""
-    }
-];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

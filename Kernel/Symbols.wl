@@ -3,6 +3,8 @@
 (*Declare Fully Qualified Symbol Names*)
 Wolfram`PacletCICD`$Debug;
 Wolfram`PacletCICD`$ExamplesLocation;
+Wolfram`PacletCICD`$WorkflowValueLocation;
+Wolfram`PacletCICD`$WorkflowValueScope;
 Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`ASTCondition;
 Wolfram`PacletCICD`ASTConditionValue;
