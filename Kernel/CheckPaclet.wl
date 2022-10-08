@@ -212,7 +212,7 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
 (*sourceFileURL*)
 sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
     With[ { url = ghCommitFileURL @ hint },
-        PutAppend[ $debugLogFile, <| "hint" -> hint, "url" -> url |> ];
+        PutAppend[ <| "hint" -> hint, "url" -> url |>, $debugLogFile ];
         url /; StringQ @ url
     ];
 
@@ -221,7 +221,7 @@ sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
         id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos = Lookup[ cellIndex, id ];
         url = ghCommitFileURL[ nbFile, pos ];
-        PutAppend[ $debugLogFile, <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |> ];
+        PutAppend[ <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |>, $debugLogFile ];
         url
     ];
 
