@@ -47,7 +47,7 @@ If[ FileExistsQ[ Wolfram`PacletCICD`Internal`$MXFile ]
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Initialize Workflow Values*)
-Wolfram`PacletCICD`InitializeWorkflowValues[ ];
+EchoEvaluation @ Wolfram`PacletCICD`InitializeWorkflowValues[ ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

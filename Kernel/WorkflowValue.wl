@@ -38,12 +38,14 @@ $$appendable = _List | _Association? AssociationQ;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*InitializeWorkflowValues*)
-InitializeWorkflowValues[ ] :=
-    InitializeWorkflowValues @ $wfDownloadLocation;
+InitializeWorkflowValues[ ] := (
+    EchoEvaluation @ FileNames[ ".paclet-workflow-values", Infinity ];
+    InitializeWorkflowValues @ $wfDownloadLocation
+);
 
 InitializeWorkflowValues[ src_? DirectoryQ ] :=
     Module[ { files },
-        files = FileNames[ "*.wxf", src, Infinity ];
+        files = EchoEvaluation @ FileNames[ "*.wxf", src, Infinity ];
         importDownloadedWFV[ src, # ] & /@ files
     ];
 
