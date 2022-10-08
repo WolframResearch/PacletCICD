@@ -53,6 +53,9 @@ WorkflowValue::WriteFailed =
 WorkflowValue::AppendFailed =
 "Internal Error: Failed to append `2` to workflow value `1`.";
 
+WorkflowValue::PayloadFailed =
+"Internal Error: Failed to construct workflow payload: `1`.";
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Options*)
@@ -174,7 +177,7 @@ setWorkflowValue // catchUndefined;
 (*setStepValue*)
 setStepValue[ name_String, val_ ] :=
     With[ { file = FileNameJoin @ { $stepRoot, encodeWFVName @ name } },
-        writeWFFile[ file, val ]
+        writeWFFile[ "Step", name, file, val ]
     ];
 
 setStepValue // catchUndefined;
@@ -184,7 +187,7 @@ setStepValue // catchUndefined;
 (*setJobValue*)
 setJobValue[ name_String, val_ ] :=
     With[ { file = FileNameJoin @ { $jobRoot, encodeWFVName @ name } },
-        writeWFFile[ file, val ]
+        writeWFFile[ "Job", name, file, val ]
     ];
 
 setJobValue // catchUndefined;
@@ -195,7 +198,7 @@ setJobValue // catchUndefined;
 setWFValue[ name_String, val_ ] :=
     With[ { file = FileNameJoin @ { $wfRoot, encodeWFVName @ name } },
         flagWFValueOutput @ $wfRoot;
-        writeWFFile[ file, val ]
+        writeWFFile[ "Workflow", name, file, val ]
     ];
 
 setWFValue // catchUndefined;
@@ -223,7 +226,7 @@ appendWorkflowValue[ name_? StringQ, scope: $$wfScope, v_ ] := Enclose[
     Module[ { current, new },
         current = Confirm @ getInitialValueForAppend[ name, scope, v ];
         new     = ConfirmMatch[ Append[ current, v ], $$appendable ];
-        Confirm @ setWorkflowValue[ name, scope, v ]
+        Confirm @ setWorkflowValue[ name, scope, new ]
     ],
     throwMessageFailure[ WorkflowValue::AppendFailed, name, scope, v ] &
 ];
@@ -272,8 +275,7 @@ encodeWFVName // catchUndefined;
 readWFFile[ file_ ] :=
     readWFFile[ file, Quiet @ Developer`ReadWXFFile @ file ];
 
-readWFFile[ file_, $wfv[ expr___ ] ] :=
-    expr;
+readWFFile[ file_, as_? wfPayloadQ ] := Lookup[ as, "Expression" ];
 
 readWFFile[ file_? FileExistsQ, other_ ] :=
     throwMessageFailure[ WorkflowValue::CorruptFile, file, HoldForm @ other ];
@@ -286,9 +288,10 @@ readWFFile // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*writeWFFile*)
-writeWFFile[ file_, expr_ ] :=
-    Module[ { out },
-        out = Quiet @ Developer`WriteWXFFile[ file, $wfv @ expr ];
+writeWFFile[ scope_, name_, file_, expr_ ] :=
+    Module[ { write, out },
+        write = makeWFPayload[ scope, name, expr ];
+        out   = Quiet @ Developer`WriteWXFFile[ file, write ];
         If[ FileExistsQ @ out,
             expr,
             writeWFFileError[ file, out ]
@@ -296,6 +299,34 @@ writeWFFile[ file_, expr_ ] :=
     ];
 
 writeWFFile // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*makeWFPayload*)
+makeWFPayload // Attributes = { HoldRest };
+makeWFPayload[ scope_, name_, expr_ ] :=
+    Module[ { as, pl },
+        as = <| "Scope" -> scope, "Name" -> name, "Expression" :> expr |>;
+        pl = Join[ as, $wfPayloadDefaults ];
+        If[ wfPayloadQ @ pl,
+            pl,
+            throwMessageFailure[ WorkflowValue::PayloadFailed, pl ]
+        ]
+    ];
+
+makeWFPayload // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$wfPayloadDefaults*)
+$wfPayloadDefaults := DeleteCases[
+    Association[
+        "Date"    -> DateObject[ TimeZone -> 0 ],
+        "Version" -> 1,
+        GetEnvironment @ { "GITHUB_WORKFLOW", "GITHUB_JOB" }
+    ],
+    None
+];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -313,6 +344,19 @@ writeWFFileError[ file_, other_Developer`WriteWXFFile ] :=
     throwMessageFailure[ WorkflowValue::WriteFailed, file, HoldForm @ other ];
 
 writeWFFileError // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wfPayloadQ*)
+wfPayloadQ[ KeyValuePattern @ {
+    "Expression" :> _,
+    "Date"       -> _DateObject? DateObjectQ,
+    "Version"    -> _Integer? IntegerQ,
+    "Scope"      -> $$wfScope,
+    "Name"       -> _String? StringQ
+} ] := True;
+
+wfPayloadQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
