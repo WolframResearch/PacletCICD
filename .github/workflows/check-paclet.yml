@@ -57,8 +57,17 @@ jobs:
           name: check-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_CHECK_RESULTS }}
           if-no-files-found: error
+      
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v2
+        with:
+          name: workflow-values-${{ env.WOLFRAM_SYSTEM_ID }}
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          if-no-files-found: error
 
   Build:
+    if: ${{ false }}  # disable for now
     name: Build
     runs-on: ubuntu-latest
     container:
@@ -89,8 +98,17 @@ jobs:
           name: PacletBuildArtifact
           path: ${{ env.PACLET_BUILD_DIR }}
           if-no-files-found: error
+      
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v2
+        with:
+          name: workflow-values-${{ env.WOLFRAM_SYSTEM_ID }}
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          if-no-files-found: error
 
   Test-Linux: 
+    if: ${{ false }}  # disable for now
     name: Test-Linux
     needs: [Build]
     runs-on: ubuntu-latest
@@ -131,6 +149,7 @@ jobs:
           if-no-files-found: error
 
   Test-MacOSX: 
+    if: ${{ false }}  # disable for now
     name: Test-MacOSX
     needs: [Build]
     runs-on: macos-latest
@@ -193,6 +212,7 @@ jobs:
 
 
   Test-Windows: 
+    if: ${{ false }}  # disable for now
     name: Test-Windows
     needs: [Build]
     runs-on: windows-latest

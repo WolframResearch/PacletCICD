@@ -171,6 +171,7 @@ generateCheckReport[ KeyValuePattern @ {
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
         head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
         title = Style[ "Definition Notebook (" <> job <> ")", "Section" ];
+        WorkflowValue[ "hints", "Workflow" ] = hints;
         grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
         appendStepSummary @ md
@@ -212,7 +213,9 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
 (*sourceFileURL*)
 sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
     With[ { url = ghCommitFileURL @ hint },
-        PutAppend[ <| "hint" -> hint, "url" -> url |>, $debugLogFile ];
+        AppendTo[ WorkflowValue[ "sourceFileURL", "Workflow" ],
+                  <| "hint" -> hint, "url" -> url |>
+        ];
         url /; StringQ @ url
     ];
 
@@ -221,16 +224,13 @@ sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
         id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos = Lookup[ cellIndex, id ];
         url = ghCommitFileURL[ nbFile, pos ];
-        PutAppend[ <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |>, $debugLogFile ];
+        AppendTo[ WorkflowValue[ "sourceFileURL", "Workflow" ],
+                  <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |>
+        ];
         url
     ];
 
 sourceFileURL // catchUndefined;
-
-$debugLogFile = FileNameJoin @ {
-    GeneralUtilities`EnsureDirectory[ "build" ],
-    "log.wl"
-};
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)

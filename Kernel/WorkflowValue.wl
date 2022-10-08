@@ -26,7 +26,8 @@ $stepRoot := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Step"     };
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Argument Patterns*)
-$$wfScope = "Workflow"|"Job"|"Step";
+$$wfScope    = "Workflow"|"Job"|"Step";
+$$appendable = _List | _Association? AssociationQ;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -37,6 +38,9 @@ WorkflowValue::ValueName =
 WorkflowValue::InvalidScope =
 "`1` is not a valid workflow scope.";
 
+WorkflowValue::InvalidAppendType =
+"Cannot append `1` to `2`.";
+
 WorkflowValue::CorruptFile =
 "Internal Error: The workflow value stored in `1` is corrupted.";
 
@@ -45,6 +49,9 @@ WorkflowValue::InvalidFile =
 
 WorkflowValue::WriteFailed =
 "Internal Error: Failed to write WXF data to `1`.";
+
+WorkflowValue::AppendFailed =
+"Internal Error: Failed to append `2` to workflow value `1`.";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -63,16 +70,20 @@ WorkflowValue[ args___ ] := catchTop @ getWorkflowValue @ args;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Set*)
-WorkflowValue /:
-HoldPattern[ Set ][ WorkflowValue[ args___ ], value_ ] :=
+WorkflowValue /: HoldPattern @ Set[ WorkflowValue[ args___ ], value_ ] :=
     catchTop @ setWorkflowValue[ args, value ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*SetDelayed*)
-WorkflowValue /:
-HoldPattern[ SetDelayed ][ WorkflowValue[ args___ ], value_ ] :=
+WorkflowValue /: HoldPattern @ SetDelayed[ WorkflowValue[ args___ ], value_ ] :=
     catchTop @ setDelayedWorkflowValue[ args, value ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*AppendTo*)
+WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ args___ ], value_ ] :=
+    catchTop @ appendWorkflowValue[ args, value ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -201,6 +212,49 @@ flagWFValueOutput[ root_ ] := flagWFValueOutput[ root ] =
 setDelayedWorkflowValue[ name_, scope_ ] := Failure[ "NotImplemented", <| |> ];
 (* TODO (maybe) *)
 setDelayedWorkflowValue // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*appendWorkflowValue*)
+appendWorkflowValue[ name_, v_ ] :=
+    appendWorkflowValue[ name, $defaultScope, v ];
+
+appendWorkflowValue[ name_? StringQ, scope: $$wfScope, v_ ] := Enclose[
+    Module[ { current, new },
+        current = Confirm @ getInitialValueForAppend[ name, scope, v ];
+        new     = ConfirmMatch[ Append[ current, v ], $$appendable ];
+        Confirm @ setWorkflowValue[ name, scope, v ]
+    ],
+    throwMessageFailure[ WorkflowValue::AppendFailed, name, scope, v ] &
+];
+
+appendWorkflowValue // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*getInitialValueForAppend*)
+getInitialValueForAppend[ name_, scope_, value_ ] :=
+    Module[ { current, list },
+        current = getWorkflowValue[ name, scope ];
+        list    = Replace[ current,
+                           Missing[ "WorkflowValueNotFound", name ] :>
+                               initialWorkflowValue @ value
+                  ];
+
+        If[ MatchQ[ list, $$appendable ],
+            list,
+            throwMessageFailure[ WorkflowValue::InvalidAppendType, value, list ]
+        ]
+    ];
+
+getInitialValueForAppend // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*initialWorkflowValue*)
+initialWorkflowValue[ (Rule|RuleDelayed)[ _, _ ] ] := <| |>;
+initialWorkflowValue[ _ ] := { };
+initialWorkflowValue // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
