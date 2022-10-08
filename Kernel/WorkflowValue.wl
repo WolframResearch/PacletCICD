@@ -64,7 +64,7 @@ WorkflowValue // Options = { };
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main Definition*)
-WorkflowValue[ args___ ] := catchTop @ getWorkflowValue @ args;
+WorkflowValue[ a___ ] := catchTop @ getWorkflowValue @ a;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -73,20 +73,26 @@ WorkflowValue[ args___ ] := catchTop @ getWorkflowValue @ args;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*Set*)
-WorkflowValue /: HoldPattern @ Set[ WorkflowValue[ args___ ], value_ ] :=
-    catchTop @ setWorkflowValue[ args, value ];
+WorkflowValue /: HoldPattern @ Set[ WorkflowValue[ a___ ], v_ ] :=
+    catchTop @ setWorkflowValue[ a, v ];
+
+WorkflowValue /: HoldPattern @ Set[ WorkflowValue[ a___ ][ k_ ], v_ ] :=
+    catchTop @ appendWorkflowValue[ a, k -> v ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*SetDelayed*)
-WorkflowValue /: HoldPattern @ SetDelayed[ WorkflowValue[ args___ ], value_ ] :=
-    catchTop @ setDelayedWorkflowValue[ args, value ];
+WorkflowValue /: HoldPattern @ SetDelayed[ WorkflowValue[ a___ ], v_ ] :=
+    catchTop @ setDelayedWorkflowValue[ a, v ];
+
+WorkflowValue /: HoldPattern @ SetDelayed[ WorkflowValue[ a___ ][ k_ ], v_ ] :=
+    catchTop @ appendWorkflowValue[ a, k :> v ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*AppendTo*)
-WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ args___ ], value_ ] :=
-    catchTop @ appendWorkflowValue[ args, value ];
+WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ a___ ], v_ ] :=
+    catchTop @ appendWorkflowValue[ a, v ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -266,8 +272,19 @@ initialWorkflowValue // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*encodeWFVName*)
-encodeWFVName[ name_String ] := URLEncode @ name <> ".wxf";
+encodeWFVName[ name_String ] := $jobPrefix <> URLEncode @ name <> ".wxf";
 encodeWFVName // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$jobPrefix*)
+$jobPrefix := Replace[
+    Environment[ "GITHUB_JOB" ],
+    {
+        job: Except[ "", _String ] :> job <> "_",
+        _ :> ""
+    }
+];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

@@ -171,7 +171,6 @@ generateCheckReport[ KeyValuePattern @ {
         index = ConfirmBy[ notebookCellIDIndex @ file, AssociationQ ];
         head  = Style[ #, Bold ] & /@ { "Level", "Tag", "Message", "Link" };
         title = Style[ "Definition Notebook (" <> job <> ")", "Section" ];
-        WorkflowValue[ "hints", "Workflow" ] = hints;
         grid  = Grid @ Prepend[ reportHintRow[ file, index ] /@ hints, head ];
         md    = ConfirmBy[ ToMarkdownString @ { title, grid }, StringQ ];
         appendStepSummary @ md
@@ -182,21 +181,6 @@ generateCheckReport // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsubsection::Closed:: *)
 (*reportHintRow*)
-(* reportHintRow[ file_, index_ ][ hint_Association ] :=
-    Enclose @ Module[ { lookup, level, tag, msg, id, pos, url, link },
-        lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
-        level  = hintIcon @ lookup[ "Level" ];
-        tag    = lookup[ "Tag" ];
-        msg    = Style[ lookup[ "Message" ], "Text" ];
-        id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
-        pos    = Lookup[ index, id ];
-        Print[ "hint: ", hint ];
-        url    = ghCommitFileURL[ file, hint ];
-        If[ url === None, url = ghCommitFileURL[ file, pos ] ];
-        link   = Hyperlink[ ":link:", url ];
-        { level, tag, msg, link }
-    ]; *)
-
 reportHintRow[ file_, index_ ][ hint_Association ] :=
     Enclose @ Module[ { lookup, level, tag, msg, url, link },
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
@@ -213,9 +197,6 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
 (*sourceFileURL*)
 sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
     With[ { url = ghCommitFileURL @ hint },
-        AppendTo[ WorkflowValue[ "sourceFileURL", "Workflow" ],
-                  <| "hint" -> hint, "url" -> url |>
-        ];
         url /; StringQ @ url
     ];
 
@@ -223,11 +204,7 @@ sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
     Enclose @ Module[ { id, pos, url },
         id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
         pos = Lookup[ cellIndex, id ];
-        url = ghCommitFileURL[ nbFile, pos ];
-        AppendTo[ WorkflowValue[ "sourceFileURL", "Workflow" ],
-                  <| "hint" -> hint, "id" -> id, "pos" -> pos, "url" -> url |>
-        ];
-        url
+        ghCommitFileURL[ nbFile, pos ]
     ];
 
 sourceFileURL // catchUndefined;

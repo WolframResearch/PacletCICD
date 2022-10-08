@@ -10,4 +10,8 @@ checkResult @ Wolfram`PacletCICD`BuildPaclet[
     "Target"     -> "Submit"
 ];
 
+ Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "MachineName" ] = $MachineName;
+ Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "SystemID"    ] = $SystemID;
+ Wolfram`PacletCICD`WorkflowValue[ "TestValue", "Workflow" ][ "Timestamp"   ] = Now;
+
 EndPackage[ ];

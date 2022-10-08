@@ -62,13 +62,12 @@ jobs:
         if: always() && env.PACLET_WORKFLOW_VALUES
         uses: actions/upload-artifact@v2
         with:
-          name: workflow-values-${{ env.WOLFRAM_SYSTEM_ID }}
+          name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
           retention-days: 1
           if-no-files-found: error
 
   Build:
-    if: ${{ false }}  # disable for now
     name: Build
     runs-on: ubuntu-latest
     container:
@@ -104,7 +103,7 @@ jobs:
         if: always() && env.PACLET_WORKFLOW_VALUES
         uses: actions/upload-artifact@v2
         with:
-          name: workflow-values-${{ env.WOLFRAM_SYSTEM_ID }}
+          name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
           retention-days: 1
           if-no-files-found: error
