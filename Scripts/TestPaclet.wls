@@ -3,10 +3,12 @@
 BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
-checkResult @ Wolfram`PacletCICD`TestPaclet[
-    FileNameJoin @ { $pacDir, "Tests" },
-    "Target"          -> "Submit",
-    "AnnotateTestIDs" -> True
+checkResult @ Block[ { Wolfram`PacletCICD`$WorkflowValueScope = None },
+    Wolfram`PacletCICD`TestPaclet[
+        FileNameJoin @ { $pacDir, "Tests" },
+        "Target"          -> "Submit",
+        "AnnotateTestIDs" -> True
+    ]
 ];
 
 job  = Environment[ "GITHUB_JOB" ];

@@ -32,7 +32,7 @@ $wfDownloadLocation := ExpandFileName[ ".paclet-workflow-values" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Argument Patterns*)
-$$wfScope    = "Workflow"|"Job"|"Step";
+$$wfScope    = "Workflow"|"Job"|"Step"|None;
 $$appendable = _List | _Association? AssociationQ;
 
 (* ::**********************************************************************:: *)
@@ -141,6 +141,7 @@ $defaultScope := $WorkflowValueScope;
 (*getWorkflowValue*)
 getWorkflowValue[ name_ ] := getWorkflowValue[ name, $defaultScope ];
 
+getWorkflowValue[ name_? StringQ, None       ] := Missing[ "NoWorkflowScope" ];
 getWorkflowValue[ name_? StringQ, "Step"     ] := getStepValue @ name;
 getWorkflowValue[ name_? StringQ, "Job"      ] := getJobValue @ name;
 getWorkflowValue[ name_? StringQ, "Workflow" ] := getWFValue @ name;
@@ -203,6 +204,7 @@ getWFValue // catchUndefined;
 (*setWorkflowValue*)
 setWorkflowValue[ name_, v_ ] := setWorkflowValue[ name, $defaultScope, v ];
 
+setWorkflowValue[ name_? StringQ, None      , v_ ] := v;
 setWorkflowValue[ name_? StringQ, "Step"    , v_ ] := setStepValue[ name, v ];
 setWorkflowValue[ name_? StringQ, "Job"     , v_ ] := setJobValue[ name, v ];
 setWorkflowValue[ name_? StringQ, "Workflow", v_ ] := setWFValue[ name, v ];
