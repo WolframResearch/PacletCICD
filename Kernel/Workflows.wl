@@ -35,6 +35,7 @@ $actionTarget    = "Submit";
 $defNotebookPath = "./ResourceDefinition.nb";
 $defaultOS       = "Linux-x86-64";
 $defaultRunner   = "ubuntu-latest";
+$downloadValues  = Automatic;
 $resSystemBase   = "https://www.wolframcloud.com/obj/resourcesystem/api/1.0";
 $publisherToken  = GitHubSecret[ "RESOURCE_PUBLISHER_TOKEN" ];
 
@@ -112,6 +113,7 @@ Workflow // Options = {
     "CheckPacletAction"      -> $checkAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
+    "DownloadWorkflowValues" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
@@ -424,6 +426,7 @@ WorkflowJob // Options = {
     "CheckPacletAction"      -> $checkAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
+    "DownloadWorkflowValues" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
@@ -638,7 +641,7 @@ makeWorkflowJobData[ name_String? jobNameQ, as_Association ] :=
         as1  = ConfirmBy[ Last @ rule, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML[ "jobs", name, as ], AssociationQ ];
         data = merger @ { as1, as2 };
-        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
+        handleWFValues @ wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowJobData[ name_String, custom_Association ] :=
@@ -648,10 +651,36 @@ makeWorkflowJobData[ custom_Association ] :=
     Enclose @ Module[ { rule, data, id },
         rule = ConfirmMatch[ normalizeJob @ custom, _ -> _ ];
         data = ConfirmBy[ Last @ rule, AssociationQ ];
-        wfKeySort @ data
+        handleWFValues @ wfKeySort @ data
     ];
 
 makeWorkflowJobData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*handleWFValues*)
+handleWFValues[ as: KeyValuePattern[ "download_workflow_values" -> dl_ ] ] :=
+    handleWFValues[
+        KeyDrop[ as, "download_workflow_values" ],
+        as[ "needs" ],
+        dl
+    ];
+
+handleWFValues[ as_ ] := handleWFValues[ as, as[ "needs" ], $downloadValues ];
+
+(* Keep the DownloadWorkflowValuesStep: *)
+handleWFValues[ as_, _String | { __String }, Automatic ] := as;
+handleWFValues[ as_, _                     , True      ] := as;
+
+(* Drop the DownloadWorkflowValuesStep: *)
+handleWFValues[ as_, _, Automatic|False ] :=
+    DeleteCases[
+        as,
+        KeyValuePattern[ "id" -> "download-workflow-values-step" ],
+        { 2 }
+    ];
+
+handleWFValues // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -699,6 +728,7 @@ WorkflowStep // Options = {
     "CheckPacletAction"      -> $checkAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
+    "DownloadWorkflowValues" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
@@ -837,6 +867,7 @@ $stepNames = {
     "CreateRelease",
     "Download",
     "DownloadCompilationArtifacts",
+    "DownloadWorkflowValues",
     "InstallWolframEngine",
     "Publish",
     "RestoreCachedWolframEngine",
@@ -1022,6 +1053,7 @@ WorkflowExport // Options = {
     "CheckPacletAction"      -> $checkAction,
     "DefaultBranch"          -> $defaultBranch,
     "DefinitionNotebookPath" -> Automatic,
+    "DownloadWorkflowValues" -> Automatic,
     OperatingSystem          -> Automatic,
     ProcessEnvironment       -> Automatic,
     "PublisherToken"         -> Automatic,
@@ -1484,6 +1516,9 @@ normalizeForYAML[ "operating_system" -> _ ] := Nothing;
 normalizeForYAML[ "jobs", _, "operating_system" -> _ ] := Nothing;
 normalizeForYAML[ "jobs", _, "steps", _, "operating_system" -> _ ] := Nothing;
 
+normalizeForYAML[ "jobs", _, "download_workflow_values" -> dl_ ] :=
+    "download_workflow_values" -> dl;
+
 normalizeForYAML[ key: Except[ $$rootProp ] -> val_ ] :=
     With[ { p = toCanonicalProp @ key },
         If[ MatchQ[ p, $$rootProp ],
@@ -1709,8 +1744,10 @@ normalizeJob[ "check" | "checkpaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"    ],
-            normalizeStep[ "CheckPaclet" ]
+            normalizeStep[ "Checkout"               ],
+            normalizeStep[ "DownloadWorkflowValues" ],
+            normalizeStep[ "CheckPaclet"            ],
+            normalizeStep[ "UploadWorkflowValues"   ]
         }
     |>;
 
@@ -1722,9 +1759,11 @@ normalizeJob[ "build" | "buildpaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"             ],
-            normalizeStep[ "BuildPaclet"          ],
-            normalizeStep[ "UploadBuildArtifacts" ]
+            normalizeStep[ "Checkout"               ],
+            normalizeStep[ "DownloadWorkflowValues" ],
+            normalizeStep[ "BuildPaclet"            ],
+            normalizeStep[ "UploadBuildArtifacts"   ],
+            normalizeStep[ "UploadWorkflowValues"   ]
         }
     |>;
 
@@ -1736,11 +1775,13 @@ normalizeJob[ "release" | "releasepaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"             ],
-            normalizeStep[ "BuildPaclet"          ],
-            normalizeStep[ "UploadBuildArtifacts" ],
-            normalizeStep[ "CreateRelease"        ],
-            normalizeStep[ "UploadRelease"        ]
+            normalizeStep[ "Checkout"               ],
+            normalizeStep[ "DownloadWorkflowValues" ],
+            normalizeStep[ "BuildPaclet"            ],
+            normalizeStep[ "UploadBuildArtifacts"   ],
+            normalizeStep[ "CreateRelease"          ],
+            normalizeStep[ "UploadRelease"          ],
+            normalizeStep[ "UploadWorkflowValues"   ]
         }
     |>;
 
@@ -1752,9 +1793,11 @@ normalizeJob[ "submit" | "submitpaclet" | "publish" | "publishpaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"             ],
-            normalizeStep[ "SubmitPaclet"         ],
-            normalizeStep[ "UploadBuildArtifacts" ]
+            normalizeStep[ "Checkout"               ],
+            normalizeStep[ "DownloadWorkflowValues" ],
+            normalizeStep[ "SubmitPaclet"           ],
+            normalizeStep[ "UploadBuildArtifacts"   ],
+            normalizeStep[ "UploadWorkflowValues"   ]
         }
     |>;
 
@@ -1766,9 +1809,10 @@ normalizeJob[ "test" | "testpaclet" ] :=
         "env"             -> $defaultJobEnv,
         "timeout-minutes" -> $timeConstraint,
         "steps"           -> {
-            normalizeStep[ "Checkout"             ],
-            normalizeStep[ "TestPaclet"           ],
-            normalizeStep[ "UploadTestResults"    ]
+            normalizeStep[ "Checkout"               ],
+            normalizeStep[ "DownloadWorkflowValues" ],
+            normalizeStep[ "TestPaclet"             ],
+            normalizeStep[ "UploadWorkflowValues"   ]
         }
     |>;
 
@@ -1836,7 +1880,8 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
     "env"             -> compilationEnv[ "Windows-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
     "steps" -> {
-        normalizeStep[ "Checkout" ],
+        normalizeStep[ "Checkout"               ],
+        normalizeStep[ "DownloadWorkflowValues" ],
         $windowsCacheRestoreStep,
         $windowsInstallWLStep,
         windowsCompileStep @ as,
@@ -1850,7 +1895,8 @@ normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
     "steps" -> {
-        normalizeStep[ "Checkout" ],
+        normalizeStep[ "Checkout"               ],
+        normalizeStep[ "DownloadWorkflowValues" ],
         $macCacheRestoreStep,
         $macInstallWLStep,
         macCompileStep @ as,
@@ -1865,7 +1911,8 @@ normalizeCompilationJob0[ "Linux-x86-64", as_Association ] := <|
     "env"             -> compilationEnv[ "Linux-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
     "steps" -> {
-        normalizeStep[ "Checkout" ],
+        normalizeStep[ "Checkout"               ],
+        normalizeStep[ "DownloadWorkflowValues" ],
         linuxInstallBuildStep @ as,
         linuxCompileStep @ as,
         linuxUploadCompiledStep @ as
@@ -1891,6 +1938,7 @@ buildCompiledPacletJob[ as_Association ] :=
         },
         "steps"           -> {
             normalizeStep[ "Checkout"                     ],
+            normalizeStep[ "DownloadWorkflowValues"       ],
             normalizeStep[ "DownloadCompilationArtifacts" ],
             normalizeStep[ "BuildPaclet"                  ],
             normalizeStep[ "UploadBuildArtifacts"         ]
@@ -2333,6 +2381,32 @@ normalizeStep[
     |>
 |>;
 
+normalizeStep[ ___, "uploadworkflowvalues" ] := <|
+    "name" -> "UploadWorkflowValues",
+    "id"   -> "upload-workflow-values-step",
+    "if"   -> "always() && env.PACLET_WORKFLOW_VALUES",
+    "uses" -> "actions/upload-artifact@v2",
+    "with" -> <|
+        "name"              -> "paclet-workflow-values",
+        "path"              -> "${{ env.PACLET_WORKFLOW_VALUES }}",
+        "if-no-files-found" -> "ignore"
+    |>
+|>;
+
+normalizeStep[ ___, "downloadworkflowvalues" ] :=
+    If[ MatchQ[ $downloadValues, True|Automatic ],
+        <|
+            "name" -> "DownloadWorkflowValues",
+            "id"   -> "download-workflow-values-step",
+            "uses" -> "actions/download-artifact@v2",
+            "with" -> <|
+                "name" -> "paclet-workflow-values",
+                "path" -> ".paclet-workflow-values"
+            |>
+        |>,
+        Nothing
+    ];
+
 normalizeStep[ ___, "createrelease" ] := <|
     "name" -> "CreateRelease",
     "id"   -> "create-release-step",
@@ -2623,6 +2697,7 @@ withWorkflowOptions0[ s_, { opts___ }, eval_ ] :=
             $defaultOS        = wfOpt[ s, opts, "OperatingSystem"             ],
             $defaultRunner    = wfOpt[ s, opts, "OperatingSystem" -> "Runner" ],
             $defNotebookPath  = wfOpt[ s, opts, "DefinitionNotebookPath"      ],
+            $downloadValues   = wfOpt[ s, opts, "DownloadWorkflowValues"      ],
             $publisherToken   = wfOpt[ s, opts, "PublisherToken"              ],
             $resSystemBase    = wfOpt[ s, opts, "ResourceSystemBase"          ],
             $testAction       = wfOpt[ s, opts, "TestPacletAction"            ],
@@ -2674,6 +2749,7 @@ wfOptFunc[ "CancelInProgress"       ] := toCancelInProgress;
 wfOptFunc[ "CheckPacletAction"      ] := toCheckPacletAction;
 wfOptFunc[ "DefaultBranch"          ] := toDefaultBranch;
 wfOptFunc[ "DefinitionNotebookPath" ] := toDefinitionNotebookPath;
+wfOptFunc[ "DownloadWorkflowValues" ] := toDownloadWorkflowValues;
 wfOptFunc[ "OperatingSystem"        ] := toDefaultOS;
 wfOptFunc[ "PublisherToken"         ] := toPublisherToken;
 wfOptFunc[ "ResourceSystemBase"     ] := toResourceSystemBase;
@@ -2739,6 +2815,13 @@ toDefinitionNotebookPath[ File[ path_ ] ] := toDefinitionNotebookPath @ path;
 
 toDefinitionNotebookPath[ other_ ] :=
     wfOptFail[ "InvalidDefinitionNotebookPath", other ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*toDownloadWorkflowValues*)
+toDownloadWorkflowValues[ expr: True|False|Automatic ] := expr;
+toDownloadWorkflowValues[ other_ ] :=
+    wfOptFail[ "InvalidDownloadWorkflowValues", other ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
