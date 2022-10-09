@@ -842,8 +842,7 @@ filterOptions[
 ] :=
     filterOptions[ syms, opts ];
 
-filterOptions /:
-    (sym_Symbol)[
+filterOptions /: (sym_Symbol)[
         args___,
         filterOptions[ opts1: (Rule|RuleDelayed)[ _, _ ]... ],
         opts2: (Rule|RuleDelayed)[ _, _ ]...

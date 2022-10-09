@@ -132,6 +132,7 @@ $checkHintData := withConsoleType[
     Automatic,
     DeleteMissing /@ dnc`HintData[
         "Paclet",
+        None,
         { "Tag", "Level", "MessageText", "CellID", "SourcePosition" }
     ]
 ];
