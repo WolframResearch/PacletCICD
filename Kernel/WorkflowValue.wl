@@ -308,7 +308,13 @@ initialWorkflowValue // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*encodeWFVName*)
-encodeWFVName[ name_String ] := URLEncode @ name <> ".wxf";
+encodeWFVName[ name_String ] :=
+    StringReplace[
+        URLEncode @ name <> ".wxf",
+        "%2F" -> "/",
+        IgnoreCase -> True
+    ];
+
 encodeWFVName // catchUndefined;
 
 (* ::**********************************************************************:: *)
@@ -332,6 +338,7 @@ readWFFile // catchUndefined;
 (*writeWFFile*)
 writeWFFile[ scope_, name_, file_, expr_ ] :=
     Module[ { write, out },
+        GeneralUtilities`EnsureDirectory @ DirectoryName @ file;
         write = makeWFPayload[ scope, name, expr ];
         out   = Quiet @ Developer`WriteWXFFile[ file, write ];
         If[ FileExistsQ @ out,
