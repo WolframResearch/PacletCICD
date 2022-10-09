@@ -26,6 +26,7 @@ TestPaclet // Options = {
     "MarkdownSummary"  -> True,
     "MemoryConstraint" -> Inherited,
     "SameTest"         -> Inherited,
+    "SetWorkflowValue" -> True,
     "Target"           -> "Submit",
     "TimeConstraint"   -> Inherited
 };
@@ -67,7 +68,11 @@ testPaclet[ dir_? DirectoryQ, opts_Association ] :=
         files   = FileNames[ "*.wlt", dir, Infinity ];
         as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
-        WorkflowValue[ "PacletCICD/TestPaclet" ] = reports;
+
+        If[ opts[ "SetWorkflowValue" ],
+            WorkflowValue[ "PacletCICD/TestPaclet" ] = reports
+        ];
+
         makeTestResult[ pacDir, reports ]
     ];
 

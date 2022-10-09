@@ -104,7 +104,8 @@ VerificationTest[
 VerificationTest[
     result = suppressConsole @ TestPaclet[
         ExampleDirectory[ "Sample" ],
-        "AnnotateTestIDs" -> False
+        "AnnotateTestIDs"  -> False,
+        "SetWorkflowValue" -> False
     ],
     _Success,
     SameTest -> MatchQ,
@@ -146,7 +147,8 @@ VerificationTest[
 VerificationTest[
     result = suppressConsole @ TestPaclet[
         ExampleDirectory[ "FewIssues" ],
-        "AnnotateTestIDs" -> False
+        "AnnotateTestIDs"  -> False,
+        "SetWorkflowValue" -> False
     ],
     _Failure,
     { TestPaclet::Failures },
