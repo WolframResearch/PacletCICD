@@ -211,7 +211,7 @@ openNotebookAndBuild[ file_, opts___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*setGHBuildOutput*)
 setGHBuildOutput[ res_ ] := Enclose[
-    WorkflowValue[ "PacletCICD/BuildPaclet", "Workflow" ] = res;
+    WorkflowValue[ "PacletCICD/BuildPaclet" ] = res;
     Confirm @ setGHBuildOutput0 @ res,
     exitFailure[ BuildPaclet::archive, 1, res ] &
 ];

@@ -143,7 +143,7 @@ $checkHintData := withConsoleType[
 exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
 
 exportCheckResults[ nb_, data_Association ] :=
-    Set[ WorkflowValue[ "PacletCICD/CheckPaclet", "Workflow" ], data ];
+    Set[ WorkflowValue[ "PacletCICD/CheckPaclet" ], data ];
 
 exportCheckResults // catchUndefined;
 

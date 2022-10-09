@@ -64,7 +64,7 @@ importDownloadedWFV // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*$WorkflowValueScope*)
-$WorkflowValueScope = "Job";
+$WorkflowValueScope = "Workflow";
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

@@ -67,7 +67,7 @@ testPaclet[ dir_? DirectoryQ, opts_Association ] :=
         files   = FileNames[ "*.wlt", dir, Infinity ];
         as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
-        WorkflowValue[ "PacletCICD/TestPaclet", "Workflow" ] = reports;
+        WorkflowValue[ "PacletCICD/TestPaclet" ] = reports;
         makeTestResult[ pacDir, reports ]
     ];
 

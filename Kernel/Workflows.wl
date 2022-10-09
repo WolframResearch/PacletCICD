@@ -124,6 +124,8 @@ Workflow // Options = {
     TimeConstraint           -> Infinity
 };
 
+(* TODO: PersistenceTime/ExpirationDate for artifact retention time *)
+
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
