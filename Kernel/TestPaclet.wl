@@ -540,24 +540,14 @@ makeTestResult[ dir_, reports_, True ] :=
     ];
 
 makeTestResult[ dir_, reports_, False ] :=
-    Module[ { export, exported },
-        export = fileNameJoin @ { dir, "build", "test_results.wxf" };
-        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        exported = Export[ export,
-                           reports,
-                           "WXF",
-                           PerformanceGoal -> "Size"
-                   ];
-        setOutput[ "PACLET_TEST_RESULTS", exported ];
-        exitFailure[
-            "TestPaclet::Failures",
-            Association[
-                "MessageTemplate"   :> TestPaclet::Failures,
-                "MessageParameters" :> { },
-                "Result"            :> reports
-            ],
-            1
-        ]
+    exitFailure[
+        "TestPaclet::Failures",
+        Association[
+            "MessageTemplate"   :> TestPaclet::Failures,
+            "MessageParameters" :> { },
+            "Result"            :> reports
+        ],
+        1
     ];
 
 makeTestResult // catchUndefined;

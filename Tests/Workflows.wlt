@@ -589,7 +589,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    StringContainsQ[ Workflow[ "Test" ][ "YAML" ], "env.PACLET_TEST_RESULTS" ],
+    StringContainsQ[ Workflow[ "Test" ][ "YAML" ], "env.PACLET_WORKFLOW_VALUES" ],
     True,
     TestID -> "Workflow-Test-Results-File@@Tests/Workflows.wlt:591,1-595,2"
 ]

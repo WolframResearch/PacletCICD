@@ -50,14 +50,6 @@ jobs:
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
       
-      - name: Upload check results
-        if: always() && env.PACLET_CHECK_RESULTS
-        uses: actions/upload-artifact@v2
-        with:
-          name: check-paclet-results
-          path: ${{ env.PACLET_CHECK_RESULTS }}
-          if-no-files-found: error
-      
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
         uses: actions/upload-artifact@v2
@@ -146,14 +138,6 @@ jobs:
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
       
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
-          if-no-files-found: error
-      
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
         uses: actions/upload-artifact@v2
@@ -220,14 +204,6 @@ jobs:
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
-          if-no-files-found: error
-      
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
           if-no-files-found: error
       
       - name: Upload workflow values
@@ -320,15 +296,7 @@ jobs:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
-      
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
-          if-no-files-found: error
-      
+
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
         uses: actions/upload-artifact@v2

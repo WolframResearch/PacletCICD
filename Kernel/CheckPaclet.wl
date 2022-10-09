@@ -143,15 +143,7 @@ $checkHintData := withConsoleType[
 exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
 
 exportCheckResults[ nb_, data_Association ] :=
-    Module[ { dir, export, exported },
-        dir = parentPacletDirectory @ nb;
-        export = fileNameJoin @ { dir, "build", "check_results.wxf" };
-        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        exported = Export[ export, data, "WXF", PerformanceGoal -> "Size" ];
-        WorkflowValue[ "PacletCICD/CheckPaclet", "Workflow" ] = data;
-        setOutput[ "PACLET_CHECK_RESULTS", exported ];
-        exported
-    ];
+    Set[ WorkflowValue[ "PacletCICD/CheckPaclet", "Workflow" ], data ];
 
 exportCheckResults // catchUndefined;
 

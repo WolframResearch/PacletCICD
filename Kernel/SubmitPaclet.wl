@@ -124,6 +124,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
         submitted = scrapeAndSubmit @ nbo;
+        WorkflowValue[ "PacletCICD/SubmitPaclet", "Workflow" ] = submitted;
         Confirm @ submitted
     ],
     exitFailure[

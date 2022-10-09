@@ -2363,24 +2363,6 @@ normalizeStep[
     |>
 |>;
 
-normalizeStep[
-    ___,
-    Alternatives[
-        "uploadtestartifacts",
-        "uploadtestresults",
-        "uploadtests"
-    ]
-] := <|
-    "name" -> "UploadTestResults",
-    "id"   -> "upload-test-results-step",
-    "if"   -> "always() && env.PACLET_TEST_RESULTS",
-    "uses" -> "actions/upload-artifact@v2",
-    "with" -> <|
-        "path"              -> "${{ env.PACLET_TEST_RESULTS }}",
-        "if-no-files-found" -> "ignore"
-    |>
-|>;
-
 normalizeStep[ ___, "uploadworkflowvalues" ] := <|
     "name" -> "UploadWorkflowValues",
     "id"   -> "upload-workflow-values-step",
