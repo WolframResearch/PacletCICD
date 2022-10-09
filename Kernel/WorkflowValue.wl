@@ -52,10 +52,11 @@ InitializeWorkflowValues[ ___ ] := Missing[ "NotAvailable" ];
 (* ::Subsection::Closed:: *)
 (*importDownloadedWFV*)
 importDownloadedWFV[ src_, file_ ] :=
-    CopyFile[
-        file,
-        ExpandFileName @ FileNameJoin @ { $wfRoot, relativePath[ src, file ] },
-        OverwriteTarget -> True
+    Module[ { rel, tgt },
+        rel = relativePath[ src, file ];
+        tgt = ExpandFileName @ FileNameJoin @ { $wfRoot, rel };
+        GeneralUtilities`EnsureDirectory @ DirectoryName @ tgt;
+        CopyFile[ file, tgt, OverwriteTarget -> True ]
     ];
 
 importDownloadedWFV // catchUndefined;
