@@ -9,8 +9,8 @@ EndPackage[ ];
 (*Install Dependencies*)
 If[ $VersionNumber < 13.2 && StringQ @ Environment[ "GITHUB_WORKFLOW" ],
     Quiet[
-        PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/DefinitionNotebookClient-1.18.0.paclet" ];
-        PacletInstall[ "https://www.wolframcloud.com/obj/rhennigan/Paclets/PacletResource-1.6.0.paclet"            ];
+        PacletInstall[ "https://github.com/WolframResearch/PacletCICD/releases/download/DefinitionNotebookClient-1.18.0/DefinitionNotebookClient-1.18.0.paclet" ];
+        PacletInstall[ "https://github.com/WolframResearch/PacletCICD/releases/download/PacletResource-1.6.0/PacletResource-1.6.0.paclet"                       ];
         ,
         PacletInstall::samevers
     ]
