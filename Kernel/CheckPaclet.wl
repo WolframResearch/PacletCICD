@@ -124,9 +124,6 @@ checkPaclet[ nb_, opts___ ] :=
         checkExit @ res
     ];
 
-(* FIXME: temporary stuff: *)
-<| a -> # + 1 & |>
-
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*$checkHintData*)
