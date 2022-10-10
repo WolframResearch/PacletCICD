@@ -103,6 +103,12 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v3
 
+      - name: Download workflow values
+        uses: actions/download-artifact@v2
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
       - name: Download MX build
         id: download-mx-artifacts-step
         uses: actions/download-artifact@v2
@@ -145,6 +151,12 @@ jobs:
       - name: Checkout
         id: checkout-code-step
         uses: actions/checkout@v3
+
+      - name: Download workflow values
+        uses: actions/download-artifact@v2
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
@@ -208,6 +220,12 @@ jobs:
       - name: Checkout
         id: checkout-code-step
         uses: actions/checkout@v3
+
+      - name: Download workflow values
+        uses: actions/download-artifact@v2
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
