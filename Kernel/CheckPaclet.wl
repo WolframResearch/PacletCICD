@@ -33,7 +33,8 @@ CheckPaclet::unknown =
 CheckPaclet // Options = {
     "Target"           -> "Submit",
     "DisabledHints"    -> Automatic,
-    "FailureCondition" -> "Error"
+    "FailureCondition" -> "Error",
+    "SetWorkflowValue" -> True
     (* TODO: MarkdownSummary option *)
 };
 
@@ -111,13 +112,14 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    ccPromptFix @ Module[ { res, hints, data, exported },
+    ccPromptFix @ Module[ { res, hints, data, setWF },
         needs[ "DefinitionNotebookClient`" -> None ];
         hiddenDirectoryFix[ ];
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
         hints = $checkHintData;
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
-        exported = exportCheckResults[ nb, data ];
+        setWF = OptionValue[ CheckPaclet, { opts }, "SetWorkflowValue" ];
+        If[ setWF, ghSetWFOutput[ "CheckPaclet", data ] ];
         generateCheckReport @ data;
         checkExit @ res
     ];
@@ -136,16 +138,6 @@ $checkHintData := withConsoleType[
         { "Tag", "Level", "MessageText", "CellID", "SourcePosition" }
     ]
 ];
-
-(* ::**********************************************************************:: *)
-(* ::Subsubsection::Closed:: *)
-(*exportCheckResults*)
-exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
-
-exportCheckResults[ nb_, data_Association ] :=
-    Set[ WorkflowValue[ "PacletCICD/CheckPaclet" ], data ];
-
-exportCheckResults // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

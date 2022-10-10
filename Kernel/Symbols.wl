@@ -14,6 +14,7 @@ Wolfram`PacletCICD`BytesToQuantity;
 Wolfram`PacletCICD`CheckDependencies;
 Wolfram`PacletCICD`CheckPaclet;
 Wolfram`PacletCICD`CompileLibraryResources;
+Wolfram`PacletCICD`ConsoleDebug;
 Wolfram`PacletCICD`ConsoleError;
 Wolfram`PacletCICD`ConsoleLog;
 Wolfram`PacletCICD`ConsoleNotice;

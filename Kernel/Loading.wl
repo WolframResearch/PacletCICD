@@ -121,6 +121,7 @@ SetContextLoad[ WorkflowStepQ   , "Workflows" ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Console*)
+SetContextLoad[ ConsoleDebug  , "Console" ];
 SetContextLoad[ ConsoleError  , "Console" ];
 SetContextLoad[ ConsoleLog    , "Console" ];
 SetContextLoad[ ConsoleNotice , "Console" ];

@@ -43,7 +43,8 @@ SubmitPaclet // Options = {
     ConsoleType        -> Automatic,
     PublisherID        -> Automatic,
     PublisherToken     -> Automatic,
-    ResourceSystemBase -> Automatic
+    ResourceSystemBase -> Automatic,
+    "SetWorkflowValue" -> True
 };
 
 (* ::**********************************************************************:: *)
@@ -120,11 +121,12 @@ submitPaclet[ file_File, opts___ ] :=
     ];
 
 submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
-    Module[ { built, submitted },
+    Module[ { setWF, built, submitted },
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
         submitted = scrapeAndSubmit @ nbo;
-        WorkflowValue[ "PacletCICD/SubmitPaclet" ] = submitted;
+        setWF = OptionValue[ SubmitPaclet, { opts }, "SetWorkflowValue" ];
+        If[ setWF, ghSetWFOutput[ "SubmitPaclet", submitted ] ];
         Confirm @ submitted
     ],
     exitFailure[

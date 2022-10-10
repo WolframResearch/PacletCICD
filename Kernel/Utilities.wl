@@ -473,6 +473,32 @@ getGitHubSS[ s_OutputStream ] := $gitHubStepSummary = s;
 getGitHubSS[ ___ ] := $Failed;
 
 (* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghSetWFOutput*)
+ghSetWFOutput[ name_String? StringQ, expr_ ] /; $ghSetWFOutput :=
+    With[ { tag = ghWFTag @ name },
+        ConsoleDebug @ TemplateApply[
+            "Setting WorkflowValue \"`1`\" to `2`.",
+            { name, shortString @ expr }
+        ];
+        WorkflowValue[ tag ] = expr
+    ];
+
+ghSetWFOutput // catchUndefined;
+
+$ghSetWFOutput = True;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghWFTag*)
+ghWFTag[ name_String? StringQ ] :=
+    With[ { job = Environment[ "GITHUB_JOB" ] },
+        StringRiffle[ { "PacletCICD", job, name }, "/" ] /; StringQ @ job
+    ];
+
+ghWFTag // catchUndefined;
+
+(* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Paclet Resources*)
 
@@ -761,6 +787,11 @@ expandURL // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Misc Programming Utilities*)
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*shortString*)
+shortString[ a___ ] := ToString[ Unevaluated @ Short @ a, PageWidth -> 80 ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

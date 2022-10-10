@@ -19,6 +19,9 @@ Begin[ "`Private`" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Config*)
+(* TODO: it might make sense to only have Workflow scope, since
+         PersistentSymbol can be used for others *)
+
 $wfScopes = { "Workflow", "Job", "Step" };
 
 $wfvRoot := GeneralUtilities`EnsureDirectory @ {
