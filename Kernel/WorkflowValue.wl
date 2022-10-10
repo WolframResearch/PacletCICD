@@ -19,6 +19,8 @@ Begin[ "`Private`" ];
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Config*)
+$wfScopes = { "Workflow", "Job", "Step" };
+
 $wfvRoot := GeneralUtilities`EnsureDirectory @ {
     $UserBaseDirectory, "Wolfram", "PacletCICD", "WorkflowValues"
 };
@@ -127,6 +129,12 @@ WorkflowValue /: HoldPattern @ SetDelayed[ WorkflowValue[ a___ ][ k_ ], v_ ] :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
+(*Unset*)
+WorkflowValue /: HoldPattern @ Unset @ WorkflowValue[ a___ ] :=
+    catchTop @ unsetWorkflowValue @ a;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
 (*AppendTo*)
 WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ a___ ], v_ ] :=
     catchTop @ appendWorkflowValue[ a, v ];
@@ -135,6 +143,58 @@ WorkflowValue /: HoldPattern @ AppendTo[ WorkflowValue[ a___ ], v_ ] :=
 (* ::Subsection::Closed:: *)
 (*$defaultScope*)
 $defaultScope := $WorkflowValueScope;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wfvRoot*)
+wfvRoot[ "Workflow" ] := $wfRoot;
+wfvRoot[ "Job"      ] := $jobRoot;
+wfvRoot[ "Step"     ] := $stepRoot;
+wfvRoot[ None       ] := None;
+wfvRoot[ All        ] := wfvRoot /@ $wfScopes;
+wfvRoot // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*wfvFile*)
+wfvFile[ name_? StringQ, scope: $$wfScope ] :=
+    wfvFile0[ encodeWFVName @ name, scope ];
+
+wfvFile // catchUndefined;
+
+wfvFile0[ str_, "Workflow" ] := FileNameJoin @ { $wfRoot  , str };
+wfvFile0[ str_, "Job"      ] := FileNameJoin @ { $jobRoot , str };
+wfvFile0[ str_, "Step"     ] := FileNameJoin @ { $stepRoot, str };
+wfvFile0[ str_, None       ] := None;
+wfvFile0 // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*unsetWorkflowValue*)
+unsetWorkflowValue[ name_ ] := unsetWorkflowValue[ name, All ];
+unsetWorkflowValue[ name_, All ] := unsetWorkflowValue[ name, $wfScopes ];
+
+unsetWorkflowValue[ name_? StringQ, scope: $$wfScope ] :=
+    unsetWorkflowValue[ name, scope, wfvFile[ name, scope ] ];
+
+unsetWorkflowValue[ name_, scopes_List ] :=
+    unsetWorkflowValue[ name, # ] & /@ scopes;
+
+unsetWorkflowValue[ All, None ] := { };
+
+unsetWorkflowValue[ All, scope: $$wfScope ] :=
+    With[ { root = wfvRoot @ scope },
+        If[ DirectoryQ @ root,
+            DeleteDirectory[ root, DeleteContents -> True ]
+        ]/; StringQ @ root
+    ];
+
+unsetWorkflowValue[ name_, scope_, file_? StringQ ] :=
+    If[ FileExistsQ @ file, DeleteFile @ file ];
+
+unsetWorkflowValue[ name_, scope_, None ] := Null;
+
+unsetWorkflowValue // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

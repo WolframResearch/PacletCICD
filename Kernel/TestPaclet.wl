@@ -69,6 +69,8 @@ testPaclet[ dir_? DirectoryQ, opts_Association ] :=
         as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
 
+        AppendTo[ WorkflowValue[ "Debug/TestPacletOptions" ], opts ];
+
         If[ opts[ "SetWorkflowValue" ],
             WorkflowValue[ "PacletCICD/TestPaclet" ] = reports
         ];
