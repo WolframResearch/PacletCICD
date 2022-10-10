@@ -406,7 +406,7 @@ writeWFFile[ scope_, name_, file_, expr_ ] :=
     Module[ { write, out },
         GeneralUtilities`EnsureDirectory @ DirectoryName @ file;
         write = makeWFPayload[ scope, name, expr ];
-        out   = Quiet @ Developer`WriteWXFFile[ file, write ];
+        out   = writeWXF[ file, write ];
         If[ FileExistsQ @ out,
             expr,
             writeWFFileError[ file, out ]
@@ -414,6 +414,14 @@ writeWFFile[ scope_, name_, file_, expr_ ] :=
     ];
 
 writeWFFile // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*writeWXF*)
+writeWXF[ file_, expr_ ] :=
+    Quiet @ Developer`WriteWXFFile[ file, expr, PerformanceGoal -> "Size" ];
+
+writeWXF // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)

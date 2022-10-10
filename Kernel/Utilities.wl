@@ -215,10 +215,7 @@ checkGHRateLimits[ num_Integer ] /; num <= 5 :=
 
 checkGHRateLimits[ num_Integer ] :=
     If[ TrueQ @ $gitHub,
-        dnc`ConsolePrint @ StringJoin[
-            "GitHub API requests remaining: ",
-            ToString @ num
-        ],
+        ConsoleDebug[ "GitHub API requests remaining: " <> ToString @ num ],
         Null
     ];
 
@@ -400,7 +397,7 @@ setOutput[ name_, value_ ] :=
 
 setOutput[ str_OutputStream, name_, value_ ] := (
 
-    dnc`ConsolePrint @ StringJoin[
+    ConsoleDebug @ StringJoin[
         "Setting GitHub environment variable ",
         ToString @ name,
         "=",
@@ -411,7 +408,7 @@ setOutput[ str_OutputStream, name_, value_ ] := (
 );
 
 setOutput[ _, name_, value_ ] := (
-    dnc`ConsolePrint @ StringJoin[
+    ConsoleDebug @ StringJoin[
         "Setting GitHub environment variable using fallback ",
         ToString @ name,
         "=",
@@ -436,7 +433,7 @@ appendStepSummary[ md_ ] :=
 
 appendStepSummary[ stream_OutputStream, md_ ] :=
     With[ { string = ToString @ md },
-        dnc`ConsolePrint[ "Appending to summary markdown: " <> string ];
+        ConsoleDebug[ "Appending to summary markdown: " <> string ];
         If[ StringEndsQ[ string, "\n" ],
             WriteString[ stream, string ],
             WriteString[ stream, string, "\n" ]
