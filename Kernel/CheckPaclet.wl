@@ -118,7 +118,7 @@ checkPaclet[ nb_, opts___ ] :=
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
         hints = $checkHintData;
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
-        setWF = OptionValue[ CheckPaclet, { opts }, "SetWorkflowValue" ];
+        setWF = optionValue[ CheckPaclet, { opts }, "SetWorkflowValue" ];
         If[ setWF, ghSetWFOutput[ "CheckPaclet", data ] ];
         generateCheckReport @ data;
         checkExit @ res

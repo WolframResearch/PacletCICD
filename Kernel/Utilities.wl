@@ -854,6 +854,14 @@ $uuidRegex := $uuidRegex =
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*optionValue*)
+optionValue[ sym_Symbol, opts_, name_ ] :=
+    OptionValue[ sym, FilterRules[ opts, Options @ sym ], name ];
+
+optionValue // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*filterOptions*)
 filterOptions[ sym_Symbol, opts: (Rule|RuleDelayed)[ _, _ ]... ] :=
     Sequence @@ FilterRules[ Flatten @ { opts }, Options @ sym ];

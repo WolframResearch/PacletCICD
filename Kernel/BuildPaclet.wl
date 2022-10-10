@@ -139,7 +139,7 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
             filterOptions[ Interactive -> False, opts ]
         ];
 
-        setWF = OptionValue[ BuildPaclet, { opts }, "SetWorkflowValue" ];
+        setWF = optionValue[ BuildPaclet, { opts }, "SetWorkflowValue" ];
         setGHBuildOutput[ result, setWF ]
     ];
 

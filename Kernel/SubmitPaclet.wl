@@ -125,7 +125,7 @@ submitPaclet[ nbo_NotebookObject, opts___ ] := Enclose[
         LoadSubPackage[ "Wolfram`PacletCICD`BuildPaclet`" ];
         built = buildPaclet[ nbo, opts ];
         submitted = scrapeAndSubmit @ nbo;
-        setWF = OptionValue[ SubmitPaclet, { opts }, "SetWorkflowValue" ];
+        setWF = optionValue[ SubmitPaclet, { opts }, "SetWorkflowValue" ];
         If[ setWF, ghSetWFOutput[ "SubmitPaclet", submitted ] ];
         Confirm @ submitted
     ],
