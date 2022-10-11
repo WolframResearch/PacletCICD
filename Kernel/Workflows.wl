@@ -2030,7 +2030,7 @@ wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
 (*windowsUploadCompiledStep*)
 windowsUploadCompiledStep[ as_ ] := <|
     "name" -> "Archive compiled libraries",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <|
         "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
         "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
@@ -2087,7 +2087,7 @@ wolframscript -debug -verbose -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
 (*macUploadCompiledStep*)
 macUploadCompiledStep[ as_ ] := <|
     "name" -> "Archive compiled libraries",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <|
         "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
         "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
@@ -2136,7 +2136,7 @@ linuxCompileStep[ as_ ] := <|
 (*linuxUploadCompiledStep*)
 linuxUploadCompiledStep[ as_ ] := <|
     "name" -> "Archive compiled libraries",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <|
         "name" -> "${{ env.WOLFRAM_SYSTEM_ID }}",
         "path" -> "${{ env.WOLFRAM_LIBRARY_BUILD_OUTPUT }}/${{ env.WOLFRAM_SYSTEM_ID }}"
@@ -2335,7 +2335,7 @@ normalizeStep[ ___, "submit"|"submitpaclet"|"publish"|"publishpaclet" ] := <|
 normalizeStep[ ___, "upload" ] := <|
     "name" -> "Upload",
     "id"   -> "upload-artifacts-step",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <| "path" -> ".", "if-no-files-found" -> "error" |>
 |>;
 
@@ -2358,7 +2358,7 @@ normalizeStep[
 ] := <|
     "name" -> "UploadArtifact",
     "id"   -> "upload-build-artifacts-step",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <|
         "path"              -> "${{ env.PACLET_BUILD_DIR }}",
         "if-no-files-found" -> "ignore"
@@ -2369,7 +2369,7 @@ normalizeStep[ ___, "uploadworkflowvalues" ] := <|
     "name" -> "UploadWorkflowValues",
     "id"   -> "upload-workflow-values-step",
     "if"   -> "always() && env.PACLET_WORKFLOW_VALUES",
-    "uses" -> "actions/upload-artifact@v2",
+    "uses" -> "actions/upload-artifact@v3",
     "with" -> <|
         "name"              -> "paclet-workflow-values",
         "path"              -> "${{ env.PACLET_WORKFLOW_VALUES }}",
