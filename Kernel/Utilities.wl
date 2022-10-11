@@ -404,6 +404,13 @@ setOutput[ str_OutputStream, name_, value_ ] := (
         ToString @ value
     ];
 
+    dnc`ConsolePrint @ StringJoin[
+        "::set-output name=",
+        ToString @ name,
+        "::",
+        ToString @ value
+    ];
+
     WriteLine[ str, ToString @ name <> "=" <> ToString @ value ]
 );
 
