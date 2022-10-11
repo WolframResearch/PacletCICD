@@ -454,8 +454,8 @@ autoTrueWhenGH // catchUndefined;
 (*$gitHubEnv*)
 $gitHubEnv := getGitHubEnv[ ];
 
-getGitHubEnv[ ] := getGitHubEnv @ Environment[ "GITHUB_ENV" ];
-getGitHubEnv[ e_String ] := getGitHubEnv @ First[ Streams @ e, OpenAppend @ e ];
+getGitHubEnv[ ] := getGitHubEnv @ EchoEvaluation @ Environment[ "GITHUB_ENV" ];
+getGitHubEnv[ e_String ] := getGitHubEnv @ First[ EchoEvaluation @ Streams @ e, OpenAppend @ e ];
 getGitHubEnv[ s_OutputStream ] := $gitHubEnv = s;
 getGitHubEnv[ ___ ] := $Failed;
 
