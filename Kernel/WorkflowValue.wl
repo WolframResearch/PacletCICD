@@ -25,14 +25,30 @@ Begin[ "`Private`" ];
 $wfScopes = { "Workflow", "Job", "Step" };
 
 $wfvRoot := GeneralUtilities`EnsureDirectory @ {
-    $UserBaseDirectory, "Wolfram", "PacletCICD", "WorkflowValues"
+    $UserBaseDirectory,
+    "ApplicationData",
+    "Wolfram",
+    "PacletCICD",
+    "WorkflowValues"
 };
 
-$wfRoot   := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Workflow" };
-$jobRoot  := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Job"      };
-$stepRoot := GeneralUtilities`EnsureDirectory @ { $wfvRoot, "Step"     };
+$wfRoot   := GeneralUtilities`EnsureDirectory @ { $wfvRoot, $ghWFID   };
+$jobRoot  := GeneralUtilities`EnsureDirectory @ { $wfRoot,  $ghJobID  };
+$stepRoot := GeneralUtilities`EnsureDirectory @ { $jobRoot, $ghStepID };
 
 $wfDownloadLocation := ExpandFileName[ ".paclet-workflow-values" ];
+
+$ghWFID := $ghWFID = URLEncode @ Replace[
+    Environment[ "GITHUB_WORKFLOW" ],
+    ""|None :> "Workflow"
+];
+
+$ghJobID := $ghJobID = URLEncode @ Replace[
+    Environment[ "GITHUB_JOB" ],
+    ""|None :> "Job"
+];
+
+$ghStepID := $ghStepID = IntegerString[ $SessionID, 36 ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -444,9 +460,11 @@ makeWFPayload // catchUndefined;
 (*$wfPayloadDefaults*)
 $wfPayloadDefaults := DeleteCases[
     Association[
-        "Date"    -> DateObject[ TimeZone -> 0 ],
-        "Version" -> 1,
-        GetEnvironment @ { "GITHUB_WORKFLOW", "GITHUB_JOB" }
+        "Date"       -> DateObject[ TimeZone -> 0 ],
+        "Version"    -> 1,
+        "WorkflowID" -> $ghWFID,
+        "JobID"      -> $ghJobID,
+        "StepID"     -> $ghStepID
     ],
     None
 ];
