@@ -43,8 +43,7 @@ $ghWFID := $ghWFID = StringJoin[
     URLEncode @ Replace[
         Environment[ "GITHUB_WORKFLOW" ],
         Except[ _String ] :> ""
-    ],
-    "_"
+    ]
 ];
 
 $ghJobID := $ghJobID = StringJoin[
@@ -52,14 +51,12 @@ $ghJobID := $ghJobID = StringJoin[
     URLEncode @ Replace[
         Environment[ "GITHUB_JOB" ],
         Except[ _String ] :> ""
-    ],
-    "_"
+    ]
 ];
 
 $ghStepID := $ghStepID = StringJoin[
     "__Step_",
-    IntegerString[ $SessionID, 36 ],
-    "_"
+    IntegerString[ $SessionID, 36 ]
 ];
 
 (* ::**********************************************************************:: *)

@@ -33,7 +33,7 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: check-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
@@ -41,7 +41,7 @@ jobs:
       
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -67,14 +67,14 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: PacletBuildArtifact
           path: ${{ env.PACLET_BUILD_DIR }}
@@ -82,7 +82,7 @@ jobs:
       
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -121,7 +121,7 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
@@ -129,7 +129,7 @@ jobs:
       
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -189,7 +189,7 @@ jobs:
 
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
@@ -197,7 +197,7 @@ jobs:
       
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -281,7 +281,7 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
@@ -289,7 +289,7 @@ jobs:
 
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -349,7 +349,7 @@ jobs:
 
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
@@ -383,7 +383,7 @@ jobs:
 
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: submit-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
@@ -391,7 +391,7 @@ jobs:
 
       - name: Upload workflow values
         if: always() && env.PACLET_WORKFLOW_VALUES
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: paclet-workflow-values
           path: ${{ env.PACLET_WORKFLOW_VALUES }}
