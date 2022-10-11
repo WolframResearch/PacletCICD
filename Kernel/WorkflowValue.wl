@@ -38,17 +38,29 @@ $stepRoot := GeneralUtilities`EnsureDirectory @ { $jobRoot, $ghStepID };
 
 $wfDownloadLocation := ExpandFileName[ ".paclet-workflow-values" ];
 
-$ghWFID := $ghWFID = URLEncode @ Replace[
-    Environment[ "GITHUB_WORKFLOW" ],
-    ""|None :> "Workflow"
+$ghWFID := $ghWFID = StringJoin[
+    "__Workflow_",
+    URLEncode @ Replace[
+        Environment[ "GITHUB_WORKFLOW" ],
+        Except[ _String ] :> ""
+    ],
+    "_"
 ];
 
-$ghJobID := $ghJobID = URLEncode @ Replace[
-    Environment[ "GITHUB_JOB" ],
-    ""|None :> "Job"
+$ghJobID := $ghJobID = StringJoin[
+    "__Job_",
+    URLEncode @ Replace[
+        Environment[ "GITHUB_JOB" ],
+        Except[ _String ] :> ""
+    ],
+    "_"
 ];
 
-$ghStepID := $ghStepID = IntegerString[ $SessionID, 36 ];
+$ghStepID := $ghStepID = StringJoin[
+    "__Step_",
+    IntegerString[ $SessionID, 36 ],
+    "_"
+];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
