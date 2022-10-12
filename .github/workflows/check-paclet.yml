@@ -16,6 +16,7 @@ env:
   TEST_PUBLISHER_ID:           ${{ secrets.TEST_PUBLISHER_ID }}
   WOLFRAM_SYSTEM_ID:           Linux-x86-64
   WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+  ACTIONS_RUNNER_DEBUG:        ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
 concurrency: 
   group: ${{ github.ref }}
@@ -28,9 +29,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
-      options: --user root --privileged
+      options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 10
     steps:
+      - name: Setup debugging
+        if: env.ACTIONS_RUNNER_DEBUG
+        run: |
+          ulimit -c unlimited
+          mkdir -p /tmp/cores
+          chmod a+rwx /tmp/cores
+          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
+
       - name: Checkout files
         uses: actions/checkout@v3
 
@@ -38,21 +47,15 @@ jobs:
         run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Check paclet
-        run: |
-          ulimit -c unlimited
-          ulimit -a
-          mkdir -p /tmp/cores
-          chmod a+rwx /tmp/cores
-          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
-          cat /proc/sys/kernel/core_pattern
-          wolframscript Scripts/CheckPaclet.wls
+        run: wolframscript Scripts/CheckPaclet.wls
       
       - name: Upload core dump
-        if: always()
+        if: always() && env.ACTIONS_RUNNER_DEBUG
         uses: actions/upload-artifact@v3
         with:
           name: check-core-dump
           path: /tmp/cores
+          retention-days: 1
           if-no-files-found: ignore
 
       - name: Upload stack data
@@ -61,6 +64,7 @@ jobs:
         with:
           name: check-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
           if-no-files-found: error
       
       - name: Upload workflow values
@@ -77,9 +81,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
-      options: --user root --privileged
+      options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 10
     steps:
+      - name: Setup debugging
+        if: env.ACTIONS_RUNNER_DEBUG
+        run: |
+          ulimit -c unlimited
+          mkdir -p /tmp/cores
+          chmod a+rwx /tmp/cores
+          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
+
       - name: Checkout files
         uses: actions/checkout@v3
 
@@ -87,21 +99,15 @@ jobs:
         run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Build paclet
-        run: |
-          ulimit -c unlimited
-          ulimit -a
-          mkdir -p /tmp/cores
-          chmod a+rwx /tmp/cores
-          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
-          cat /proc/sys/kernel/core_pattern
-          wolframscript Scripts/BuildPaclet.wls
+        run: wolframscript Scripts/BuildPaclet.wls
       
       - name: Upload core dump
-        if: always()
+        if: always() && env.ACTIONS_RUNNER_DEBUG
         uses: actions/upload-artifact@v3
         with:
           name: build-core-dump
           path: /tmp/cores/
+          retention-days: 1
           if-no-files-found: ignore
       
       - name: Upload stack data
@@ -110,6 +116,7 @@ jobs:
         with:
           name: build-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
           if-no-files-found: error
 
       - name: Upload build artifacts
@@ -164,6 +171,7 @@ jobs:
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
           if-no-files-found: error
       
       - name: Upload workflow values
@@ -232,6 +240,7 @@ jobs:
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
           if-no-files-found: error
       
       - name: Upload workflow values
@@ -323,6 +332,7 @@ jobs:
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
           if-no-files-found: error
 
       - name: Upload workflow values
