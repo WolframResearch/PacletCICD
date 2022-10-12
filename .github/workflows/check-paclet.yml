@@ -5,6 +5,8 @@ on:
     - cron: '30 12 * * *'
   pull_request:
     branches: ["main"]
+  push:
+    branches: ["feature/include-dependencies-as-release-files"]
   workflow_dispatch:
 
 env:
@@ -91,6 +93,9 @@ jobs:
           mkdir -p /tmp/cores
           chmod a+rwx /tmp/cores
           sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
+      
+      - name: Core dump test
+        run: wolframscript -code 'UsingFrontEnd[MathLink`CallFrontEnd[FrontEnd`UndocumentedCrashFrontEndPacket[]]]'
 
       - name: Checkout files
         uses: actions/checkout@v3
