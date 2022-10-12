@@ -10,9 +10,4 @@ checkResult @ Wolfram`PacletCICD`BuildPaclet[
     "Target"     -> "Submit"
 ];
 
-now = Now;
-AppendTo[ Wolfram`PacletCICD`WorkflowValue[ "Debug/StepTest"    , "Step"      ], now ];
-AppendTo[ Wolfram`PacletCICD`WorkflowValue[ "Debug/JobTest"     , "Job"       ], now ];
-AppendTo[ Wolfram`PacletCICD`WorkflowValue[ "Debug/WorkflowTest", "Workflow"  ], now ];
-
 EndPackage[ ];
