@@ -95,7 +95,7 @@ jobs:
           sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
       
       - name: Core dump test
-        run: wolframscript -code 'UsingFrontEnd[MathLink`CallFrontEnd[FrontEnd`UndocumentedCrashFrontEndPacket[]]]'
+        run: wolframscript -code 'UsingFrontEnd[MathLink`CallFrontEnd[FrontEnd`UndocumentedCrashFrontEndPacket[]]];Exit[1]'
 
       - name: Checkout files
         uses: actions/checkout@v3
