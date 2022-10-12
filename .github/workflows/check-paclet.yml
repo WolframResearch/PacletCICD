@@ -38,8 +38,20 @@ jobs:
         run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Check paclet
-        run: wolframscript Scripts/CheckPaclet.wls
+        run: |
+          ulimit -c unlimited
+          ulimit -a
+          cat /proc/sys/kernel/core_pattern
+          wolframscript Scripts/CheckPaclet.wls
       
+      - name: Upload core dump
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: core-dump
+          path: /var/crash/
+          if-no-files-found: ignore
+
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
         uses: actions/upload-artifact@v3
