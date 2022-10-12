@@ -289,8 +289,10 @@ workflowProperty // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*getWorkflowJobs*)
 getWorkflowJobs[ wf_? workflowQ ] :=
-    Enclose @ Module[ { data, jobs },
-        data = ConfirmBy[ genericWFProperty[ wf, "Data" ], AssociationQ ];
+    getWorkflowJobs @ genericWFProperty[ wf, "Data" ];
+
+getWorkflowJobs[ data_Association? AssociationQ ] :=
+    Enclose @ Module[ { jobs },
         jobs = ConfirmBy[ Lookup[ data, "jobs" ], AssociationQ ];
         ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
     ];
@@ -314,9 +316,11 @@ getInnerJobProperties // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*jobGraph*)
-jobGraph[ wf_? workflowQ ] :=
+jobGraph[ wf_? workflowQ ] := jobGraph @ genericWFProperty[ wf, "Data" ];
+
+jobGraph[ data_Association? AssociationQ ] :=
     Enclose @ Module[ { jobs, needs, vertices, edges },
-        jobs = ConfirmBy[ getWorkflowJobs @ wf, AllTrue @ workflowJobQ ];
+        jobs = ConfirmBy[ getWorkflowJobs @ data, AllTrue @ workflowJobQ ];
         needs = ConfirmBy[ (#[ "Needs" ] &) /@ jobs, AssociationQ ];
         vertices = Keys @ needs;
         edges = Flatten[ Thread /@ Normal @ DeleteCases[ needs, None ] ];
@@ -367,16 +371,118 @@ makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
         as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
         data = merger @ { as1, as2 };
-        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
+        checkWFDownload @ wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowData[ name_String, custom_Association ] :=
     makeWorkflowData @ Prepend[ custom, "name" -> name ];
 
 makeWorkflowData[ custom_Association ] :=
-    Enclose @ wfKeySort @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+    Enclose @ checkWFDownload @ wfKeySort @ ConfirmBy[
+        normalizeForYAML @ custom,
+        AssociationQ
+    ];
 
 makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkWFDownload*)
+checkWFDownload[ as_ ] := checkWFDownload[ as, $downloadValues ];
+
+checkWFDownload[ as0_, Automatic ] :=
+    Enclose @ Module[
+        { as, allJobs, graph, setters, downloaders, nonDownloaders, removed },
+
+        as          = ConfirmBy[ as0, AssociationQ ];
+        allJobs     = ConfirmBy[ as[ "jobs" ], AssociationQ ];
+        graph       = ConfirmBy[ jobGraph @ as, GraphQ ];
+        setters     = Keys @ Select[ allJobs, jobSetsWFValuesQ ];
+
+        downloaders = Union @ Flatten[
+            DeleteCases[ VertexOutComponent[ graph, # ], # ] & /@ setters
+        ];
+
+        nonDownloaders = KeyTake[
+            allJobs,
+            Complement[ Keys @ allJobs, downloaders ]
+        ];
+
+        removed = DeleteCases[
+            nonDownloaders,
+            KeyValuePattern[ "id" -> "download-workflow-values-step" ],
+            { 3 }
+        ];
+
+        as[ "jobs" ] = KeyTake[ Join[ allJobs, removed ], Keys @ allJobs ];
+
+        as
+    ];
+
+checkWFDownload[ as_, True ] := as;
+
+checkWFDownload[ as_, False ] :=
+    DeleteCases[
+        as,
+        KeyValuePattern[ "id" -> "download-workflow-values-step" ],
+        { 4 }
+    ];
+
+checkWFDownload // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*jobSetsWFValuesQ*)
+jobSetsWFValuesQ[ job: KeyValuePattern[ "steps" -> steps_ ] ] :=
+    jobSetsWFValuesQ[ job, steps ];
+
+jobSetsWFValuesQ[
+    _,
+    { ___, _? stepSetsWFValuesQ, ___, _? stepUploadsWFValuesQ, ___ }
+] := True;
+
+jobSetsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepSetsWFValuesQ*)
+stepSetsWFValuesQ[ step: KeyValuePattern[ "uses" -> uses_ ] ] :=
+    stepSetsWFValuesQ[ step, uses ];
+
+stepSetsWFValuesQ[ step_, uses_String ] :=
+    stepNameSetsWFValuesQ @ First @ StringSplit[ uses, "@" ];
+
+stepSetsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepNameSetsWFValuesQ*)
+stepNameSetsWFValuesQ[ "WolframResearch/build-paclet"  ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/check-paclet"  ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/test-paclet"   ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/submit-paclet" ] := True;
+stepNameSetsWFValuesQ[ ___                             ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepUploadsWFValuesQ*)
+stepUploadsWFValuesQ[ KeyValuePattern @ {
+    "uses" -> _? uploadArtifactStepNameQ,
+    "with" -> KeyValuePattern @ {
+        "name" -> "paclet-workflow-values",
+        "path" -> "${{ env.PACLET_WORKFLOW_VALUES }}"
+    }
+} ] := True;
+
+stepUploadsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*uploadArtifactStepNameQ*)
+uploadArtifactStepNameQ[ name_String ] :=
+    First @ StringSplit[ name, "@" ] === "actions/upload-artifact";
+
+uploadArtifactStepNameQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -506,7 +612,7 @@ WorkflowJob[
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*File*)
-WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
+WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ withOS[ OptionValue @ OperatingSystem,
         Module[ { name },
             name = FileBaseName @ file;
@@ -516,20 +622,21 @@ WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
                     "runs-on"   -> $defaultRunner,
                     "container" -> $defaultJobContainer,
                     "env"       -> $defaultJobEnv,
-                    "Steps"     -> workflowFileSteps @ file
+                    "Steps"     -> workflowFileSteps @ file,
+                    as
                 |>,
                 opts
             ]
         ]
     ];
 
-WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
-    WorkflowJob[ WorkflowJob[ File @ file, opts ], as, opts ];
+WorkflowJob[ file: File[ _String ], opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ file, <| |>, opts ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*List of Steps*)
-WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
+WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ withOS[
         OptionValue @ OperatingSystem,
         WorkflowJob[
@@ -538,18 +645,22 @@ WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
                 "runs-on"   -> $defaultRunner,
                 "container" -> $defaultJobContainer,
                 "env"       -> $defaultJobEnv,
-                "Steps"     -> steps
+                "Steps"     -> steps,
+                as
             |>,
             opts
         ]
     ];
 
-WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
+WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
     WorkflowJob[
         WorkflowJob[ steps, opts ],
         Prepend[ as, "Steps" -> steps ],
         opts
     ];
+
+WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ steps, <| |>, opts ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -691,12 +802,19 @@ workflowFileSteps[ file_ ] := workflowFileSteps[ file, $defaultOS ];
 
 workflowFileSteps[ file_String, "Windows-x86-64"|"MacOSX-x86-64" ] := {
     "Checkout",
+    "DownloadWorkflowValues",
     "RestoreCachedWolframEngine",
     "InstallWolframEngine",
-    File @ file
+    File @ file,
+    "UploadWorkflowValues"
 };
 
-workflowFileSteps[ file_String, _ ] := { "Checkout", File @ file };
+workflowFileSteps[ file_String, _ ] := {
+    "Checkout",
+    "DownloadWorkflowValues",
+    File @ file,
+    "UploadWorkflowValues"
+};
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

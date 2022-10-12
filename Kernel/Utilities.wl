@@ -500,6 +500,9 @@ ghWFTag[ name_String? StringQ ] :=
         StringRiffle[ { "PacletCICD", job, name }, "/" ] /; StringQ @ job
     ];
 
+ghWFTag[ name_String? StringQ ] :=
+    StringRiffle[ { "PacletCICD", "Job", name }, "/" ];
+
 ghWFTag // catchUndefined;
 
 (* ::**********************************************************************:: *)
