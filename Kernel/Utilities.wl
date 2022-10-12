@@ -215,10 +215,7 @@ checkGHRateLimits[ num_Integer ] /; num <= 5 :=
 
 checkGHRateLimits[ num_Integer ] :=
     If[ TrueQ @ $gitHub,
-        dnc`ConsolePrint @ StringJoin[
-            "GitHub API requests remaining: ",
-            ToString @ num
-        ],
+        ConsoleDebug[ "GitHub API requests remaining: " <> ToString @ num ],
         Null
     ];
 
@@ -337,8 +334,19 @@ ghCommitFileURL[ file_? FileExistsQ ] := ghCommitFileURL[ file ] = Enclose[
     None &
 ];
 
+ghCommitFileURL[ file_, KeyValuePattern[ "SourceInformation" -> src_ ] ] :=
+    ghCommitFileURL[ file, src ];
+
+ghCommitFileURL[ _, KeyValuePattern @ { "File" -> f_, "Position" -> p_ } ] :=
+    ghCommitFileURL[ f, p ];
+
 ghCommitFileURL[ file_, KeyValuePattern[ "Position" -> pos_ ] ] :=
     ghCommitFileURL[ file, pos ];
+
+ghCommitFileURL[
+    file_,
+    { KeyValuePattern[ "Line" -> l1_ ], KeyValuePattern[ "Line" -> l2_ ] }
+] := ghCommitFileURL[ file, { l1, l2 } ];
 
 ghCommitFileURL[ file_, _Association ] := ghCommitFileURL @ file;
 ghCommitFileURL[ file_, _Missing     ] := ghCommitFileURL @ file;
@@ -354,7 +362,14 @@ ghCommitFileURL[ file_, { l1_Integer, l2_Integer } ] := Enclose[
     None &
 ];
 
+ghCommitFileURL[ KeyValuePattern[ "SourcePosition" -> src_ ] ] :=
+    ghCommitFileURL @ src;
+
+ghCommitFileURL[ KeyValuePattern @ { "File" -> f_, "Position" -> p_ } ] :=
+    ghCommitFileURL[ f, p ];
+
 ghCommitFileURL[ file_ ] := None;
+ghCommitFileURL[ file_, _ ] := None;
 
 ghCommitFileURL // catchUndefined;
 
@@ -382,10 +397,17 @@ setOutput[ name_, value_ ] :=
 
 setOutput[ str_OutputStream, name_, value_ ] := (
 
-    dnc`ConsolePrint @ StringJoin[
+    ConsoleDebug @ StringJoin[
         "Setting GitHub environment variable ",
         ToString @ name,
         "=",
+        ToString @ value
+    ];
+
+    dnc`ConsolePrint @ StringJoin[
+        "::set-output name=",
+        ToString @ name,
+        "::",
         ToString @ value
     ];
 
@@ -393,7 +415,7 @@ setOutput[ str_OutputStream, name_, value_ ] := (
 );
 
 setOutput[ _, name_, value_ ] := (
-    dnc`ConsolePrint @ StringJoin[
+    ConsoleDebug @ StringJoin[
         "Setting GitHub environment variable using fallback ",
         ToString @ name,
         "=",
@@ -418,7 +440,7 @@ appendStepSummary[ md_ ] :=
 
 appendStepSummary[ stream_OutputStream, md_ ] :=
     With[ { string = ToString @ md },
-        dnc`ConsolePrint[ "Appending to summary markdown: " <> string ];
+        ConsoleDebug[ "Appending to summary markdown: " <> string ];
         If[ StringEndsQ[ string, "\n" ],
             WriteString[ stream, string ],
             WriteString[ stream, string, "\n" ]
@@ -453,6 +475,32 @@ getGitHubSS[ ] := getGitHubSS @ Environment[ "GITHUB_STEP_SUMMARY" ];
 getGitHubSS[ e_String ] := getGitHubSS @ First[ Streams @ e, OpenAppend @ e ];
 getGitHubSS[ s_OutputStream ] := $gitHubStepSummary = s;
 getGitHubSS[ ___ ] := $Failed;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghSetWFOutput*)
+ghSetWFOutput[ name_String? StringQ, expr_ ] /; $ghSetWFOutput :=
+    With[ { tag = ghWFTag @ name },
+        ConsoleDebug @ TemplateApply[
+            "Setting WorkflowValue \"`1`\" to `2`.",
+            { name, shortString @ expr }
+        ];
+        WorkflowValue[ tag ] = expr
+    ];
+
+ghSetWFOutput // catchUndefined;
+
+$ghSetWFOutput = True;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*ghWFTag*)
+ghWFTag[ name_String? StringQ ] :=
+    With[ { job = Environment[ "GITHUB_JOB" ] },
+        StringRiffle[ { "PacletCICD", job, name }, "/" ] /; StringQ @ job
+    ];
+
+ghWFTag // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
@@ -746,6 +794,11 @@ expandURL // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*shortString*)
+shortString[ a___ ] := ToString[ Unevaluated @ Short @ a, PageWidth -> 80 ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*symbolQ*)
 symbolQ // Attributes = { HoldAllComplete };
 
@@ -805,6 +858,14 @@ $uuidRegex := $uuidRegex =
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*optionValue*)
+optionValue[ sym_Symbol, opts_, name_ ] :=
+    OptionValue[ sym, FilterRules[ opts, Options @ sym ], name ];
+
+optionValue // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*filterOptions*)
 filterOptions[ sym_Symbol, opts: (Rule|RuleDelayed)[ _, _ ]... ] :=
     Sequence @@ FilterRules[ Flatten @ { opts }, Options @ sym ];
@@ -824,8 +885,7 @@ filterOptions[
 ] :=
     filterOptions[ syms, opts ];
 
-filterOptions /:
-    (sym_Symbol)[
+filterOptions /: (sym_Symbol)[
         args___,
         filterOptions[ opts1: (Rule|RuleDelayed)[ _, _ ]... ],
         opts2: (Rule|RuleDelayed)[ _, _ ]...

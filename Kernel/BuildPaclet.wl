@@ -30,10 +30,11 @@ BuildPaclet::archive =
 (* ::Subsection::Closed:: *)
 (*Options*)
 BuildPaclet // Options = {
-    "ConsoleType" -> Automatic,
-    "Check"       -> False,
-    "Target"      -> "Build",
-    "ExitOnFail"  -> Automatic
+    "Check"            -> False,
+    "ConsoleType"      -> Automatic,
+    "ExitOnFail"       -> Automatic,
+    "SetWorkflowValue" -> True,
+    "Target"           -> "Build"
 };
 
 (* ::**********************************************************************:: *)
@@ -129,9 +130,8 @@ buildPaclet[ file_File, opts___ ] :=
         ]
     ];
 
-
 buildPaclet[ nbo_NotebookObject, opts___ ] :=
-    Module[ { result },
+    Module[ { result, setWF },
         needs[ "PacletResource`DefinitionNotebook`" -> None ];
 
         result = pacletToolsMessageFix @ prdn`BuildPaclet[
@@ -139,7 +139,8 @@ buildPaclet[ nbo_NotebookObject, opts___ ] :=
             filterOptions[ Interactive -> False, opts ]
         ];
 
-        setGHBuildOutput @ result
+        setWF = optionValue[ BuildPaclet, { opts }, "SetWorkflowValue" ];
+        setGHBuildOutput[ result, setWF ]
     ];
 
 buildPaclet // catchUndefined;
@@ -210,8 +211,10 @@ openNotebookAndBuild[ file_, opts___ ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*setGHBuildOutput*)
-setGHBuildOutput[ res_ ] := Enclose[
-    Confirm @ setGHBuildOutput0 @ res,
+setGHBuildOutput[ res_, set_ ] := Enclose[
+    If[ set, ghSetWFOutput[ "BuildPaclet", res ] ];
+    Confirm @ setGHBuildOutput0 @ res
+    ,
     exitFailure[ BuildPaclet::archive, 1, res ] &
 ];
 

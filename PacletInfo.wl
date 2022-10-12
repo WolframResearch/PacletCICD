@@ -6,7 +6,7 @@ PacletObject[ <|
     "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
-    "Version"          -> "0.32.0",
+    "Version"          -> "0.33.0",
     "WolframVersion"   -> "13.0+",
     "ReleaseID"        -> "$RELEASE_ID$",
     "ReleaseDate"      -> "$RELEASE_DATE$",
@@ -14,8 +14,8 @@ PacletObject[ <|
     "ActionURL"        -> "$ACTION_URL$",
     "Icon"             -> "Images/PacletIcon.png",
     "Dependencies"     -> {
-        "DefinitionNotebookClient" -> ">=1.17.0",
-        "PacletResource"           -> ">=1.4.0",
+        "DefinitionNotebookClient" -> ">=1.18.0",
+        "PacletResource"           -> ">=1.6.0",
         "ResourceSystemClient"     -> ">=1.24.1"
     },
     "Extensions"       -> {

@@ -104,10 +104,13 @@ VerificationTest[
 ]
 
 VerificationTest[
-    suppressConsole @ BuildPaclet @ ExampleDirectory[ "FewIssues" ],
+    suppressConsole @ BuildPaclet[
+        ExampleDirectory[ "FewIssues" ],
+        "SetWorkflowValue" -> False
+    ],
     _Success,
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:106,1-111,2"
+    TestID   -> "BuildPaclet-FewIssues@@Tests/BuildPaclet.wlt:106,1-114,2"
 ]
 
 VerificationTest[
@@ -117,28 +120,30 @@ VerificationTest[
     ],
     { _ },
     SameTest -> MatchQ,
-    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:113,1-121,2"
+    TestID   -> "Nonempty-Build-Directory@@Tests/BuildPaclet.wlt:116,1-124,2"
 ]
 
 VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check" -> True
+        "Check"            -> True,
+        "SetWorkflowValue" -> False
     ],
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:123,1-132,2"
+    TestID   -> "BuildPaclet-Check-Failure@@Tests/BuildPaclet.wlt:126,1-136,2"
 ]
 
 VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check" -> False
+        "Check"            -> False,
+        "SetWorkflowValue" -> False
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:134,1-142,2"
+    TestID   -> "BuildPaclet-Check-Skipped@@Tests/BuildPaclet.wlt:138,1-147,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -151,8 +156,9 @@ VerificationTest[
 VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check"         -> True,
-        "DisabledHints" -> {
+        "Check"            -> True,
+        "SetWorkflowValue" -> False,
+        "DisabledHints"    -> {
             Inherited,
             "CodeInspectionIssues",
             "CodeInspectionFileIssue/*",
@@ -162,14 +168,15 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints-1@@Tests/BuildPaclet.wlt:151,1-166,2"
+    TestID   -> "BuildPaclet-DisabledHints-1@@Tests/BuildPaclet.wlt:156,1-172,2"
 ]
 
 VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
-        "Check"         -> True,
-        "DisabledHints" -> {
+        "Check"            -> True,
+        "SetWorkflowValue" -> False,
+        "DisabledHints"    -> {
             Inherited,
             "CodeInspectionIssues",
             "CodeInspectionFileIssue",
@@ -179,7 +186,7 @@ VerificationTest[
     ],
     Success[ "PacletBuild", _ ],
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-DisabledHints-2@@Tests/BuildPaclet.wlt:168,1-183,2"
+    TestID   -> "BuildPaclet-DisabledHints-2@@Tests/BuildPaclet.wlt:174,1-190,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -189,6 +196,7 @@ VerificationTest[
     suppressConsole @ BuildPaclet[
         ExampleDirectory[ "MoreIssues" ],
         "Check"            -> True,
+        "SetWorkflowValue" -> False,
         "DisabledHints"    -> {
             Inherited,
             "CodeInspectionIssues",
@@ -199,7 +207,7 @@ VerificationTest[
     Failure[ "CheckPaclet::errors", _ ],
     { CheckPaclet::errors },
     SameTest -> MatchQ,
-    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:188,1-203,2"
+    TestID   -> "BuildPaclet-FailureCondition@@Tests/BuildPaclet.wlt:195,1-211,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -209,11 +217,11 @@ VerificationTest[
     ResetExampleDirectory @ All,
     { __Success },
     SameTest -> MatchQ,
-    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:208,1-213,2"
+    TestID   -> "ResetExampleDirectory-Cleanup@@Tests/BuildPaclet.wlt:216,1-221,2"
 ]
 
 VerificationTest[
     $PublisherID = None,
     None,
-    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:215,1-219,2"
+    TestID -> "ClearPublisherID@@Tests/BuildPaclet.wlt:223,1-227,2"
 ]

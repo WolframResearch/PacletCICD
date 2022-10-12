@@ -327,10 +327,7 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
             Print[ "::notice::Exporting stack data: ", stacks ];
             Export[
                 stacks,
-                <|
-                    "Stacks"      -> $stackHistory,
-                    "Environment" -> GetEnvironment[ ]
-                |>,
+                $stackHistory,
                 "WXF",
                 PerformanceGoal -> "Size"
             ];

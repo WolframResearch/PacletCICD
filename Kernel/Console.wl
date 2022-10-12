@@ -3,7 +3,13 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
 
-ClearAll[ ConsoleError, ConsoleLog, ConsoleNotice, ConsoleWarning ];
+ClearAll[
+    ConsoleDebug,
+    ConsoleError,
+    ConsoleLog,
+    ConsoleNotice,
+    ConsoleWarning
+];
 
 Begin[ "`Private`" ];
 
@@ -150,6 +156,28 @@ withConsoleSettings0[ { "Notice", "TTY" }, eval_ ] :=
 withConsoleSettings0[ _, eval_ ] := eval;
 
 withConsoleSettings0 // Attributes = { HoldRest };
+
+(* ::**********************************************************************:: *)
+(* ::Section::Closed:: *)
+(*ConsoleDebug*)
+ConsoleDebug // Options = { "ConsoleType" -> Automatic };
+
+ConsoleDebug[ ___ ] /; ! TrueQ @ $consoleDebug := Null;
+
+ConsoleDebug[ expr_, a___, opts: OptionsPattern[ ] ] :=
+    catchTop @ ConsoleLog[
+        Unevaluated @ expr,
+        a,
+        "ConsoleType" -> OptionValue[ "ConsoleType" ],
+        "Level"       -> "Debug"
+    ];
+
+ConsoleDebug // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*$consoleDebug*)
+$consoleDebug := $Debug || StringQ @ Environment[ "GITHUB_WORKFLOW" ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)

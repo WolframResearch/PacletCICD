@@ -95,7 +95,7 @@ VerificationTest[
                 { True, False }, CloudConnect[ user ],
                 _              , CloudConnect[ ]
         ]
-    ],
+    ] ~Quiet~ { CloudConnect::clver },
     _String? StringQ,
     SameTest -> MatchQ,
     TestID   -> "CloudConnect@@Tests/PublisherTokens.wlt:87,1-102,2"

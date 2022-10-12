@@ -33,18 +33,19 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: check-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
       
-      - name: Upload check results
-        if: always() && env.PACLET_CHECK_RESULTS
-        uses: actions/upload-artifact@v2
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
         with:
-          name: check-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_CHECK_RESULTS }}
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error
 
   Build:
@@ -66,17 +67,26 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: PacletBuildArtifact
           path: ${{ env.PACLET_BUILD_DIR }}
+          if-no-files-found: error
+      
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error
 
   Test-Linux: 
@@ -93,9 +103,15 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v3
 
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -105,18 +121,19 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
       
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
         with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error
 
   Test-MacOSX: 
@@ -135,9 +152,15 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v3
 
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with: 
           path: ${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}
           key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}
@@ -151,7 +174,7 @@ jobs:
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -166,18 +189,19 @@ jobs:
 
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
       
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
         with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error
 
 
@@ -197,9 +221,15 @@ jobs:
         id: checkout-code-step
         uses: actions/checkout@v3
 
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env: 
           WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
         with: 
@@ -236,7 +266,7 @@ jobs:
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -251,18 +281,19 @@ jobs:
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-paclet-stacks-${{ env.WOLFRAM_SYSTEM_ID }}
           path: ${{ env.PACLET_STACK_HISTORY }}
           if-no-files-found: error
-      
-      - name: Upload test results
-        if: always() && env.PACLET_TEST_RESULTS
-        uses: actions/upload-artifact@v2
+
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
         with:
-          name: test-paclet-results-${{ env.WOLFRAM_SYSTEM_ID }}
-          path: ${{ env.PACLET_TEST_RESULTS }}
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error
 
   Release:
@@ -278,9 +309,15 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v3
 
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: Release
@@ -310,6 +347,15 @@ jobs:
           asset_name: ${{ env.PACLET_FILE }}
           asset_content_type: application/zip
 
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
+          if-no-files-found: error
+
   Submit:
     name: Submit
     needs: [Check, Test-Linux, Test-MacOSX, Test-Windows]
@@ -322,6 +368,12 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v3
+
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
         
       - name: Build paclet MX
         run: wolframscript Scripts/BuildPacletMX.wls
@@ -331,8 +383,17 @@ jobs:
 
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: submit-paclet-stacks
           path: ${{ env.PACLET_STACK_HISTORY }}
+          if-no-files-found: error
+
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
           if-no-files-found: error

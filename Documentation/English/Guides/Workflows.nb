@@ -1,3 +1,11 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* Created By: SaveReadableNotebook *)
+(* https://resources.wolframcloud.com/FunctionRepository/resources/SaveReadableNotebook *)
+
 Notebook[
  {
   Cell[
@@ -480,19 +488,21 @@ Notebook[
   "Author" -> "rhennigan",
   "CreationDate" -> "02-18-2022 14:01:28",
   "NotebookIndexQ" -> True,
-  "NotebookLastIndexed" -> DateObject[
-   {2022, 2, 21, 17, 35, 39.5086588`9.34926716972804},
-   "Instant",
-   "Gregorian",
-   -5.
-  ],
+  "NotebookLastIndexed" ->
+   DateObject[
+    {2022, 2, 21, 17, 35, 39.509},
+    "Instant",
+    "Gregorian",
+    -5.0
+   ],
   "NotebookUUID" -> "aa98faa8-7040-45e4-9bbe-b20ff8c5bc36"
  |>,
  FrontEndVersion -> "13.1 for Microsoft Windows (64-bit) (February 16, 2022)",
- StyleDefinitions -> FrontEnd`FileName[
-  {"Wolfram"},
-  "GuidePageStylesExt.nb",
-  CharacterEncoding -> "UTF-8"
- ],
+ StyleDefinitions ->
+  FrontEnd`FileName[
+   {"Wolfram"},
+   "GuidePageStylesExt.nb",
+   CharacterEncoding -> "UTF-8"
+  ],
  ExpressionUUID -> "aa98faa8-7040-45e4-9bbe-b20ff8c5bc36"
 ]

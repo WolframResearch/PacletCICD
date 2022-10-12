@@ -3,6 +3,7 @@
 (*Declare Fully Qualified Symbol Names*)
 Wolfram`PacletCICD`$Debug;
 Wolfram`PacletCICD`$ExamplesLocation;
+Wolfram`PacletCICD`$WorkflowValueScope;
 Wolfram`PacletCICD`AnnotateTestIDs;
 Wolfram`PacletCICD`ASTCondition;
 Wolfram`PacletCICD`ASTConditionValue;
@@ -13,6 +14,7 @@ Wolfram`PacletCICD`BytesToQuantity;
 Wolfram`PacletCICD`CheckDependencies;
 Wolfram`PacletCICD`CheckPaclet;
 Wolfram`PacletCICD`CompileLibraryResources;
+Wolfram`PacletCICD`ConsoleDebug;
 Wolfram`PacletCICD`ConsoleError;
 Wolfram`PacletCICD`ConsoleLog;
 Wolfram`PacletCICD`ConsoleNotice;
@@ -28,6 +30,7 @@ Wolfram`PacletCICD`FormattingHelper;
 Wolfram`PacletCICD`FromAST;
 Wolfram`PacletCICD`GitHubPacletInstall;
 Wolfram`PacletCICD`GitHubSecret;
+Wolfram`PacletCICD`InitializeWorkflowValues;
 Wolfram`PacletCICD`LoadSubPackage;
 Wolfram`PacletCICD`MessageFailure;
 Wolfram`PacletCICD`PacletCICD;

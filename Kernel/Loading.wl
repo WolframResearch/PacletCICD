@@ -121,6 +121,7 @@ SetContextLoad[ WorkflowStepQ   , "Workflows" ];
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Console*)
+SetContextLoad[ ConsoleDebug  , "Console" ];
 SetContextLoad[ ConsoleError  , "Console" ];
 SetContextLoad[ ConsoleLog    , "Console" ];
 SetContextLoad[ ConsoleNotice , "Console" ];
@@ -148,6 +149,13 @@ SetContextLoad[ BytesToQuantity  , "Units" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*WorkflowValue*)
+SetContextLoad[ $WorkflowValueScope     , "WorkflowValue" ];
+SetContextLoad[ InitializeWorkflowValues, "WorkflowValue" ];
+SetContextLoad[ WorkflowValue           , "WorkflowValue" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
 SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
@@ -159,19 +167,26 @@ SetContextLoad[ FormattingHelper       , "Formatting"          ];
 SetContextLoad[ GitHubPacletInstall    , "GitHubPacletInstall" ];
 SetContextLoad[ MessageFailure         , "MessageFailure"      ];
 SetContextLoad[ SubmitPaclet           , "SubmitPaclet"        ];
-SetContextLoad[ WorkflowValue          , "WorkflowValue"       ];
 SetContextLoad[ ToMarkdownString       , "Markdown"            ];
 SetContextLoad[ ReadableForm           , "ReadableForm"        ];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Preloading*)
-WorkflowValue /:
-    (wfv_WorkflowValue = rhs_) /; (LoadSubPackage[ "WorkflowValue" ]; True) :=
+WorkflowValue /: (wfv: WorkflowValue[ ___ ] = rhs_) /;
+    (LoadSubPackage[ "WorkflowValue" ]; True) :=
         wfv = rhs;
 
-WorkflowValue /:
-    (wfv_WorkflowValue := rhs_) /; (LoadSubPackage[ "WorkflowValue" ]; True) :=
+WorkflowValue /: (wfv: WorkflowValue[ ___ ] := rhs_) /;
+    (LoadSubPackage[ "WorkflowValue" ]; True) :=
+        wfv := rhs;
+
+WorkflowValue /: (wfv: WorkflowValue[ ___ ][ ___ ] = rhs_) /;
+    (LoadSubPackage[ "WorkflowValue" ]; True) :=
+        wfv = rhs;
+
+WorkflowValue /: (wfv: WorkflowValue[ ___ ][ ___ ] := rhs_) /;
+    (LoadSubPackage[ "WorkflowValue" ]; True) :=
         wfv := rhs;
 
 (* ::**********************************************************************:: *)

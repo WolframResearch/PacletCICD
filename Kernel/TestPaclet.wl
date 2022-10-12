@@ -26,6 +26,7 @@ TestPaclet // Options = {
     "MarkdownSummary"  -> True,
     "MemoryConstraint" -> Inherited,
     "SameTest"         -> Inherited,
+    "SetWorkflowValue" -> True,
     "Target"           -> "Submit",
     "TimeConstraint"   -> Inherited
 };
@@ -67,6 +68,11 @@ testPaclet[ dir_? DirectoryQ, opts_Association ] :=
         files   = FileNames[ "*.wlt", dir, Infinity ];
         as      = Append[ opts, "PacletDirectory" -> pacDir ];
         reports = testReport[ as, files ];
+
+        If[ opts[ "SetWorkflowValue" ],
+            ghSetWFOutput[ "TestPaclet", reports ]
+        ];
+
         makeTestResult[ pacDir, reports ]
     ];
 
@@ -539,24 +545,14 @@ makeTestResult[ dir_, reports_, True ] :=
     ];
 
 makeTestResult[ dir_, reports_, False ] :=
-    Module[ { export, exported },
-        export = fileNameJoin @ { dir, "build", "test_results.wxf" };
-        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        exported = Export[ export,
-                           reports,
-                           "WXF",
-                           PerformanceGoal -> "Size"
-                   ];
-        setOutput[ "PACLET_TEST_RESULTS", exported ];
-        exitFailure[
-            "TestPaclet::Failures",
-            Association[
-                "MessageTemplate"   :> TestPaclet::Failures,
-                "MessageParameters" :> { },
-                "Result"            :> reports
-            ],
-            1
-        ]
+    exitFailure[
+        "TestPaclet::Failures",
+        Association[
+            "MessageTemplate"   :> TestPaclet::Failures,
+            "MessageParameters" :> { },
+            "Result"            :> reports
+        ],
+        1
     ];
 
 makeTestResult // catchUndefined;

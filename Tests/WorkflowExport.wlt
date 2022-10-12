@@ -84,3 +84,19 @@ VerificationTest[
     True,
     TestID -> "WorkflowExport-Uniqueness@@Tests/WorkflowExport.wlt:82,1-86,2"
 ]
+
+VerificationTest[
+    StringReplace[
+        ReadString @ WorkflowExport[ ExampleDirectory[ "Sample" ], "Submit" ],
+        "\r\n" -> "\n"
+    ],
+    Workflow[ "Submit" ][ "YAML" ],
+    TestID -> "WorkflowExport-YAML-Equivalence@@Tests/WorkflowExport.wlt:88,1-95,2"
+]
+
+VerificationTest[
+    ResetExampleDirectory[ "Sample" ],
+    _Success,
+    SameTest -> MatchQ,
+    TestID   -> "WorkflowExport-YAML-Equivalence-Cleanup@@Tests/WorkflowExport.wlt:97,1-102,2"
+]

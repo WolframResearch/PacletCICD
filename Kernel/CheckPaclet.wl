@@ -33,7 +33,8 @@ CheckPaclet::unknown =
 CheckPaclet // Options = {
     "Target"           -> "Submit",
     "DisabledHints"    -> Automatic,
-    "FailureCondition" -> "Error"
+    "FailureCondition" -> "Error",
+    "SetWorkflowValue" -> True
     (* TODO: MarkdownSummary option *)
 };
 
@@ -111,33 +112,29 @@ e: CheckPaclet[ ___ ] :=
 (* ::Subsubsection::Closed:: *)
 (*checkPaclet*)
 checkPaclet[ nb_, opts___ ] :=
-    ccPromptFix @ Module[ { res, hints, data, exported },
+    ccPromptFix @ Module[ { res, hints, data, setWF },
         needs[ "DefinitionNotebookClient`" -> None ];
         hiddenDirectoryFix[ ];
         res   = dnc`CheckDefinitionNotebook[ nb, opts ];
-        hints = dnc`HintData[ "Paclet", { "Tag", "Level", "Message", "CellID" } ];
+        hints = $checkHintData;
         data  = <| "Result" -> res, "HintData" -> hints, "File" -> nb |>;
-        exported = exportCheckResults[ nb, data ];
+        setWF = optionValue[ CheckPaclet, { opts }, "SetWorkflowValue" ];
+        If[ setWF, ghSetWFOutput[ "CheckPaclet", data ] ];
         generateCheckReport @ data;
         checkExit @ res
     ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
-(*exportCheckResults*)
-exportCheckResults[ _, KeyValuePattern[ "HintData" -> { } ] ] := Null;
-
-exportCheckResults[ nb_, data_Association ] :=
-    Module[ { dir, export, exported },
-        dir = parentPacletDirectory @ nb;
-        export = fileNameJoin @ { dir, "build", "check_results.wxf" };
-        GeneralUtilities`EnsureDirectory @ DirectoryName @ export;
-        exported = Export[ export, data, "WXF", PerformanceGoal -> "Size" ];
-        setOutput[ "PACLET_CHECK_RESULTS", exported ];
-        exported
-    ];
-
-exportCheckResults // catchUndefined;
+(*$checkHintData*)
+$checkHintData := withConsoleType[
+    Automatic,
+    DeleteMissing /@ dnc`HintData[
+        "Paclet",
+        None,
+        { "Tag", "Level", "MessageText", "CellID", "SourcePosition" }
+    ]
+];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -164,24 +161,45 @@ generateCheckReport[ KeyValuePattern @ {
 
 generateCheckReport // catchUndefined;
 
-
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*reportHintRow*)
 reportHintRow[ file_, index_ ][ hint_Association ] :=
-    Enclose @ Module[ { lookup, level, tag, msg, id, pos, url, link },
+    Enclose @ Module[ { lookup, level, tag, msg, url, link },
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
         level  = hintIcon @ lookup[ "Level" ];
         tag    = lookup[ "Tag" ];
-        msg    = Style[ lookup[ "Message" ], "Text" ];
-        id     = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
-        pos    = Lookup[ index, id ];
-        url    = ghCommitFileURL[ file, pos ];
+        msg    = Style[ lookup[ "MessageText" ], "Text" ];
+        url    = sourceFileURL[ file, index, hint ];
         link   = Hyperlink[ ":link:", url ];
         { level, tag, msg, link }
     ];
 
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*sourceFileURL*)
+sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
+    With[ { url = ghCommitFileURL @ hint },
+        url /; StringQ @ url
+    ];
+
+sourceFileURL[ nbFile_, cellIndex_, hint_ ] :=
+    Enclose @ Module[ { id, pos, url },
+        id  = ConfirmBy[ Lookup[ hint, "CellID" ], IntegerQ ];
+        pos = Lookup[ cellIndex, id ];
+        ghCommitFileURL[ nbFile, pos ]
+    ];
+
+sourceFileURL // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*hintIcon*)
 hintIcon[ "Error"      ] := ":x: Error";
 hintIcon[ "Warning"    ] := ":warning: Warning";
 hintIcon[ "Suggestion" ] := ":grey_question: Suggestion";
 hintIcon[ other_       ] := other;
+hintIcon // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
