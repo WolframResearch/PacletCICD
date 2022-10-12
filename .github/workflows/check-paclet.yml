@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
-      options: --user root
+      options: --user root --privileged
     timeout-minutes: 10
     steps:
       - name: Checkout files
@@ -41,6 +41,9 @@ jobs:
         run: |
           ulimit -c unlimited
           ulimit -a
+          mkdir -p /tmp/cores
+          chmod a+rwx /tmp/cores
+          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
           cat /proc/sys/kernel/core_pattern
           wolframscript Scripts/CheckPaclet.wls
       
@@ -48,8 +51,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: core-dump
-          path: /var/crash/
+          name: check-core-dump
+          path: /tmp/cores
           if-no-files-found: ignore
 
       - name: Upload stack data
@@ -74,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: wolframresearch/wolframengine:latest
-      options: --user root
+      options: --user root --privileged
     timeout-minutes: 10
     steps:
       - name: Checkout files
@@ -84,7 +87,22 @@ jobs:
         run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
+        run: |
+          ulimit -c unlimited
+          ulimit -a
+          mkdir -p /tmp/cores
+          chmod a+rwx /tmp/cores
+          sysctl -w kernel.core_pattern=/tmp/cores/core.%e.%p.%h.%t
+          cat /proc/sys/kernel/core_pattern
+          wolframscript Scripts/BuildPaclet.wls
+      
+      - name: Upload core dump
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-core-dump
+          path: /tmp/cores/
+          if-no-files-found: ignore
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
