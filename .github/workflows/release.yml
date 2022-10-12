@@ -104,14 +104,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download workflow values
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: paclet-workflow-values
           path: .paclet-workflow-values
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -153,14 +153,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download workflow values
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: paclet-workflow-values
           path: .paclet-workflow-values
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with: 
           path: ${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}
           key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}
@@ -174,7 +174,7 @@ jobs:
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -222,14 +222,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download workflow values
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: paclet-workflow-values
           path: .paclet-workflow-values
 
       - name: RestoreCachedWolframEngine
         id: cache-restore-step
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env: 
           WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
         with: 
@@ -266,7 +266,7 @@ jobs:
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: MXBuild
@@ -310,14 +310,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download workflow values
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: paclet-workflow-values
           path: .paclet-workflow-values
 
       - name: Download MX build
         id: download-mx-artifacts-step
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: PacletBuildArtifact
           path: Release
@@ -370,7 +370,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download workflow values
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: paclet-workflow-values
           path: .paclet-workflow-values

@@ -1959,7 +1959,7 @@ buildCompiledPacletJob // catchUndefined;
 $windowsCacheRestoreStep := <|
     "name" -> "RestoreCachedWolframEngine",
     "id"   -> "cache-restore-step",
-    "uses" -> "actions/cache@v2",
+    "uses" -> "actions/cache@v3",
     "env"  -> <|
         "WOLFRAM_SYSTEM_ID"                    -> "Windows-x86-64",
         "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
@@ -2047,7 +2047,7 @@ windowsUploadCompiledStep[ as_ ] := <|
 $macCacheRestoreStep := <|
     "name" -> "RestoreCachedWolframEngine",
     "id"   -> "cache-restore-step",
-    "uses" -> "actions/cache@v2",
+    "uses" -> "actions/cache@v3",
     "with" -> <|
         "path" -> "${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}",
         "key"  -> "wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}"
@@ -2342,7 +2342,7 @@ normalizeStep[ ___, "upload" ] := <|
 normalizeStep[ ___, "download" ] := <|
     "name" -> "Download",
     "id"   -> "download-artifacts-step",
-    "uses" -> "actions/download-artifact@v2",
+    "uses" -> "actions/download-artifact@v3",
     "with" -> <| "path" -> "." |>
 |>;
 
@@ -2382,7 +2382,7 @@ normalizeStep[ ___, "downloadworkflowvalues" ] :=
         <|
             "name" -> "DownloadWorkflowValues",
             "id"   -> "download-workflow-values-step",
-            "uses" -> "actions/download-artifact@v2",
+            "uses" -> "actions/download-artifact@v3",
             "with" -> <|
                 "name" -> "paclet-workflow-values",
                 "path" -> ".paclet-workflow-values"
@@ -2420,7 +2420,7 @@ normalizeStep[ ___, "uploadrelease"|"uploadreleaseasset" ] := <|
 normalizeStep[ ___, "downloadcompilationartifacts" ] := <|
     "name" -> "DownloadCompilationArtifacts",
     "id"   -> "download-compilation-artifacts-step",
-    "uses" -> "actions/download-artifact@v2",
+    "uses" -> "actions/download-artifact@v3",
     "with" -> <| "path" -> "LibraryResources" |>
 |>;
 
