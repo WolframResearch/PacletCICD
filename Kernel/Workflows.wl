@@ -390,7 +390,7 @@ makeWorkflowData // catchUndefined;
 (*checkWFDownload*)
 checkWFDownload[ as_ ] := checkWFDownload[ as, $downloadValues ];
 
-checkWFDownload[ as0_, Automatic ] :=
+checkWFDownload[ as0: KeyValuePattern[ "jobs" -> _ ], Automatic ] :=
     Enclose @ Module[
         { as, allJobs, graph, setters, downloaders, nonDownloaders, removed },
 
@@ -419,7 +419,8 @@ checkWFDownload[ as0_, Automatic ] :=
         as
     ];
 
-checkWFDownload[ as_, True ] := as;
+checkWFDownload[ as_, Automatic ] := as;
+checkWFDownload[ as_, True      ] := as;
 
 checkWFDownload[ as_, False ] :=
     DeleteCases[
