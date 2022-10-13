@@ -1128,10 +1128,10 @@ makeRunString[ file_String ] /; True := joinLines[
 installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
 
 installPacletManagerString[ "Windows-x86-64" ] := "\
-wolfram -noprompt -run \"PacletInstall[\\\"PacletManager\\\"];Quit[]\"";
+wolfram -noprompt -run \"PacletInstall[\\\"PacletManager\\\"];PacletSiteRegister[\\\"https://resources.wolframcloud.com/PacletRepository/pacletsite\\\"];Quit[]\"";
 
 installPacletManagerString[ _ ] := "\
-wolframscript -code 'PacletInstall[\"PacletManager\"]' > /dev/null";
+wolframscript -code 'PacletInstall[\"PacletManager\"];PacletSiteRegister[\"https://resources.wolframcloud.com/PacletRepository/pacletsite\"]' > /dev/null";
 
 installPacletManagerString // catchUndefined;
 
