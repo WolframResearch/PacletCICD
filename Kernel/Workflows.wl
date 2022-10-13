@@ -1105,15 +1105,41 @@ $wolframScriptRunEnv /; True := <| |>;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeRunString*)
-makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := "\
-export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -script " <> file;
+makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := joinLines[
+    "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
+    installPacletManagerString[ "MacOSX-x86-64" ],
+    "wolframscript -script " <> file
+];
 
-makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := "\
-$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
-wolfram -script " <> file;
+makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := joinLines[
+    "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
+    installPacletManagerString[ "Windows-x86-64" ],
+    "wolfram -script " <> file
+];
 
-makeRunString[ file_String ] /; True := "wolframscript " <> file;
+makeRunString[ file_String ] /; True := joinLines[
+    installPacletManagerString[ ],
+    "wolframscript " <> file
+];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*installPacletManagerString*)
+installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
+
+installPacletManagerString[ "Windows-x86-64" ] := "\
+wolfram -noprompt -run \"PacletInstall[\\\"PacletManager\\\"];Quit[]\"";
+
+installPacletManagerString[ _ ] := "\
+wolframscript -code 'PacletInstall[\"PacletManager\"]' > /dev/null";
+
+installPacletManagerString // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*joinLines*)
+joinLines[ lines___String ] := StringRiffle[ { lines }, "\n" ];
+joinLines // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1126,10 +1152,13 @@ makeEvaluateString[ File[ file_String ] ] := makeRunString @ file;
 
 makeEvaluateString[ code_ ] :=
     Block[ { $Context = "System`", $ContextPath = { "System`" } },
-        StringJoin[
-            "wolframscript -code '",
-            ToString[ Unevaluated @ code, InputForm ],
-            "'"
+        joinLines[
+            installPacletManagerString[ ],
+            StringJoin[
+                "wolframscript -code '",
+                ToString[ Unevaluated @ code, InputForm ],
+                "'"
+            ]
         ]
     ];
 
@@ -2139,9 +2168,11 @@ windowsCompileStep[ as_ ] := <|
         "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\WolframEngine'",
         "WOLFRAMINIT" -> "\"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\""
     |>,
-    "run" -> "\
-$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
-wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run" -> joinLines[
+        "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
+        installPacletManagerString[ ],
+        "wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2204,9 +2235,11 @@ macCompileStep[ as_ ] := <|
         "WOLFRAMENGINE_EXECUTABLES_DIRECTORY" -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS\"",
         "WOLFRAMSCRIPT_KERNELPATH"            -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel\""
     |>,
-    "run" -> "\
-export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run" -> joinLines[
+        "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
+        installPacletManagerString[ ],
+        "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2255,7 +2288,10 @@ apt-get -y install build-essential"
 (*linuxCompileStep*)
 linuxCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
-    "run"  -> "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run"  -> joinLines[
+        installPacletManagerString[ ],
+        "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
