@@ -1114,13 +1114,20 @@ makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := joinLines[
 makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := joinLines[
     "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
     installPacletManagerString[ "Windows-x86-64" ],
-    "wolfram -script " <> file
+    "wolfram -runfirst " <> $windowsRunFirst <> " -script " <> file
 ];
 
 makeRunString[ file_String ] /; True := joinLines[
     installPacletManagerString[ ],
     "wolframscript " <> file
 ];
+
+
+$windowsRunFirst = "'\
+Unprotect[$EvaluationEnvironment];\
+$EvaluationEnvironment=\\\"Script\\\";\
+Protect[$EvaluationEnvironment]\
+'";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -2180,7 +2187,7 @@ windowsCompileStep[ as_ ] := <|
     "run" -> joinLines[
         "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
         installPacletManagerString[ ],
-        "wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+        "wolfram -runfirst " <> $windowsRunFirst <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
 
