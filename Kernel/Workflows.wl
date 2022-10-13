@@ -1107,7 +1107,7 @@ $wolframScriptRunEnv /; True := <| |>;
 (*makeRunString*)
 makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := "\
 export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -debug -verbose -script " <> file;
+wolframscript -script " <> file;
 
 makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := "\
 $env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
@@ -2184,7 +2184,15 @@ $macInstallWLStep := <|
 
 $macInstallWLString = "\
 echo 'Installing Wolfram Engine...'
-brew install --cask wolfram-engine
+DOWNLOAD_FILE=\"${{ env.WOLFRAMENGINE_DOWNLOAD_PATH }}/WolframEngine.dmg\"
+mkdir -p \"${{ env.WOLFRAMENGINE_DOWNLOAD_PATH }}\"
+curl ${{ env.WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL }} -o $DOWNLOAD_FILE -s
+hdiutil attach $DOWNLOAD_FILE -nobrowse
+DMG_MOUNT_POINT=\"$(hdiutil info | grep \"Wolfram Engine\" | awk '{ print $1 }')\"
+DMG_VOLUME=\"$(hdiutil info | grep \"Wolfram Engine\" | awk '{$1=$2=\"\"; print $0}' | xargs)\"
+APP_PATH=\"$DMG_VOLUME/$(ls \"$DMG_VOLUME\" | grep .app)\"
+cp -R \"$APP_PATH\" \"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\"
+hdiutil detach $DMG_MOUNT_POINT
 echo 'Installed Wolfram Engine.'";
 
 (* ::**********************************************************************:: *)
@@ -2198,7 +2206,7 @@ macCompileStep[ as_ ] := <|
     |>,
     "run" -> "\
 export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -debug -verbose -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2311,19 +2319,21 @@ $defaultJobContainer :=
 (* ::Subsection::Closed:: *)
 (*$defaultJobEnv*)
 $defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := takeEnvStrings @ <|
-    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "RESOURCE_PUBLISHER_TOKEN"             -> $publisherToken,
-    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+    "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
+    "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
+    "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
+    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\"",
+    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 $defaultJobEnv /; $defaultOS === "Windows-x86-64" := takeEnvStrings @ <|
-    "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
     "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
+    "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
     "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A"
+    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 $defaultJobEnv /; True := takeEnvStrings @ <|
