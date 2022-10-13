@@ -2057,7 +2057,7 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
 
 normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
     "name"            -> "Compile (MacOSX-x86-64)",
-    "runs-on"         -> "macos-latest",
+    "runs-on"         -> "macos-12",
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
     "steps" -> {
@@ -3035,7 +3035,7 @@ toDefaultOS // catchUndefined;
 toDefaultRunner[ Automatic                      ] := $defaultRunner;
 toDefaultRunner[ "Linux"|"Unix"|"Linux-x86-64"  ] := "ubuntu-latest";
 toDefaultRunner[ "Windows"|"Windows-x86-64"     ] := "windows-latest";
-toDefaultRunner[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "macos-latest";
+toDefaultRunner[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "macos-12";
 
 toDefaultRunner[ s_String? StringQ ] :=
     Module[ { startsWith },
@@ -3109,8 +3109,8 @@ macRunner[ spec_String ] :=
 macRunner // catchUndefined;
 
 macRunner0[ "mac"|"macosx", a___ ] := macRunner0[ "macos", a ];
-macRunner0[ "macos" ] := "macos-latest";
-macRunner0[ "macos", "latest" ] := "macos-latest";
+macRunner0[ "macos" ] := "macos-12";
+macRunner0[ "macos", "latest" ] := "macos-12";
 macRunner0[ "macos", version_String ] := "macos-" <> version;
 
 (* ::**********************************************************************:: *)
