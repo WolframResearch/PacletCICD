@@ -315,6 +315,8 @@ checkResult // Attributes = { HoldFirst };
 checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
     Module[ { result, ctx, name, stacks, stackName, full },
 
+        Print[ "::notice::Entering checkResult" ];
+
         result = noExit @ eval;
         ctx    = Context @ Unevaluated @ sym;
         name   = SymbolName @ Unevaluated @ sym;
@@ -344,7 +346,9 @@ checkResult[ eval: (sym_Symbol)[ args___ ] ] :=
         If[ FailureQ @ result,
             Print[ "::error::" <> full <> " failed" ];
             Exit[ 1 ]
-        ]
+        ];
+
+        Print[ "::notice::Exiting checkResult" ];
     ];
 
 noExit    := Wolfram`PacletCICD`Private`noExit;

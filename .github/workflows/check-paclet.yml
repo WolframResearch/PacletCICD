@@ -5,6 +5,8 @@ on:
     - cron: '30 12 * * *'
   pull_request:
     branches: ["main"]
+  push:
+    branches: ["bugfix/cannot-download-workflow-values-in-first-job"]
   workflow_dispatch:
 
 env:

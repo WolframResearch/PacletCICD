@@ -9,4 +9,6 @@ checkResult @ Wolfram`PacletCICD`CheckPaclet[
     "FailureCondition" -> { "Warning", "Error" }
 ];
 
+Print[ "::notice::Finished CheckPaclet" ];
+
 EndPackage[ ];
