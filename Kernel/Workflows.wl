@@ -1108,13 +1108,13 @@ $wolframScriptRunEnv /; True := <| |>;
 makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := joinLines[
     "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
     installPacletManagerString[ "MacOSX-x86-64" ],
-    "wolframscript -script " <> file
+    "wolframscript -runfirst " <> $macSetScriptEnv <> " -script " <> file
 ];
 
 makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := joinLines[
     "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
     installPacletManagerString[ "Windows-x86-64" ],
-    "wolfram -runfirst " <> $windowsRunFirst <> " -script " <> file
+    "wolfram -runfirst " <> $winSetScriptEnv <> " -script " <> file
 ];
 
 makeRunString[ file_String ] /; True := joinLines[
@@ -1123,9 +1123,15 @@ makeRunString[ file_String ] /; True := joinLines[
 ];
 
 
-$windowsRunFirst = "'\
+$winSetScriptEnv = "'\
 Unprotect[$EvaluationEnvironment];\
 $EvaluationEnvironment=\\\"Script\\\";\
+Protect[$EvaluationEnvironment]\
+'";
+
+$macSetScriptEnv = "'\
+Unprotect[$EvaluationEnvironment];\
+$EvaluationEnvironment=\"Script\";\
 Protect[$EvaluationEnvironment]\
 '";
 
@@ -1135,19 +1141,10 @@ Protect[$EvaluationEnvironment]\
 installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
 
 installPacletManagerString[ "Windows-x86-64" ] := "\
-wolfram -noprompt -run '\
-PacletInstall[\\\"PacletManager\\\"];\
-PacletSiteRegister[\\\"https://resources.wolframcloud.com/PacletRepository/pacletsite\\\"];\
-PacletSiteUpdate[PacletSites[]];\
-Quit[]\
-'";
+wolfram -noprompt -run 'PacletInstall[\\\"PacletManager\\\"];Quit[]'";
 
 installPacletManagerString[ _ ] := "\
-wolframscript -code '\
-PacletInstall[\"PacletManager\"];\
-PacletSiteRegister[\"https://resources.wolframcloud.com/PacletRepository/pacletsite\"];\
-PacletSiteUpdate[PacletSites[]]\
-' > /dev/null";
+wolframscript -code 'PacletInstall[\"PacletManager\"]' > /dev/null";
 
 installPacletManagerString // catchUndefined;
 
@@ -2187,7 +2184,7 @@ windowsCompileStep[ as_ ] := <|
     "run" -> joinLines[
         "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
         installPacletManagerString[ ],
-        "wolfram -runfirst " <> $windowsRunFirst <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+        "wolfram -runfirst " <> $winSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
 
@@ -2254,7 +2251,7 @@ macCompileStep[ as_ ] := <|
     "run" -> joinLines[
         "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
         installPacletManagerString[ ],
-        "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+        "wolframscript -runfirst " <> $macSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
 
