@@ -1161,7 +1161,8 @@ if (\"${{ env.WLPR_PACLET_SITE }}\") {
 }";
 
 installPacletManagerString[ "MacOSX-x86-64" ] := "\
-if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\" then
+if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\"
+then
     echo 'Updating paclet sites...'
     wolframscript -code " <> $pacSiteSetup <> " > /dev/null
 fi";
