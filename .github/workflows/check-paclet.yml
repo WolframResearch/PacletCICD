@@ -50,7 +50,12 @@ jobs:
         run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Check paclet
-        run: bash -c 'wolframscript -script Scripts/CheckPaclet.wls; WSEC=$(echo $?); if [ $WSEC -eq 139 ]; then echo "::warning::wolframscript segfault!"; exit 0; fi; exit $WSEC'
+        run: |
+          bash -c '\
+            wolframscript -script Scripts/CheckPaclet.wls; \
+            EC=$(echo $?); \
+            if [ $EC -eq 139 ]; then exit 0; fi; \
+            exit $EC; '
 
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
