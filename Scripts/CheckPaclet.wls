@@ -12,3 +12,6 @@ checkResult @ Wolfram`PacletCICD`CheckPaclet[
 Print[ "::notice::Finished CheckPaclet" ];
 
 EndPackage[ ];
+
+Print[ "::notice::Exiting ", $InputFileName ];
+Exit[ 0 ];
