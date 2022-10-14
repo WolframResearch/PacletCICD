@@ -370,7 +370,7 @@ makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
 
         as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
-        data = merger @ { as1, as2 };
+        data = merger @ { $defaultWorkflowData, as1, as2 };
         checkWFDownload @ wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
@@ -378,12 +378,26 @@ makeWorkflowData[ name_String, custom_Association ] :=
     makeWorkflowData @ Prepend[ custom, "name" -> name ];
 
 makeWorkflowData[ custom_Association ] :=
-    Enclose @ checkWFDownload @ wfKeySort @ ConfirmBy[
-        normalizeForYAML @ custom,
-        AssociationQ
+    Enclose @ Module[ { as, data },
+        as   = ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+        data = ConfirmBy[ merger @ { $defaultWorkflowData, as }, AssociationQ ];
+        checkWFDownload @ wfKeySort @ Join[ KeyTake[ data, Keys @ as ], data ]
     ];
 
 makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$defaultWorkflowData*)
+$defaultWorkflowData := <|
+    "name" -> "Workflow",
+    "on"   -> <| "workflow_dispatch" -> True |>,
+    "env"  -> $defaultWorkflowEnv,
+    "concurrency" -> <|
+        "group"              -> "${{ github.ref }}",
+        "cancel-in-progress" -> True
+    |>
+|>;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -1141,12 +1155,30 @@ Protect[$EvaluationEnvironment]\
 installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
 
 installPacletManagerString[ "Windows-x86-64" ] := "\
-wolfram -noprompt -run 'PacletInstall[\\\"PacletManager\\\"];Quit[]'";
+if (${{ env.WLPR_PACLET_SITE }}) {
+    wolfram -noprompt -run " <> $winPacSiteSetup <> "
+}";
 
 installPacletManagerString[ _ ] := "\
-wolframscript -code 'PacletInstall[\"PacletManager\"]' > /dev/null";
+if [ ${{ env.WLPR_PACLET_SITE }} != \"\" ];
+    then wolframscript -code " <> $pacSiteSetup <> " > /dev/null;
+fi";
 
 installPacletManagerString // catchUndefined;
+
+$winPacSiteSetup = "'\
+PacletInstall[\\\"PacletManager\\\"];\
+PacletSiteRegister[\\\"${{ env.WLPR_PACLET_SITE }}\\\"];\
+PacletSiteUpdate[PacletSites[]];\
+Quit[]\
+'";
+
+$pacSiteSetup = "'\
+PacletInstall[\"PacletManager\"];\
+PacletSiteRegister[\"${{ env.WLPR_PACLET_SITE }}\"];\
+PacletSiteUpdate[PacletSites[]];\
+Quit[]\
+'";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1548,7 +1580,7 @@ $namedWorkflows := <|
     "Release" -> <|
         "name"        -> "Release",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
@@ -1563,7 +1595,7 @@ $namedWorkflows := <|
     "Build" -> <|
         "name"        -> "Build",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1575,7 +1607,7 @@ $namedWorkflows := <|
     "Check" -> <|
         "name"        -> "Check",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1587,7 +1619,7 @@ $namedWorkflows := <|
     "Test" -> <|
         "name"        -> "Test",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1599,7 +1631,7 @@ $namedWorkflows := <|
     "Submit" -> <|
         "name"        -> "Submit",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
@@ -1610,7 +1642,7 @@ $namedWorkflows := <|
     "Compile" -> <|
         "name"        -> "Compile",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -2366,29 +2398,32 @@ $defaultJobContainer :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*$defaultWorkflowEnv*)
+$defaultWorkflowEnv := takeEnvStrings @ <|
+    "RESOURCE_PUBLISHER_TOKEN"    -> $publisherToken,
+    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WLPR_PACLET_SITE"            -> "https://resources.wolframcloud.com/PacletRepository/pacletsite"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*$defaultJobEnv*)
 $defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := takeEnvStrings @ <|
-    "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
     "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
     "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
     "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
     "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
-    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\"",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\""
 |>;
 
 $defaultJobEnv /; $defaultOS === "Windows-x86-64" := takeEnvStrings @ <|
-    "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
     "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
     "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
+    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi"
 |>;
 
 $defaultJobEnv /; True := takeEnvStrings @ <|
-    "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "RESOURCE_PUBLISHER_TOKEN"    -> $publisherToken
+    "WOLFRAM_SYSTEM_ID" -> "Linux-x86-64"
 |>;
 
 takeEnvStrings[ as_ ] :=
