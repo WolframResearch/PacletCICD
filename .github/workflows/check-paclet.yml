@@ -33,8 +33,7 @@ jobs:
       image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
-    env:
-      WOLFRAM_KERNEL_PATH: /usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Kernel/Binaries/Linux-x86-64/WolframKernel
+
     steps:
       - name: Setup debugging
         if: env.ACTIONS_STEP_DEBUG
@@ -48,21 +47,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: |
-          ${{ env.WOLFRAM_KERNEL_PATH }} \
-            -pwfile '!cloudlm.wolfram.com' \
-            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
-            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
-            -script Scripts/BuildPacletMX.wls
+        run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Check paclet
         run: |
-          ${{ env.WOLFRAM_KERNEL_PATH }} \
-            -pwfile '!cloudlm.wolfram.com' \
-            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
-            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
-            -script Scripts/CheckPaclet.wls
-      
+          wolframscript Scripts/CheckPaclet.wls
+          WS_EXIT_CODE=$(echo $?)
+          if [ $WS_EXIT_CODE -eq 139 ]; then echo '::warning::wolframscript segfault!'; exit 0; fi
+          exit $WS_EXIT_CODE
+
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
         uses: actions/upload-artifact@v3
@@ -97,8 +90,7 @@ jobs:
       image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
-    env:
-      WOLFRAM_KERNEL_PATH: /usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Kernel/Binaries/Linux-x86-64/WolframKernel
+
     steps:
       - name: Setup debugging
         if: env.ACTIONS_STEP_DEBUG
@@ -112,20 +104,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: |
-          ${{ env.WOLFRAM_KERNEL_PATH }} \
-            -pwfile '!cloudlm.wolfram.com' \
-            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
-            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
-            -script Scripts/BuildPacletMX.wls
+        run: wolframscript Scripts/BuildPacletMX.wls
 
       - name: Build paclet
-        run: |
-          ${{ env.WOLFRAM_KERNEL_PATH }} \
-            -pwfile '!cloudlm.wolfram.com' \
-            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
-            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
-            -script Scripts/BuildPaclet.wls
+        run: wolframscript Scripts/BuildPaclet.wls
       
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -169,8 +151,6 @@ jobs:
       image: wolframresearch/wolframengine:13.0.1
       options: --user root
     timeout-minutes: 10
-    env:
-      WOLFRAM_KERNEL_PATH: /usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Kernel/Binaries/Linux-x86-64/WolframKernel
 
     steps: 
       - name: Checkout
@@ -191,12 +171,7 @@ jobs:
           path: MXBuild
 
       - name: Test paclet
-        run: |
-          ${{ env.WOLFRAM_KERNEL_PATH }} \
-            -pwfile '!cloudlm.wolfram.com' \
-            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
-            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
-            -script Scripts/TestPaclet.wls
+        run: wolframscript Scripts/TestPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
