@@ -48,10 +48,20 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: |
+          ${{ env.WOLFRAM_KERNEL_PATH }} \
+            -pwfile '!cloudlm.wolfram.com' \
+            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
+            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
+            -script Scripts/BuildPacletMX.wls
 
       - name: Check paclet
-        run: ${{ env.WOLFRAM_KERNEL_PATH }} -pwfile '!cloudlm.wolfram.com' -entitlement "$WOLFRAMSCRIPT_ENTITLEMENTID" -script Scripts/CheckPaclet.wls
+        run: |
+          ${{ env.WOLFRAM_KERNEL_PATH }} \
+            -pwfile '!cloudlm.wolfram.com' \
+            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
+            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
+            -script Scripts/CheckPaclet.wls
       
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -102,10 +112,20 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: ${{ env.WOLFRAM_KERNEL_PATH }} -pwfile '!cloudlm.wolfram.com' -entitlement "$WOLFRAMSCRIPT_ENTITLEMENTID" -script Scripts/BuildPacletMX.wls
+        run: |
+          ${{ env.WOLFRAM_KERNEL_PATH }} \
+            -pwfile '!cloudlm.wolfram.com' \
+            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
+            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
+            -script Scripts/BuildPacletMX.wls
 
       - name: Build paclet
-        run: ${{ env.WOLFRAM_KERNEL_PATH }} -pwfile '!cloudlm.wolfram.com' -entitlement "$WOLFRAMSCRIPT_ENTITLEMENTID" -script Scripts/BuildPaclet.wls
+        run: |
+          ${{ env.WOLFRAM_KERNEL_PATH }} \
+            -pwfile '!cloudlm.wolfram.com' \
+            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
+            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
+            -script Scripts/BuildPaclet.wls
       
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -171,7 +191,12 @@ jobs:
           path: MXBuild
 
       - name: Test paclet
-        run: ${{ env.WOLFRAM_KERNEL_PATH }} -pwfile '!cloudlm.wolfram.com' -entitlement "$WOLFRAMSCRIPT_ENTITLEMENTID" -script Scripts/TestPaclet.wls
+        run: |
+          ${{ env.WOLFRAM_KERNEL_PATH }} \
+            -pwfile '!cloudlm.wolfram.com' \
+            -entitlement "${{ env.WOLFRAMSCRIPT_ENTITLEMENTID }}" \
+            -runfirst 'Unprotect[$EvaluationEnvironment];$EvaluationEnvironment="Script";Protect[$EvaluationEnvironment];'\
+            -script Scripts/TestPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
