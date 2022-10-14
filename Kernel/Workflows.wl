@@ -2399,7 +2399,7 @@ $compilationTargets = { "Windows-x86-64", "MacOSX-x86-64", "Linux-x86-64" };
 $defaultJobContainer :=
     If[ $defaultOS === "Linux-x86-64",
         <|
-            "image"   -> "wolframresearch/wolframengine:latest",
+            "image"   -> "wolframresearch/wolframengine:13.0.1",
             "options" -> "--user root"
         |>,
         $noValue
