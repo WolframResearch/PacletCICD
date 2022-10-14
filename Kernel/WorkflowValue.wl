@@ -68,10 +68,14 @@ $$appendable = _List | _Association? AssociationQ;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*InitializeWorkflowValues*)
-InitializeWorkflowValues[ ] := (
-    setWorkflowValue[ ".initialization", Null ];
-    importExistingWorkflowValues[ ]
-);
+InitializeWorkflowValues[ ] :=
+    If[ TrueQ @ Wolfram`PacletCICD`Internal`$BuildingMX,
+        Missing[ "NotAvailable" ],
+        setWorkflowValue[ ".initialization", Null ];
+        importExistingWorkflowValues[ ]
+    ];
+
+InitializeWorkflowValues // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

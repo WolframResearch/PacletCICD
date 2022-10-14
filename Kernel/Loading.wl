@@ -3,6 +3,7 @@
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`Internal`", { "Wolfram`PacletCICD`" } ];
 
+$BuildingMX;
 $MXFile;
 
 ClearAll[
@@ -74,6 +75,7 @@ SetContextLoad[ sym_Symbol, context_String ] :=
 BuildMX[ ] := (
     LoadSubPackages[ ];
     GeneralUtilities`EnsureDirectory @ DirectoryName @ $MXFile;
+    $BuildingMX = False;
     DumpSave[ $MXFile, "Wolfram`PacletCICD`", "SymbolAttributes" -> False ];
     $MXFile
 );

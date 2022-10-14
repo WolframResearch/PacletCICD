@@ -12,11 +12,15 @@ If[ DirectoryQ @ $mxDir, DeleteDirectory[ $mxDir, DeleteContents -> True ] ];
 
 $resDir = FileNameJoin @ { $pacDir, "Resources" };
 PacletDirectoryLoad @ $pacDir;
-Get[ "Wolfram`PacletCICD`" ];
+Block[ { Wolfram`PacletCICD`Internal`$BuildingMX = True },
+    Get[ "Wolfram`PacletCICD`" ]
+];
 
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Pre-cache Values*)
+
+(* TODO: move this to package code conditioned on $BuildingMX *)
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
