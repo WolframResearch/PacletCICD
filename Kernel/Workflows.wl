@@ -1143,11 +1143,11 @@ $EvaluationEnvironment=\\\"Script\\\";\
 Protect[$EvaluationEnvironment]\
 '";
 
-$macSetScriptEnv = "'\
-Unprotect[$EvaluationEnvironment];\
-$EvaluationEnvironment=\"Script\";\
+$macSetScriptEnv = "'CompoundExpression[\
+Unprotect[$EvaluationEnvironment],\
+Set[$EvaluationEnvironment,SymbolName[Script]],\
 Protect[$EvaluationEnvironment]\
-'";
+]'";
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1161,10 +1161,9 @@ if (\"${{ env.WLPR_PACLET_SITE }}\") {
 }";
 
 installPacletManagerString[ "MacOSX-x86-64" ] := "\
-if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\"
-then
-    echo 'Updating paclet sites...'
-    wolframscript -code " <> $pacSiteSetup <> " > /dev/null
+if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\"; then
+    echo 'Updating paclet sites...';
+    wolframscript -code " <> $pacSiteSetup <> " > /dev/null;
 fi";
 
 installPacletManagerString[ _ ] := "\
