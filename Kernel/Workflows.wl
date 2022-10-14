@@ -1155,13 +1155,16 @@ Protect[$EvaluationEnvironment]\
 installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
 
 installPacletManagerString[ "Windows-x86-64" ] := "\
-if (${{ env.WLPR_PACLET_SITE }}) {
+if (\"${{ env.WLPR_PACLET_SITE }}\") {
+    echo 'Updating paclet sites...'
     wolfram -noprompt -run " <> $winPacSiteSetup <> "
 }";
 
 installPacletManagerString[ _ ] := "\
-if [ ${{ env.WLPR_PACLET_SITE }} != \"\" ];
-    then wolframscript -code " <> $pacSiteSetup <> " > /dev/null;
+if [ \"${{ env.WLPR_PACLET_SITE }}\" != \"\" ]
+then
+    echo 'Updating paclet sites...'
+    wolframscript -code " <> $pacSiteSetup <> " > /dev/null
 fi";
 
 installPacletManagerString // catchUndefined;
