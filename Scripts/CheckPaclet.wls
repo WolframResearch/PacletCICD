@@ -9,15 +9,4 @@ checkResult @ Wolfram`PacletCICD`CheckPaclet[
     "FailureCondition" -> { "Warning", "Error" }
 ];
 
-Print[ "::notice::Finished CheckPaclet" ];
-
 EndPackage[ ];
-
-
-Print[ "::notice::Killing any remaining FE process" ];
-fePID = UsingFrontEnd @ SystemInformation[ "FrontEnd", "ProcessID" ];
-feProc = First[ SystemProcesses[ "PID" -> fePID ], $Failed ];
-KillProcess @ feProc;
-
-Print[ "::notice::Exiting ", $InputFileName ];
-Exit[ 0 ];

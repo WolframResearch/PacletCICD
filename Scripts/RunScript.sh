@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wolframscript -script "${1}"
+wolframscript -script "Scripts/${1}"
 WS_EXIT_CODE=$(echo $?)
 
 if [ $WS_EXIT_CODE -eq 139 ]

@@ -47,15 +47,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: bash Scripts/wolframscript.sh Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Check paclet
-        run: |
-          bash -c '\
-            wolframscript -script Scripts/CheckPaclet.wls; \
-            EC=$(echo $?); \
-            if [ $EC -eq 139 ]; then exit 0; fi; \
-            exit $EC; '
+        run: bash Scripts/RunScript.sh CheckPaclet.wls
 
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -105,10 +100,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
+        run: bash Scripts/RunScript.sh BuildPaclet.wls
       
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -172,7 +167,7 @@ jobs:
           path: MXBuild
 
       - name: Test paclet
-        run: wolframscript Scripts/TestPaclet.wls
+        run: bash Scripts/RunScript.sh TestPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
