@@ -1144,9 +1144,9 @@ Protect[$EvaluationEnvironment]\
 '";
 
 $macSetScriptEnv = "'CompoundExpression[\
-Unprotect[$EvaluationEnvironment],\
-Set[$EvaluationEnvironment,SymbolName[Script]],\
-Protect[$EvaluationEnvironment]\
+Unprotect[\\$EvaluationEnvironment],\
+Set[\\$EvaluationEnvironment,SymbolName[Script]],\
+Protect[$\\EvaluationEnvironment]\
 ]'";
 
 (* ::**********************************************************************:: *)
