@@ -28,7 +28,7 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
     steps:
@@ -80,7 +80,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
     steps:
@@ -140,7 +140,7 @@ jobs:
     needs: [Build]
     runs-on: ubuntu-latest
     container: 
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root
     timeout-minutes: 10
 
