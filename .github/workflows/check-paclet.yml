@@ -28,9 +28,10 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
+
     steps:
       - name: Setup debugging
         if: env.ACTIONS_STEP_DEBUG
@@ -44,11 +45,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Check paclet
-        run: wolframscript Scripts/CheckPaclet.wls
-      
+        run: bash Scripts/RunScript.sh CheckPaclet.wls
+
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
         uses: actions/upload-artifact@v3
@@ -80,9 +81,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
+
     steps:
       - name: Setup debugging
         if: env.ACTIONS_STEP_DEBUG
@@ -96,10 +98,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
+        run: bash Scripts/RunScript.sh BuildPaclet.wls
       
       - name: Upload core dump
         if: always() && env.ACTIONS_STEP_DEBUG
@@ -140,7 +142,7 @@ jobs:
     needs: [Build]
     runs-on: ubuntu-latest
     container: 
-      image: wolframresearch/wolframengine:latest
+      image: wolframresearch/wolframengine:13.0.1
       options: --user root
     timeout-minutes: 10
 
@@ -163,7 +165,7 @@ jobs:
           path: MXBuild
 
       - name: Test paclet
-        run: wolframscript Scripts/TestPaclet.wls
+        run: bash Scripts/RunScript.sh TestPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY

@@ -38,7 +38,7 @@ $stepRoot := GeneralUtilities`EnsureDirectory @ { $jobRoot, $ghStepID };
 
 $wfDownloadLocation := ExpandFileName[ ".paclet-workflow-values" ];
 
-$ghWFID := $ghWFID = StringJoin[
+$ghWFID := StringJoin[
     "__Workflow_",
     URLEncode @ Replace[
         Environment[ "GITHUB_WORKFLOW" ],
@@ -46,7 +46,7 @@ $ghWFID := $ghWFID = StringJoin[
     ]
 ];
 
-$ghJobID := $ghJobID = StringJoin[
+$ghJobID := StringJoin[
     "__Job_",
     URLEncode @ Replace[
         Environment[ "GITHUB_JOB" ],
@@ -54,7 +54,7 @@ $ghJobID := $ghJobID = StringJoin[
     ]
 ];
 
-$ghStepID := $ghStepID = StringJoin[
+$ghStepID := StringJoin[
     "__Step_",
     IntegerString[ $SessionID, 36 ]
 ];
@@ -68,15 +68,28 @@ $$appendable = _List | _Association? AssociationQ;
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*InitializeWorkflowValues*)
-InitializeWorkflowValues[ ] := InitializeWorkflowValues @ $wfDownloadLocation;
+InitializeWorkflowValues[ ] :=
+    If[ TrueQ @ Wolfram`PacletCICD`Internal`$BuildingMX,
+        Missing[ "NotAvailable" ],
+        setWorkflowValue[ ".initialization", Null ];
+        importExistingWorkflowValues[ ]
+    ];
 
-InitializeWorkflowValues[ src_? DirectoryQ ] :=
+InitializeWorkflowValues // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*importExistingWorkflowValues*)
+importExistingWorkflowValues[ ] :=
+    importExistingWorkflowValues @ $wfDownloadLocation;
+
+importExistingWorkflowValues[ src_? DirectoryQ ] :=
     Module[ { files },
         files = FileNames[ "*.wxf", src, Infinity ];
         importDownloadedWFV[ src, # ] & /@ files
     ];
 
-InitializeWorkflowValues[ ___ ] := Missing[ "NotAvailable" ];
+importExistingWorkflowValues[ ___ ] := Missing[ "NotAvailable" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)

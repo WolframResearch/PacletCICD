@@ -289,8 +289,10 @@ workflowProperty // catchUndefined;
 (* ::Subsubsection::Closed:: *)
 (*getWorkflowJobs*)
 getWorkflowJobs[ wf_? workflowQ ] :=
-    Enclose @ Module[ { data, jobs },
-        data = ConfirmBy[ genericWFProperty[ wf, "Data" ], AssociationQ ];
+    getWorkflowJobs @ genericWFProperty[ wf, "Data" ];
+
+getWorkflowJobs[ data_Association? AssociationQ ] :=
+    Enclose @ Module[ { jobs },
         jobs = ConfirmBy[ Lookup[ data, "jobs" ], AssociationQ ];
         ConfirmBy[ WorkflowJob /@ jobs, AllTrue[ workflowJobQ ] ]
     ];
@@ -314,9 +316,11 @@ getInnerJobProperties // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*jobGraph*)
-jobGraph[ wf_? workflowQ ] :=
+jobGraph[ wf_? workflowQ ] := jobGraph @ genericWFProperty[ wf, "Data" ];
+
+jobGraph[ data_Association? AssociationQ ] :=
     Enclose @ Module[ { jobs, needs, vertices, edges },
-        jobs = ConfirmBy[ getWorkflowJobs @ wf, AllTrue @ workflowJobQ ];
+        jobs = ConfirmBy[ getWorkflowJobs @ data, AllTrue @ workflowJobQ ];
         needs = ConfirmBy[ (#[ "Needs" ] &) /@ jobs, AssociationQ ];
         vertices = Keys @ needs;
         edges = Flatten[ Thread /@ Normal @ DeleteCases[ needs, None ] ];
@@ -366,17 +370,134 @@ makeWorkflowData[ name_String? workflowNameQ, as_Association ] :=
 
         as1  = ConfirmBy[ normalizeForYAML @ as1, AssociationQ ];
         as2  = ConfirmBy[ normalizeForYAML @ as , AssociationQ ];
-        data = merger @ { as1, as2 };
-        wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
+        data = merger @ { $defaultWorkflowData, as1, as2 };
+        checkWFDownload @ wfKeySort @ Join[ KeyTake[ data, Keys @ as2 ], data ]
     ];
 
 makeWorkflowData[ name_String, custom_Association ] :=
     makeWorkflowData @ Prepend[ custom, "name" -> name ];
 
 makeWorkflowData[ custom_Association ] :=
-    Enclose @ wfKeySort @ ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+    Enclose @ Module[ { as, data },
+        as   = ConfirmBy[ normalizeForYAML @ custom, AssociationQ ];
+        data = ConfirmBy[ merger @ { $defaultWorkflowData, as }, AssociationQ ];
+        checkWFDownload @ wfKeySort @ Join[ KeyTake[ data, Keys @ as ], data ]
+    ];
 
 makeWorkflowData // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*$defaultWorkflowData*)
+$defaultWorkflowData := <|
+    "name" -> "Workflow",
+    "on"   -> <| "workflow_dispatch" -> True |>,
+    "env"  -> $defaultWorkflowEnv,
+    "concurrency" -> <|
+        "group"              -> "${{ github.ref }}",
+        "cancel-in-progress" -> True
+    |>
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsection::Closed:: *)
+(*checkWFDownload*)
+checkWFDownload[ as_ ] := checkWFDownload[ as, $downloadValues ];
+
+checkWFDownload[ as0: KeyValuePattern[ "jobs" -> _ ], Automatic ] :=
+    Enclose @ Module[
+        { as, allJobs, graph, setters, downloaders, nonDownloaders, removed },
+
+        as          = ConfirmBy[ as0, AssociationQ ];
+        allJobs     = ConfirmBy[ as[ "jobs" ], AssociationQ ];
+        graph       = ConfirmBy[ jobGraph @ as, GraphQ ];
+        setters     = Keys @ Select[ allJobs, jobSetsWFValuesQ ];
+
+        downloaders = Union @ Flatten[
+            DeleteCases[ VertexOutComponent[ graph, # ], # ] & /@ setters
+        ];
+
+        nonDownloaders = KeyTake[
+            allJobs,
+            Complement[ Keys @ allJobs, downloaders ]
+        ];
+
+        removed = DeleteCases[
+            nonDownloaders,
+            KeyValuePattern[ "id" -> "download-workflow-values-step" ],
+            { 3 }
+        ];
+
+        as[ "jobs" ] = KeyTake[ Join[ allJobs, removed ], Keys @ allJobs ];
+
+        as
+    ];
+
+checkWFDownload[ as_, Automatic ] := as;
+checkWFDownload[ as_, True      ] := as;
+
+checkWFDownload[ as_, False ] :=
+    DeleteCases[
+        as,
+        KeyValuePattern[ "id" -> "download-workflow-values-step" ],
+        { 4 }
+    ];
+
+checkWFDownload // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*jobSetsWFValuesQ*)
+jobSetsWFValuesQ[ job: KeyValuePattern[ "steps" -> steps_ ] ] :=
+    jobSetsWFValuesQ[ job, steps ];
+
+jobSetsWFValuesQ[
+    _,
+    { ___, _? stepSetsWFValuesQ, ___, _? stepUploadsWFValuesQ, ___ }
+] := True;
+
+jobSetsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepSetsWFValuesQ*)
+stepSetsWFValuesQ[ step: KeyValuePattern[ "uses" -> uses_ ] ] :=
+    stepSetsWFValuesQ[ step, uses ];
+
+stepSetsWFValuesQ[ step_, uses_String ] :=
+    stepNameSetsWFValuesQ @ First @ StringSplit[ uses, "@" ];
+
+stepSetsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepNameSetsWFValuesQ*)
+stepNameSetsWFValuesQ[ "WolframResearch/build-paclet"  ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/check-paclet"  ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/test-paclet"   ] := True;
+stepNameSetsWFValuesQ[ "WolframResearch/submit-paclet" ] := True;
+stepNameSetsWFValuesQ[ ___                             ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*stepUploadsWFValuesQ*)
+stepUploadsWFValuesQ[ KeyValuePattern @ {
+    "uses" -> _? uploadArtifactStepNameQ,
+    "with" -> KeyValuePattern @ {
+        "name" -> "paclet-workflow-values",
+        "path" -> "${{ env.PACLET_WORKFLOW_VALUES }}"
+    }
+} ] := True;
+
+stepUploadsWFValuesQ[ ___ ] := False;
+
+(* ::**********************************************************************:: *)
+(* ::Subsubsubsection::Closed:: *)
+(*uploadArtifactStepNameQ*)
+uploadArtifactStepNameQ[ name_String ] :=
+    First @ StringSplit[ name, "@" ] === "actions/upload-artifact";
+
+uploadArtifactStepNameQ[ ___ ] := False;
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -506,7 +627,7 @@ WorkflowJob[
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*File*)
-WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
+WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ withOS[ OptionValue @ OperatingSystem,
         Module[ { name },
             name = FileBaseName @ file;
@@ -516,20 +637,21 @@ WorkflowJob[ File[ file_String ], opts: OptionsPattern[ ] ] :=
                     "runs-on"   -> $defaultRunner,
                     "container" -> $defaultJobContainer,
                     "env"       -> $defaultJobEnv,
-                    "Steps"     -> workflowFileSteps @ file
+                    "Steps"     -> workflowFileSteps @ file,
+                    as
                 |>,
                 opts
             ]
         ]
     ];
 
-WorkflowJob[ File[ file_String ], as_Association, opts: OptionsPattern[ ] ] :=
-    WorkflowJob[ WorkflowJob[ File @ file, opts ], as, opts ];
+WorkflowJob[ file: File[ _String ], opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ file, <| |>, opts ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*List of Steps*)
-WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
+WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ withOS[
         OptionValue @ OperatingSystem,
         WorkflowJob[
@@ -538,18 +660,22 @@ WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
                 "runs-on"   -> $defaultRunner,
                 "container" -> $defaultJobContainer,
                 "env"       -> $defaultJobEnv,
-                "Steps"     -> steps
+                "Steps"     -> steps,
+                as
             |>,
             opts
         ]
     ];
 
-WorkflowJob[ steps_List, as_Association, opts: OptionsPattern[ ] ] :=
+WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
     WorkflowJob[
         WorkflowJob[ steps, opts ],
         Prepend[ as, "Steps" -> steps ],
         opts
     ];
+
+WorkflowJob[ steps_List, opts: OptionsPattern[ ] ] :=
+    WorkflowJob[ steps, <| |>, opts ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
@@ -691,12 +817,19 @@ workflowFileSteps[ file_ ] := workflowFileSteps[ file, $defaultOS ];
 
 workflowFileSteps[ file_String, "Windows-x86-64"|"MacOSX-x86-64" ] := {
     "Checkout",
+    "DownloadWorkflowValues",
     "RestoreCachedWolframEngine",
     "InstallWolframEngine",
-    File @ file
+    File @ file,
+    "UploadWorkflowValues"
 };
 
-workflowFileSteps[ file_String, _ ] := { "Checkout", File @ file };
+workflowFileSteps[ file_String, _ ] := {
+    "Checkout",
+    "DownloadWorkflowValues",
+    File @ file,
+    "UploadWorkflowValues"
+};
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -986,15 +1119,81 @@ $wolframScriptRunEnv /; True := <| |>;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeRunString*)
-makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := "\
-export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -debug -verbose -script " <> file;
+makeRunString[ file_String ] /; $defaultOS === "MacOSX-x86-64" := joinLines[
+    "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
+    installPacletManagerString[ "MacOSX-x86-64" ],
+    "wolframscript -runfirst " <> $macSetScriptEnv <> " -script " <> file
+];
 
-makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := "\
-$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
-wolfram -script " <> file;
+makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := joinLines[
+    "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
+    installPacletManagerString[ "Windows-x86-64" ],
+    "wolfram -runfirst " <> $winSetScriptEnv <> " -script " <> file
+];
 
-makeRunString[ file_String ] /; True := "wolframscript " <> file;
+makeRunString[ file_String ] /; True := joinLines[
+    installPacletManagerString[ ],
+    "wolframscript " <> file
+];
+
+
+$winSetScriptEnv = "'\
+Unprotect[$EvaluationEnvironment];\
+$EvaluationEnvironment=\\\"Script\\\";\
+Protect[$EvaluationEnvironment]\
+'";
+
+$macSetScriptEnv = "'CompoundExpression[\
+Unprotect[\\$EvaluationEnvironment],\
+Set[\\$EvaluationEnvironment,SymbolName[Script]],\
+Protect[\\$EvaluationEnvironment]\
+]'";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*installPacletManagerString*)
+installPacletManagerString[ ] := installPacletManagerString @ $defaultOS;
+
+installPacletManagerString[ "Windows-x86-64" ] := "\
+if (\"${{ env.WLPR_PACLET_SITE }}\") {
+    echo 'Updating paclet sites...'
+    wolfram -noprompt -run " <> $winPacSiteSetup <> "
+}";
+
+installPacletManagerString[ "MacOSX-x86-64" ] := "\
+if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\"; then
+    echo 'Updating paclet sites...';
+    wolframscript -code " <> $pacSiteSetup <> " > /dev/null;
+fi";
+
+installPacletManagerString[ _ ] := "\
+if [ \"${{ env.WLPR_PACLET_SITE }}\" != \"\" ]
+then
+    echo 'Updating paclet sites...'
+    wolframscript -code " <> $pacSiteSetup <> " > /dev/null
+fi";
+
+installPacletManagerString // catchUndefined;
+
+$winPacSiteSetup = "'\
+PacletInstall[\\\"PacletManager\\\"];\
+PacletSiteRegister[\\\"${{ env.WLPR_PACLET_SITE }}\\\"];\
+PacletSiteUpdate[PacletSites[]];\
+Quit[]\
+'";
+
+$pacSiteSetup = "'\
+PacletInstall[\"PacletManager\"];\
+PacletSiteRegister[\"${{ env.WLPR_PACLET_SITE }}\"];\
+PacletSiteUpdate[PacletSites[]];\
+Quit[]\
+'";
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*joinLines*)
+joinLines[ lines___String ] := StringRiffle[ { lines }, "\n" ];
+joinLines // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
@@ -1007,10 +1206,13 @@ makeEvaluateString[ File[ file_String ] ] := makeRunString @ file;
 
 makeEvaluateString[ code_ ] :=
     Block[ { $Context = "System`", $ContextPath = { "System`" } },
-        StringJoin[
-            "wolframscript -code '",
-            ToString[ Unevaluated @ code, InputForm ],
-            "'"
+        joinLines[
+            installPacletManagerString[ ],
+            StringJoin[
+                "wolframscript -code '",
+                ToString[ Unevaluated @ code, InputForm ],
+                "'"
+            ]
         ]
     ];
 
@@ -1387,7 +1589,7 @@ $namedWorkflows := <|
     "Release" -> <|
         "name"        -> "Release",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
@@ -1402,7 +1604,7 @@ $namedWorkflows := <|
     "Build" -> <|
         "name"        -> "Build",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1414,7 +1616,7 @@ $namedWorkflows := <|
     "Check" -> <|
         "name"        -> "Check",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1426,7 +1628,7 @@ $namedWorkflows := <|
     "Test" -> <|
         "name"        -> "Test",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1438,7 +1640,7 @@ $namedWorkflows := <|
     "Submit" -> <|
         "name"        -> "Submit",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> { "release/*" } |>,
             "workflow_dispatch" -> True
@@ -1449,7 +1651,7 @@ $namedWorkflows := <|
     "Compile" -> <|
         "name"        -> "Compile",
         "concurrency" -> $concurrency,
-        "env"         -> $defaultJobEnv,
+        "env"         -> $defaultWorkflowEnv,
         "on"          -> <|
             "push"              -> <| "branches" -> $defaultBranch |>,
             "pull_request"      -> <| "branches" -> $defaultBranch |>,
@@ -1893,7 +2095,7 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
 
 normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
     "name"            -> "Compile (MacOSX-x86-64)",
-    "runs-on"         -> "macos-latest",
+    "runs-on"         -> "macos-12",
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
     "steps" -> {
@@ -2020,9 +2222,11 @@ windowsCompileStep[ as_ ] := <|
         "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "'${{ runner.temp }}\\WolframEngine'",
         "WOLFRAMINIT" -> "\"-pwfile !cloudlm.wolfram.com -entitlement ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}\""
     |>,
-    "run" -> "\
-$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'
-wolfram -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run" -> joinLines[
+        "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
+        installPacletManagerString[ ],
+        "wolfram -runfirst " <> $winSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2065,7 +2269,15 @@ $macInstallWLStep := <|
 
 $macInstallWLString = "\
 echo 'Installing Wolfram Engine...'
-brew install --cask wolfram-engine
+DOWNLOAD_FILE=\"${{ env.WOLFRAMENGINE_DOWNLOAD_PATH }}/WolframEngine.dmg\"
+mkdir -p \"${{ env.WOLFRAMENGINE_DOWNLOAD_PATH }}\"
+curl ${{ env.WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL }} -o $DOWNLOAD_FILE -s
+hdiutil attach $DOWNLOAD_FILE -nobrowse
+DMG_MOUNT_POINT=\"$(hdiutil info | grep \"Wolfram Engine\" | awk '{ print $1 }')\"
+DMG_VOLUME=\"$(hdiutil info | grep \"Wolfram Engine\" | awk '{$1=$2=\"\"; print $0}' | xargs)\"
+APP_PATH=\"$DMG_VOLUME/$(ls \"$DMG_VOLUME\" | grep .app)\"
+cp -R \"$APP_PATH\" \"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\"
+hdiutil detach $DMG_MOUNT_POINT
 echo 'Installed Wolfram Engine.'";
 
 (* ::**********************************************************************:: *)
@@ -2077,9 +2289,11 @@ macCompileStep[ as_ ] := <|
         "WOLFRAMENGINE_EXECUTABLES_DIRECTORY" -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/Resources/Wolfram Player.app/Contents/MacOS\"",
         "WOLFRAMSCRIPT_KERNELPATH"            -> "\"${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}/Contents/MacOS/WolframKernel\""
     |>,
-    "run" -> "\
-export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"
-wolframscript -debug -verbose -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run" -> joinLines[
+        "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
+        installPacletManagerString[ ],
+        "wolframscript -runfirst " <> $macSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2128,7 +2342,10 @@ apt-get -y install build-essential"
 (*linuxCompileStep*)
 linuxCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
-    "run"  -> "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    "run"  -> joinLines[
+        installPacletManagerString[ ],
+        "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+    ]
 |>;
 
 (* ::**********************************************************************:: *)
@@ -2182,7 +2399,7 @@ $compilationTargets = { "Windows-x86-64", "MacOSX-x86-64", "Linux-x86-64" };
 $defaultJobContainer :=
     If[ $defaultOS === "Linux-x86-64",
         <|
-            "image"   -> "wolframresearch/wolframengine:latest",
+            "image"   -> "wolframresearch/wolframengine:13.0.1",
             "options" -> "--user root"
         |>,
         $noValue
@@ -2190,27 +2407,32 @@ $defaultJobContainer :=
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*$defaultWorkflowEnv*)
+$defaultWorkflowEnv := takeEnvStrings @ <|
+    "RESOURCE_PUBLISHER_TOKEN"    -> $publisherToken,
+    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
+    "WLPR_PACLET_SITE"            -> "https://resources.wolframcloud.com/PacletRepository/pacletsite"
+|>;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*$defaultJobEnv*)
 $defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := takeEnvStrings @ <|
-    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "RESOURCE_PUBLISHER_TOKEN"             -> $publisherToken,
-    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+    "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
+    "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
+    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\""
 |>;
 
 $defaultJobEnv /; $defaultOS === "Windows-x86-64" := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "RESOURCE_PUBLISHER_TOKEN"               -> $publisherToken,
-    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A"
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
+    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi"
 |>;
 
 $defaultJobEnv /; True := takeEnvStrings @ <|
-    "WOLFRAM_SYSTEM_ID"           -> "Linux-x86-64",
-    "WOLFRAMSCRIPT_ENTITLEMENTID" -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "RESOURCE_PUBLISHER_TOKEN"    -> $publisherToken
+    "WOLFRAM_SYSTEM_ID" -> "Linux-x86-64"
 |>;
 
 takeEnvStrings[ as_ ] :=
@@ -2854,7 +3076,7 @@ toDefaultOS // catchUndefined;
 toDefaultRunner[ Automatic                      ] := $defaultRunner;
 toDefaultRunner[ "Linux"|"Unix"|"Linux-x86-64"  ] := "ubuntu-latest";
 toDefaultRunner[ "Windows"|"Windows-x86-64"     ] := "windows-latest";
-toDefaultRunner[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "macos-latest";
+toDefaultRunner[ "Mac"|"MacOSX"|"MacOSX-x86-64" ] := "macos-12";
 
 toDefaultRunner[ s_String? StringQ ] :=
     Module[ { startsWith },
@@ -2928,8 +3150,8 @@ macRunner[ spec_String ] :=
 macRunner // catchUndefined;
 
 macRunner0[ "mac"|"macosx", a___ ] := macRunner0[ "macos", a ];
-macRunner0[ "macos" ] := "macos-latest";
-macRunner0[ "macos", "latest" ] := "macos-latest";
+macRunner0[ "macos" ] := "macos-12";
+macRunner0[ "macos", "latest" ] := "macos-12";
 macRunner0[ "macos", version_String ] := "macos-" <> version;
 
 (* ::**********************************************************************:: *)

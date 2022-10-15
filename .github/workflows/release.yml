@@ -21,15 +21,16 @@ jobs:
       image: wolframresearch/wolframengine:latest
       options: --user root
     timeout-minutes: 10
+
     steps:
       - name: Checkout files
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Check paclet
-        run: wolframscript Scripts/CheckPaclet.wls
+        run: bash Scripts/RunScript.sh CheckPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
@@ -55,15 +56,16 @@ jobs:
       image: wolframresearch/wolframengine:latest
       options: --user root
     timeout-minutes: 10
+
     steps:
       - name: Checkout files
         uses: actions/checkout@v3
 
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Build paclet
-        run: wolframscript Scripts/BuildPaclet.wls
+        run: bash Scripts/RunScript.sh BuildPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
@@ -117,7 +119,7 @@ jobs:
           path: MXBuild
 
       - name: Test paclet
-        run: wolframscript Scripts/TestPaclet.wls
+        run: bash Scripts/RunScript.sh TestPaclet.wls
       
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
@@ -323,7 +325,7 @@ jobs:
           path: Release
 
       - name: Set release parameters
-        run: wolframscript Scripts/SetReleaseParameters.wls
+        run: bash Scripts/RunScript.sh SetReleaseParameters.wls
       
       - name: Create release
         id: create_release
@@ -376,10 +378,10 @@ jobs:
           path: .paclet-workflow-values
         
       - name: Build paclet MX
-        run: wolframscript Scripts/BuildPacletMX.wls
+        run: bash Scripts/RunScript.sh BuildPacletMX.wls
 
       - name: Submit paclet
-        run: wolframscript Scripts/SubmitPaclet.wls
+        run: bash Scripts/RunScript.sh SubmitPaclet.wls
 
       - name: Upload stack data
         if: always() && env.PACLET_STACK_HISTORY
