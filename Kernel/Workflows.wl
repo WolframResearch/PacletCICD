@@ -2224,7 +2224,7 @@ windowsCompileStep[ as_ ] := <|
     |>,
     "run" -> joinLines[
         "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
-        installPacletManagerString[ ],
+        installPacletManagerString[ "Windows-x86-64" ],
         "wolfram -runfirst " <> $winSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
@@ -2291,7 +2291,7 @@ macCompileStep[ as_ ] := <|
     |>,
     "run" -> joinLines[
         "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
-        installPacletManagerString[ ],
+        installPacletManagerString[ "MacOSX-x86-64" ],
         "wolframscript -runfirst " <> $macSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
@@ -2343,7 +2343,7 @@ apt-get -y install build-essential"
 linuxCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
     "run"  -> joinLines[
-        installPacletManagerString[ ],
+        installPacletManagerString[ "Linux-x86-64" ],
         "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
