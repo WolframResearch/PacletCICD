@@ -2079,7 +2079,7 @@ normalizeCompilationJob[ sys_String, name_String, as_Association ] :=
 normalizeCompilationJob // catchUndefined;
 
 normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
-    "name"            -> "Compile (Windows-x86-64)",
+    "name"            -> "Compile-Windows-x86-64",
     "runs-on"         -> "windows-latest",
     "env"             -> compilationEnv[ "Windows-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
@@ -2094,7 +2094,7 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
 |>;
 
 normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
-    "name"            -> "Compile (MacOSX-x86-64)",
+    "name"            -> "Compile-MacOSX-x86-64",
     "runs-on"         -> "macos-12",
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
@@ -2109,7 +2109,7 @@ normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
 |>;
 
 normalizeCompilationJob0[ "Linux-x86-64", as_Association ] := <|
-    "name"            -> "Compile (Linux-x86-64)",
+    "name"            -> "Compile-Linux-x86-64",
     "runs-on"         -> "ubuntu-latest",
     "container"       -> $defaultJobContainer,
     "env"             -> compilationEnv[ "Linux-x86-64" ],
