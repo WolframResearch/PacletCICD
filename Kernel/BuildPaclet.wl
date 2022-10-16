@@ -280,7 +280,11 @@ pacletToolsMessageFix[ eval_ ] := (
             eval,
             {
                 FileHash::noopen,
-                DocumentationBuild`DocumentationBuild::warning
+                DocumentationBuild`DocumentationBuild::warning,
+                DocumentationBuild`Info`GetNotebookHistoryData::notfound,
+                DocumentationBuild`Utils`CreateInputForm::err,
+                DocumentationBuild`Utils`CreateInputForm::str,
+                DocumentationBuild`Utils`Localized::nokey
             }
         ]
     ]
