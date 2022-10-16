@@ -125,6 +125,12 @@ actionCodeLabel[ code_String ] :=
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*actionCommandLabel*)
+$$pacSiteTest = Alternatives[
+    "if (\"${{ env.WLPR_PACLET_SITE }}\") {",
+    "if [ \"${{ env.WLPR_PACLET_SITE }}\" != \"\" ]",
+    "if test \"${{ env.WLPR_PACLET_SITE }}\" != \"\"; then"
+];
+
 actionCommandLabel[ { code_String } ] :=
     If[ StringLength[ code ] < 40,
         { BoxForm`SummaryItem @ { "Command: ", code } },
@@ -134,7 +140,10 @@ actionCommandLabel[ { code_String } ] :=
         } }
     ];
 
-actionCommandLabel @ { code_String, rest__ } := {
+actionCommandLabel[ { $$pacSiteTest, Except[ "fi" ].., "fi", cmd__String } ] :=
+    actionCommandLabel @ { cmd };
+
+actionCommandLabel[ { code_String, rest__ } ] := {
     BoxForm`SummaryItem @ {
         "Command: ",
         Tooltip[

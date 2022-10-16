@@ -167,7 +167,7 @@ Workflow[ as_Association, opts: OptionsPattern[ ] ] :=
     catchTop @ Module[ { new, id },
         new = makeWorkflowData @ as;
         (* TODO: write a getWorkFlowID function *)
-        id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+        id = First[ KeyTake[ new, { "name", "id" } ], CreateUUID[ ] ];
         Workflow[ id, new, opts ]
     ];
 
@@ -599,7 +599,7 @@ WorkflowJob[ as_Association, opts: OptionsPattern[ ] ] :=
         OptionValue @ OperatingSystem,
         Module[ { new, id },
             new = makeWorkflowJobData @ Association[ as, opts ];
-            id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+            id = First[ KeyTake[ new, { "name", "id" } ], CreateUUID[ ] ];
             WorkflowJob[ id, new ]
         ]
     ];
@@ -911,7 +911,7 @@ WorkflowStep[ as_Association, opts: OptionsPattern[ ] ] :=
         Module[ { new, id },
             new = makeWorkflowStepData @ <| as, opts |>;
             (* TODO: write a getWorkFlowID function *)
-            id = First[ KeyTake[ new, { "id", "name" } ], CreateUUID[ ] ];
+            id = First[ KeyTake[ new, { "name", "id" } ], CreateUUID[ ] ];
             WorkflowStep[ id, new ]
         ];
 
@@ -1271,6 +1271,10 @@ WorkflowExport // Options = {
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*Main definition*)
+(* FIXME: this should not be necessary *)
+WorkflowExport[ pac_, wf_Workflow? workflowQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ exportWorkflow[ pac, wf, opts ];
+
 WorkflowExport[ pac_, spec_, opts: OptionsPattern[ ] ] :=
     catchTop @ exportWorkflow[ pac, Workflow[ spec, <| |>, opts ] ];
 
@@ -2079,7 +2083,7 @@ normalizeCompilationJob[ sys_String, name_String, as_Association ] :=
 normalizeCompilationJob // catchUndefined;
 
 normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
-    "name"            -> "Compile (Windows-x86-64)",
+    "name"            -> "Compile-Windows-x86-64",
     "runs-on"         -> "windows-latest",
     "env"             -> compilationEnv[ "Windows-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
@@ -2094,7 +2098,7 @@ normalizeCompilationJob0[ "Windows-x86-64", as_Association ] := <|
 |>;
 
 normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
-    "name"            -> "Compile (MacOSX-x86-64)",
+    "name"            -> "Compile-MacOSX-x86-64",
     "runs-on"         -> "macos-12",
     "env"             -> compilationEnv[ "MacOSX-x86-64" ],
     "timeout-minutes" -> $timeConstraint,
@@ -2109,7 +2113,7 @@ normalizeCompilationJob0[ "MacOSX-x86-64", as_Association ] := <|
 |>;
 
 normalizeCompilationJob0[ "Linux-x86-64", as_Association ] := <|
-    "name"            -> "Compile (Linux-x86-64)",
+    "name"            -> "Compile-Linux-x86-64",
     "runs-on"         -> "ubuntu-latest",
     "container"       -> $defaultJobContainer,
     "env"             -> compilationEnv[ "Linux-x86-64" ],
@@ -2130,7 +2134,7 @@ normalizeCompilationJob0 // catchUndefined;
 (*buildCompiledPacletJob*)
 buildCompiledPacletJob[ as_Association ] :=
     "BuildPaclet" -> <|
-        "name"            -> "Build Paclet",
+        "name"            -> "BuildPaclet",
         "runs-on"         -> "ubuntu-latest",
         "container"       -> $defaultJobContainer,
         "env"             -> $defaultJobEnv,
@@ -2224,7 +2228,7 @@ windowsCompileStep[ as_ ] := <|
     |>,
     "run" -> joinLines[
         "$env:Path += ';${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}\\'",
-        installPacletManagerString[ ],
+        installPacletManagerString[ "Windows-x86-64" ],
         "wolfram -runfirst " <> $winSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
@@ -2291,7 +2295,7 @@ macCompileStep[ as_ ] := <|
     |>,
     "run" -> joinLines[
         "export PATH=\"${{ env.WOLFRAMENGINE_EXECUTABLES_DIRECTORY }}:$PATH\"",
-        installPacletManagerString[ ],
+        installPacletManagerString[ "MacOSX-x86-64" ],
         "wolframscript -runfirst " <> $macSetScriptEnv <> " -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
@@ -2343,7 +2347,7 @@ apt-get -y install build-essential"
 linuxCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
     "run"  -> joinLines[
-        installPacletManagerString[ ],
+        installPacletManagerString[ "Linux-x86-64" ],
         "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
@@ -2364,21 +2368,23 @@ linuxUploadCompiledStep[ as_ ] := <|
 (* ::Subsection::Closed:: *)
 (*compilationEnv*)
 compilationEnv[ "Windows-x86-64" ] := <|
-    "WOLFRAMSCRIPT_ENTITLEMENTID"             -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "WOLFRAM_LIBRARY_BUILD_SCRIPT"            -> "./Scripts/Compile.wls",
     "WOLFRAM_LIBRARY_BUILD_OUTPUT"            -> "LibraryResources/",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"            -> "./Scripts/Compile.wls",
     "WOLFRAM_SYSTEM_ID"                       -> "Windows-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A",
     "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL"  -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A"
+    "WOLFRAMSCRIPT_ENTITLEMENTID"             -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 compilationEnv[ "MacOSX-x86-64" ] := <|
-    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "WOLFRAM_LIBRARY_BUILD_SCRIPT"         -> "./Scripts/Compile.wls",
-    "WOLFRAM_LIBRARY_BUILD_OUTPUT"         -> "LibraryResources/",
-    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
-    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+    "WOLFRAM_LIBRARY_BUILD_OUTPUT"           -> "LibraryResources/",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"           -> "./Scripts/Compile.wls",
+    "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
+    "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
+    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\"",
+    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 compilationEnv[ "Linux-x86-64" ] := <|

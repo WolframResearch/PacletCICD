@@ -282,7 +282,7 @@ VerificationTest[
         "Check",
         <| "Needs" -> "OtherJob" |>
     ][ "Steps" ],
-    { ___, "download-workflow-values-step", ___, "check-paclet-step", ___ },
+    { ___, "DownloadWorkflowValues", ___, "Check", ___ },
     SameTest -> MatchQ,
     TestID   -> "DownloadWorkflowValues-1@@Tests/Workflows.wlt:280,1-288,2"
 ]
@@ -293,7 +293,7 @@ VerificationTest[
         <| "Needs" -> "OtherJob" |>,
         "DownloadWorkflowValues" -> False
     ][ "Steps" ],
-    { Except[ "download-workflow-values-step" ]..., "check-paclet-step", ___ },
+    { Except[ "DownloadWorkflowValues" ]..., "Check", ___ },
     SameTest -> MatchQ,
     TestID   -> "DownloadWorkflowValues-2@@Tests/Workflows.wlt:290,1-299,2"
 ]
@@ -304,7 +304,7 @@ VerificationTest[
         <| "Needs" -> "OtherJob" |>,
         "DownloadWorkflowValues" -> Automatic
     ][ "Steps" ],
-    { ___, "download-workflow-values-step", ___, "check-paclet-step", ___ },
+    { ___, "DownloadWorkflowValues", ___, "Check", ___ },
     SameTest -> MatchQ,
     TestID   -> "DownloadWorkflowValues-3@@Tests/Workflows.wlt:301,1-310,2"
 ]
@@ -314,7 +314,7 @@ VerificationTest[
         "Check",
         "DownloadWorkflowValues" -> Automatic
     ][ "Steps" ],
-    { Except[ "download-workflow-values-step" ]..., "check-paclet-step", ___ },
+    { Except[ "DownloadWorkflowValues" ]..., "Check", ___ },
     SameTest -> MatchQ,
     TestID   -> "DownloadWorkflowValues-4@@Tests/Workflows.wlt:312,1-320,2"
 ]

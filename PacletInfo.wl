@@ -6,7 +6,7 @@ PacletObject[ <|
     "SourceControlURL" -> "https://github.com/WolframResearch/PacletCICD",
     "License"          -> "MIT",
     "PublisherID"      -> "Wolfram",
-    "Version"          -> "0.33.1",
+    "Version"          -> "0.33.2",
     "WolframVersion"   -> "13.0+",
     "ReleaseID"        -> "$RELEASE_ID$",
     "ReleaseDate"      -> "$RELEASE_DATE$",
