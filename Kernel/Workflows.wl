@@ -2364,21 +2364,23 @@ linuxUploadCompiledStep[ as_ ] := <|
 (* ::Subsection::Closed:: *)
 (*compilationEnv*)
 compilationEnv[ "Windows-x86-64" ] := <|
-    "WOLFRAMSCRIPT_ENTITLEMENTID"             -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "WOLFRAM_LIBRARY_BUILD_SCRIPT"            -> "./Scripts/Compile.wls",
     "WOLFRAM_LIBRARY_BUILD_OUTPUT"            -> "LibraryResources/",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"            -> "./Scripts/Compile.wls",
     "WOLFRAM_SYSTEM_ID"                       -> "Windows-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A",
     "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL"  -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi",
-    "WOLFRAMENGINE_CACHE_KEY"                 -> "WolframEngine-A"
+    "WOLFRAMSCRIPT_ENTITLEMENTID"             -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 compilationEnv[ "MacOSX-x86-64" ] := <|
-    "WOLFRAMSCRIPT_ENTITLEMENTID"          -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}",
-    "WOLFRAM_LIBRARY_BUILD_SCRIPT"         -> "./Scripts/Compile.wls",
-    "WOLFRAM_LIBRARY_BUILD_OUTPUT"         -> "LibraryResources/",
-    "WOLFRAM_SYSTEM_ID"                    -> "MacOSX-x86-64",
-    "WOLFRAMENGINE_CACHE_KEY"              -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALLATION_DIRECTORY" -> "\"/Applications/Wolfram Engine.app\""
+    "WOLFRAM_LIBRARY_BUILD_OUTPUT"           -> "LibraryResources/",
+    "WOLFRAM_LIBRARY_BUILD_SCRIPT"           -> "./Scripts/Compile.wls",
+    "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
+    "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
+    "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
+    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
+    "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\"",
+    "WOLFRAMSCRIPT_ENTITLEMENTID"            -> "${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}"
 |>;
 
 compilationEnv[ "Linux-x86-64" ] := <|
