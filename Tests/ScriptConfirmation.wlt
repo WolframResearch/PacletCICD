@@ -13,7 +13,7 @@ VerificationTest[
                 If[ DirectoryQ @ mx, mx, root ]
             ]
     ],
-    TestID -> "Initialize-PacletObject"
+    TestID -> "Initialize-PacletObject@@Tests/ScriptConfirmation.wlt:7,1-17,2"
 ]
 
 VerificationTest[
@@ -21,13 +21,13 @@ VerificationTest[
     PacletDirectoryLoad @ Echo[ $pacletDir, "PacletDirectory" ],
     { ___, $pacletDir, ___ },
     SameTest -> MatchQ,
-    TestID   -> "Initialize-PacletDirectoryLoad"
+    TestID   -> "Initialize-PacletDirectoryLoad@@Tests/ScriptConfirmation.wlt:19,1-25,2"
 ]
 
 VerificationTest[
     Needs[ "Wolfram`PacletCICD`" ],
     Null,
-    TestID -> "Initialize-Paclet-Needs"
+    TestID -> "Initialize-Paclet-Needs@@Tests/ScriptConfirmation.wlt:27,1-31,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -36,25 +36,25 @@ VerificationTest[
 VerificationTest[
     Context @ ScriptConfirm,
     "Wolfram`PacletCICD`",
-    TestID -> "ScriptConfirm-Context"
+    TestID -> "ScriptConfirm-Context@@Tests/ScriptConfirmation.wlt:36,1-40,2"
 ]
 
 VerificationTest[
     Context @ ScriptConfirmAssert,
     "Wolfram`PacletCICD`",
-    TestID -> "ScriptConfirmAssert-Context"
+    TestID -> "ScriptConfirmAssert-Context@@Tests/ScriptConfirmation.wlt:42,1-46,2"
 ]
 
 VerificationTest[
     Context @ ScriptConfirmBy,
     "Wolfram`PacletCICD`",
-    TestID -> "ScriptConfirmBy-Context"
+    TestID -> "ScriptConfirmBy-Context@@Tests/ScriptConfirmation.wlt:48,1-52,2"
 ]
 
 VerificationTest[
     Context @ ScriptConfirmMatch,
     "Wolfram`PacletCICD`",
-    TestID -> "ScriptConfirmMatch-Context"
+    TestID -> "ScriptConfirmMatch-Context@@Tests/ScriptConfirmation.wlt:54,1-58,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -99,7 +99,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-1"
+    TestID   -> "ScriptConfirm-1@@Tests/ScriptConfirmation.wlt:89,1-103,2"
 ]
 
 VerificationTest[
@@ -109,7 +109,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-2"
+    TestID   -> "ScriptConfirm-2@@Tests/ScriptConfirmation.wlt:105,1-113,2"
 ]
 
 VerificationTest[
@@ -121,7 +121,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-3"
+    TestID   -> "ScriptConfirm-3@@Tests/ScriptConfirmation.wlt:115,1-125,2"
 ]
 
 VerificationTest[
@@ -136,7 +136,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-4"
+    TestID   -> "ScriptConfirm-4@@Tests/ScriptConfirmation.wlt:127,1-140,2"
 ]
 
 VerificationTest[
@@ -157,7 +157,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-5"
+    TestID   -> "ScriptConfirm-5@@Tests/ScriptConfirmation.wlt:142,1-161,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -177,7 +177,7 @@ VerificationTest[
     },
     { ScriptConfirm::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-6"
+    TestID   -> "ScriptConfirm-6@@Tests/ScriptConfirmation.wlt:166,1-181,2"
 ]
 
 VerificationTest[
@@ -185,7 +185,7 @@ VerificationTest[
     Failure[ "ScriptConfirm::ArgumentCount", _Association ],
     { ScriptConfirm::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-7"
+    TestID   -> "ScriptConfirm-7@@Tests/ScriptConfirmation.wlt:183,1-189,2"
 ]
 
 VerificationTest[
@@ -193,7 +193,7 @@ VerificationTest[
     Failure[ "ScriptConfirm::ArgumentCount", _Association ],
     { ScriptConfirm::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-8"
+    TestID   -> "ScriptConfirm-8@@Tests/ScriptConfirmation.wlt:191,1-197,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -212,7 +212,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-1"
+    TestID   -> "ScriptConfirmAssert-1@@Tests/ScriptConfirmation.wlt:202,1-216,2"
 ]
 
 VerificationTest[
@@ -222,7 +222,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-2"
+    TestID   -> "ScriptConfirmAssert-2@@Tests/ScriptConfirmation.wlt:218,1-226,2"
 ]
 
 VerificationTest[
@@ -237,7 +237,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-3"
+    TestID   -> "ScriptConfirmAssert-3@@Tests/ScriptConfirmation.wlt:228,1-241,2"
 ]
 
 VerificationTest[
@@ -252,7 +252,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-4"
+    TestID   -> "ScriptConfirmAssert-4@@Tests/ScriptConfirmation.wlt:243,1-256,2"
 ]
 
 VerificationTest[
@@ -273,7 +273,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-5"
+    TestID   -> "ScriptConfirmAssert-5@@Tests/ScriptConfirmation.wlt:258,1-277,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -293,7 +293,7 @@ VerificationTest[
     },
     { ScriptConfirmAssert::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-6"
+    TestID   -> "ScriptConfirmAssert-6@@Tests/ScriptConfirmation.wlt:282,1-297,2"
 ]
 
 VerificationTest[
@@ -301,7 +301,7 @@ VerificationTest[
     Failure[ "ScriptConfirmAssert::ArgumentCount", _Association ],
     { ScriptConfirmAssert::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-7"
+    TestID   -> "ScriptConfirmAssert-7@@Tests/ScriptConfirmation.wlt:299,1-305,2"
 ]
 
 VerificationTest[
@@ -309,7 +309,7 @@ VerificationTest[
     Failure[ "ScriptConfirmAssert::ArgumentCount", _Association ],
     { ScriptConfirmAssert::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-8"
+    TestID   -> "ScriptConfirmAssert-8@@Tests/ScriptConfirmation.wlt:307,1-313,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -328,7 +328,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-1"
+    TestID   -> "ScriptConfirmBy-1@@Tests/ScriptConfirmation.wlt:318,1-332,2"
 ]
 
 VerificationTest[
@@ -338,7 +338,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-2"
+    TestID   -> "ScriptConfirmBy-2@@Tests/ScriptConfirmation.wlt:334,1-342,2"
 ]
 
 VerificationTest[
@@ -353,7 +353,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-3"
+    TestID   -> "ScriptConfirmBy-3@@Tests/ScriptConfirmation.wlt:344,1-357,2"
 ]
 
 VerificationTest[
@@ -368,7 +368,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-4"
+    TestID   -> "ScriptConfirmBy-4@@Tests/ScriptConfirmation.wlt:359,1-372,2"
 ]
 
 VerificationTest[
@@ -389,7 +389,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-5"
+    TestID   -> "ScriptConfirmBy-5@@Tests/ScriptConfirmation.wlt:374,1-393,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -409,7 +409,7 @@ VerificationTest[
     },
     { ScriptConfirmBy::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-6"
+    TestID   -> "ScriptConfirmBy-6@@Tests/ScriptConfirmation.wlt:398,1-413,2"
 ]
 
 VerificationTest[
@@ -417,7 +417,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-7"
+    TestID   -> "ScriptConfirmBy-7@@Tests/ScriptConfirmation.wlt:415,1-421,2"
 ]
 
 VerificationTest[
@@ -425,7 +425,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-8"
+    TestID   -> "ScriptConfirmBy-8@@Tests/ScriptConfirmation.wlt:423,1-429,2"
 ]
 
 VerificationTest[
@@ -433,7 +433,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-9"
+    TestID   -> "ScriptConfirmBy-9@@Tests/ScriptConfirmation.wlt:431,1-437,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -452,7 +452,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-1"
+    TestID   -> "ScriptConfirmMatch-1@@Tests/ScriptConfirmation.wlt:442,1-456,2"
 ]
 
 VerificationTest[
@@ -462,7 +462,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-2"
+    TestID   -> "ScriptConfirmMatch-2@@Tests/ScriptConfirmation.wlt:458,1-466,2"
 ]
 
 VerificationTest[
@@ -477,7 +477,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-3"
+    TestID   -> "ScriptConfirmMatch-3@@Tests/ScriptConfirmation.wlt:468,1-481,2"
 ]
 
 VerificationTest[
@@ -492,7 +492,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-4"
+    TestID   -> "ScriptConfirmMatch-4@@Tests/ScriptConfirmation.wlt:483,1-496,2"
 ]
 
 VerificationTest[
@@ -513,7 +513,7 @@ VerificationTest[
         ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-5"
+    TestID   -> "ScriptConfirmMatch-5@@Tests/ScriptConfirmation.wlt:498,1-517,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -533,7 +533,7 @@ VerificationTest[
     },
     { ScriptConfirmMatch::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-6"
+    TestID   -> "ScriptConfirmMatch-6@@Tests/ScriptConfirmation.wlt:522,1-537,2"
 ]
 
 VerificationTest[
@@ -541,7 +541,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-7"
+    TestID   -> "ScriptConfirmMatch-7@@Tests/ScriptConfirmation.wlt:539,1-545,2"
 ]
 
 VerificationTest[
@@ -549,7 +549,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-8"
+    TestID   -> "ScriptConfirmMatch-8@@Tests/ScriptConfirmation.wlt:547,1-553,2"
 ]
 
 VerificationTest[
@@ -557,7 +557,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-9"
+    TestID   -> "ScriptConfirmMatch-9@@Tests/ScriptConfirmation.wlt:555,1-561,2"
 ]
 
 (* :!CodeAnalysis::EndBlock:: *)
