@@ -790,6 +790,36 @@ expandURL // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*toConsoleString*)
+toConsoleString[ e_ ] :=
+    toConsoleString[ Unevaluated @ e, consoleWidth[ ] ];
+
+toConsoleString[ e_, w_Integer ] :=
+    ToString[ Unevaluated @ Short @ e, PageWidth -> w ];
+
+toConsoleString // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*consoleWidth*)
+consoleWidth[ ] := consoleWidth @ Terminal`ConsoleSize[ ];
+consoleWidth[ { _, w_Integer } ] := w;
+consoleWidth[ _ ] := 80;
+consoleWidth // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*successfulQ*)
+successfulQ[ $Aborted  ] := False;
+successfulQ[ $Canceled ] := False;
+successfulQ[ $Failed   ] := False;
+successfulQ[ _Failure  ] := False;
+successfulQ[ _Missing  ] := False;
+successfulQ[ _         ] := True;
+successfulQ // catchUndefined;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*shortString*)
 shortString[ a___ ] := ToString[ Unevaluated @ Short @ a, PageWidth -> 80 ];
 
@@ -826,6 +856,8 @@ versionOrder[ v1_, v2_ ] :=
         ]
     ];
 
+versionOrder // catchUndefined;
+
 (* ::**********************************************************************:: *)
 (* ::Subsubsection::Closed:: *)
 (*toVersionList*)
@@ -837,6 +869,8 @@ toVersionList[ v_ ] :=
             c: Longest[ LetterCharacter.. ] :> c
         }
     ];
+
+toVersionList // catchUndefined;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
