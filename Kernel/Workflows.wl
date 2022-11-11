@@ -1133,7 +1133,7 @@ makeRunString[ file_String ] /; $defaultOS === "Windows-x86-64" := joinLines[
 
 makeRunString[ file_String ] /; True := joinLines[
     installPacletManagerString[ ],
-    "wolframscript " <> file
+    "wolframscript -f " <> file
 ];
 
 
@@ -1355,10 +1355,10 @@ getRootGitDirectory[ file_ ] := getRootGitDirectory0 @ file;
 
 getRootGitDirectory // catchUndefined;
 
-getRootGitDirectory0[ file_ ] := Enclose[
-    Module[ { dir, dirs, root, nb },
-        dir  = ConfirmBy[ DirectoryName @ file, StringQ ];
-        dirs = FixedPointList[ DirectoryName, dir ];
+getRootGitDirectory0[ file0_ ] := Enclose[
+    Module[ { file, dirs, root, nb },
+        file = ConfirmBy[ ExpandFileName @ file0, StringQ ];
+        dirs = FixedPointList[ DirectoryName, file ];
         root = SelectFirst[ dirs, FileNames[ ".git", # ] =!= { } & ];
         If[ DirectoryQ @ root,
             ConfirmBy[ root, DirectoryQ ],
@@ -2348,7 +2348,7 @@ linuxCompileStep[ as_ ] := <|
     "name" -> "Compile libraries",
     "run"  -> joinLines[
         installPacletManagerString[ "Linux-x86-64" ],
-        "wolframscript -script ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
+        "wolframscript -f ${{ env.WOLFRAM_LIBRARY_BUILD_SCRIPT }}"
     ]
 |>;
 

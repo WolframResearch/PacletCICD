@@ -158,6 +158,14 @@ SetContextLoad[ WorkflowValue           , "WorkflowValue" ];
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
+(*ScriptConfirm*)
+SetContextLoad[ ScriptConfirm      , "ScriptConfirmation" ];
+SetContextLoad[ ScriptConfirmAssert, "ScriptConfirmation" ];
+SetContextLoad[ ScriptConfirmBy    , "ScriptConfirmation" ];
+SetContextLoad[ ScriptConfirmMatch , "ScriptConfirmation" ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
 (*Other*)
 SetContextLoad[ BuildPaclet            , "BuildPaclet"         ];
 SetContextLoad[ CheckDependencies      , "CheckDependencies"   ];
