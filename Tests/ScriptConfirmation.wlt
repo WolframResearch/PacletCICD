@@ -83,6 +83,10 @@ traceSideEffects[ eval_ ] :=
         ]
     ];
 
+printedMessage[ msg_ ] := HoldComplete[
+    (Print|WriteString)[ ___, _String? (StringEndsQ @ msg), ___ ]
+];
+
 (* ::**********************************************************************:: *)
 (* ::Section::Closed:: *)
 (*ScriptConfirm*)
@@ -90,16 +94,10 @@ VerificationTest[
     traceSideEffects[ ScriptConfirm @ $Failed, "Script" ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirm: $Failed encountered.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirm: $Failed encountered." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-1@@Tests/ScriptConfirmation.wlt:89,1-103,2"
+    TestID   -> "ScriptConfirm-1@@Tests/ScriptConfirmation.wlt:93,1-101,2"
 ]
 
 VerificationTest[
@@ -109,19 +107,17 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-2@@Tests/ScriptConfirmation.wlt:105,1-113,2"
+    TestID   -> "ScriptConfirm-2@@Tests/ScriptConfirmation.wlt:103,1-111,2"
 ]
 
 VerificationTest[
     traceSideEffects[ ScriptConfirm[ Identity @ $Failed, "`Input`" ], "Script" ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[$Failed]", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[$Failed]" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-3@@Tests/ScriptConfirmation.wlt:115,1-125,2"
+    TestID   -> "ScriptConfirm-3@@Tests/ScriptConfirmation.wlt:113,1-121,2"
 ]
 
 VerificationTest[
@@ -131,12 +127,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 123 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[$Failed]", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[$Failed]" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-4@@Tests/ScriptConfirmation.wlt:127,1-140,2"
+    TestID   -> "ScriptConfirm-4@@Tests/ScriptConfirmation.wlt:123,1-134,2"
 ]
 
 VerificationTest[
@@ -148,16 +142,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 2 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirm: $Canceled encountered.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirm: $Canceled encountered." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-5@@Tests/ScriptConfirmation.wlt:142,1-161,2"
+    TestID   -> "ScriptConfirm-5@@Tests/ScriptConfirmation.wlt:136,1-149,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -167,17 +155,11 @@ VerificationTest[
     traceSideEffects[ ScriptConfirm @ $Failed, "Session" ],
     KeyValuePattern @ {
         "Result"      -> $aborted[ ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirm: $Failed encountered.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirm: $Failed encountered." ] }
     },
     { ScriptConfirm::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-6@@Tests/ScriptConfirmation.wlt:166,1-181,2"
+    TestID   -> "ScriptConfirm-6@@Tests/ScriptConfirmation.wlt:154,1-163,2"
 ]
 
 VerificationTest[
@@ -185,7 +167,7 @@ VerificationTest[
     Failure[ "ScriptConfirm::ArgumentCount", _Association ],
     { ScriptConfirm::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-7@@Tests/ScriptConfirmation.wlt:183,1-189,2"
+    TestID   -> "ScriptConfirm-7@@Tests/ScriptConfirmation.wlt:165,1-171,2"
 ]
 
 VerificationTest[
@@ -193,7 +175,7 @@ VerificationTest[
     Failure[ "ScriptConfirm::ArgumentCount", _Association ],
     { ScriptConfirm::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirm-8@@Tests/ScriptConfirmation.wlt:191,1-197,2"
+    TestID   -> "ScriptConfirm-8@@Tests/ScriptConfirmation.wlt:173,1-179,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -203,16 +185,10 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmAssert @ False, "Script" ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmAssert: Assertion False failed.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmAssert: Assertion False failed." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-1@@Tests/ScriptConfirmation.wlt:202,1-216,2"
+    TestID   -> "ScriptConfirmAssert-1@@Tests/ScriptConfirmation.wlt:184,1-192,2"
 ]
 
 VerificationTest[
@@ -222,7 +198,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-2@@Tests/ScriptConfirmation.wlt:218,1-226,2"
+    TestID   -> "ScriptConfirmAssert-2@@Tests/ScriptConfirmation.wlt:194,1-202,2"
 ]
 
 VerificationTest[
@@ -232,12 +208,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[$Failed]", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[$Failed]" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-3@@Tests/ScriptConfirmation.wlt:228,1-241,2"
+    TestID   -> "ScriptConfirmAssert-3@@Tests/ScriptConfirmation.wlt:204,1-215,2"
 ]
 
 VerificationTest[
@@ -247,12 +221,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 123 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[$Failed]", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[$Failed]" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-4@@Tests/ScriptConfirmation.wlt:243,1-256,2"
+    TestID   -> "ScriptConfirmAssert-4@@Tests/ScriptConfirmation.wlt:217,1-228,2"
 ]
 
 VerificationTest[
@@ -264,16 +236,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 2 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmAssert: Assertion $Canceled failed.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmAssert: Assertion $Canceled failed." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-5@@Tests/ScriptConfirmation.wlt:258,1-277,2"
+    TestID   -> "ScriptConfirmAssert-5@@Tests/ScriptConfirmation.wlt:230,1-243,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -283,17 +249,11 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmAssert @ $Failed, "Session" ],
     KeyValuePattern @ {
         "Result"      -> $aborted[ ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmAssert: Assertion $Failed failed.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmAssert: Assertion $Failed failed." ] }
     },
     { ScriptConfirmAssert::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-6@@Tests/ScriptConfirmation.wlt:282,1-297,2"
+    TestID   -> "ScriptConfirmAssert-6@@Tests/ScriptConfirmation.wlt:248,1-257,2"
 ]
 
 VerificationTest[
@@ -301,7 +261,7 @@ VerificationTest[
     Failure[ "ScriptConfirmAssert::ArgumentCount", _Association ],
     { ScriptConfirmAssert::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-7@@Tests/ScriptConfirmation.wlt:299,1-305,2"
+    TestID   -> "ScriptConfirmAssert-7@@Tests/ScriptConfirmation.wlt:259,1-265,2"
 ]
 
 VerificationTest[
@@ -309,7 +269,7 @@ VerificationTest[
     Failure[ "ScriptConfirmAssert::ArgumentCount", _Association ],
     { ScriptConfirmAssert::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmAssert-8@@Tests/ScriptConfirmation.wlt:307,1-313,2"
+    TestID   -> "ScriptConfirmAssert-8@@Tests/ScriptConfirmation.wlt:267,1-273,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -319,16 +279,10 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmBy[ 1.5, IntegerQ ], "Script" ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmBy: IntegerQ[1.5] did not return True.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmBy: IntegerQ[1.5] did not return True." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-1@@Tests/ScriptConfirmation.wlt:318,1-332,2"
+    TestID   -> "ScriptConfirmBy-1@@Tests/ScriptConfirmation.wlt:278,1-286,2"
 ]
 
 VerificationTest[
@@ -338,7 +292,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-2@@Tests/ScriptConfirmation.wlt:334,1-342,2"
+    TestID   -> "ScriptConfirmBy-2@@Tests/ScriptConfirmation.wlt:288,1-296,2"
 ]
 
 VerificationTest[
@@ -348,12 +302,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[1.5] IntegerQ", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[1.5] IntegerQ" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-3@@Tests/ScriptConfirmation.wlt:344,1-357,2"
+    TestID   -> "ScriptConfirmBy-3@@Tests/ScriptConfirmation.wlt:298,1-309,2"
 ]
 
 VerificationTest[
@@ -363,12 +315,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 123 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[1.5] IntegerQ", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[1.5] IntegerQ" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-4@@Tests/ScriptConfirmation.wlt:359,1-372,2"
+    TestID   -> "ScriptConfirmBy-4@@Tests/ScriptConfirmation.wlt:311,1-322,2"
 ]
 
 VerificationTest[
@@ -380,16 +330,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 2 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmBy: IntegerQ[1.5] did not return True.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmBy: IntegerQ[1.5] did not return True." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-5@@Tests/ScriptConfirmation.wlt:374,1-393,2"
+    TestID   -> "ScriptConfirmBy-5@@Tests/ScriptConfirmation.wlt:324,1-337,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -399,17 +343,11 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmBy[ 1.5, IntegerQ ], "Session" ],
     KeyValuePattern @ {
         "Result"      -> $aborted[ ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmBy: IntegerQ[1.5] did not return True.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmBy: IntegerQ[1.5] did not return True." ] }
     },
     { ScriptConfirmBy::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-6@@Tests/ScriptConfirmation.wlt:398,1-413,2"
+    TestID   -> "ScriptConfirmBy-6@@Tests/ScriptConfirmation.wlt:342,1-351,2"
 ]
 
 VerificationTest[
@@ -417,7 +355,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-7@@Tests/ScriptConfirmation.wlt:415,1-421,2"
+    TestID   -> "ScriptConfirmBy-7@@Tests/ScriptConfirmation.wlt:353,1-359,2"
 ]
 
 VerificationTest[
@@ -425,7 +363,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-8@@Tests/ScriptConfirmation.wlt:423,1-429,2"
+    TestID   -> "ScriptConfirmBy-8@@Tests/ScriptConfirmation.wlt:361,1-367,2"
 ]
 
 VerificationTest[
@@ -433,7 +371,7 @@ VerificationTest[
     Failure[ "ScriptConfirmBy::ArgumentCount", _Association ],
     { ScriptConfirmBy::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmBy-9@@Tests/ScriptConfirmation.wlt:431,1-437,2"
+    TestID   -> "ScriptConfirmBy-9@@Tests/ScriptConfirmation.wlt:369,1-375,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -443,16 +381,10 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmMatch[ 1.5, _Integer ], "Script" ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmMatch: 1.5 does not match _Integer.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmMatch: 1.5 does not match _Integer." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-1@@Tests/ScriptConfirmation.wlt:442,1-456,2"
+    TestID   -> "ScriptConfirmMatch-1@@Tests/ScriptConfirmation.wlt:380,1-388,2"
 ]
 
 VerificationTest[
@@ -462,7 +394,7 @@ VerificationTest[
         "SideEffects" -> { }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-2@@Tests/ScriptConfirmation.wlt:458,1-466,2"
+    TestID   -> "ScriptConfirmMatch-2@@Tests/ScriptConfirmation.wlt:390,1-398,2"
 ]
 
 VerificationTest[
@@ -472,12 +404,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 1 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[1.5] _Integer", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[1.5] _Integer" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-3@@Tests/ScriptConfirmation.wlt:468,1-481,2"
+    TestID   -> "ScriptConfirmMatch-3@@Tests/ScriptConfirmation.wlt:400,1-411,2"
 ]
 
 VerificationTest[
@@ -487,12 +417,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 123 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[ ___, "Identity[1.5] _Integer", ___ ]
-        ] }
+        "SideEffects" -> { printedMessage[ "Identity[1.5] _Integer" ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-4@@Tests/ScriptConfirmation.wlt:483,1-496,2"
+    TestID   -> "ScriptConfirmMatch-4@@Tests/ScriptConfirmation.wlt:413,1-424,2"
 ]
 
 VerificationTest[
@@ -504,16 +432,10 @@ VerificationTest[
     ],
     KeyValuePattern @ {
         "Result"      -> $exit[ 2 ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmMatch: 1.5 does not match _Integer.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmMatch: 1.5 does not match _Integer." ] }
     },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-5@@Tests/ScriptConfirmation.wlt:498,1-517,2"
+    TestID   -> "ScriptConfirmMatch-5@@Tests/ScriptConfirmation.wlt:426,1-439,2"
 ]
 
 (* ::**********************************************************************:: *)
@@ -523,17 +445,11 @@ VerificationTest[
     traceSideEffects[ ScriptConfirmMatch[ 1.5, _Integer ], "Session" ],
     KeyValuePattern @ {
         "Result"      -> $aborted[ ],
-        "SideEffects" -> { HoldComplete[
-            (Print|WriteString)[
-                ___,
-                "ScriptConfirmMatch: 1.5 does not match _Integer.",
-                ___
-            ]
-        ] }
+        "SideEffects" -> { printedMessage[ "ScriptConfirmMatch: 1.5 does not match _Integer." ] }
     },
     { ScriptConfirmMatch::Session },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-6@@Tests/ScriptConfirmation.wlt:522,1-537,2"
+    TestID   -> "ScriptConfirmMatch-6@@Tests/ScriptConfirmation.wlt:444,1-453,2"
 ]
 
 VerificationTest[
@@ -541,7 +457,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-7@@Tests/ScriptConfirmation.wlt:539,1-545,2"
+    TestID   -> "ScriptConfirmMatch-7@@Tests/ScriptConfirmation.wlt:455,1-461,2"
 ]
 
 VerificationTest[
@@ -549,7 +465,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-8@@Tests/ScriptConfirmation.wlt:547,1-553,2"
+    TestID   -> "ScriptConfirmMatch-8@@Tests/ScriptConfirmation.wlt:463,1-469,2"
 ]
 
 VerificationTest[
@@ -557,7 +473,7 @@ VerificationTest[
     Failure[ "ScriptConfirmMatch::ArgumentCount", _Association ],
     { ScriptConfirmMatch::ArgumentCount },
     SameTest -> MatchQ,
-    TestID   -> "ScriptConfirmMatch-9@@Tests/ScriptConfirmation.wlt:555,1-561,2"
+    TestID   -> "ScriptConfirmMatch-9@@Tests/ScriptConfirmation.wlt:471,1-477,2"
 ]
 
 (* :!CodeAnalysis::EndBlock:: *)

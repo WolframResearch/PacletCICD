@@ -171,7 +171,7 @@ VerificationTest[
 (*File*)
 VerificationTest[
     WorkflowStep[ File[ "Scripts/MyWorkflowJob.wls" ] ][ "Data" ][ "run" ],
-    "wolframscript Scripts/MyWorkflowJob.wls",
+    "wolframscript -f Scripts/MyWorkflowJob.wls",
     SameTest -> StringContainsQ,
     TestID   -> "WorkflowStep-File@@Tests/Workflows.wlt:172,1-177,2"
 ]
