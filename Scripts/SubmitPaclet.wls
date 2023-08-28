@@ -3,9 +3,10 @@
 BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 
 Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
-checkResult @ Wolfram`PacletCICD`SubmitPaclet[
-    $defNB,
-    "ExitOnFail" -> True
-];
+
+Needs[ "PacletResource`" -> None ];
+SetOptions[ PacletResource`Notebooks`ProcessNotebookForEmbedding, "EmbeddedHTMLImages" -> True ];
+
+checkResult @ Wolfram`PacletCICD`SubmitPaclet[ $defNB, "ExitOnFail" -> True ];
 
 EndPackage[ ];
