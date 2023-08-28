@@ -249,15 +249,7 @@ normalHeaderKey // catchUndefined;
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$ghTokenAuth*)
-$ghTokenAuth :=
-    Module[ { user, token },
-        user  = $ghTokenUser;
-        token = Environment[ "GITHUB_TOKEN" ];
-        If[ StringQ @ user && StringQ @ token,
-            <| "Username" -> user, "Password" -> token |>,
-            Automatic
-        ]
-    ];
+$ghTokenAuth := getGHTokenAuth[ ];
 
 $ghTokenUser :=
     SelectFirst[
@@ -267,6 +259,67 @@ $ghTokenUser :=
         },
         StringQ
     ];
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*getGHTokenAuth*)
+getGHTokenAuth[ ] :=
+    getGHTokenAuth @ SystemCredential[ "Wolfram/PacletCICD/GitHubToken" ];
+
+getGHTokenAuth[
+    HoldPattern @ SystemCredentialData[
+        as: KeyValuePattern[ "Username"|"UserName" -> user_String ],
+        tokenField_String
+    ]
+] := getGHTokenAuth[ user, Lookup[ as, tokenField ] ];
+
+getGHTokenAuth[ _Missing ] :=
+    getGHTokenAuth[ $ghTokenUser, Environment[ "GITHUB_TOKEN" ] ];
+
+getGHTokenAuth[ user_String, token_String ] :=
+    <| "Username" -> user, "Password" -> token |>;
+
+getGHTokenAuth[ _, _ ] /; $useGHAuthDialog :=
+    With[ { res = ghTokenAuthDialog[ ] },
+        res /; AssociationQ @ res
+    ];
+
+getGHTokenAuth[ ___ ] := Automatic;
+
+(* ::**********************************************************************:: *)
+(* ::Subsection::Closed:: *)
+(*ghTokenAuthDialog*)
+ghTokenAuthDialog[ ] :=
+    AuthenticationDialog[
+        { "GitHub Username", "Token" -> "" -> "Masked" },
+        setGHTokenAuth,
+        AppearanceRules -> <|
+            "Description" ->
+                Column @ {
+                    "GitHub Personal Access Token",
+                    Hyperlink[
+                        "Create New Token \[RightGuillemet]",
+                        "https://github.com/settings/tokens/new"
+                    ]
+                }
+        |>
+    ];
+
+
+setGHTokenAuth[ as: KeyValuePattern[ "GitHub Username" -> user_String] ] :=
+    Module[ { data, credentials },
+        data = Association[
+            "Name"                -> "GitHub Personal Access Token",
+            "SystemCredentialKey" -> "Wolfram/PacletCICD/GitHubToken",
+            "Username"            -> user,
+            KeyDrop[ as, "GitHub Username" ]
+        ];
+        credentials = SystemCredentialData[ data, "Token" ];
+        SystemCredential[ "Wolfram/PacletCICD/GitHubToken" ] = credentials;
+        getGHTokenAuth @ credentials
+    ];
+
+setGHTokenAuth[ ___ ] := Automatic;
 
 (* ::**********************************************************************:: *)
 (* ::Subsection::Closed:: *)
