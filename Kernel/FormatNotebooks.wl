@@ -1,4 +1,4 @@
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Header*)
 BeginPackage[ "Wolfram`PacletCICD`" ];
@@ -7,19 +7,19 @@ FormatNotebooks // ClearAll;
 
 Begin[ "`Private`" ];
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Section::Closed:: *)
 (*FormatNotebooks*)
-FormatNotebooks[ dir_? DirectoryQ ] :=
-    catchTop @ FormatNotebooks @ FileNames[ "*.nb", dir, Infinity ];
+FormatNotebooks[ dir_? DirectoryQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ FormatNotebooks[ FileNames[ "*.nb", dir, Infinity ], opts ];
 
-FormatNotebooks[ files_List ] :=
-    catchTop @ Map[ FormatNotebooks, files ];
+FormatNotebooks[ files_List, opts: OptionsPattern[ ] ] :=
+    catchTop @ Map[ FormatNotebooks[ #, opts ] &, files ];
 
-FormatNotebooks[ file_? notebookFileQ ] :=
-    catchTop @ makeReadable @ file;
+FormatNotebooks[ file_? notebookFileQ, opts: OptionsPattern[ ] ] :=
+    catchTop @ makeReadable[ file, { opts } ];
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*notebookFileQ*)
 notebookFileQ[ file_? FileExistsQ ] :=
@@ -30,17 +30,17 @@ notebookFileQ[ file_? FileExistsQ ] :=
 
 notebookFileQ[ ___ ] := False;
 
-(******************************************************************************)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*makeReadable*)
-makeReadable[ file_ ] := makeReadable[ file, Hash @ ReadByteArray @ file ];
+makeReadable[ file_, opts: { OptionsPattern[ ] } ] := makeReadable[ file, Hash @ ReadByteArray @ file, opts ];
 
-makeReadable[ file_, hash_Integer ] /; skipFormattingQ[ file, hash ] :=
+makeReadable[ file_, hash_Integer, opts_ ] /; skipFormattingQ[ file, hash ] :=
     Missing[ "Skipped", file ];
 
-makeReadable[ file_, hash_Integer ] := Enclose[
+makeReadable[ file_, hash_Integer, opts: { OptionsPattern[ ] } ] := Enclose[
     Module[ { res },
-        res = ConfirmBy[ makeReadable[ file, hash, $overrideFormats ],
+        res = ConfirmBy[ makeReadable[ file, hash, $overrideFormats, opts ],
                          FileExistsQ
               ];
         saveHash @ file;
@@ -51,7 +51,7 @@ makeReadable[ file_, hash_Integer ] := Enclose[
 
 (* :!CodeAnalysis::BeginBlock:: *)
 (* :!CodeAnalysis::Disable::VariableError::Block:: *)
-makeReadable[ file_, hash_, HoldComplete[ overrides___ ] ] :=
+makeReadable[ file_, hash_, HoldComplete[ overrides___ ], { opts: OptionsPattern[ ] } ] :=
     Internal`InheritedBlock[ { RawArray, NumericArray, overrides },
         Unprotect[ RawArray, NumericArray, overrides ];
         ReleaseHold[ overrideFormat /@ HoldComplete @ overrides ];
@@ -73,11 +73,11 @@ makeReadable[ file_, hash_, HoldComplete[ overrides___ ] ] :=
                     With[ { b = Check[ a, $Failed ] }, b /; ! FailureQ @ b ]
             ],
             file,
-            "ExcludedNotebookOptions" -> { WindowMargins, WindowSize }
+            opts
         ]
     ];
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*$overrideFormats*)
 (* :!CodeAnalysis::BeginBlock:: *)
@@ -102,7 +102,7 @@ $overrideFormats = HoldComplete[
 
 (* :!CodeAnalysis::EndBlock:: *)
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*formatHashID*)
 formatHashID[ id_ ] :=
@@ -111,7 +111,7 @@ formatHashID[ id_ ] :=
         "/"
     ];
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*skipFormattingQ*)
 skipFormattingQ[ file_, hash_Integer ] :=
@@ -120,7 +120,7 @@ skipFormattingQ[ file_, hash_Integer ] :=
 skipFormattingQ[ file_, hash_Integer, id_String ] :=
     PersistentSymbol @ formatHashID @ id === hash;
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*saveHash*)
 saveHash[ file_ ] := saveHash[ file, Hash @ ReadByteArray @ file ];
@@ -131,19 +131,19 @@ saveHash[ file_, hash_Integer ] :=
 saveHash[ file_, hash_Integer, id_String ] :=
     Set[ PersistentSymbol[ formatHashID @ id ], hash ];
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*rawArrayQ*)
 rawArrayQ // Attributes = { HoldFirst };
 rawArrayQ[ arr_RawArray ] := Developer`RawArrayQ @ Unevaluated @ arr;
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*numericArrayQ*)
 numericArrayQ // Attributes = { HoldFirst };
 numericArrayQ[ arr_RawArray ] := NumericArrayQ @ Unevaluated @ arr;
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Subsection::Closed:: *)
 (*overrideFormat*)
 overrideFormat // Attributes = { HoldAllComplete };
@@ -154,7 +154,7 @@ overrideFormat[ sym_Symbol ] := (
         OutputForm @ ToString @ Unevaluated @ FullForm @ x
 );
 
-(* ::**********************************************************************:: *)
+(* ::**************************************************************************************************************:: *)
 (* ::Section::Closed:: *)
 (*Package Footer*)
 End[ ];
