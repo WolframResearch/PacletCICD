@@ -241,11 +241,17 @@ outcomeText[ outcome_   ] := outcome;
 
 
 troOutcome[ tro_TestResultObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
-troOutcome[ tro_TestReportObject    ] := troOutcome[ tro, tro[ "Outcome" ] ];
-troOutcome[ tro_, "Success"         ] := "Success";
+troOutcome[ tro_, "Success"|True    ] := "Success";
 troOutcome[ tro_, "MessagesFailure" ] := "Messages";
-troOutcome[ tro_, "Failure"         ] := troFailureType @ tro;
+troOutcome[ tro_, "Failure"|False   ] := troFailureType @ tro;
 troOutcome[ tro_, outcome_String    ] := outcome;
+
+troOutcome[ tro_TestReportObject ] :=
+    If[ $VersionNumber >= 13.3,
+        troOutcome[ tro, tro[ "ReportSucceeded" ] ],
+        troOutcome[ tro, tro[ "Outcome" ] ]
+    ];
+
 troOutcome // catchUndefined;
 
 
