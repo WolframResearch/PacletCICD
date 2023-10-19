@@ -28,7 +28,7 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:13.0.1
+      image: wolframresearch/wolframengine:latest
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
 
@@ -81,7 +81,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: wolframresearch/wolframengine:13.0.1
+      image: wolframresearch/wolframengine:latest
       options: --user root --privileged --init --ulimit core=-1
     timeout-minutes: 20
 
@@ -142,7 +142,7 @@ jobs:
     needs: [Build]
     runs-on: ubuntu-latest
     container: 
-      image: wolframresearch/wolframengine:13.0.1
+      image: wolframresearch/wolframengine:latest
       options: --user root
     timeout-minutes: 10
 
@@ -185,6 +185,54 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
+  Test-Linux-13: 
+    name: Test-Linux-13
+    needs: [Build]
+    runs-on: ubuntu-latest
+    container: 
+      image: wolframresearch/wolframengine:13.0.1
+      options: --user root
+    timeout-minutes: 10
+
+    steps: 
+      - name: Checkout
+        id: checkout-code-step
+        uses: actions/checkout@v3
+
+      - name: Download workflow values
+        uses: actions/download-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: .paclet-workflow-values
+
+      - name: Download MX build
+        id: download-mx-artifacts-step
+        uses: actions/download-artifact@v3
+        with: 
+          name: PacletBuildArtifact
+          path: MXBuild
+
+      - name: Test paclet
+        run: bash Scripts/RunScript.sh TestPaclet.wls
+      
+      - name: Upload stack data
+        if: always() && env.PACLET_STACK_HISTORY
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-paclet-stacks-13-${{ env.WOLFRAM_SYSTEM_ID }}
+          path: ${{ env.PACLET_STACK_HISTORY }}
+          retention-days: 1
+          if-no-files-found: error
+      
+      - name: Upload workflow values
+        if: always() && env.PACLET_WORKFLOW_VALUES
+        uses: actions/upload-artifact@v3
+        with:
+          name: paclet-workflow-values
+          path: ${{ env.PACLET_WORKFLOW_VALUES }}
+          retention-days: 1
+          if-no-files-found: error
+
   Test-MacOSX: 
     name: Test-MacOSX
     needs: [Build]
@@ -192,7 +240,7 @@ jobs:
     env: 
       WOLFRAM_SYSTEM_ID: MacOSX-x86-64
       WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
-      WOLFRAMENGINE_CACHE_KEY: WolframEngine-A
+      WOLFRAMENGINE_CACHE_KEY: WolframEngine-1
       WOLFRAMENGINE_INSTALLATION_DIRECTORY: "/Applications/Wolfram Engine.app"
     timeout-minutes: 20
 
@@ -261,8 +309,7 @@ jobs:
     env: 
       WOLFRAM_SYSTEM_ID: Windows-x86-64
       WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
-      WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL: https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi
-      WOLFRAMENGINE_CACHE_KEY: WolframEngine-A
+      WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL: https://files.wolframcdn.com/packages/winget/13.3.0.0/WolframEngine_13.3.0_WIN.msi
     timeout-minutes: 20
 
     steps: 
@@ -283,7 +330,7 @@ jobs:
           WOLFRAMENGINE_INSTALLATION_DIRECTORY: '${{ runner.temp }}\WolframEngine'
         with: 
           path: ${{ env.WOLFRAMENGINE_INSTALLATION_DIRECTORY }}
-          key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_CACHE_KEY }}
+          key: wolframengine-${{ env.WOLFRAM_SYSTEM_ID }}-${{ env.WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL }}
 
       - name: InstallWolframEngine
         if: steps.cache-restore-step.outputs.cache-hit != 'true'
