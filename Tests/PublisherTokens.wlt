@@ -361,7 +361,13 @@ VerificationTest[
 
 VerificationTest[
     Pause[ 10 ];
-    withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
+    withoutToken @ Replace[
+        Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
+        False /; StringQ @ Environment[ "GITHUB_ACTIONS" ] :> (
+            Pause[ 50 ];
+            Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ]
+        )
+    ],
     True,
     TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:362,1-367,2"
 ]
