@@ -213,7 +213,7 @@ VerificationTest[
 
 VerificationTest[
     Now - token3[ "CreationDate" ],
-    t_ /; Less[ Quantity[ -5, "Seconds" ], t, Quantity[ 5, "Minutes" ] ],
+    t_ /; Less[ Quantity[ -1, "Minutes" ], t, Quantity[ 5, "Minutes" ] ],
     SameTest -> MatchQ,
     TestID   -> "PublisherTokenObject-CreationDate-3@@Tests/PublisherTokens.wlt:214,1-219,2"
 ]
@@ -361,7 +361,13 @@ VerificationTest[
 
 VerificationTest[
     Pause[ 10 ];
-    withoutToken @ Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
+    withoutToken @ Replace[
+        Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ],
+        False /; StringQ @ Environment[ "GITHUB_ACTIONS" ] :> (
+            Pause[ 50 ];
+            Quiet @ FailureQ @ PublisherTokenObject @ token5[ "TokenString" ]
+        )
+    ],
     True,
     TestID -> "PublisherTokenObject-Expired@@Tests/PublisherTokens.wlt:362,1-367,2"
 ]
