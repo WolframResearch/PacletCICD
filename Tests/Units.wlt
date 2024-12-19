@@ -87,7 +87,7 @@ VerificationTest[
 VerificationTest[
     SecondsToQuantity[ 12346.0 ],
     Quantity[
-        MixedMagnitude @ { 3, 25, 46.000000000000156 },
+        MixedMagnitude @ { 3, 25, 46.00000000000037 },
         MixedUnit @ { "Hours", "Minutes", "Seconds" }
     ],
     TestID -> "SecondsToQuantity-6@@Tests/Units.wlt:87,1-94,2"
