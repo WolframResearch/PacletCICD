@@ -132,7 +132,7 @@ $checkHintData := withConsoleType[
     DeleteMissing /@ dnc`HintData[
         "Paclet",
         None,
-        { "Tag", "Level", "MessageText", "CellID", "SourcePosition" }
+        { "Tag", "Level", "Message", "CellID", "SourcePosition" }
     ]
 ];
 
@@ -169,7 +169,7 @@ reportHintRow[ file_, index_ ][ hint_Association ] :=
         lookup = ConfirmBy[ Lookup[ hint, # ], StringQ ] &;
         level  = hintIcon @ lookup[ "Level" ];
         tag    = lookup[ "Tag" ];
-        msg    = Style[ lookup[ "MessageText" ], "Text" ];
+        msg    = Style[ lookup[ "Message" ], "Text" ];
         url    = sourceFileURL[ file, index, hint ];
         link   = Hyperlink[ ":link:", url ];
         { level, tag, msg, link }
