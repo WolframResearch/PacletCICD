@@ -2405,7 +2405,7 @@ $compilationTargets = { "Windows-x86-64", "MacOSX-x86-64", "Linux-x86-64" };
 $defaultJobContainer :=
     If[ $defaultOS === "Linux-x86-64",
         <|
-            "image"   -> "wolframresearch/wolframengine:13.0.1",
+            "image"   -> "wolframresearch/wolframengine:14.1.0",
             "options" -> "--user root"
         |>,
         $noValue
@@ -2427,14 +2427,14 @@ $defaultJobEnv /; $defaultOS === "MacOSX-x86-64" := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"                      -> "MacOSX-x86-64",
     "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
     "WOLFRAMENGINE_DOWNLOAD_PATH"            -> "/tmp/downloads",
-    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/13.0.0.0/WolframEngine_13.0.0_MAC.dmg",
+    "WOLFRAMENGINE_INSTALL_DMG_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/Homebrew/14.1.0.0/WolframEngine_14.1.0_MAC.dmg",
     "WOLFRAMENGINE_INSTALLATION_DIRECTORY"   -> "\"/Applications/Wolfram Engine.app\""
 |>;
 
 $defaultJobEnv /; $defaultOS === "Windows-x86-64" := takeEnvStrings @ <|
     "WOLFRAM_SYSTEM_ID"                      -> "Windows-x86-64",
     "WOLFRAMENGINE_CACHE_KEY"                -> "WolframEngine-A",
-    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/13.0.0.0/WolframEngine_13.0.0_WIN.msi"
+    "WOLFRAMENGINE_INSTALL_MSI_DOWNLOAD_URL" -> "https://files.wolframcdn.com/packages/winget/14.1.0.0/WolframEngine_14.1.0_WIN.msi"
 |>;
 
 $defaultJobEnv /; True := takeEnvStrings @ <|
