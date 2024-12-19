@@ -1,8 +1,6 @@
 name: Check Paclet
 
 on:
-  schedule:
-    - cron: '30 12 * * *'
   pull_request:
     branches: ["main"]
   workflow_dispatch:
