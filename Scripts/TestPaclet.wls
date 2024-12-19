@@ -5,6 +5,4 @@ BeginPackage[ "Wolfram`PacletCICD`Scripts`" ];
 Get @ FileNameJoin @ { DirectoryName @ $InputFileName, "Common.wl" };
 checkResult @ Wolfram`PacletCICD`TestPaclet @ FileNameJoin @ { $pacDir, "Tests" };
 
-Print[ "Finished testing" ];
-
 EndPackage[ ];
